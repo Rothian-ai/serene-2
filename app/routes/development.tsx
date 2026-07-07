@@ -42,7 +42,7 @@ export default function Development({ params }: Route.ComponentProps) {
         }}
       />
 
-      <Hero plate={d.plate} image={d.image} height="min-h-[66svh]" direction="hero render · full-bleed">
+      <Hero plate={d.plate} image={d.image} height="min-h-[66svh]">
         <Eyebrow className="text-dawn">
           <Link to="/developments" className="hover:underline">Developments</Link>
           <span aria-hidden>·</span> {d.district}, {d.city}
@@ -83,7 +83,13 @@ export default function Development({ params }: Route.ComponentProps) {
             />
           </Reveal>
           <Reveal delay={0.15} className="md:col-span-4 md:col-start-9 md:mt-24">
-            <Plate kind="interior" alt="" className="aspect-[4/5]" />
+            <Plate
+              kind="interior"
+              image="/images/ins-sequence.jpg"
+              alt="Interior in natural light, timber and warm stone"
+              className="aspect-[4/5]"
+              parallax
+            />
             <p className="type-cap mt-3 text-fog">Interior direction — window light, natural materials.</p>
           </Reveal>
         </div>

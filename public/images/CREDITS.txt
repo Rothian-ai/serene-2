@@ -1,0 +1,19 @@
+Photography via Unsplash (unsplash.com/license — free for commercial use).
+Replace with client-licensed photography before launch if preferred; filenames are stable slots.
+
+hero-dusk.jpg        | Dubai Downtown at dusk            | PhotoHound
+philosophy-stone.jpg | White stone stair, quiet light    | Rubén García
+vela-crest.jpg       | High-rise facade, low angle       | Viktor Jakovlev
+saadiyat-grove.jpg   | Curved courtyard with tree        | Declan Sun
+cove-tower.jpg       | Dubai Marina towers over water    | Timo Volz
+verde-terraces.jpg   | Ribbed balconies with planting    | Roman
+mamsha-gardens.jpg   | White beachfront architecture     | Allison Huang
+dev-emaar.jpg        | Burj Khalifa, blue hour           | ZQ Lee
+dev-aldar.jpg        | Abu Dhabi Corniche skyline        | Nick Fewings
+dev-sobha.jpg        | Carpenter's hands at work         | Craft Kitties
+ins-supply.jpg       | Jumeirah coastline aerial         | Nahel Hadi
+ins-escrow.jpg       | Curtain-wall glass abstraction    | Christian Ladewig
+ins-aldar.jpg        | Louvre Abu Dhabi dome light       | Agnieszka Stankiewicz
+ins-sequence.jpg     | Timber battens, pendant light     | Declan Sun
+about-glass.jpg      | Curtain wall detail               | CeKuhn
+amelia-dusk.jpg      | Dubai skyline at night over water | Ahmed Galal

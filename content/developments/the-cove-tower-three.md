@@ -8,6 +8,7 @@ handover: Q1 2028
 paymentPlan: 90 / 10
 priceFrom: AED 1.9M
 featured: 3
+image: /images/cove-tower.jpg
 plate: glass
 excerpt: Creek-front glass at the harbour's quietest bend — the entry point to a district still being priced.
 ---

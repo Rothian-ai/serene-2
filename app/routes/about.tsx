@@ -36,7 +36,7 @@ const MOVEMENTS = [
 export default function About() {
   return (
     <>
-      <Hero plate="glass" height="min-h-[62svh]" direction="photography · curtain-wall geometry, morning">
+      <Hero plate="glass" image="/images/about-glass.jpg" height="min-h-[62svh]">
         <Eyebrow className="text-dawn">The House</Eyebrow>
         <h1 className="type-display mt-5 max-w-[16ch]">
           Built on information, not persistence.

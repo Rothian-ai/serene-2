@@ -8,6 +8,7 @@ handover: Q4 2027
 paymentPlan: 50 / 50
 priceFrom: AED 3.8M
 featured: 5
+image: /images/mamsha-gardens.jpg
 plate: stone
 excerpt: Beachfront maisonettes on the Saadiyat boardwalk — the island's most finite address.
 ---

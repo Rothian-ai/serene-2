@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router";
 import { motion } from "framer-motion";
-import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import { Eyebrow, Plate, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { QuestionSettle } from "~/components/AmeliaBand";
 import { ameliaHref } from "~/lib/site";
 import { track } from "~/lib/analytics";
@@ -77,7 +77,12 @@ export default function Amelia() {
       </Section>
 
       {/* the threshold */}
-      <div className="plate plate-dusk">
+      <Plate kind="dusk" image="/images/amelia-dusk.jpg" alt="">
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to top, rgba(13,29,60,0.72), rgba(13,29,60,0.28) 55%, rgba(13,29,60,0.15))" }}
+        />
         <div className="relative z-[1] mx-auto flex min-h-[56svh] max-w-[1440px] flex-col items-center justify-center px-6 py-24 text-center">
           <Reveal>
             <h2 className="type-display">Bring her your hardest question.</h2>
@@ -99,7 +104,7 @@ export default function Amelia() {
             <p className="type-cap mt-4 text-ivory/55">Amelia opens in a new window.</p>
           </Reveal>
         </div>
-      </div>
+      </Plate>
     </div>
   );
 }

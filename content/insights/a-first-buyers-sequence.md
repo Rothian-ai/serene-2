@@ -5,6 +5,7 @@ date: 2026-05-22
 readingTime: 7 min
 excerpt: The off-plan purchase, laid out in order — what happens, what you sign, what you pay, and where the protections sit at each step. No urgency anywhere in the sequence.
 featured: 4
+image: /images/ins-sequence.jpg
 plate: interior
 ---
 

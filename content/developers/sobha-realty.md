@@ -5,6 +5,7 @@ hq: Dubai
 delivered: 27,000+ homes
 notable: Sobha Hartland | Sobha Hartland II | Sobha One
 tagline: Backward-integrated craft. Every trade under one roof.
+image: /images/dev-sobha.jpg
 plate: stone
 ---
 

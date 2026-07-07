@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Plate } from "~/components/primitives";
 import type { PlateKind } from "~/lib/content";
 import { EASE_INOUT, EASE_QUIET } from "~/lib/motion";
@@ -25,10 +26,15 @@ export function Hero({
   direction?: string;
 }) {
   const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  // ambient drift: the surface eases upward as the visitor scrolls past (≤8%)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
   return (
-    <div className={`relative flex ${height} items-end overflow-hidden bg-ink text-ivory`}>
+    <div ref={ref} className={`relative flex ${height} items-end overflow-hidden bg-ink text-ivory`}>
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-x-0 top-0 -bottom-[10%]"
+        style={reduced ? undefined : { y: bgY }}
         initial={reduced ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", scale: 1.06 }}
         animate={
           reduced

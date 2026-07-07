@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router";
+import { useRef } from "react";
 import type { ReactNode } from "react";
 import { fadeRise, stagger, viewportOnce } from "~/lib/motion";
 import type { PlateKind } from "~/lib/content";
@@ -139,16 +140,36 @@ export function Plate({
   alt = "",
   className = "",
   children,
+  parallax = false,
 }: {
   kind: PlateKind;
   image?: string;
   alt?: string;
   className?: string;
   children?: ReactNode;
+  /** scroll-bound drift, ≤8% displacement — images only, always subtle */
+  parallax?: boolean;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const drift = parallax && !reduced;
   return (
-    <div className={`plate plate-${kind} ${className}`}>
-      {image && <img src={image} alt={alt} loading="lazy" decoding="async" />}
+    <div ref={ref} className={`plate plate-${kind} ${className}`}>
+      {image &&
+        (drift ? (
+          <motion.img
+            src={image}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            style={{ y }}
+            className="scale-[1.14]"
+          />
+        ) : (
+          <img src={image} alt={alt} loading="lazy" decoding="async" />
+        ))}
       {children}
     </div>
   );

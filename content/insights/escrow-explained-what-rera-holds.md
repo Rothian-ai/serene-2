@@ -5,6 +5,7 @@ date: 2026-06-18
 readingTime: 5 min
 excerpt: The escrow account is the reason Dubai off-plan is investable at all. What the law holds, what it releases, and the two questions to ask before any deposit.
 featured: 2
+image: /images/ins-escrow.jpg
 plate: glass
 ---
 

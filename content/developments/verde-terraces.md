@@ -8,6 +8,7 @@ handover: Q3 2027
 paymentPlan: 60 / 40
 priceFrom: AED 2.6M
 featured: 4
+image: /images/verde-terraces.jpg
 plate: interior
 excerpt: Sobha's in-house craft applied to garden terraces — every trade under one roof, every finish accountable.
 ---

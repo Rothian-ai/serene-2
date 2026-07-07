@@ -5,6 +5,7 @@ date: 2026-07-02
 readingTime: 6 min
 excerpt: Announced pipelines and delivered homes are different numbers. We traced every 2027 handover in the registry to its escrow filings — here is the honest supply picture.
 featured: 1
+image: /images/ins-supply.jpg
 plate: hero
 ---
 

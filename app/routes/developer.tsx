@@ -25,7 +25,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
 
   return (
     <>
-      <Hero plate={dev.plate} image={dev.image} height="min-h-[54svh]" direction="identity · signature elevation">
+      <Hero plate={dev.plate} image={dev.image} height="min-h-[54svh]">
         <Eyebrow className="text-dawn">Registered Developer</Eyebrow>
         <h1 className="type-display mt-4">{dev.name}</h1>
         <p className="type-body-lg mt-4 max-w-[44ch] text-ivory/80">{dev.tagline}</p>

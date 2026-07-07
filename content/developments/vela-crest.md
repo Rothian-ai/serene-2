@@ -8,6 +8,7 @@ handover: Q4 2028
 paymentPlan: 80 / 20
 priceFrom: AED 3.2M
 featured: 1
+image: /images/vela-crest.jpg
 plate: render
 excerpt: Forty-two storeys of pale stone and low-iron glass above the Boulevard — residences composed for the long term.
 ---

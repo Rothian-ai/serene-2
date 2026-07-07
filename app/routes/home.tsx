@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <>
       {/* ① Cinematic hero */}
-      <Hero plate="hero" direction="photography · slow aerial, dusk facade, glass & water">
+      <Hero plate="hero" image="/images/hero-dusk.jpg">
         <h1 className="type-display-xl max-w-[14ch]">The address is only the beginning.</h1>
         <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">
           Off-plan property in Dubai and Abu Dhabi, advised with data and held to a single
@@ -55,7 +55,13 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={0.15} className="md:col-span-5 md:col-start-8 md:mt-24">
-            <Plate kind="stone" alt="" className="aspect-[4/5]" />
+            <Plate
+              kind="stone"
+              image="/images/philosophy-stone.jpg"
+              alt="White stone stair in natural light"
+              className="aspect-[4/5]"
+              parallax
+            />
           </Reveal>
         </div>
       </Section>

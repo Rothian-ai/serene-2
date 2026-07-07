@@ -8,6 +8,7 @@ handover: Q2 2027
 paymentPlan: 60 / 40
 priceFrom: AED 2.1M
 featured: 2
+image: /images/saadiyat-grove.jpg
 plate: dusk
 excerpt: Low-rise living in the cultural district — between the Louvre and the sea, at the island's unhurried pace.
 ---
