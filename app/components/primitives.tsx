@@ -141,6 +141,7 @@ export function Plate({
   className = "",
   children,
   parallax = false,
+  eager = false,
 }: {
   kind: PlateKind;
   image?: string;
@@ -149,6 +150,8 @@ export function Plate({
   children?: ReactNode;
   /** scroll-bound drift, ≤8% displacement — images only, always subtle */
   parallax?: boolean;
+  /** above-the-fold (LCP) images load eagerly at high priority */
+  eager?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -162,13 +165,19 @@ export function Plate({
           <motion.img
             src={image}
             alt={alt}
-            loading="lazy"
+            loading={eager ? "eager" : "lazy"}
             decoding="async"
             style={{ y }}
             className="scale-[1.14]"
           />
         ) : (
-          <img src={image} alt={alt} loading="lazy" decoding="async" />
+          <img
+            src={image}
+            alt={alt}
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : undefined}
+            decoding="async"
+          />
         ))}
       {children}
     </div>

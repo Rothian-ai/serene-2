@@ -21,9 +21,12 @@
   --color-gold: #d4a94a;
   --color-navy: #0d1d3c;
   --color-silver: #b7bcc2;
-  --color-brass: #a97c2f;
+  /* Brass (#A97C2F) and Fog Stone (#7D7568) fail WCAG 4.5:1 for small text on
+     ivory (3.32 / 4.03). Text usages run these deepened, in-family tones;
+     the original hexes remain the print/graphic values. */
+  --color-brass: #8a6420;
   --color-dawn: #efd08c;
-  --color-fog: #7d7568;
+  --color-fog: #6b6357;
   --color-white: #ffffff;
   --color-transparent: transparent;
 

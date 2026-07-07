@@ -40,3 +40,14 @@ export const scaleSettle: Variants = {
 };
 
 export const viewportOnce = { once: true, margin: "-80px" } as const;
+
+/**
+ * First-hydration flag. Prerendered HTML must paint complete (no hidden
+ * initial states) — entrance animations are reserved for client-side
+ * navigations. Root marks hydration; components read it at mount.
+ */
+let hydrated = false;
+export const markHydrated = () => {
+  hydrated = true;
+};
+export const isHydrated = () => hydrated;

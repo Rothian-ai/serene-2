@@ -11,7 +11,9 @@ export function LoadingSequence() {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || sessionStorage.getItem("serene-visited")) return;
+    // If hydration arrived late (slow network/device), the page is already
+    // readable — flashing an overlay over it would be worse than no sequence.
+    if (reduced || sessionStorage.getItem("serene-visited") || performance.now() > 1500) return;
     sessionStorage.setItem("serene-visited", "1");
     setShow(true);
     const dismiss = () => setShow(false);

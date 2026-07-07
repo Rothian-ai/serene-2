@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Plate } from "~/components/primitives";
 import type { PlateKind } from "~/lib/content";
-import { EASE_INOUT, EASE_QUIET } from "~/lib/motion";
+import { EASE_INOUT, EASE_QUIET, isHydrated } from "~/lib/motion";
 
 /**
  * Cinematic hero — one of the four sanctioned cinematic moments.
@@ -26,6 +26,9 @@ export function Hero({
   direction?: string;
 }) {
   const reduced = useReducedMotion();
+  // Prerendered HTML must paint the hero complete — the mask reveal plays
+  // only on client-side navigations (captured once at mount).
+  const [animateIn] = useState(() => isHydrated() && !reduced);
   const ref = useRef<HTMLDivElement>(null);
   // ambient drift: the surface eases upward as the visitor scrolls past (≤8%)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -35,11 +38,10 @@ export function Hero({
       <motion.div
         className="absolute inset-x-0 top-0 -bottom-[10%]"
         style={reduced ? undefined : { y: bgY }}
-        initial={reduced ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", scale: 1.06 }}
+        initial={animateIn ? { clipPath: "inset(100% 0 0 0)", scale: 1.06 } : false}
         animate={
-          reduced
-            ? { opacity: 1, transition: { duration: 0.3 } }
-            : {
+          animateIn
+            ? {
                 clipPath: "inset(0% 0 0 0)",
                 scale: 1,
                 transition: {
@@ -47,9 +49,10 @@ export function Hero({
                   scale: { duration: 1.3, ease: EASE_QUIET },
                 },
               }
+            : undefined
         }
       >
-        <Plate kind={plate} image={image} className="h-full w-full">
+        <Plate kind={plate} image={image} eager className="h-full w-full">
           {video && (
             <video
               className="absolute inset-0 h-full w-full object-cover"
@@ -75,12 +78,12 @@ export function Hero({
       <div className="relative z-[1] w-full">
         <div className="mx-auto max-w-[1440px] px-6 pb-20 pt-40 md:px-12 lg:px-20">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.8, delay: reduced ? 0 : 0.5, ease: EASE_QUIET },
-            }}
+            initial={animateIn ? { opacity: 0, y: 24 } : false}
+            animate={
+              animateIn
+                ? { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.5, ease: EASE_QUIET } }
+                : undefined
+            }
           >
             {children}
           </motion.div>

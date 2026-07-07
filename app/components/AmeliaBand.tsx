@@ -45,7 +45,8 @@ export function AmeliaBand({
  * typography, no chat chrome. The site's one interactive-storytelling device.
  */
 export function QuestionSettle({ questions }: { questions: string[] }) {
-  const opacities = [1, 0.62, 0.38];
+  // floor at 0.5 — ivory@0.5 over navy is the last step that clears WCAG 4.5:1
+  const opacities = [1, 0.68, 0.5];
   return (
     <div>
       {questions.map((q, i) => (

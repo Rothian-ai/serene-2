@@ -8,6 +8,10 @@ import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
+export function links() {
+  return [{ rel: "preload", as: "image", href: "/images/hero-dusk.jpg", fetchpriority: "high" }];
+}
+
 export function meta() {
   return buildMeta({
     description:

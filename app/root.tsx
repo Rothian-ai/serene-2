@@ -20,7 +20,7 @@ import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { initAnalytics } from "~/lib/analytics";
 import { SITE } from "~/lib/site";
-import { EASE_QUIET } from "~/lib/motion";
+import { EASE_QUIET, markHydrated } from "~/lib/motion";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -76,7 +76,10 @@ export default function App() {
   // or React discards the whole document as a hydration mismatch. Transitions
   // begin with the first client-side navigation.
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
+  useEffect(() => {
+    setHydrated(true);
+    markHydrated();
+  }, []);
 
   useEffect(() => {
     initAnalytics();
