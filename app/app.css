@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+/* ————————————————————————————————————————————————
+   FACADE — the Serene design system
+   Warm ink, warm ivory, disciplined gold. Radius 0.
+   Gold is an edge, never a wall. Navy belongs to Amelia.
+———————————————————————————————————————————————— */
+
+@font-face {
+  font-family: "Anek Latin";
+  src: url("/fonts/anek-latin-var.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-*: initial;
+  --color-ink: #0b0a08;
+  --color-ivory: #f6f1e6;
+  --color-gold: #d4a94a;
+  --color-navy: #0d1d3c;
+  --color-silver: #b7bcc2;
+  --color-brass: #a97c2f;
+  --color-dawn: #efd08c;
+  --color-fog: #7d7568;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+
+  --font-sans: "Anek Latin", ui-sans-serif, system-ui, sans-serif;
+
+  --text-eyebrow: 0.72rem;
+  --text-data: 0.875rem;
+  --text-cap: 0.8rem;
+
+  --ease-quiet: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --spacing: 0.25rem;
+}
+
+/* base */
+html {
+  background: var(--color-ink);
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+}
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* type roles — weight does the work usually done by size */
+.type-display-xl {
+  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+  font-weight: 200;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.type-display {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.type-headline {
+  font-size: clamp(1.7rem, 3.2vw, 2.65rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.type-title {
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.type-subhead {
+  font-size: 1.185rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.type-body-lg {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.62;
+}
+.type-data {
+  font-size: var(--text-data);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.type-eyebrow {
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.type-cap {
+  font-size: var(--text-cap);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* hairlines */
+.hairline-t {
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+.hairline-b {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+.on-dark .hairline-t,
+.hairline-t.on-dark {
+  border-top-color: color-mix(in srgb, var(--color-ivory) 16%, transparent);
+}
+.on-dark .hairline-b {
+  border-bottom-color: color-mix(in srgb, var(--color-ivory) 16%, transparent);
+}
+
+/* prose — article body rendered from markdown */
+.prose-serene {
+  max-width: 65ch;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--color-ink) 88%, var(--color-ivory));
+}
+.prose-serene h2 {
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin: 2.4em 0 0.7em;
+  color: var(--color-ink);
+}
+.prose-serene h3 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 2em 0 0.6em;
+  color: var(--color-ink);
+}
+.prose-serene p {
+  margin: 0 0 1.2em;
+}
+.prose-serene strong {
+  font-weight: 600;
+}
+.prose-serene a {
+  color: var(--color-brass);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-serene ul,
+.prose-serene ol {
+  margin: 0 0 1.2em;
+  padding-left: 1.2em;
+}
+.prose-serene li {
+  margin-bottom: 0.4em;
+}
+.prose-serene blockquote {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  padding: 1.4em 1.6em;
+  margin: 2em 0;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+.prose-serene table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.6em 0;
+  font-size: 0.95rem;
+}
+.prose-serene th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-fog);
+  padding: 0.6em 1em 0.6em 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+.prose-serene td {
+  padding: 0.6em 1em 0.6em 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* plates — CSS-composed photographic stand-ins (see /content README).
+   Licensed photography replaces these 1:1 via the image manifest. */
+.plate {
+  position: relative;
+  overflow: hidden;
+  background: #1a1712;
+}
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.09;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.plate > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.plate-hero {
+  background:
+    radial-gradient(120% 65% at 50% 108%, rgba(212, 169, 74, 0.28), rgba(169, 124, 47, 0.1) 45%, transparent 70%),
+    repeating-linear-gradient(90deg, transparent 0 54px, rgba(246, 241, 230, 0.028) 54px 57px),
+    linear-gradient(180deg, #0b0a08 0%, #12100c 45%, #241c12 78%, #392a18 100%);
+}
+.plate-render {
+  background:
+    radial-gradient(90% 50% at 50% 0%, rgba(246, 241, 230, 0.16), transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 44px, rgba(246, 241, 230, 0.05) 44px 46px),
+    repeating-linear-gradient(0deg, transparent 0 90px, rgba(11, 10, 8, 0.14) 90px 91px),
+    linear-gradient(185deg, #6d675c 0%, #4b463e 55%, #2b2721 100%);
+}
+.plate-stone {
+  background:
+    radial-gradient(80% 90% at 20% 10%, rgba(246, 241, 230, 0.2), transparent 55%),
+    linear-gradient(160deg, #978972 0%, #7d7568 45%, #57503f 100%);
+}
+.plate-interior {
+  background:
+    radial-gradient(55% 75% at 72% 38%, rgba(239, 208, 140, 0.34), rgba(212, 169, 74, 0.08) 55%, transparent 75%),
+    linear-gradient(200deg, #4a3d2e 0%, #322a1f 55%, #191510 100%);
+}
+.plate-dusk {
+  background:
+    radial-gradient(110% 60% at 50% 100%, rgba(212, 169, 74, 0.2), transparent 65%),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(246, 241, 230, 0.03) 34px 36px),
+    linear-gradient(180deg, #0d1d3c 0%, #14213c 55%, #2c2a20 100%);
+}
+.plate-glass {
+  background:
+    radial-gradient(70% 60% at 65% 20%, rgba(246, 241, 230, 0.22), transparent 60%),
+    repeating-linear-gradient(115deg, transparent 0 60px, rgba(246, 241, 230, 0.05) 60px 62px),
+    linear-gradient(160deg, #3a3f45 0%, #23262b 60%, #131413 100%);
+}
+
+/* reduced motion — the whole motion system collapses to fades */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Below the mark's 32px minimum the wordmark stands alone (brand rule);
+       at favicon scale that is the initial, set in the wordmark's weight. -->
+  <rect width="64" height="64" fill="#0B0A08"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Anek Latin, ui-sans-serif, sans-serif" font-size="36" font-weight="500" fill="#F6F1E6">S</text>
+</svg>
