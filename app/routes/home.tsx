@@ -2,7 +2,7 @@ import { HeroSequence } from "~/components/HeroSequence";
 import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
-import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plate } from "~/components/primitives";
+import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
 import { DeveloperCard, InsightRow } from "~/components/cards";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { developments, developers, insights } from "~/lib/content";
@@ -67,6 +67,7 @@ export default function Home() {
       <MetricsMonument />
 
       {/* ⑤ Why Serene — the trust monument */}
+      <Seam variant="ivory-ink" />
       <div className="bg-ink text-ivory">
         <Section>
           <Eyebrow className="text-gold">Why Serene</Eyebrow>
@@ -97,12 +98,16 @@ export default function Home() {
         </Section>
       </div>
 
-      {/* ⑤ Amelia — her one navy moment, now interactive */}
+      {/* ⑥ Amelia — her one navy moment, now interactive */}
+      <Seam variant="ink-navy" />
       <AmeliaAsk />
+      <Seam variant="navy-ivory" />
 
-      {/* ⑥ The registry */}
+      {/* ⑦ The registry */}
       <Section>
-        <Eyebrow className="text-brass">The Registry</Eyebrow>
+        <Reveal exit>
+          <Eyebrow className="text-brass">The Registry</Eyebrow>
+        </Reveal>
         <div className="mt-9 grid gap-10 md:grid-cols-3 md:gap-7">
           {registry.map((dev, i) => (
             <Reveal key={dev.slug} delay={0.08 * i} className={i === 1 ? "md:mt-14" : ""}>
@@ -115,9 +120,11 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ⑦ Insights — journal contents */}
+      {/* ⑧ Insights — journal contents */}
       <Section className="pt-0">
-        <Eyebrow className="text-brass">Insights</Eyebrow>
+        <Reveal exit>
+          <Eyebrow className="text-brass">Insights</Eyebrow>
+        </Reveal>
         <Reveal className="mt-7 hairline-b">
           {latest.map((i) => (
             <InsightRow key={i.slug} insight={i} />
@@ -129,6 +136,7 @@ export default function Home() {
       </Section>
 
       {/* ⑨ Final threshold */}
+      <Seam variant="ivory-ink" />
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal>

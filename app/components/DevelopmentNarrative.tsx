@@ -135,14 +135,21 @@ export function DevelopmentNarrative({
                   }}
                   className="scroll-mt-28"
                 >
-                  <div className="type-data mb-4 text-brass">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  <h2 className="type-headline mb-6">{s.title}</h2>
-                  <div
-                    className="prose-serene"
-                    dangerouslySetInnerHTML={{ __html: s.html }}
-                  />
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: 30 }}
+                    whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-90px" }}
+                    transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <div className="type-data mb-4 text-brass">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <h2 className="type-headline mb-6">{s.title}</h2>
+                    <div
+                      className="prose-serene"
+                      dangerouslySetInnerHTML={{ __html: s.html }}
+                    />
+                  </motion.div>
                 </article>
               ))}
             </div>

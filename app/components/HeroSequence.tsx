@@ -17,6 +17,15 @@ import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
  * SSR renders complete at chapter 1 (chapters 2–3 start hidden inline).
  */
 
+/**
+ * Hero background video. Empty by default (no licensed footage ships in the
+ * repo). Drop a muted, looping clip at e.g. `/videos/hero.webm` (webm + an mp4
+ * fallback) and set the path here — it plays over the ken-burns still, which
+ * stays as the poster/reduced-motion frame. Keep it short, dark, and calm
+ * (a slow dusk skyline drift), graded to match the house look.
+ */
+const HERO_VIDEO = { webm: "", mp4: "" };
+
 const CHAPTERS = [
   {
     eyebrow: "Dubai & Abu Dhabi · Off-Plan",
@@ -167,6 +176,7 @@ export function HeroSequence() {
 
   if (reduced) return <StaticHero />;
 
+  const hasVideo = HERO_VIDEO.webm || HERO_VIDEO.mp4;
   const bgNodes = [
     <Plate
       key="hero"
@@ -176,7 +186,22 @@ export function HeroSequence() {
       avifSrcSet="/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w"
       eager
       className="h-full w-full"
-    />,
+    >
+      {hasVideo && (
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/hero-dusk.jpg"
+          aria-hidden
+        >
+          {HERO_VIDEO.webm && <source src={HERO_VIDEO.webm} type="video/webm" />}
+          {HERO_VIDEO.mp4 && <source src={HERO_VIDEO.mp4} type="video/mp4" />}
+        </video>
+      )}
+    </Plate>,
     <Plate key="render" kind="render" image="/images/cove-tower.jpg" className="h-full w-full" />,
     <Plate key="dusk" kind="dusk" image="/images/amelia-dusk.jpg" className="h-full w-full" />,
   ];

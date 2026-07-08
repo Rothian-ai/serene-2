@@ -14,11 +14,14 @@ export function Reveal({
   className,
   delay = 0,
   variant = "fade-up",
+  exit = false,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   variant?: RevealVariant;
+  /** when true the content also gracefully fades out as it leaves the viewport */
+  exit?: boolean;
 }) {
   return (
     <motion.div
@@ -26,7 +29,7 @@ export function Reveal({
       variants={revealVariants[variant]}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportOnce}
+      viewport={exit ? { once: false, amount: 0.2 } : viewportOnce}
       transition={{ delay }}
     >
       {children}
@@ -34,14 +37,22 @@ export function Reveal({
   );
 }
 
-export function RevealGroup({ children, className }: { children: ReactNode; className?: string }) {
+export function RevealGroup({
+  children,
+  className,
+  exit = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  exit?: boolean;
+}) {
   return (
     <motion.div
       className={className}
       variants={stagger}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportOnce}
+      viewport={exit ? { once: false, amount: 0.2 } : viewportOnce}
     >
       {children}
     </motion.div>
@@ -54,6 +65,22 @@ export function RevealItem({ children, className }: { children: ReactNode; class
       {children}
     </motion.div>
   );
+}
+
+/* ——— Seam: a soft gradient bridge between two grounds, so the eye is guided
+       from one section to the next instead of meeting a hard colour edge. ——— */
+
+const seamMap = {
+  "ivory-ink": "from-ivory to-ink",
+  "ink-ivory": "from-ink to-ivory",
+  "ivory-navy": "from-ivory to-navy",
+  "navy-ivory": "from-navy to-ivory",
+  "ink-navy": "from-ink to-navy",
+  "navy-ink": "from-navy to-ink",
+} as const;
+
+export function Seam({ variant }: { variant: keyof typeof seamMap }) {
+  return <div aria-hidden className={`h-24 w-full bg-gradient-to-b ${seamMap[variant]} md:h-32`} />;
 }
 
 /* ——— Eyebrow: gold tick + tracked label. Colour from parent (brass on ivory, gold on dark). ——— */

@@ -22,6 +22,10 @@ export const fadeRise: Variants = {
 
 /** the reveal repertoire — selected by `Reveal`'s `variant` prop */
 export const fadeUp = fadeRise;
+export const fadeDown: Variants = {
+  hidden: { opacity: 0, y: -24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_QUIET } },
+};
 export const fade: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.9, ease: EASE_QUIET } },
@@ -46,6 +50,7 @@ export const maskUp: Variants = {
 
 export const revealVariants = {
   "fade-up": fadeUp,
+  "fade-down": fadeDown,
   fade,
   scale: scaleIn,
   mask: maskUp,
