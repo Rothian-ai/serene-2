@@ -267,6 +267,36 @@ body {
     linear-gradient(160deg, #3a3f45 0%, #23262b 60%, #131413 100%);
 }
 
+/* cinematic layer — ambient light & split-text masks
+   (GSAP owns the scroll-driven motion; these are the static scaffolding) */
+.hero-light {
+  position: absolute;
+  inset: -20% -30%;
+  pointer-events: none;
+  background: radial-gradient(
+    45% 60% at 50% 45%,
+    rgba(239, 208, 140, 0.22),
+    rgba(212, 169, 74, 0.06) 45%,
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.split-line {
+  overflow: hidden;
+}
+.hero-cue {
+  animation: hero-cue 1.9s ease-in-out infinite;
+}
+@keyframes hero-cue {
+  0% { transform: translateY(-14px); }
+  100% { transform: translateY(44px); }
+}
+.will-change-transform {
+  will-change: transform;
+}
+
 /* reduced motion — the whole motion system collapses to fades */
 @media (prefers-reduced-motion: reduce) {
   *,

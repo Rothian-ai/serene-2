@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Eyebrow, Plate, Section } from "~/components/primitives";
+import { SplitHeading } from "~/components/SplitHeading";
 import { InsightRow } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { formatDate, getInsight, insights, renderMarkdown } from "~/lib/content";
@@ -44,7 +45,9 @@ export default function Insight({ params }: Route.ComponentProps) {
         <Eyebrow className="justify-center text-brass">
           {a.category} · {formatDate(a.date)} · {a.readingTime}
         </Eyebrow>
-        <h1 className="type-display mx-auto mt-6 max-w-[22ch]">{a.title}</h1>
+        <SplitHeading as="h1" className="type-display mx-auto mt-6 max-w-[22ch]">
+          {a.title}
+        </SplitHeading>
       </Section>
 
       <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">

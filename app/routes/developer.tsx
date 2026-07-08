@@ -1,5 +1,6 @@
 import { Eyebrow, Ledger, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
+import { SplitHeading } from "~/components/SplitHeading";
 import { DevelopmentCard } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developmentsByDeveloper, getDeveloper, renderMarkdown } from "~/lib/content";
@@ -27,7 +28,9 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
     <>
       <Hero plate={dev.plate} image={dev.image} height="min-h-[54svh]">
         <Eyebrow className="text-dawn">Registered Developer</Eyebrow>
-        <h1 className="type-display mt-4">{dev.name}</h1>
+        <SplitHeading as="h1" className="type-display mt-4" mode="chars">
+          {dev.name}
+        </SplitHeading>
         <p className="type-body-lg mt-4 max-w-[44ch] text-ivory/80">{dev.tagline}</p>
       </Hero>
 

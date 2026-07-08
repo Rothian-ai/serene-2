@@ -16,15 +16,22 @@ export function DevelopmentCard({
   const dev = getDeveloper(development.developer);
   return (
     <Link to={`/developments/${development.slug}`} className="group block">
-      <div className={`overflow-hidden ${aspect}`}>
+      <div className={`relative overflow-hidden ${aspect}`}>
         <Plate
           kind={development.plate}
           image={development.image}
           alt={development.title}
-          className="h-full w-full transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: "linear-gradient(to top, rgba(11,10,8,0.42), transparent 58%)" }}
         />
       </div>
-      <h3 className={`type-title mt-4 ${compact ? "text-[1.25rem]" : ""}`}>{development.title}</h3>
+      <h3 className={`type-title mt-4 transition-colors duration-300 group-hover:text-brass ${compact ? "text-[1.25rem]" : ""}`}>
+        {development.title}
+      </h3>
       {compact ? (
         <p className="type-cap mt-1.5 text-fog">
           {development.district}, {development.city} · {dev?.name} · from {development.priceFrom}
@@ -48,15 +55,22 @@ export function DevelopmentCard({
 export function DeveloperCard({ developer }: { developer: Developer }) {
   return (
     <Link to={`/developers/${developer.slug}`} className="group block">
-      <div className="aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[3/4] overflow-hidden">
         <Plate
           kind={developer.plate}
           image={developer.image}
           alt={developer.name}
-          className="h-full w-full transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: "linear-gradient(to top, rgba(11,10,8,0.42), transparent 58%)" }}
         />
       </div>
-      <h3 className="type-title mt-4 text-[1.35rem]">{developer.name}</h3>
+      <h3 className="type-title mt-4 text-[1.35rem] transition-colors duration-300 group-hover:text-brass">
+        {developer.name}
+      </h3>
       <p className="type-cap mt-1 text-fog">{developer.tagline}</p>
     </Link>
   );

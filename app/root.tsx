@@ -18,7 +18,9 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
+import { ScrollProgress } from "~/components/ScrollProgress";
 import { initAnalytics } from "~/lib/analytics";
+import { gsap, ScrollTrigger } from "~/lib/gsap";
 import { SITE } from "~/lib/site";
 import { EASE_QUIET, markHydrated } from "~/lib/motion";
 
@@ -84,18 +86,27 @@ export default function App() {
   useEffect(() => {
     initAnalytics();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Lenis drives the document scroll; GSAP's ticker drives Lenis, and Lenis
+    // pushes every scroll into ScrollTrigger — one clock for smooth scroll and
+    // all pinned/scrubbed timelines (no scrollerProxy: Lenis scrolls window).
     const lenis = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
-    let frame: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
     return () => {
-      cancelAnimationFrame(frame);
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);
+
+  // Client-side navigation swaps `main` and its pinned triggers — recompute
+  // pin/scrub geometry once the enter transition has settled.
+  useEffect(() => {
+    if (!hydrated) return;
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 400);
+    return () => window.clearTimeout(id);
+  }, [location.pathname, hydrated]);
 
   return (
     <>
@@ -106,6 +117,7 @@ export default function App() {
         Skip to content
       </a>
       <LoadingSequence />
+      <ScrollProgress />
       <Header tone={tone} />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main

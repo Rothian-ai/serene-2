@@ -48,7 +48,12 @@ export function initAnalytics(): void {
   if (getConsent() === "accepted") loadAnalytics();
 }
 
-type EventName = "amelia_engage" | "contact_submit" | "development_view" | "insight_read";
+type EventName =
+  | "amelia_engage"
+  | "amelia_ask"
+  | "contact_submit"
+  | "development_view"
+  | "insight_read";
 
 export function track(event: EventName, params?: Record<string, string>): void {
   window.gtag?.("event", event, params);

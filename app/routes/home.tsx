@@ -1,8 +1,10 @@
-import { Link } from "react-router";
-import { Hero } from "~/components/Hero";
+import { HeroSequence } from "~/components/HeroSequence";
+import { HorizontalShowcase } from "~/components/HorizontalShowcase";
+import { MetricsMonument } from "~/components/MetricsMonument";
+import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plate } from "~/components/primitives";
-import { DevelopmentCard, DeveloperCard, InsightRow } from "~/components/cards";
-import { AMELIA_QUESTIONS, QuestionSettle } from "~/components/AmeliaBand";
+import { DeveloperCard, InsightRow } from "~/components/cards";
+import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { developments, developers, insights } from "~/lib/content";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
@@ -17,35 +19,22 @@ export function meta() {
 }
 
 export default function Home() {
-  const featured = developments.slice(0, 3);
   const registry = developers.slice(0, 3);
   const latest = insights.slice(0, 3);
 
   return (
     <>
-      {/* ① Cinematic hero */}
-      <Hero
-        plate="hero"
-        image="/images/hero-dusk.jpg"
-        srcSet="/images/hero-dusk-800.jpg 800w, /images/hero-dusk-1280.jpg 1280w, /images/hero-dusk.jpg 1600w"
-        avifSrcSet="/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w"
-      >
-        <h1 className="type-display-xl max-w-[14ch]">The address is only the beginning.</h1>
-        <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">
-          Off-plan property in Dubai and Abu Dhabi, advised with data and held to a single
-          standard: you will never receive a call you didn't ask for.
-        </p>
-        <div className="mt-9">
-          <CTA to="/developments" kind="line">Explore Developments</CTA>
-        </div>
-      </Hero>
+      {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence */}
+      <HeroSequence />
 
       {/* ② Philosophy */}
       <Section>
         <div className="grid gap-10 md:grid-cols-12 md:gap-7">
           <Reveal className="md:col-span-5 md:col-start-2">
             <Eyebrow className="text-brass">The House</Eyebrow>
-            <h2 className="type-headline mt-5">A quieter way to acquire in the Emirates.</h2>
+            <SplitHeading as="h2" className="type-headline mt-5">
+              A quieter way to acquire in the Emirates.
+            </SplitHeading>
             <p className="type-body-lg mt-6 text-ink/78">
               Serene is an advisory for off-plan property in Dubai and Abu Dhabi — licensed,
               registered with the developers it represents, and built on one conviction: serious
@@ -71,35 +60,19 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ③ Featured developments */}
-      <Section className="pt-0">
-        <Eyebrow className="text-brass">Current Developments</Eyebrow>
-        <div className="mt-9 grid gap-10 md:grid-cols-12 md:gap-7">
-          {featured[0] && (
-            <Reveal className="md:col-span-7">
-              <DevelopmentCard development={featured[0]} />
-            </Reveal>
-          )}
-          <div className="flex flex-col gap-11 md:col-span-4 md:col-start-9 md:mt-28">
-            {featured.slice(1).map((d, i) => (
-              <Reveal key={d.slug} delay={0.1 * (i + 1)}>
-                <DevelopmentCard development={d} aspect="aspect-[4/5]" compact />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-        <div className="mt-11">
-          <QuietLink to="/developments">All Developments</QuietLink>
-        </div>
-      </Section>
+      {/* ③ Featured developments — pinned horizontal gallery */}
+      <HorizontalShowcase developments={developments} />
 
-      {/* ④ Why Serene — the trust monument */}
+      {/* ④ By the Record — animated credibility monument */}
+      <MetricsMonument />
+
+      {/* ⑤ Why Serene — the trust monument */}
       <div className="bg-ink text-ivory">
         <Section>
           <Eyebrow className="text-gold">Why Serene</Eyebrow>
-          <Reveal>
-            <h2 className="type-headline mt-6 max-w-[24ch]">Trust is a matter of record.</h2>
-          </Reveal>
+          <SplitHeading as="h2" className="type-headline mt-6 max-w-[24ch]">
+            Trust is a matter of record.
+          </SplitHeading>
           <RevealGroup className="mt-12 grid gap-9 md:grid-cols-3">
             {[
               {
@@ -124,24 +97,8 @@ export default function Home() {
         </Section>
       </div>
 
-      {/* ⑤ Amelia — her one navy moment */}
-      <div className="bg-navy text-ivory">
-        <Section>
-          <Eyebrow className="text-gold">Amelia</Eyebrow>
-          <div className="mt-10 max-w-[820px]">
-            <QuestionSettle questions={AMELIA_QUESTIONS} />
-            <Reveal delay={0.2}>
-              <p className="type-body-lg mt-11 max-w-[48ch] text-ivory/82">
-                Ask anything. Amelia answers with data — at midnight, in detail, without ever
-                placing a call.
-              </p>
-              <div className="mt-8">
-                <CTA to="/amelia?ref=home" kind="gold">Speak with Amelia</CTA>
-              </div>
-            </Reveal>
-          </div>
-        </Section>
-      </div>
+      {/* ⑤ Amelia — her one navy moment, now interactive */}
+      <AmeliaAsk />
 
       {/* ⑥ The registry */}
       <Section>
@@ -171,11 +128,13 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ⑧ Final threshold */}
+      {/* ⑨ Final threshold */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal>
-            <h2 className="type-display">When you have questions, ask.</h2>
+            <SplitHeading as="h2" className="type-display" mode="chars">
+              When you have questions, ask.
+            </SplitHeading>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <CTA to="/amelia?ref=home-final" kind="gold">Speak with Amelia</CTA>
               <CTA to="/contact" kind="line">Enquire</CTA>

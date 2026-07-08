@@ -33,6 +33,35 @@ export function renderMarkdown(body: string): string {
   return marked.parse(body, { async: false }) as string;
 }
 
+export interface BodySection {
+  id: string;
+  title: string;
+  html: string;
+}
+
+/**
+ * Split a markdown body into its top-level (`## `) sections for the
+ * sticky section-nav on masterpiece pages. Any preamble before the first
+ * heading is discarded (our development bodies open straight on a heading).
+ */
+export function parseSections(body: string): BodySection[] {
+  return body
+    .split(/\r?\n(?=## )/)
+    .map((part) => part.trim())
+    .map((part) => {
+      const m = /^##\s+(.+)/.exec(part);
+      if (!m) return null;
+      const title = m[1].trim();
+      const id = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      const rest = part.replace(/^##\s+.+(\r?\n)?/, "");
+      return { id, title, html: renderMarkdown(rest) };
+    })
+    .filter((s): s is BodySection => s !== null);
+}
+
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",

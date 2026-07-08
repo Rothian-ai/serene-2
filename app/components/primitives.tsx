@@ -2,28 +2,32 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Link } from "react-router";
 import { useRef } from "react";
 import type { ReactNode } from "react";
-import { fadeRise, stagger, viewportOnce } from "~/lib/motion";
+import { fadeRise, revealVariants, stagger, viewportOnce } from "~/lib/motion";
+import type { RevealVariant } from "~/lib/motion";
 import type { PlateKind } from "~/lib/content";
 
-/* ——— Reveal: the default entrance. Animates once, never re-triggers. ——— */
+/* ——— Reveal: the default entrance. Animates once, never re-triggers.
+       `variant` selects the move (fade-up | fade | scale | mask). ——— */
 
 export function Reveal({
   children,
   className,
   delay = 0,
+  variant = "fade-up",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  variant?: RevealVariant;
 }) {
   return (
     <motion.div
       className={className}
-      variants={fadeRise}
+      variants={revealVariants[variant]}
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ delay }}
     >
       {children}
     </motion.div>
@@ -66,7 +70,7 @@ export function Eyebrow({ children, className = "" }: { children: ReactNode; cla
 /* ——— Buttons: two species — solid and quiet. Gold fill exists once per page (Amelia). ——— */
 
 const btnBase =
-  "inline-block cursor-pointer text-[12.5px] font-semibold uppercase tracking-[0.1em] px-8 py-[15px] transition-colors duration-300 text-center";
+  "inline-block cursor-pointer text-[12.5px] font-semibold uppercase tracking-[0.1em] px-8 py-[15px] text-center transition-[background-color,border-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-[2px] active:translate-y-0 motion-reduce:transform-none motion-reduce:hover:translate-y-0";
 
 type BtnKind = "solid" | "solid-ivory" | "gold" | "line" | "line-ink";
 
@@ -165,6 +169,9 @@ export function Plate({
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const drift = parallax && !reduced;
+  // React 18 drops the camelCase `fetchPriority` prop with a warning, losing
+  // the LCP hint — forward the lowercase DOM attribute instead.
+  const priority: Record<string, string> = eager ? { fetchpriority: "high" } : {};
   return (
     <div ref={ref} className={`plate plate-${kind} ${className}`}>
       {image &&
@@ -186,7 +193,7 @@ export function Plate({
               srcSet={srcSet}
               sizes={srcSet ? (sizes ?? "100vw") : undefined}
               loading={eager ? "eager" : "lazy"}
-              fetchPriority={eager ? "high" : undefined}
+              {...priority}
               decoding="async"
             />
           </picture>
@@ -197,7 +204,7 @@ export function Plate({
             srcSet={srcSet}
             sizes={srcSet ? (sizes ?? "100vw") : undefined}
             loading={eager ? "eager" : "lazy"}
-            fetchPriority={eager ? "high" : undefined}
+            {...priority}
             decoding="async"
           />
         ))}
