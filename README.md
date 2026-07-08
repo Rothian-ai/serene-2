@@ -1,8 +1,12 @@
 # Serene — serene.com
 
 Production frontend for Serene, the AI-native advisory for off-plan real estate in Dubai and
-Abu Dhabi. React Router v7 (framework mode, fully prerendered), Vite, TypeScript,
-Tailwind v4, Framer Motion, Lenis.
+Abu Dhabi. A premium, cinematic, fully prerendered marketing site whose one job is to move
+visitors into **Amelia** (the external AI platform).
+
+**Stack:** React Router v7 (framework mode, fully prerendered) · Vite · TypeScript ·
+Tailwind v4 · GSAP + ScrollTrigger (scroll-driven / pinned / split-text) · Framer Motion
+(component-level reveals + page transitions) · Lenis (smooth scroll).
 
 ## Commands
 
@@ -16,6 +20,47 @@ npm run typecheck  # route typegen + tsc
 The build prerenders **every route** — including each development, developer, and insight —
 to static HTML for SEO. Deploy `build/client` to any static host behind HTTPS; configure the
 host's SPA fallback to `__spa-fallback.html` for unknown paths.
+
+## Structure
+
+```
+app/
+  root.tsx            Shell: Lenis↔GSAP wiring, page transitions, scroll progress, header/footer
+  routes/             One file per page (home, developments, development, developer, insight, …)
+  components/         UI + cinematic layer (see Motion below); primitives.tsx = the design system
+  lib/
+    content.ts        Markdown content collections + parseSections (masterpiece section-nav)
+    site.ts           Site constants, Amelia gateway, <meta> builder
+    gsap.ts           GSAP foundation: plugin registration + useGsapContext (scoped, reduced-motion safe)
+    motion.ts         Framer variants/eases + the reveal repertoire
+    analytics.ts      GA4, loaded only after consent
+content/              Markdown/JSON content (a new file = a new page)
+brand-assets/         brand-tokens.md (the brand rules) + the logo artwork
+public/               images/ (Plate photography, AVIF+srcSet hero), logo/, fonts/
+```
+
+## Motion & interaction
+
+GSAP + ScrollTrigger own the heavy scroll work; Framer Motion stays for lightweight component
+reveals and page transitions. Lenis drives the document scroll and is clocked by GSAP's ticker,
+feeding `ScrollTrigger.update` (one clock, no scrollerProxy) — wired once in `root.tsx`.
+
+- **`lib/gsap.ts`** — registers ScrollTrigger + SplitText once (client-only); `useGsapContext(ref, fn)`
+  scopes every tween/trigger to a container, reverts on unmount, and **no-ops under reduced motion**.
+- **`HeroSequence`** — pinned 3-chapter hero: ambient ken-burns + light bloom (loop), flash-free
+  split-text entrance, scrubbed chapter/background crossfade, handoff scrim. `HERO_VIDEO` const is a
+  ready `<video>` slot (empty by default — see Imagery).
+- **`HorizontalShowcase`** — ScrollTrigger pin + scrub; pin lasts exactly the track overflow width
+  (`end = "+=" + (scrollWidth − innerWidth)`, `invalidateOnRefresh`). Touch/reduced-motion → swipe row.
+- **`DevelopmentNarrative`** — sticky fact-rail + section-nav with an IntersectionObserver scrollspy.
+- **`MetricsMonument` / `Counter`** — credibility band; figures count up on scroll-in.
+- **`SplitHeading`** — masked line/character reveal for major headings (used sparingly).
+- **`ScrollProgress`** — hairline gold reading bar. **`Seam`** — gradient bridges between grounds.
+- **`Reveal` / `RevealGroup`** (`primitives.tsx`) — the enter (and optional graceful `exit`) reveals;
+  `variant` = fade-up · fade-down · fade · scale · mask.
+
+Everything is **SSR-complete** (prerendered HTML paints without JS) and collapses to static under
+`prefers-reduced-motion`. To feel the motion, run the dev server and open it in a real browser.
 
 ## Adding content (no code required)
 
@@ -58,6 +103,12 @@ To swap in client-licensed photography, drop the file in `public/images/` and po
 entry's `image:` at it (same filename = zero code change). Direction: architecture, material,
 light. Never handshakes, staged offices, or HDR skylines.
 
+**Hero video (optional):** the hero ships as layered motion (ken-burns + light bloom) because no
+footage is licensed yet. To use a video, drop a muted/looping clip at `public/videos/hero.webm`
+(+ an `.mp4` fallback) and set `HERO_VIDEO` in `app/components/HeroSequence.tsx`. It plays over the
+ken-burns still, which stays as the poster and the reduced-motion frame. Keep it short, dark, and
+calm (a slow dusk skyline), graded to the house look.
+
 ## Configuration
 
 Copy `.env.example` to `.env`:
@@ -80,7 +131,16 @@ Copy `.env.example` to `.env`:
 
 ## Brand invariants (enforced in code — don't undo them)
 
-Anek Latin only, weight-led hierarchy · gold fill once per page (the Amelia action), Brass for
-gold-toned text on ivory · Deep Navy surfaces belong to Amelia exclusively · radius 0 · the
-supplied mark artwork only (white on dark, silver on light, 32px minimum) · motion collapses
-under `prefers-reduced-motion`.
+Source of truth: `brand-assets/brand-tokens.md` (colours · type · logo · voice).
+
+Anek Latin only, weight-led hierarchy · gold **fill** once per page (the Amelia action) — gold
+elsewhere only as an *edge/accent* (rails, ticks, hairlines) · Brass/Fog run in-family deepened
+(`#8a6420` / `#6b6357`) so gold-toned text and captions pass WCAG AA on ivory (brand `#A97C2F` /
+`#7D7568` remain the graphic/print values) · Deep Navy surfaces belong to Amelia exclusively ·
+radius 0 · the supplied mark artwork only — **metallic silver on light, white on dark**, never
+recoloured gold, 32px minimum · voice is composed · elevated · enduring (no exclamations, no
+"luxury lifestyle," no expiring dates) · all motion collapses under `prefers-reduced-motion` and
+every route prerenders complete.
+
+Motion intensity is dialled to "maximal / cinematic" per client direction (Jul 2026) — split-text,
+expressive easing, animated light — but stays elegant, never distracting.

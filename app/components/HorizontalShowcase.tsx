@@ -37,7 +37,7 @@ function Panel({ development, index }: { development: Development; index: number
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="absolute inset-x-4 bottom-4 translate-y-1 transition-transform duration-500 group-hover:translate-y-0">
-          <div className="type-eyebrow text-dawn">
+          <div className="type-eyebrow text-gold">
             {development.district}, {development.city}
           </div>
           <h3 className="type-title mt-2 text-ivory">{development.title}</h3>
