@@ -66,7 +66,6 @@ function Header() {
         <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
         <span>Current Developments</span>
       </div>
-      <span className="type-cap hidden text-fog md:inline">Scroll to explore →</span>
     </div>
   );
 }
