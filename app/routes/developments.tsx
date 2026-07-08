@@ -28,44 +28,46 @@ export default function Developments() {
     <>
       <FullScreen
         tone="ink"
-        align="start"
-        cue
         bg={<Plate kind="dusk" image="/images/saadiyat-grove.jpg" alt="" eager parallax />}
       >
-        <div className="pb-6">
+        <div className="max-w-[62ch]">
           <Reveal exit>
             <Eyebrow className="text-gold">Developments</Eyebrow>
           </Reveal>
           <SplitHeading as="h1" mode="chars" className="type-display-xl mt-6 max-w-[16ch]">
             Off-plan, considered.
           </SplitHeading>
-          <p className="type-body-lg mt-7 max-w-[52ch] text-ivory/75">
-            A short register of developments in Dubai and Abu Dhabi — each anchored to a developer
-            we are registered with, each presented with the facts investors scan first: developer,
-            handover, payment plan, price.
-          </p>
-          <div className="mt-10 flex flex-wrap items-baseline gap-7 border-y border-ivory/16 py-3.5">
-            {CITIES.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() =>
-                  setParams(c === "All" ? {} : { city: c }, { preventScrollReset: true })
-                }
-                className={`type-data cursor-pointer uppercase tracking-[0.08em] transition-colors ${
-                  city === c ? "text-ivory" : "text-ivory/55 hover:text-ivory"
-                }`}
-                aria-pressed={city === c}
-              >
-                {c}
-              </button>
-            ))}
-            <span className="type-data ml-auto text-ivory/55">{list.length} projects</span>
-          </div>
+          <Reveal delay={0.1}>
+            <p className="type-body-lg mt-7 max-w-[52ch] text-ivory/75">
+              A short register of developments in Dubai and Abu Dhabi — each anchored to a developer
+              we are registered with, each presented with the facts investors scan first: developer,
+              handover, payment plan, price.
+            </p>
+          </Reveal>
         </div>
       </FullScreen>
 
-      <Section className="pt-0">
+      {/* filter — sticks just below the header as you scroll into the register */}
+      <div className="sticky top-[68px] z-30 border-y border-ink/12 bg-ivory/92 backdrop-blur-[3px]">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap items-baseline gap-7 px-6 py-4 md:px-12 lg:px-20">
+          {CITIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setParams(c === "All" ? {} : { city: c }, { preventScrollReset: true })}
+              className={`type-data cursor-pointer uppercase tracking-[0.08em] transition-colors ${
+                city === c ? "text-ink" : "text-fog hover:text-ink"
+              }`}
+              aria-pressed={city === c}
+            >
+              {c}
+            </button>
+          ))}
+          <span className="type-data ml-auto text-fog">{list.length} projects</span>
+        </div>
+      </div>
+
+      <Section className="pt-14">
         <div className="flex flex-col gap-20">
           {list.map((d, i) => {
             const wide = i % 3 === 2;

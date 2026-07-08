@@ -289,6 +289,24 @@ body {
 .hero-cue {
   animation: hero-cue 1.9s ease-in-out infinite;
 }
+
+/* loading sequence — CSS-driven entrance (no rAF dependency; see LoadingSequence) */
+@keyframes loader-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.loader-mark {
+  animation: loader-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+.loader-word {
+  animation: loader-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
+}
 @keyframes hero-cue {
   0% { transform: translateY(-14px); }
   100% { transform: translateY(44px); }

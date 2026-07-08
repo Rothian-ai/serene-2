@@ -26,12 +26,12 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
 
   return (
     <>
-      <Hero plate={dev.plate} image={dev.image} height="min-h-[54svh]">
+      <Hero plate={dev.plate} image={dev.image} height="min-h-[100svh]" scrollCue>
         <Eyebrow className="text-dawn">Registered Developer</Eyebrow>
-        <SplitHeading as="h1" className="type-display mt-4" mode="chars">
+        <SplitHeading as="h1" className="type-display-xl mt-4" mode="chars">
           {dev.name}
         </SplitHeading>
-        <p className="type-body-lg mt-4 max-w-[44ch] text-ivory/80">{dev.tagline}</p>
+        <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">{dev.tagline}</p>
       </Hero>
 
       <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">

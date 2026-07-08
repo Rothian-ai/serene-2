@@ -4,84 +4,84 @@ import { CTA, Plate } from "~/components/primitives";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
 
 /**
- * The homepage cinematic hero — a pinned, scroll-driven narrative that stays
- * *alive* while idle. GSAP owns everything here:
- *   • ambient life — a slow ken-burns breath + a drifting light bloom, looping
- *     with no interaction;
- *   • entrance — eyebrow → masked split-text headline → sub → CTAs, staggered,
- *     flash-free (set in a layout effect before paint);
- *   • sequence — three chapters + three backgrounds crossfade on a scrubbed
- *     ScrollTrigger, with a gold progress rail and a handoff scrim at release.
- *
- * Under prefers-reduced-motion it collapses to a single static hero.
- * SSR renders complete at chapter 1 (chapters 2–3 start hidden inline).
+ * The homepage cinematic hero — a pinned, scroll-driven narrative over actual
+ * photography. Three centred chapters crossfade on a scrubbed ScrollTrigger:
+ *   1. a minimal brand title-card (mark + tagline);
+ *   2. the approach;
+ *   3. Amelia — the one place a CTA appears.
+ * GSAP owns ambient life (a slow breath + drifting light), the flash-free
+ * entrance (mark → masked split tagline → sub), and the crossfade. A centred
+ * vignette keeps text legible over the photography. Under prefers-reduced-motion
+ * it collapses to a single static title-card. SSR renders complete at chapter 1.
  */
 
 /**
  * Hero background video. Empty by default (no licensed footage ships in the
  * repo). Drop a muted, looping clip at e.g. `/videos/hero.webm` (webm + an mp4
- * fallback) and set the path here — it plays over the ken-burns still, which
- * stays as the poster/reduced-motion frame. Keep it short, dark, and calm
- * (a slow dusk skyline drift), graded to match the house look.
+ * fallback) and set the path here — it plays over the still, which stays as the
+ * poster/reduced-motion frame. Keep it short, dark, and calm, graded to the house look.
  */
 const HERO_VIDEO = { webm: "", mp4: "" };
 
 const CHAPTERS = [
   {
-    eyebrow: "Dubai & Abu Dhabi · Off-Plan",
-    title: "The address is only the beginning.",
-    sub: "Off-plan property in the Emirates, advised with data and held to a single standard.",
+    eyebrow: "",
+    title: "Serenity, elevated.",
+    sub: "Off-plan real estate and curated addresses across Dubai and Abu Dhabi.",
   },
   {
-    eyebrow: "The Standard",
-    title: "Advised with data. Never with a call you didn't ask for.",
-    sub: "Serious buyers are persuaded by information, not persistence.",
+    eyebrow: "The Approach",
+    title: "Advised with data, never persuasion.",
+    sub: "Districts, payment plans, escrow, handover records — the full picture, before any commitment.",
   },
   {
     eyebrow: "Amelia",
-    title: "Ask anything. Answered at midnight, in detail.",
-    sub: "An AI advisory that holds the record — and never places a call.",
+    title: "Ask anything. Answered on the record.",
+    sub: "An AI advisory available at any hour — and incapable of a cold call.",
   },
 ] as const;
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="type-eyebrow mb-6 flex items-center gap-2.5 text-ivory/75">
+    <div className="type-eyebrow mb-6 flex items-center justify-center gap-2.5 text-ivory/75">
       <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
       <span>{children}</span>
     </div>
   );
 }
 
-/** Static fallback — reduced motion. */
+// Chapter-1 (title card / LCP) and chapter-3 grounds. Swapped per request:
+// the title card now opens on amelia-dusk, and the skyline moves to Amelia's slide.
+const TITLE_BG = { image: "/images/amelia-dusk.jpg" };
+const AMELIA_BG = {
+  image: "/images/hero-dusk.jpg",
+  srcSet: "/images/hero-dusk-800.jpg 800w, /images/hero-dusk-1280.jpg 1280w, /images/hero-dusk.jpg 1600w",
+  avifSrcSet:
+    "/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w",
+};
+
+/** A centred vignette — dark enough to read white text, light enough to keep the photo. */
+const VIGNETTE =
+  "radial-gradient(125% 105% at 50% 48%, rgba(11,10,8,0.5) 0%, rgba(11,10,8,0.66) 55%, rgba(11,10,8,0.86) 100%)";
+
+/** Static fallback — reduced motion. The title-card over the photograph. */
 function StaticHero() {
   return (
-    <div className="relative flex min-h-[92svh] items-end overflow-hidden bg-ink text-ivory">
+    <div className="relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-ink text-ivory">
       <div className="absolute inset-0">
-        <Plate
-          kind="hero"
-          image="/images/hero-dusk.jpg"
-          srcSet="/images/hero-dusk-800.jpg 800w, /images/hero-dusk-1280.jpg 1280w, /images/hero-dusk.jpg 1600w"
-          avifSrcSet="/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w"
-          eager
-          className="h-full w-full"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(11,10,8,0.72) 0%, rgba(11,10,8,0.3) 45%, transparent 78%)",
-          }}
-        />
+        <Plate kind="dusk" {...TITLE_BG} eager className="h-full w-full" />
+        <div aria-hidden className="absolute inset-0" style={{ background: VIGNETTE }} />
       </div>
-      <div className="relative z-[1] mx-auto w-full max-w-[1440px] px-6 pb-20 pt-40 md:px-12 lg:px-20">
-        <Eyebrow>{CHAPTERS[0].eyebrow}</Eyebrow>
-        <h1 className="type-display-xl max-w-[15ch]">{CHAPTERS[0].title}</h1>
-        <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{CHAPTERS[0].sub}</p>
-        <div className="mt-9 flex flex-wrap gap-4">
-          <CTA to="/amelia?ref=home-hero" kind="line">Ask Amelia</CTA>
-          <CTA to="/developments" kind="line">Explore Developments</CTA>
+      <div className="relative z-[1] mx-auto w-full max-w-[1440px] px-6 text-center">
+        <img
+          src="/logo/serene-mark-white.png"
+          alt="Serene"
+          className="mx-auto h-20 w-auto md:h-28"
+        />
+        <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
+        <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
+        <div className="mt-9 flex justify-center">
+          <CTA to="/amelia?ref=home-hero" kind="gold">Speak with Amelia</CTA>
         </div>
       </div>
     </div>
@@ -98,10 +98,9 @@ export function HeroSequence() {
   const scrimRef = useRef<HTMLDivElement>(null);
   const bgRefs = useRef<Array<HTMLDivElement | null>>([]);
   const chapterRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const markRef = useRef<HTMLImageElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const eyebrowRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
 
   useGsapContext(
     rootRef,
@@ -121,24 +120,23 @@ export function HeroSequence() {
         { xPercent: 22, yPercent: 6, opacity: 0.6, duration: 11, ease: "sine.inOut", repeat: -1, yoyo: true },
       );
 
-      // ——— entrance: eyebrow → masked split headline → sub → CTAs → cue ———
+      // ——— entrance: mark → masked split tagline → sub ———
       const split = new SplitText(headlineRef.current, {
         type: "lines,chars",
         mask: "lines",
         linesClass: "split-line",
       });
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.from(eyebrowRef.current, { autoAlpha: 0, y: 18, duration: 0.7 })
+      tl.from(markRef.current, { autoAlpha: 0, scale: 0.9, y: 12, duration: 0.9 })
         .from(
           split.chars,
           { autoAlpha: 0, yPercent: 118, rotateX: -55, stagger: 0.02, duration: 0.95 },
-          "-=0.35",
+          "-=0.4",
         )
         .from(subRef.current, { autoAlpha: 0, y: 20, duration: 0.7 }, "-=0.55")
-        .from(ctaRef.current, { autoAlpha: 0, y: 16, duration: 0.6 }, "-=0.45")
         .from(cueRef.current, { autoAlpha: 0, duration: 0.6 }, "-=0.15");
 
-      // ——— sequence: chapters + backgrounds crossfade on scrub ———
+      // ——— sequence: chapters + grounds crossfade on scrub ———
       const seq = gsap.timeline({
         defaults: { ease: "power1.inOut" },
         scrollTrigger: {
@@ -148,10 +146,7 @@ export function HeroSequence() {
           scrub: 1,
           onUpdate: (self) => {
             if (railRef.current) gsap.set(railRef.current, { scaleY: self.progress });
-            if (scrimRef.current) {
-              // deepen the scrim toward the end for the handoff into §Philosophy
-              gsap.set(scrimRef.current, { opacity: 0.6 + self.progress * 0.4 });
-            }
+            if (scrimRef.current) gsap.set(scrimRef.current, { opacity: 0.85 + self.progress * 0.15 });
           },
         },
       });
@@ -159,15 +154,15 @@ export function HeroSequence() {
       seq.to(bgWrapRef.current, { yPercent: -8, ease: "none", duration: 3 }, 0);
       // chapter 1 → 2
       seq
-        .to(chapters[0], { autoAlpha: 0, yPercent: -14, duration: 0.5 }, 0.55)
+        .to(chapters[0], { autoAlpha: 0, yPercent: -12, duration: 0.5 }, 0.55)
         .to(bgs[0], { autoAlpha: 0, duration: 0.6 }, 0.55)
         .fromTo(bgs[1], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 0.55)
-        .fromTo(chapters[1], { autoAlpha: 0, yPercent: 14 }, { autoAlpha: 1, yPercent: 0, duration: 0.5 }, 0.8)
+        .fromTo(chapters[1], { autoAlpha: 0, yPercent: 12 }, { autoAlpha: 1, yPercent: 0, duration: 0.5 }, 0.8)
         // chapter 2 → 3
-        .to(chapters[1], { autoAlpha: 0, yPercent: -14, duration: 0.5 }, 1.75)
+        .to(chapters[1], { autoAlpha: 0, yPercent: -12, duration: 0.5 }, 1.75)
         .to(bgs[1], { autoAlpha: 0, duration: 0.6 }, 1.75)
         .fromTo(bgs[2], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 1.75)
-        .fromTo(chapters[2], { autoAlpha: 0, yPercent: 14 }, { autoAlpha: 1, yPercent: 0, duration: 0.5 }, 2.0);
+        .fromTo(chapters[2], { autoAlpha: 0, yPercent: 12 }, { autoAlpha: 1, yPercent: 0, duration: 0.5 }, 2.0);
 
       return () => split.revert();
     },
@@ -178,15 +173,7 @@ export function HeroSequence() {
 
   const hasVideo = HERO_VIDEO.webm || HERO_VIDEO.mp4;
   const bgNodes = [
-    <Plate
-      key="hero"
-      kind="hero"
-      image="/images/hero-dusk.jpg"
-      srcSet="/images/hero-dusk-800.jpg 800w, /images/hero-dusk-1280.jpg 1280w, /images/hero-dusk.jpg 1600w"
-      avifSrcSet="/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w"
-      eager
-      className="h-full w-full"
-    >
+    <Plate key="title" kind="dusk" {...TITLE_BG} eager className="h-full w-full">
       {hasVideo && (
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -194,7 +181,7 @@ export function HeroSequence() {
           muted
           loop
           playsInline
-          poster="/images/hero-dusk.jpg"
+          poster={TITLE_BG.image}
           aria-hidden
         >
           {HERO_VIDEO.webm && <source src={HERO_VIDEO.webm} type="video/webm" />}
@@ -203,13 +190,13 @@ export function HeroSequence() {
       )}
     </Plate>,
     <Plate key="render" kind="render" image="/images/cove-tower.jpg" className="h-full w-full" />,
-    <Plate key="dusk" kind="dusk" image="/images/amelia-dusk.jpg" className="h-full w-full" />,
+    <Plate key="amelia" kind="hero" {...AMELIA_BG} className="h-full w-full" />,
   ];
 
   return (
     <section ref={rootRef} className="relative h-[320vh]">
-      <div className="sticky top-0 flex h-screen items-end overflow-hidden bg-ink text-ivory">
-        {/* crossfading backgrounds + ambient light (parallax + breath on wrap) */}
+      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-ink text-ivory">
+        {/* crossfading grounds + ambient light (parallax + breath on wrap) */}
         <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
           {bgNodes.map((node, i) => (
             <div
@@ -222,16 +209,7 @@ export function HeroSequence() {
             </div>
           ))}
           <div ref={lightRef} aria-hidden className="hero-light" />
-          <div
-            ref={scrimRef}
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              opacity: 0.6,
-              background:
-                "linear-gradient(to top, rgba(11,10,8,0.86) 0%, rgba(11,10,8,0.34) 48%, rgba(11,10,8,0.06) 72%, transparent 86%)",
-            }}
-          />
+          <div ref={scrimRef} aria-hidden className="absolute inset-0" style={{ opacity: 0.85, background: VIGNETTE }} />
         </div>
 
         {/* progress rail — desktop */}
@@ -243,40 +221,51 @@ export function HeroSequence() {
           <span className="type-data text-ivory/50">03</span>
         </div>
 
-        {/* the statement stack + persistent action */}
-        <div className="relative z-[1] mx-auto w-full max-w-[1440px] px-6 pb-20 md:px-12 lg:px-20">
-          <div className="relative h-[280px] sm:h-[300px] md:h-[320px]">
-            {/* chapter 1 — entrance-animated */}
-            <div ref={(el) => { chapterRefs.current[0] = el; }} className="absolute inset-x-0 bottom-0">
-              <div ref={eyebrowRef}>
-                <Eyebrow>{CHAPTERS[0].eyebrow}</Eyebrow>
-              </div>
-              <h1 ref={headlineRef} className="type-display-xl max-w-[15ch]">
-                {CHAPTERS[0].title}
-              </h1>
-              <p ref={subRef} className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">
-                {CHAPTERS[0].sub}
-              </p>
-            </div>
-            {/* chapters 2 & 3 — hidden until the scrub brings them in */}
-            {CHAPTERS.slice(1).map((c, i) => (
-              <div
-                key={c.eyebrow}
-                ref={(el) => { chapterRefs.current[i + 1] = el; }}
-                className="absolute inset-x-0 bottom-0"
-                style={{ opacity: 0 }}
-              >
-                <Eyebrow>{c.eyebrow}</Eyebrow>
-                <h2 className="type-display-xl max-w-[15ch]">{c.title}</h2>
-                <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{c.sub}</p>
-              </div>
-            ))}
-          </div>
-          <div ref={ctaRef} className="mt-8 flex flex-wrap gap-4">
-            <CTA to="/amelia?ref=home-hero" kind="line">Ask Amelia</CTA>
-            <CTA to="/developments" kind="line">Explore Developments</CTA>
+        {/* three centred chapters, stacked and crossfading */}
+        {/* chapter 1 — the minimal title-card, entrance-animated */}
+        <div
+          ref={(el) => { chapterRefs.current[0] = el; }}
+          className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
+        >
+          <div className="pointer-events-auto">
+            <img
+              ref={markRef}
+              src="/logo/serene-mark-white.png"
+              alt="Serene"
+              className="mx-auto h-20 w-auto md:h-28"
+            />
+            <h1 ref={headlineRef} className="type-display mt-8 max-w-[20ch]">
+              {CHAPTERS[0].title}
+            </h1>
+            <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">
+              {CHAPTERS[0].sub}
+            </p>
           </div>
         </div>
+
+        {/* chapters 2 & 3 — hidden until the scrub brings them in */}
+        {CHAPTERS.slice(1).map((c, i) => {
+          const isAmelia = i === 1; // third chapter
+          return (
+            <div
+              key={c.eyebrow}
+              ref={(el) => { chapterRefs.current[i + 1] = el; }}
+              className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
+              style={{ opacity: 0, visibility: "hidden" }}
+            >
+              <div className="pointer-events-auto">
+                <Eyebrow>{c.eyebrow}</Eyebrow>
+                <h2 className="type-display mx-auto max-w-[20ch]">{c.title}</h2>
+                <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
+                {isAmelia && (
+                  <div className="mt-9 flex justify-center">
+                    <CTA to="/amelia?ref=home-hero" kind="gold">Speak with Amelia</CTA>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
 
         {/* scroll cue */}
         <div

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Links,
   Meta,
@@ -16,6 +16,8 @@ import Lenis from "lenis";
 import "./app.css";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+// Ask Amelia floating dock — hidden for now (re-enable the <AmeliaDock /> mount below).
+// import { AmeliaDock } from "~/components/AmeliaDock";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
@@ -108,6 +110,27 @@ export default function App() {
     return () => window.clearTimeout(id);
   }, [location.pathname, hydrated]);
 
+  // Reveal footer (111w57-style): the footer is pinned behind the page, and the
+  // opaque content slab is given a bottom margin equal to the footer's height so
+  // it slides up and off it at the end of the scroll, revealing it gradually.
+  // Prerendered HTML paints complete (margin applies after measure); a resize
+  // observer keeps the reserved space in step with the footer's responsive height.
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerH, setFooterH] = useState(0);
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const measure = () => setFooterH(el.offsetHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  // Recompute pinned-section geometry when the reserved space changes.
+  useEffect(() => {
+    if (hydrated && footerH) ScrollTrigger.refresh();
+  }, [footerH, hydrated]);
+
   return (
     <>
       <a
@@ -119,18 +142,24 @@ export default function App() {
       <LoadingSequence />
       <ScrollProgress />
       <Header tone={tone} />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.main
-          id="main"
-          key={location.pathname}
-          initial={hydrated ? { opacity: 0, y: 12 } : false}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_QUIET } }}
-          exit={{ opacity: 0, transition: { duration: 0.22 } }}
-        >
-          <Outlet />
-        </motion.main>
-      </AnimatePresence>
-      <Footer />
+      {/* opaque content slab — rides above the pinned footer, then slides off it */}
+      <div className="relative z-10 bg-ivory" style={{ marginBottom: footerH || undefined }}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.main
+            id="main"
+            key={location.pathname}
+            initial={hydrated ? { opacity: 0, y: 12 } : false}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_QUIET } }}
+            exit={{ opacity: 0, transition: { duration: 0.22 } }}
+          >
+            <Outlet />
+          </motion.main>
+        </AnimatePresence>
+      </div>
+      <div ref={footerRef} className="fixed inset-x-0 bottom-0 z-0">
+        <Footer />
+      </div>
+      {/* <AmeliaDock /> — hidden for now */}
       <CookieConsent />
     </>
   );

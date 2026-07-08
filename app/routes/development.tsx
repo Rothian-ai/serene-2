@@ -62,7 +62,7 @@ export default function Development({ params }: Route.ComponentProps) {
         }}
       />
 
-      <Hero plate={d.plate} image={d.image} height="min-h-[72svh]" scrollCue>
+      <Hero plate={d.plate} image={d.image} height="min-h-[100svh]" scrollCue>
         <Eyebrow className="text-dawn">
           <Link to="/developments" className="hover:underline">Developments</Link>
           <span aria-hidden>·</span> {d.district}, {d.city}

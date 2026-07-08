@@ -32,7 +32,13 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 40);
-      setHidden(y > 200 && y > lastY.current + 4);
+      // Hysteresis: ignore sub-threshold jitter (smooth-scroll fires many tiny
+      // deltas) and only flip visibility after a clear 10px move in one
+      // direction — otherwise the bar flickers on slow scroll. `lastY` is left
+      // untouched below the deadzone so small moves accumulate toward the flip.
+      const delta = y - lastY.current;
+      if (Math.abs(delta) < 10) return;
+      setHidden(y > 200 && delta > 0);
       lastY.current = y;
     };
     onScroll();
@@ -77,6 +83,12 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/contact"
+              className="text-[13.5px] font-medium opacity-85 transition-opacity hover:opacity-100"
+            >
+              Contact
+            </Link>
             <Link
               to="/amelia"
               className={`border px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors ${amelia}`}
