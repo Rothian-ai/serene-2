@@ -142,6 +142,9 @@ export function Plate({
   children,
   parallax = false,
   eager = false,
+  srcSet,
+  avifSrcSet,
+  sizes,
 }: {
   kind: PlateKind;
   image?: string;
@@ -152,6 +155,10 @@ export function Plate({
   parallax?: boolean;
   /** above-the-fold (LCP) images load eagerly at high priority */
   eager?: boolean;
+  srcSet?: string;
+  /** modern-format source set (AVIF), offered before the JPEG fallback */
+  avifSrcSet?: string;
+  sizes?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -170,10 +177,25 @@ export function Plate({
             style={{ y }}
             className="scale-[1.14]"
           />
+        ) : avifSrcSet ? (
+          <picture>
+            <source type="image/avif" srcSet={avifSrcSet} sizes={sizes ?? "100vw"} />
+            <img
+              src={image}
+              alt={alt}
+              srcSet={srcSet}
+              sizes={srcSet ? (sizes ?? "100vw") : undefined}
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={eager ? "high" : undefined}
+              decoding="async"
+            />
+          </picture>
         ) : (
           <img
             src={image}
             alt={alt}
+            srcSet={srcSet}
+            sizes={srcSet ? (sizes ?? "100vw") : undefined}
             loading={eager ? "eager" : "lazy"}
             fetchPriority={eager ? "high" : undefined}
             decoding="async"

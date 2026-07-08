@@ -217,7 +217,8 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .plate > img,
-.plate > video {
+.plate > video,
+.plate > picture > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -225,6 +226,10 @@ body {
   object-fit: cover;
   /* house grade — unifies mixed sources: warm, calm, shadows toward ink */
   filter: saturate(0.8) contrast(0.98) sepia(0.12) brightness(0.97);
+}
+.plate > picture {
+  position: absolute;
+  inset: 0;
 }
 .plate-hero {
   background:

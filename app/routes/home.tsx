@@ -8,10 +8,6 @@ import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
-export function links() {
-  return [{ rel: "preload", as: "image", href: "/images/hero-dusk.jpg", fetchpriority: "high" }];
-}
-
 export function meta() {
   return buildMeta({
     description:
@@ -28,7 +24,12 @@ export default function Home() {
   return (
     <>
       {/* ① Cinematic hero */}
-      <Hero plate="hero" image="/images/hero-dusk.jpg">
+      <Hero
+        plate="hero"
+        image="/images/hero-dusk.jpg"
+        srcSet="/images/hero-dusk-800.jpg 800w, /images/hero-dusk-1280.jpg 1280w, /images/hero-dusk.jpg 1600w"
+        avifSrcSet="/images/hero-dusk-800.avif 800w, /images/hero-dusk-1280.avif 1280w, /images/hero-dusk-1600.avif 1600w"
+      >
         <h1 className="type-display-xl max-w-[14ch]">The address is only the beginning.</h1>
         <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">
           Off-plan property in Dubai and Abu Dhabi, advised with data and held to a single

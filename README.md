@@ -45,11 +45,18 @@ rules are in `brand-assets/brand-tokens.md` (composed · elevated · enduring).
 
 ## Imagery
 
-Every visual surface is a `Plate` — a CSS-composed, art-directed stand-in (direction per
-plate family in the Phase 7 design deck). To use licensed photography, add the file under
-`public/images/` and set `image: /images/<file>.jpg` in the entry's frontmatter; the plate
-becomes its fallback. Grade recipe: warm shadows toward `#0B0A08`, highlights toward ivory,
-saturation −15, temperature +8. Never handshakes, staged offices, or HDR skylines.
+Every visual surface is a `Plate`. Real photography now ships in `public/images/`
+(sourced from Unsplash — free for commercial use; see `public/images/CREDITS.txt`), wired
+through each content entry's `image:` frontmatter and the hero slots. The CSS gradient
+`plate-*` classes remain as the fallback shown if an image is ever missing.
+
+A house grade is applied uniformly in CSS (`saturate .8 · sepia .12 · brightness .97`) so
+mixed sources read as one collection — warm, calm, shadows toward ink. The hero also ships
+AVIF + responsive JPEG variants (`hero-dusk-{800,1280,1600}`) via `<picture>`/`srcSet`.
+
+To swap in client-licensed photography, drop the file in `public/images/` and point the
+entry's `image:` at it (same filename = zero code change). Direction: architecture, material,
+light. Never handshakes, staged offices, or HDR skylines.
 
 ## Configuration
 
@@ -67,7 +74,8 @@ Copy `.env.example` to `.env`:
 - [ ] Confirm the real developer registry and update `/content/developers`.
 - [ ] Set the production `VITE_AMELIA_URL`, `VITE_GA_ID`, `VITE_CONTACT_ENDPOINT`.
 - [ ] Have counsel review `/content/legal/*.md` (marked as drafts).
-- [ ] License photography per the imagery direction and wire via frontmatter `image:` fields.
+- [ ] Replace the Unsplash placeholder photography with client-licensed/commissioned imagery
+      per the imagery direction (filenames in `public/images/` are stable swap slots).
 - [ ] Update `BASE` in `scripts/generate-sitemap.mjs` + `SITE.url` if the domain differs.
 
 ## Brand invariants (enforced in code — don't undo them)

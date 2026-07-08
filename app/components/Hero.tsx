@@ -13,6 +13,8 @@ import { EASE_INOUT, EASE_QUIET, isHydrated } from "~/lib/motion";
 export function Hero({
   plate,
   image,
+  srcSet,
+  avifSrcSet,
   video,
   children,
   height = "min-h-[88svh]",
@@ -20,6 +22,8 @@ export function Hero({
 }: {
   plate: PlateKind;
   image?: string;
+  srcSet?: string;
+  avifSrcSet?: string;
   video?: string;
   children: ReactNode;
   height?: string;
@@ -52,7 +56,7 @@ export function Hero({
             : undefined
         }
       >
-        <Plate kind={plate} image={image} eager className="h-full w-full">
+        <Plate kind={plate} image={image} srcSet={srcSet} avifSrcSet={avifSrcSet} eager className="h-full w-full">
           {video && (
             <video
               className="absolute inset-0 h-full w-full object-cover"
