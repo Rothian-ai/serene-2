@@ -1,11 +1,12 @@
 import { useSearchParams } from "react-router";
-import { Eyebrow, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, FullScreen, Plate, Reveal, Section } from "~/components/primitives";
+import { SplitHeading } from "~/components/SplitHeading";
 import { DevelopmentCard } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developments } from "~/lib/content";
 import { meta as buildMeta } from "~/lib/site";
 
-export const handle = { headerTone: "light" as const };
+export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
@@ -25,32 +26,44 @@ export default function Developments() {
 
   return (
     <>
-      <Section className="pt-40">
-        <Eyebrow className="text-brass">Developments</Eyebrow>
-        <h1 className="type-display mt-6 max-w-[18ch]">
-          Off-plan, considered.
-        </h1>
-        <p className="type-body-lg mt-6 max-w-[52ch] text-ink/70">
-          Current developments in Dubai and Abu Dhabi — each anchored to a registered developer,
-          each presented with the facts first.
-        </p>
-        <div className="mt-10 flex flex-wrap items-baseline gap-7 border-y border-ink/14 py-3.5">
-          {CITIES.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setParams(c === "All" ? {} : { city: c }, { preventScrollReset: true })}
-              className={`type-data cursor-pointer uppercase tracking-[0.08em] transition-colors ${
-                city === c ? "text-ink" : "text-fog hover:text-ink"
-              }`}
-              aria-pressed={city === c}
-            >
-              {c}
-            </button>
-          ))}
-          <span className="type-data ml-auto text-fog">{list.length} projects</span>
+      <FullScreen
+        tone="ink"
+        align="start"
+        cue
+        bg={<Plate kind="dusk" image="/images/saadiyat-grove.jpg" alt="" eager parallax />}
+      >
+        <div className="pb-6">
+          <Reveal exit>
+            <Eyebrow className="text-gold">Developments</Eyebrow>
+          </Reveal>
+          <SplitHeading as="h1" mode="chars" className="type-display-xl mt-6 max-w-[16ch]">
+            Off-plan, considered.
+          </SplitHeading>
+          <p className="type-body-lg mt-7 max-w-[52ch] text-ivory/75">
+            A short register of developments in Dubai and Abu Dhabi — each anchored to a developer
+            we are registered with, each presented with the facts investors scan first: developer,
+            handover, payment plan, price.
+          </p>
+          <div className="mt-10 flex flex-wrap items-baseline gap-7 border-y border-ivory/16 py-3.5">
+            {CITIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() =>
+                  setParams(c === "All" ? {} : { city: c }, { preventScrollReset: true })
+                }
+                className={`type-data cursor-pointer uppercase tracking-[0.08em] transition-colors ${
+                  city === c ? "text-ivory" : "text-ivory/55 hover:text-ivory"
+                }`}
+                aria-pressed={city === c}
+              >
+                {c}
+              </button>
+            ))}
+            <span className="type-data ml-auto text-ivory/55">{list.length} projects</span>
+          </div>
         </div>
-      </Section>
+      </FullScreen>
 
       <Section className="pt-0">
         <div className="flex flex-col gap-20">

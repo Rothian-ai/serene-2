@@ -1,5 +1,15 @@
-import { Eyebrow, Ledger, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import {
+  Eyebrow,
+  FullScreen,
+  Ledger,
+  QuietLink,
+  Reveal,
+  RevealGroup,
+  RevealItem,
+  Section,
+} from "~/components/primitives";
 import { Hero } from "~/components/Hero";
+import { SplitHeading } from "~/components/SplitHeading";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developers } from "~/lib/content";
 import { SITE, meta as buildMeta } from "~/lib/site";
@@ -36,34 +46,49 @@ const MOVEMENTS = [
 export default function About() {
   return (
     <>
-      <Hero plate="glass" image="/images/about-glass.jpg" height="min-h-[62svh]">
+      {/* ① Hero — full-screen, photographic */}
+      <Hero plate="glass" image="/images/about-glass.jpg" height="min-h-[100svh]" scrollCue>
         <Eyebrow className="text-dawn">The House</Eyebrow>
-        <h1 className="type-display mt-5 max-w-[16ch]">
+        <SplitHeading as="h1" mode="chars" className="type-display-xl mt-5 max-w-[16ch]">
           Built on information, not persistence.
-        </h1>
+        </SplitHeading>
+        <p className="type-body-lg mt-7 max-w-[42ch] text-ivory/72">
+          A licensed advisory for off-plan property in Dubai and Abu Dhabi — with the one
+          conviction that serious buyers are persuaded by information, never pressure.
+        </p>
       </Hero>
 
-      {/* stance */}
-      <Section>
+      {/* ② Stance — full-screen statement */}
+      <FullScreen tone="ivory">
         <div className="grid gap-10 md:grid-cols-12">
-          <Reveal className="md:col-span-7 md:col-start-2">
-            <p className="type-body-lg text-ink/80">
-              Serene exists because buying off-plan in the Emirates is a sound decision too often
-              wrapped in an unsound experience — the calls, the pressure, the urgency that isn't
-              yours. We removed all of it. What remains is an advisory: licensed, registered, and
-              staffed by an intelligence that answers questions instead of chasing closings.
-            </p>
-            <p className="mt-5 text-[15.5px] leading-relaxed text-ink/65">
-              Our buyers are in Mumbai and Shanghai, London and Sydney. They are used to private
-              banks and patient counsel. We built the property advisory they would expect.
-            </p>
-          </Reveal>
+          <div className="md:col-span-8 md:col-start-2">
+            <Reveal exit>
+              <Eyebrow className="text-brass">Why we exist</Eyebrow>
+            </Reveal>
+            <SplitHeading as="h2" className="type-headline mt-6 max-w-[22ch]">
+              A sound decision deserves an unhurried process.
+            </SplitHeading>
+            <Reveal delay={0.1}>
+              <p className="type-body-lg mt-7 max-w-[58ch] text-ink/80">
+                Buying off-plan in the Emirates is a sound decision too often wrapped in an unsound
+                experience — the calls, the pressure, the urgency that isn't yours. We removed all
+                of it. What remains is an advisory: licensed, registered, and staffed by an
+                intelligence that answers questions instead of chasing closings.
+              </p>
+              <p className="mt-5 max-w-[58ch] text-[15.5px] leading-relaxed text-ink/65">
+                Our buyers are in Mumbai and Shanghai, London and Sydney. They are used to private
+                banks and patient counsel. We built the property advisory they would expect.
+              </p>
+            </Reveal>
+          </div>
         </div>
-      </Section>
+      </FullScreen>
 
-      {/* the serene way — the site's only numbered device */}
-      <Section className="pt-0">
-        <Eyebrow className="text-brass">The Serene Way</Eyebrow>
+      {/* ③ The Serene Way — the site's only numbered device (flowing content) */}
+      <Section>
+        <Reveal exit>
+          <Eyebrow className="text-brass">The Serene Way</Eyebrow>
+        </Reveal>
         <RevealGroup className="mt-9 grid gap-9 md:grid-cols-3">
           {MOVEMENTS.map((m) => (
             <RevealItem key={m.n} className="border-t border-ink/14 pt-4">
@@ -78,7 +103,7 @@ export default function About() {
         </RevealGroup>
       </Section>
 
-      {/* licensing & registry — the open-corner frame monument */}
+      {/* ④ Licensing & registry — the open-corner frame monument (flowing content) */}
       <Section className="pt-0">
         <Reveal>
           <div className="relative border border-ink/18 p-8 md:p-12">
@@ -100,22 +125,45 @@ export default function About() {
         </Reveal>
       </Section>
 
-      {/* the commitment — the no-cold-calls charter */}
-      <div className="bg-ink text-ivory">
-        <Section>
+      {/* ⑤ The Commitment — full-screen charter */}
+      <FullScreen tone="ink">
+        <Reveal exit>
           <Eyebrow className="text-gold">The Commitment</Eyebrow>
-          <Reveal>
-            <h2 className="type-headline mt-6 max-w-[26ch]">
-              You will never receive a call you didn't ask for.
-            </h2>
-            <p className="mt-6 max-w-[58ch] text-[15.5px] leading-relaxed text-ivory/75">
-              No cold calls. No follow-up campaigns. No passing your number to a sales floor. If
-              you leave, you have left; if you return, we simply pick up where you stopped. This
-              is not a courtesy — it is the model, in writing.
-            </p>
+        </Reveal>
+        <SplitHeading as="h2" mode="chars" className="type-display mt-6 max-w-[24ch]">
+          You will never receive a call you didn't ask for.
+        </SplitHeading>
+        <Reveal delay={0.12}>
+          <p className="type-body-lg mt-8 max-w-[58ch] text-ivory/75">
+            No cold calls. No follow-up campaigns. No passing your number to a sales floor. If you
+            leave, you have left; if you return, we simply pick up where you stopped. This is not a
+            courtesy — it is the model, in writing.
+          </p>
+        </Reveal>
+      </FullScreen>
+
+      {/* ⑥ The Standard — full-screen closing statement */}
+      <FullScreen tone="ivory">
+        <div className="max-w-[62ch]">
+          <Reveal exit>
+            <Eyebrow className="text-brass">The Standard</Eyebrow>
           </Reveal>
-        </Section>
-      </div>
+          <SplitHeading as="h2" className="type-headline mt-6 max-w-[20ch]">
+            Counsel that waits for the question.
+          </SplitHeading>
+          <Reveal delay={0.1}>
+            <p className="type-body-lg mt-7 text-ink/78">
+              Private banking earned its trust by being available and never insistent — present
+              when called upon, invisible otherwise. We hold the acquisition of property to the
+              same standard: a house you can consult at any hour, and one that will never consult
+              you uninvited.
+            </p>
+            <div className="mt-9">
+              <QuietLink to="/developments">See what we represent</QuietLink>
+            </div>
+          </Reveal>
+        </div>
+      </FullScreen>
 
       <AmeliaBand title="The advisory is open. Bring a question." refId="about" />
     </>

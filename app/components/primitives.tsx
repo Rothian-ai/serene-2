@@ -267,6 +267,74 @@ export function Ledger({
   );
 }
 
+/* ——— FullScreen: a viewport-filling panel for the marquee moments — one
+       statement, centred, edge to edge. Content-dense sections keep `Section`.
+       SSR-complete (no hidden initial state); reduced-motion safe by construction. ——— */
+
+const panelTone = {
+  ivory: "bg-ivory text-ink",
+  ink: "bg-ink text-ivory",
+  navy: "bg-navy text-ivory", // navy is Amelia's alone
+} as const;
+
+/** animated scroll cue — pure CSS (.hero-cue), no JS, so it never traps paint */
+function PanelCue({ dark }: { dark: boolean }) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center md:bottom-10">
+      <span
+        aria-hidden
+        className={`hero-cue block h-9 w-px ${dark ? "bg-ivory/45" : "bg-ink/35"}`}
+      />
+    </div>
+  );
+}
+
+export function FullScreen({
+  children,
+  className = "",
+  tone = "ivory",
+  align = "center",
+  cue = false,
+  id,
+  bg,
+}: {
+  children: ReactNode;
+  className?: string;
+  tone?: keyof typeof panelTone;
+  /** center = vertically centred statement; start = top-aligned, clears the fixed header */
+  align?: "center" | "start";
+  cue?: boolean;
+  id?: string;
+  /** full-bleed background layer (e.g. a <Plate>) behind the content, dark tones only */
+  bg?: ReactNode;
+}) {
+  const justify = align === "center" ? "justify-center" : "justify-start pt-32 md:pt-40";
+  return (
+    <section
+      id={id}
+      className={`relative flex min-h-[100svh] flex-col overflow-hidden ${justify} ${panelTone[tone]} ${className}`}
+    >
+      {bg && (
+        <>
+          <div className="absolute inset-0 [&>*]:h-full [&>*]:w-full">{bg}</div>
+          {/* legibility scrim: dark on the left (text) easing to reveal the photo,
+              plus a soft floor so the scroll cue reads */}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/55 to-ink/20"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/70 to-transparent"
+          />
+        </>
+      )}
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 md:px-12 lg:px-20">{children}</div>
+      {cue && <PanelCue dark={tone !== "ivory"} />}
+    </section>
+  );
+}
+
 /* ——— Section shell: standard vertical rhythm + horizontal margins. ——— */
 
 export function Section({

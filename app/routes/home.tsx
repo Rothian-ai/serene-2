@@ -2,7 +2,7 @@ import { HeroSequence } from "~/components/HeroSequence";
 import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
-import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
+import { CTA, Eyebrow, FullScreen, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
 import { DeveloperCard, InsightRow } from "~/components/cards";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { developments, developers, insights } from "~/lib/content";
@@ -27,10 +27,10 @@ export default function Home() {
       {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence */}
       <HeroSequence />
 
-      {/* ② Philosophy */}
-      <Section>
+      {/* ② Philosophy — full-screen statement */}
+      <FullScreen tone="ivory">
         <div className="grid gap-10 md:grid-cols-12 md:gap-7">
-          <Reveal className="md:col-span-5 md:col-start-2">
+          <Reveal className="md:col-span-5 md:col-start-2" exit>
             <Eyebrow className="text-brass">The House</Eyebrow>
             <SplitHeading as="h2" className="type-headline mt-5">
               A quieter way to acquire in the Emirates.
@@ -58,7 +58,7 @@ export default function Home() {
             />
           </Reveal>
         </div>
-      </Section>
+      </FullScreen>
 
       {/* ③ Featured developments — pinned horizontal gallery */}
       <HorizontalShowcase developments={developments} />
@@ -66,15 +66,14 @@ export default function Home() {
       {/* ④ By the Record — animated credibility monument */}
       <MetricsMonument />
 
-      {/* ⑤ Why Serene — the trust monument */}
+      {/* ⑤ Why Serene — the trust monument, full-screen */}
       <Seam variant="ivory-ink" />
-      <div className="bg-ink text-ivory">
-        <Section>
-          <Eyebrow className="text-gold">Why Serene</Eyebrow>
-          <SplitHeading as="h2" className="type-headline mt-6 max-w-[24ch]">
-            Trust is a matter of record.
-          </SplitHeading>
-          <RevealGroup className="mt-12 grid gap-9 md:grid-cols-3">
+      <FullScreen tone="ink">
+        <Eyebrow className="text-gold">Why Serene</Eyebrow>
+        <SplitHeading as="h2" className="type-display mt-6 max-w-[20ch]">
+          Trust is a matter of record.
+        </SplitHeading>
+        <RevealGroup className="mt-14 grid gap-9 md:grid-cols-3">
             {[
               {
                 k: "RERA LICENSED",
@@ -93,10 +92,9 @@ export default function Home() {
                 <div className="type-data text-gold">{item.k}</div>
                 <p className="mt-2.5 text-[15.5px] leading-relaxed text-ivory/75">{item.copy}</p>
               </RevealItem>
-            ))}
-          </RevealGroup>
-        </Section>
-      </div>
+          ))}
+        </RevealGroup>
+      </FullScreen>
 
       {/* ⑥ Amelia — her one navy moment, now interactive */}
       <Seam variant="ink-navy" />
@@ -135,21 +133,26 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ⑨ Final threshold */}
+      {/* ⑨ Final threshold — full-screen close */}
       <Seam variant="ivory-ink" />
-      <div className="bg-ink text-ivory">
-        <Section className="text-center">
-          <Reveal>
-            <SplitHeading as="h2" className="type-display" mode="chars">
-              When you have questions, ask.
-            </SplitHeading>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <CTA to="/amelia?ref=home-final" kind="gold">Speak with Amelia</CTA>
-              <CTA to="/contact" kind="line">Enquire</CTA>
-            </div>
-          </Reveal>
-        </Section>
-      </div>
+      <FullScreen tone="ink" className="text-center">
+        <Reveal exit>
+          <Eyebrow className="justify-center text-gold">The Threshold</Eyebrow>
+        </Reveal>
+        <SplitHeading as="h2" className="type-display-xl mt-6" mode="chars">
+          When you have questions, ask.
+        </SplitHeading>
+        <Reveal delay={0.15}>
+          <p className="type-body-lg mx-auto mt-7 max-w-[46ch] text-ivory/70">
+            No queue, no call-back, no sales floor. Amelia answers the moment the
+            question arrives — and stays quiet until the next one does.
+          </p>
+          <div className="mt-11 flex flex-wrap justify-center gap-4">
+            <CTA to="/amelia?ref=home-final" kind="gold">Speak with Amelia</CTA>
+            <CTA to="/contact" kind="line">Enquire</CTA>
+          </div>
+        </Reveal>
+      </FullScreen>
     </>
   );
 }
