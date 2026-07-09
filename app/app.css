@@ -16,17 +16,22 @@
 
 @theme {
   --color-*: initial;
-  --color-ink: #0b0a08;
-  --color-ivory: #f6f1e6;
-  --color-gold: #d4a94a;
-  --color-navy: #0d1d3c;
-  --color-silver: #b7bcc2;
-  /* Brass (#A97C2F) and Fog Stone (#7D7568) fail WCAG 4.5:1 for small text on
-     ivory (3.32 / 4.03). Text usages run these deepened, in-family tones;
-     the original hexes remain the print/graphic values. */
-  --color-brass: #8a6420;
-  --color-dawn: #efd08c;
-  --color-fog: #6b6357;
+  /* BLUE & PLATINUM (v2, platinum-led) — the active scheme from the Brand
+     Guidelines. Platinum/pearl leads as the primary material & neutral; blue is
+     co-primary (navy grounds + structure); gold is accent only, never a fill.
+     The token NAMES are kept (ink/ivory/navy/…) so every component follows the
+     scheme; the extended ramps live in :root below for materials & gradients. */
+  --color-ink: #0a1526;      /* deep navy-black — primary dark ground & text on light */
+  --color-ivory: #f3f4f7;    /* Pearl — primary light surface (platinum ramp top) */
+  --color-gold: #c9a227;     /* Gold — accent only (one moment of value per surface) */
+  --color-navy: #111c39;     /* Navy — the deep-blue co-primary ground (Amelia) */
+  --color-silver: #aeb4bd;   /* Silver — platinum ramp mid, architectural accents */
+  /* Gold-on-light text must clear WCAG 4.5:1 on the Pearl surface. Nominal
+     Antique #A67C00 is only ~3.5:1, so the `brass` TEXT token runs deeper
+     (5.8:1 on Pearl); Slate #6b7078 is the muted text tone (4.5:1). */
+  --color-brass: #795a00;    /* deep antique gold — gold text on light (5.8:1 on Pearl) */
+  --color-dawn: #e3c765;     /* Champagne — gold highlight / gradient stop only */
+  --color-fog: #6b7078;      /* Slate — muted secondary text / captions */
   --color-white: #ffffff;
   --color-transparent: transparent;
 
@@ -40,6 +45,64 @@
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
 
   --spacing: 0.25rem;
+}
+
+/* ————————————————————————————————————————————————
+   DESIGN SYSTEM TOKENS — Blue & Platinum (Brand Guidelines §1–4)
+   Extended ramps, surfaces, elevation, motion, gradients and the metallic
+   recipe. The 8 @theme colours above cover utilities; these var()s power
+   materials, gradients and the premium component classes further down.
+   Radius stays 0 (architectural) and type stays Anek Latin by design decision.
+———————————————————————————————————————————————— */
+:root {
+  /* Blue ramp — navy → powder (depth, trust) */
+  --blue-navy: #111c39;
+  --blue-deep-slate: #3c496b;
+  --blue-slate: #55638a;
+  --blue-dusk: #6e7ca3;
+  --blue-periwinkle: #8793b3;
+  --blue-anchor: #9da9c2;
+  --blue-haze: #b9c2d5;
+  --blue-mist: #dce1eb;
+
+  /* Platinum / silver ramp — graphite → pearl (PRIMARY material) */
+  --plat-graphite: #464b53;
+  --plat-slate: #6b7078;
+  --plat-steel: #8a9099;
+  --plat-silver: #aeb4bd;
+  --plat-platinum: #cbcfd6;
+  --plat-frost: #e1e4e8;
+  --plat-pearl: #f3f4f7;
+
+  /* Gold ramp — ACCENT ONLY (one seal/highlight per surface, never a fill) */
+  --gold-antique: #a67c00;
+  --gold: #c9a227;
+  --gold-champagne: #e3c765;
+
+  /* Dark-surface semantics (§3 showcase) */
+  --surface-dark: #0a1526;      /* page background, dark */
+  --surface-dark-card: #101d33; /* card on dark */
+  --border-on-dark: rgba(255, 255, 255, 0.08);
+  --text-on-dark: #eef1f6;
+  --text-on-dark-muted: #7f97b8;
+  --text-on-dark-faint: #5f74a0;
+
+  /* Elevation — soft, multi-layer, navy-tinted (§1) */
+  --shadow-1: 0 1px 2px rgba(14, 18, 48, 0.06), 0 1px 1px rgba(14, 18, 48, 0.04);
+  --shadow-2: 0 4px 12px rgba(14, 18, 48, 0.08), 0 1px 3px rgba(14, 18, 48, 0.06);
+  --shadow-3: 0 12px 32px rgba(14, 18, 48, 0.12), 0 4px 10px rgba(14, 18, 48, 0.06);
+  --shadow-4: 0 24px 60px rgba(14, 18, 48, 0.18), 0 8px 20px rgba(14, 18, 48, 0.08);
+
+  /* Metallic recipe (§4) — highlight → mid → shadow → re-highlight */
+  --metal-platinum: linear-gradient(135deg, #ffffff 0%, #dfe3e8 14%, #aeb4bd 32%, #eef1f4 48%, #9aa0a9 64%, #cfd4da 82%, #eef1f4 100%);
+  --metal-platinum-btn: linear-gradient(180deg, #f7f8fa 0%, #dfe3e8 40%, #b9bfc8 60%, #e4e7eb 100%);
+  --metal-gold: repeating-linear-gradient(90deg, #c9a227 0px, #e9d488 2px, #a67c00 4px, #e3c765 6px);
+  --metal-edge: inset 0 2px 1px rgba(255, 255, 255, 0.85), inset 0 -3px 6px rgba(60, 66, 78, 0.35), 0 14px 34px rgba(0, 0, 0, 0.45);
+  --metal-edge-btn: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 14px rgba(10, 21, 38, 0.3);
+
+  /* Blue depth gradients — cool, engineered (for hero/CTA grounds & dividers) */
+  --grad-depth: linear-gradient(160deg, #111c39 0%, #1b2257 55%, #3c496b 100%);
+  --grad-depth-radial: radial-gradient(120% 90% at 100% 0%, #3c496b 0%, #0a1526 70%);
 }
 
 /* base */
@@ -201,12 +264,95 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ————————————————————————————————————————————————
+   PREMIUM COMPONENTS — the metallic layer (Brand Guidelines §4–5)
+   Metal = gradient + inner light edge + sheen. Kept sharp (radius 0) and used
+   sparingly: primary CTAs get platinum, gold appears only as a small seal.
+———————————————————————————————————————————————— */
+
+/* moving sheen — a light band swept across a metal surface (on hover/focus) */
+@keyframes sheensweep {
+  0% { transform: translateX(-140%) skewX(-18deg); }
+  100% { transform: translateX(340%) skewX(-18deg); }
+}
+
+/* Platinum primary button — the site's one metallic moment per surface. It
+   composes on top of the Tailwind btnBase (padding / tracking / lift). */
+.btn-platinum {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--metal-platinum-btn);
+  color: #2b3038;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--metal-edge-btn);
+}
+.btn-platinum:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 10px 24px rgba(10, 21, 38, 0.4);
+}
+.btn-platinum::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 36%;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-140%) skewX(-18deg);
+}
+.btn-platinum:hover::after,
+.btn-platinum:focus-visible::after {
+  animation: sheensweep 0.9s var(--ease-quiet) forwards;
+}
+
+/* Squared tags (pills kept radius-0 to hold the architectural language) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  line-height: 1;
+}
+.pill-platinum {
+  background: linear-gradient(135deg, #f7f8fa, #b9bfc8);
+  color: #2b3038;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.pill-blue {
+  background: #2e3a56;
+  color: #dce1eb;
+  border: 1px solid rgba(157, 169, 194, 0.35);
+}
+.pill-gold {
+  background: linear-gradient(135deg, #f3e3a6, #c9a227);
+  color: #5a4410;
+}
+
+/* Gold seal — a small conic "coin". The single gold moment of value; round by
+   nature (a decorative object, not a UI corner), so it keeps its circle. */
+.seal-gold {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #5a4410;
+  background: conic-gradient(from 210deg, #f3e3a6, #a67c00, #fdf1c0, #c9a227, #e9d488, #8a6a15, #f3e3a6);
+  box-shadow:
+    0 6px 14px rgba(10, 21, 38, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
 /* plates — CSS-composed photographic stand-ins (see /content README).
    Licensed photography replaces these 1:1 via the image manifest. */
 .plate {
   position: relative;
   overflow: hidden;
-  background: #1a1712;
+  background: #141c2e;
 }
 .plate::after {
   content: "";
@@ -224,8 +370,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* house grade — unifies mixed sources: warm, calm, shadows toward ink */
-  filter: saturate(0.8) contrast(0.98) sepia(0.12) brightness(0.97);
+  /* house grade — unifies mixed sources: cool, calm, shadows toward navy */
+  filter: saturate(0.85) contrast(1) brightness(0.98);
 }
 .plate > picture {
   position: absolute;
@@ -233,38 +379,38 @@ body {
 }
 .plate-hero {
   background:
-    radial-gradient(120% 65% at 50% 108%, rgba(212, 169, 74, 0.28), rgba(169, 124, 47, 0.1) 45%, transparent 70%),
-    repeating-linear-gradient(90deg, transparent 0 54px, rgba(246, 241, 230, 0.028) 54px 57px),
-    linear-gradient(180deg, #0b0a08 0%, #12100c 45%, #241c12 78%, #392a18 100%);
+    radial-gradient(120% 65% at 50% 108%, rgba(203, 207, 214, 0.22), rgba(110, 124, 163, 0.1) 45%, transparent 70%),
+    repeating-linear-gradient(90deg, transparent 0 54px, rgba(243, 244, 247, 0.03) 54px 57px),
+    linear-gradient(180deg, #0a1526 0%, #0e1730 45%, #16223f 78%, #24314f 100%);
 }
 .plate-render {
   background:
-    radial-gradient(90% 50% at 50% 0%, rgba(246, 241, 230, 0.16), transparent 60%),
-    repeating-linear-gradient(90deg, transparent 0 44px, rgba(246, 241, 230, 0.05) 44px 46px),
-    repeating-linear-gradient(0deg, transparent 0 90px, rgba(11, 10, 8, 0.14) 90px 91px),
-    linear-gradient(185deg, #6d675c 0%, #4b463e 55%, #2b2721 100%);
+    radial-gradient(90% 50% at 50% 0%, rgba(243, 244, 247, 0.18), transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 44px, rgba(243, 244, 247, 0.05) 44px 46px),
+    repeating-linear-gradient(0deg, transparent 0 90px, rgba(10, 21, 38, 0.16) 90px 91px),
+    linear-gradient(185deg, #8a9099 0%, #55638a 55%, #1a2238 100%);
 }
 .plate-stone {
   background:
-    radial-gradient(80% 90% at 20% 10%, rgba(246, 241, 230, 0.2), transparent 55%),
-    linear-gradient(160deg, #978972 0%, #7d7568 45%, #57503f 100%);
+    radial-gradient(80% 90% at 20% 10%, rgba(243, 244, 247, 0.24), transparent 55%),
+    linear-gradient(160deg, #cbcfd6 0%, #aeb4bd 45%, #6b7078 100%);
 }
 .plate-interior {
   background:
-    radial-gradient(55% 75% at 72% 38%, rgba(239, 208, 140, 0.34), rgba(212, 169, 74, 0.08) 55%, transparent 75%),
-    linear-gradient(200deg, #4a3d2e 0%, #322a1f 55%, #191510 100%);
+    radial-gradient(55% 75% at 72% 38%, rgba(203, 207, 214, 0.3), rgba(110, 124, 163, 0.1) 55%, transparent 75%),
+    linear-gradient(200deg, #3c496b 0%, #1b2257 55%, #0a1526 100%);
 }
 .plate-dusk {
   background:
-    radial-gradient(110% 60% at 50% 100%, rgba(212, 169, 74, 0.2), transparent 65%),
-    repeating-linear-gradient(90deg, transparent 0 34px, rgba(246, 241, 230, 0.03) 34px 36px),
-    linear-gradient(180deg, #0d1d3c 0%, #14213c 55%, #2c2a20 100%);
+    radial-gradient(110% 60% at 50% 100%, rgba(110, 124, 163, 0.24), transparent 65%),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(243, 244, 247, 0.03) 34px 36px),
+    linear-gradient(180deg, #111c39 0%, #1b2257 55%, #3c496b 100%);
 }
 .plate-glass {
   background:
-    radial-gradient(70% 60% at 65% 20%, rgba(246, 241, 230, 0.22), transparent 60%),
-    repeating-linear-gradient(115deg, transparent 0 60px, rgba(246, 241, 230, 0.05) 60px 62px),
-    linear-gradient(160deg, #3a3f45 0%, #23262b 60%, #131413 100%);
+    radial-gradient(70% 60% at 65% 20%, rgba(243, 244, 247, 0.24), transparent 60%),
+    repeating-linear-gradient(115deg, transparent 0 60px, rgba(243, 244, 247, 0.05) 60px 62px),
+    linear-gradient(160deg, #55638a 0%, #293479 60%, #0a1526 100%);
 }
 
 /* cinematic layer — ambient light & split-text masks
@@ -275,8 +421,8 @@ body {
   pointer-events: none;
   background: radial-gradient(
     45% 60% at 50% 45%,
-    rgba(239, 208, 140, 0.22),
-    rgba(212, 169, 74, 0.06) 45%,
+    rgba(225, 228, 232, 0.24),
+    rgba(157, 169, 194, 0.08) 45%,
     transparent 72%
   );
   mix-blend-mode: screen;
@@ -317,11 +463,11 @@ body {
 .serene-map .leaflet-container {
   height: 100%;
   width: 100%;
-  background: #e9e5da;
+  background: #e7e2d6;
   font-family: inherit;
 }
 .serene-map .leaflet-tile-pane {
-  filter: grayscale(1) contrast(1.02) brightness(1.03) sepia(0.06);
+  filter: grayscale(1) contrast(1.02) brightness(1.03);
 }
 .serene-map .leaflet-control-zoom a {
   border-radius: 0;
