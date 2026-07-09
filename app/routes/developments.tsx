@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router";
-import { Eyebrow, FullScreen, Plate, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, Reveal, Section } from "~/components/primitives";
+import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { DevelopmentCard } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
@@ -26,26 +27,17 @@ export default function Developments() {
 
   return (
     <>
-      <FullScreen
-        tone="ink"
-        bg={<Plate kind="dusk" image="/images/saadiyat-grove.jpg" alt="" eager parallax />}
-      >
-        <div className="max-w-[62ch]">
-          <Reveal exit>
-            <Eyebrow className="text-gold">Developments</Eyebrow>
-          </Reveal>
-          <SplitHeading as="h1" mode="chars" className="type-display-xl mt-6 max-w-[16ch]">
-            Off-plan, considered.
-          </SplitHeading>
-          <Reveal delay={0.1}>
-            <p className="type-body-lg mt-7 max-w-[52ch] text-ivory/75">
-              A short register of developments in Dubai and Abu Dhabi — each anchored to a developer
-              we are registered with, each presented with the facts investors scan first: developer,
-              handover, payment plan, price.
-            </p>
-          </Reveal>
-        </div>
-      </FullScreen>
+      <Hero plate="dusk" image="/images/saadiyat-grove.jpg" height="min-h-[64svh]">
+        <Eyebrow className="text-gold">Developments</Eyebrow>
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[16ch]">
+          Off-plan, considered.
+        </SplitHeading>
+        <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/75">
+          A short register of developments in Dubai and Abu Dhabi — each anchored to a developer we
+          are registered with, each presented with the facts investors scan first: developer,
+          handover, payment plan, price.
+        </p>
+      </Hero>
 
       {/* filter — sticks just below the header as you scroll into the register */}
       <div className="sticky top-[68px] z-30 border-y border-ink/12 bg-ivory/92 backdrop-blur-[3px]">

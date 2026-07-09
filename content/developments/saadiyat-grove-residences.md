@@ -11,6 +11,15 @@ featured: 2
 image: /images/saadiyat-grove.jpg
 plate: dusk
 excerpt: Low-rise living in the cultural district — between the Louvre and the sea, at the island's unhurried pace.
+positioning: Low-rise living between the Louvre and the sea.
+overview: Low-rise terraces in the cultural district of Saadiyat — one to three bedrooms around shaded courtyards, the tallest building stopping at nine floors because the site never needed more. Eight minutes from the Louvre, four from the beach, all of it at the island's unhurried pace.
+amenities: pool · Courtyard Pool | gym · Fitness Studio | park · Shaded Gardens | play · Kids' Play Area | beach · Beach Access | cycling · Cycling Path
+gallery: /images/saadiyat-grove.jpg · Courtyard — Saadiyat Island | /images/saadiyat-grove-residences-01.jpg · The courtyard, shaded by a single tree | /images/saadiyat-grove-residences-02.jpg · Interior, sand-toned and calm | /images/saadiyat-grove-residences-03.jpg · The cultural district beyond
+mapLat: 24.5386
+mapLng: 54.4386
+mapZoom: 14
+landmarks: 4 min · Saadiyat Beach | 8 min · Louvre Abu Dhabi | 10 min · NYU Abu Dhabi | 20 min · Abu Dhabi Corniche | 25 min · Zayed International Airport
+reasons: Culture on the doorstep · Eight minutes from the Louvre, ten from NYU Abu Dhabi — the cultural district, at the island's unhurried pace. | Finite by design · Saadiyat's supply is deliberately capped, and the emirate has shown no appetite for changing that. | Low-rise, high-shade · Nine floors at most, in sand-toned precast with deep overhangs — architecture that answers the Gulf sun. | Four minutes to the sand · Saadiyat Beach is a short walk; the sea is the neighbourhood, not merely the view.
 ---
 
 ## The Residence

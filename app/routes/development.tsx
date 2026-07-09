@@ -1,10 +1,14 @@
 import { Link } from "react-router";
 import { Hero } from "~/components/Hero";
-import { CTA, Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
+import { CTA, Eyebrow, Ledger, Reveal, Section } from "~/components/primitives";
 import { DevelopmentCard } from "~/components/cards";
 import { DevelopmentNarrative } from "~/components/DevelopmentNarrative";
 import { SplitHeading } from "~/components/SplitHeading";
 import { AmeliaBand } from "~/components/AmeliaBand";
+import { ReasonsCarousel } from "~/components/ReasonsCarousel";
+import { AmenitiesShowcase } from "~/components/AmenitiesShowcase";
+import { CinematicCarousel } from "~/components/CinematicCarousel";
+import { LocationSection } from "~/components/LocationSection";
 import { developments, getDeveloper, getDevelopment, parseSections, renderMarkdown } from "~/lib/content";
 import { SITE, meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/development";
@@ -29,6 +33,11 @@ export default function Development({ params }: Route.ComponentProps) {
   const dev = getDeveloper(d.developer);
   const sections = parseSections(d.body);
   const adjacent = developments.filter((x) => x.slug !== d.slug).slice(0, 2);
+  const slides = d.gallery.length
+    ? d.gallery
+    : d.image
+      ? [{ src: d.image, caption: `${d.title} — ${d.district}, ${d.city}` }]
+      : [];
 
   const facts = [
     {
@@ -62,7 +71,7 @@ export default function Development({ params }: Route.ComponentProps) {
         }}
       />
 
-      <Hero plate={d.plate} image={d.image} height="min-h-[100svh]" scrollCue>
+      <Hero plate={d.plate} image={d.image} height="min-h-[74svh]" scrollCue>
         <Eyebrow className="text-dawn">
           <Link to="/developments" className="hover:underline">Developments</Link>
           <span aria-hidden>·</span> {d.district}, {d.city}
@@ -73,56 +82,62 @@ export default function Development({ params }: Route.ComponentProps) {
         <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{d.excerpt}</p>
       </Hero>
 
-      {/* editorial gallery — the masterpiece frames (direction imagery) */}
-      <Section tight>
-        <Eyebrow className="text-brass">The Frames</Eyebrow>
-        <div className="mt-9 grid gap-6 md:grid-cols-12 md:gap-7">
-          <Reveal className="md:col-span-7">
-            <Plate
-              kind={d.plate}
-              image={d.image}
-              alt={`${d.title} — exterior`}
-              className="aspect-[4/3] md:aspect-[16/11]"
-              parallax
-            />
-            <p className="type-cap mt-3 text-fog">Exterior — {d.district}, {d.city}.</p>
-          </Reveal>
-          <div className="flex flex-col gap-6 md:col-span-4 md:col-start-9 md:mt-20">
-            <Reveal delay={0.1}>
-              <Plate
-                kind="interior"
-                image="/images/ins-sequence.jpg"
-                alt="Interior in natural light, timber and warm stone"
-                className="aspect-[4/5]"
-                parallax
-              />
-              <p className="type-cap mt-3 text-fog">Interior direction — window light, natural materials.</p>
+      {/* ① Overview — information first, before any imagery */}
+      <Section>
+        <div className="grid gap-12 md:grid-cols-12 md:gap-10">
+          <div className="md:col-span-7">
+            <Reveal>
+              <Eyebrow className="text-brass">The Overview</Eyebrow>
+              {d.positioning && (
+                <p className="type-title mt-5 max-w-[26ch] text-ink">{d.positioning}</p>
+              )}
             </Reveal>
-            <Reveal delay={0.2}>
-              <Plate
-                kind="stone"
-                image="/images/philosophy-stone.jpg"
-                alt="Pale stone and daylight — material study"
-                className="aspect-[4/3]"
-                parallax
-              />
-              <p className="type-cap mt-3 text-fog">Material study — pale stone, low-iron glass.</p>
+            <Reveal delay={0.08}>
+              {d.overview && (
+                <p className="type-body-lg mt-6 max-w-[54ch] text-ink/72">{d.overview}</p>
+              )}
+            </Reveal>
+          </div>
+
+          <div className="md:col-span-4 md:col-start-9">
+            <Reveal delay={0.1}>
+              <Ledger cells={facts} />
+              <div className="mt-8">
+                <CTA to={`/amelia?ref=development&context=${d.slug}`} kind="line-ink">
+                  Register your interest
+                </CTA>
+              </div>
             </Reveal>
           </div>
         </div>
       </Section>
 
-      {/* the register — sticky fact-rail + section-nav, chapter by chapter */}
+      {/* ② the case — "Why [development]" reasons carousel, info inside the frames */}
+      <ReasonsCarousel
+        reasons={d.reasons}
+        images={slides.map((s) => s.src)}
+        plate={d.plate}
+        title={d.title}
+        city={d.city}
+        intro={d.positioning}
+      />
+
+      {/* ③ the register — sticky fact-rail + section-nav, chapter by chapter */}
       {sections.length > 0 ? (
         <DevelopmentNarrative sections={sections} facts={facts} />
       ) : (
         <Section>
-          <Ledger className="!border-t-0 pb-8" cells={facts} />
           <div className="prose-serene" dangerouslySetInnerHTML={{ __html: renderMarkdown(d.body) }} />
         </Section>
       )}
 
-      {/* the developer — trust anchor */}
+      {/* ④ amenities — tab row over a sliding image carousel */}
+      <AmenitiesShowcase amenities={d.amenities} plate={d.plate} title={d.title} />
+
+      {/* ⑤ cinematic carousel — the imagery, after the information */}
+      <CinematicCarousel slides={slides} plate={d.plate} title={d.title} />
+
+      {/* ④ the developer — trust anchor */}
       {dev && (
         <div className="bg-ink text-ivory">
           <Section tight>
@@ -147,6 +162,9 @@ export default function Development({ params }: Route.ComponentProps) {
           </Section>
         </div>
       )}
+
+      {/* ⑤ location — map + nearest landmarks */}
+      <LocationSection landmarks={d.landmarks} map={d.map} district={d.district} city={d.city} />
 
       <AmeliaBand
         title="Payment plans, projected yields, escrow — ask."

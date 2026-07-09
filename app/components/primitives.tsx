@@ -80,7 +80,7 @@ const seamMap = {
 } as const;
 
 export function Seam({ variant }: { variant: keyof typeof seamMap }) {
-  return <div aria-hidden className={`h-24 w-full bg-gradient-to-b ${seamMap[variant]} md:h-32`} />;
+  return <div aria-hidden className={`h-16 w-full bg-gradient-to-b ${seamMap[variant]} md:h-24`} />;
 }
 
 /* ——— Eyebrow: gold tick + tracked label. Colour from parent (brass on ivory, gold on dark). ——— */
@@ -297,6 +297,7 @@ export function FullScreen({
   cue = false,
   id,
   bg,
+  minH = "min-h-[100svh]",
 }: {
   children: ReactNode;
   className?: string;
@@ -307,12 +308,14 @@ export function FullScreen({
   id?: string;
   /** full-bleed background layer (e.g. a <Plate>) behind the content, dark tones only */
   bg?: ReactNode;
+  /** min-height utility — override to make a panel less than full-viewport */
+  minH?: string;
 }) {
   const justify = align === "center" ? "justify-center" : "justify-start pt-32 md:pt-40";
   return (
     <section
       id={id}
-      className={`relative flex min-h-[100svh] flex-col overflow-hidden ${justify} ${panelTone[tone]} ${className}`}
+      className={`relative flex ${minH} flex-col overflow-hidden ${justify} ${panelTone[tone]} ${className}`}
     >
       {bg && (
         <>
@@ -349,7 +352,7 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={`${tight ? "py-16" : "py-24 md:py-32"} ${className}`}>
+    <section id={id} className={`${tight ? "py-8 md:py-12" : "py-12 md:py-18"} ${className}`}>
       <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">{children}</div>
     </section>
   );

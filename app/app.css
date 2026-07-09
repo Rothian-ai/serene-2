@@ -311,8 +311,68 @@ body {
   0% { transform: translateY(-14px); }
   100% { transform: translateY(44px); }
 }
+
+/* location map — Leaflet + OpenStreetMap, kept inside the palette.
+   The tile pane is desaturated (warm grey) while the marker keeps its brass. */
+.serene-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #e9e5da;
+  font-family: inherit;
+}
+.serene-map .leaflet-tile-pane {
+  filter: grayscale(1) contrast(1.02) brightness(1.03) sepia(0.06);
+}
+.serene-map .leaflet-control-zoom a {
+  border-radius: 0;
+  color: var(--color-ink);
+  border-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+.serene-map .leaflet-control-attribution {
+  background: rgba(246, 241, 230, 0.72);
+  font-size: 10px;
+  color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+.serene-map .leaflet-control-attribution a {
+  color: var(--color-brass);
+}
+
+/* cinematic carousel — slow ken-burns breath on the active slide
+   (gated in JS to desktop + motion-on; neutralised by the reduced-motion rule) */
+@keyframes carousel-kenburns {
+  from { transform: scale(1.01); }
+  to { transform: scale(1.07); }
+}
+.carousel-kenburns {
+  animation: carousel-kenburns 14s ease-out both;
+  transform-origin: 50% 52%;
+}
 .will-change-transform {
   will-change: transform;
+}
+
+/* collaborations marquee — a slow, continuous drift of the brand wall.
+   The track holds two identical halves; translating by -50% loops seamlessly.
+   Pauses on hover/focus; neutralised to a static row under reduced motion. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 48s linear infinite;
+  width: max-content;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .marquee {
+    overflow-x: auto;
+  }
 }
 
 /* reduced motion — the whole motion system collapses to fades */

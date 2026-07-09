@@ -17,3 +17,49 @@ ins-aldar.jpg        | Louvre Abu Dhabi dome light       | Agnieszka Stankiewicz
 ins-sequence.jpg     | Timber battens, pendant light     | Declan Sun
 about-glass.jpg      | Curtain wall detail               | CeKuhn
 amelia-dusk.jpg      | Dubai skyline at night over water | Ahmed Galal
+
+Development galleries (cinematic carousel — {slug}-0N.jpg):
+vela-crest-01.jpg               | Modern glass tower, low angle                  | Viktor Jakovlev
+vela-crest-02.jpg               | Floor-to-ceiling glass interior over the city  | Michael Chacon
+vela-crest-03.jpg               | Rooftop pool with city skyline at dusk         | Marc Wieland
+saadiyat-grove-residences-01.jpg| Curved courtyard with tree and timber benches  | Declan Sun
+saadiyat-grove-residences-02.jpg| Calm minimalist neutral interior              | Aleksandra Dementeva
+saadiyat-grove-residences-03.jpg| Modern white cultural-district architecture    | Meizhi Lang
+the-cove-tower-three-01.jpg     | Waterfront residential towers over the marina  | Dominik
+the-cove-tower-three-02.jpg     | Low-iron glass facade detail                   | Joel Filipe
+the-cove-tower-three-03.jpg     | City skyline across the water at blue hour     | Bhanu Singh
+verde-terraces-01.jpg           | Tower facade with cascading planted balconies  | Ricardo Gomez Angel
+verde-terraces-02.jpg           | Bright plant-filled living interior            | Steph Wilson
+verde-terraces-03.jpg           | Landscaped terrace with lush greenery          | Caroline Badran
+mamsha-gardens-01.jpg           | White beachfront villa with pool and palm      | Puscas Adryan
+mamsha-gardens-02.jpg           | Warm living room in natural light              | Clay Banks
+mamsha-gardens-03.jpg           | Wooden boardwalk along a quiet beach           | Artem Astashov
+
+Amenity showcase (shared per amenity type — amenities/<key>.jpg).
+Sourced via Openverse (openverse.org), commercial-use CC. Replace with client-licensed shots before launch.
+amenities/pool.jpg       | Hotel swimming pool over water    | CC0     | Mike Moloney
+amenities/gym.jpg        | Gym fitness equipment             | CC0     | Humphrey Muleba
+amenities/spa.jpg        | Spa massage room                  | CC0     | (unknown)
+amenities/concierge.jpg  | Luxury hotel lobby reception      | CC0     | (unknown)
+amenities/courts.jpg     | Padel / tennis court              | CC0     | (unknown)
+amenities/parking.jpg    | Luxury car at hotel porte-cochère | Unsplash| Roman
+amenities/park.jpg       | Landscaped garden park path       | CC0     | Bonnie Moreland
+amenities/play.jpg       | Children's playground slide       | CC0     | (unknown)
+amenities/beach.jpg      | Beach, sand and sea               | CC BY-SA| Mohanrangaphotography
+amenities/cycling.jpg    | Bicycle on a road                 | CC0     | David Marcu
+amenities/pavilion.jpg   | Hotel lounge interior             | CC0     | Daria Nepriakhina
+amenities/retail.jpg     | Shopping / boutique interior      | CC0     | Matthew Henry
+
+Collaborations (home) — brand card imagery (brands/<brand>.jpg), branded-residence interiors /
+architecture via Openverse (commercial-use CC).
+brands/armani.jpg        | Luxury penthouse living room      | CC0     | (unknown)
+brands/bvlgari.jpg       | Luxury hotel lobby interior       | CC0     | (unknown)
+brands/fendi.jpg         | Modern luxury apartment interior  | CC0     | Kristin Hardwick
+brands/cavalli.jpg       | Elegant dining room interior      | CC0     | Kristin Hardwick
+brands/aston-martin.jpg  | Modern luxury villa architecture  | CC0     | World Travel Adventures
+brands/bugatti.jpg       | Luxury high-rise residential      | CC0     | (unknown)
+
+Collaboration LOGOS (brands/<brand>.svg) — brand wordmarks/marks via worldvectorlogo.com,
+background plate stripped, painted monochrome via CSS mask. Trademarks of their respective owners;
+placeholders for the design stage only — remove or license before any public launch.
+brands/armani.svg · brands/bvlgari.svg · brands/fendi.svg · brands/cavalli.svg · brands/aston-martin.svg · brands/bugatti.svg

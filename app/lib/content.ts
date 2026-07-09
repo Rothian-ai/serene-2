@@ -29,6 +29,67 @@ function list(value: string | undefined): string[] {
   return value ? value.split("|").map((s) => s.trim()).filter(Boolean) : [];
 }
 
+/**
+ * Structured lists share the flat, pipe-separated frontmatter grammar: each
+ * item is split on the middle-dot `·` into its fields (an in-family separator,
+ * cf. `notable.join(" · ")`). Whitespace around `|` and `·` is tolerated.
+ */
+export interface Amenity {
+  icon: string;
+  label: string;
+}
+export interface Landmark {
+  time: string;
+  place: string;
+}
+export interface GalleryImage {
+  src: string;
+  caption?: string;
+}
+export interface Reason {
+  heading: string;
+  body: string;
+}
+
+/** `pool · Rooftop Pool` → { icon: "pool", label: "Rooftop Pool" }. Single token → generic icon. */
+function parseAmenities(value: string | undefined): Amenity[] {
+  return list(value).map((item) => {
+    const [first, ...rest] = item.split(/\s*·\s*/);
+    if (rest.length === 0) return { icon: "amenity", label: first };
+    return { icon: first.toLowerCase(), label: rest.join(" · ") };
+  });
+}
+
+/** `3 min · Dubai Opera` → { time: "3 min", place: "Dubai Opera" }. `time` kept raw. */
+function parseLandmarks(value: string | undefined): Landmark[] {
+  return list(value)
+    .map((item) => {
+      const [time, ...rest] = item.split(/\s*·\s*/);
+      return { time: time.trim(), place: rest.join(" · ").trim() };
+    })
+    .filter((l) => l.place);
+}
+
+/** `/images/x.jpg · Exterior` → { src, caption }. Caption optional. */
+function parseGallery(value: string | undefined): GalleryImage[] {
+  return list(value)
+    .map((item) => {
+      const [src, ...rest] = item.split(/\s*·\s*/);
+      return { src: src.trim(), caption: rest.join(" · ").trim() || undefined };
+    })
+    .filter((g) => g.src);
+}
+
+/** `The most liquid market · Downtown has survived every cycle…` → { heading, body }. */
+function parseReasons(value: string | undefined): Reason[] {
+  return list(value)
+    .map((item) => {
+      const [heading, ...rest] = item.split(/\s*·\s*/);
+      return { heading: heading.trim(), body: rest.join(" · ").trim() };
+    })
+    .filter((r) => r.heading && r.body);
+}
+
 export function renderMarkdown(body: string): string {
   return marked.parse(body, { async: false }) as string;
 }
@@ -90,6 +151,15 @@ export interface Development {
   plate: PlateKind;
   image?: string;
   featured?: number;
+  /** one-line Nakheel-style positioning statement */
+  positioning?: string;
+  /** descriptive overview paragraph (info-first block) */
+  overview?: string;
+  amenities: Amenity[];
+  gallery: GalleryImage[];
+  reasons: Reason[];
+  landmarks: Landmark[];
+  map?: { lat: number; lng: number; zoom: number };
   body: string;
 }
 
@@ -168,6 +238,16 @@ export const developments: Development[] = load(developmentFiles, (slug, d, body
   plate: (d.plate as PlateKind) ?? "render",
   image: d.image || undefined,
   featured: d.featured ? Number(d.featured) : undefined,
+  positioning: d.positioning || undefined,
+  overview: d.overview || undefined,
+  amenities: parseAmenities(d.amenities),
+  gallery: parseGallery(d.gallery),
+  reasons: parseReasons(d.reasons),
+  landmarks: parseLandmarks(d.landmarks),
+  map:
+    d.mapLat && d.mapLng
+      ? { lat: Number(d.mapLat), lng: Number(d.mapLng), zoom: Number(d.mapZoom) || 15 }
+      : undefined,
   body,
 })).sort((a, b) => (a.featured ?? 99) - (b.featured ?? 99));
 
