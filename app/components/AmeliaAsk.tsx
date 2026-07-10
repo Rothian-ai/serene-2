@@ -56,10 +56,11 @@ export function AmeliaAsk() {
         <Eyebrow className="text-gold">Amelia</Eyebrow>
         <div className="mt-9 max-w-[860px]">
           <Reveal>
-            <h2 className="type-headline max-w-[20ch]">Ask anything. Answered with data.</h2>
+            <h2 className="type-headline max-w-[20ch]">Conversation, not cold calls.</h2>
             <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/78">
-              Amelia holds the record — escrow rules, service charges, handover dates, yields —
-              and answers the moment you ask. At midnight, in detail, without ever placing a call.
+              Amelia is Serene's conversational advisor — awake at every hour, fluent in the
+              record: escrow rules, service charges, handover dates, yields. She replaced the
+              sales floor with answers, and she follows up with no one.
             </p>
           </Reveal>
 
@@ -136,7 +137,8 @@ export function AmeliaAsk() {
               ))}
             </div>
             <p className="type-cap mt-7 text-silver">
-              Amelia opens on her own platform. No call-backs, no lists — ever.
+              The conversation begins on the next page and continues on her platform. No
+              call-backs, no lists — ever.
             </p>
           </Reveal>
         </div>

@@ -36,7 +36,7 @@ const CARDS: Card[] = developments
   .slice(0, 8)
   .map((d) => ({ slug: d.slug, image: d.image, plate: d.plate, label: d.title, developer: d.developer }));
 
-function BrandMark({ slug, name }: { slug: string; name: string }) {
+export function BrandMark({ slug, name }: { slug: string; name: string }) {
   const logo = BRAND_LOGOS[slug];
   if (!logo) {
     return (

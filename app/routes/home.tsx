@@ -3,10 +3,10 @@ import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
-import { DeveloperRow, InsightCard } from "~/components/cards";
+import { InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
-import { developments, developers, insights } from "~/lib/content";
+import { developments, insights } from "~/lib/content";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -20,7 +20,6 @@ export function meta() {
 }
 
 export default function Home() {
-  const registry = developers.slice(0, 3);
   const latest = insights.slice(0, 3);
 
   return (
@@ -91,27 +90,14 @@ export default function Home() {
       {/* ④ By the Record — animated credibility monument */}
       <MetricsMonument />
 
-      {/* ⑤ The registry — the institutions, entered in the ledger */}
+      {/* ⑤ The registry — hidden for now: the collaborations band below already
+          carries the developer register. Restore by uncommenting.
       <Section className="pt-0">
         <Reveal exit>
           <Eyebrow className="text-brass">The Registry</Eyebrow>
         </Reveal>
-        <Reveal>
-          <SplitHeading as="h2" className="type-headline mt-6 max-w-[22ch]">
-            The institutions we are registered with.
-          </SplitHeading>
-        </Reveal>
-        <div className="mt-10 border-b border-ink/14">
-          {registry.map((dev, i) => (
-            <Reveal key={dev.slug}>
-              <DeveloperRow developer={dev} index={i} />
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-11">
-          <QuietLink to="/developers">The Developer Registry</QuietLink>
-        </div>
-      </Section>
+        ...
+      </Section> */}
 
       {/* ⑥ Collaborations — the register, set large, then covered by its addresses */}
       <CollaborationsBand />
