@@ -2,7 +2,7 @@ import { HeroSequence } from "~/components/HeroSequence";
 import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
-import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
+import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plate } from "~/components/primitives";
 import { InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
@@ -83,8 +83,8 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
-      {/* ③ Featured developments — pinned horizontal gallery (the end card
-          carries the visitor to the full ten-strong register) */}
+      {/* ③ Featured developments — horizontal slider (the end card carries
+          the visitor to the full register) */}
       <HorizontalShowcase developments={developments.slice(0, 6)} />
 
       {/* ④ By the Record — animated credibility monument */}
@@ -103,9 +103,7 @@ export default function Home() {
       <CollaborationsBand />
 
       {/* ⑦ Amelia — her one navy moment, now interactive */}
-      <Seam variant="ivory-navy" />
       <AmeliaAsk />
-      <Seam variant="navy-ivory" />
 
       {/* ⑧ Insights — the journal, image-led */}
       <Section>
@@ -125,7 +123,6 @@ export default function Home() {
       </Section>
 
       {/* ⑨ Final threshold — the close */}
-      <Seam variant="ivory-ink" />
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>

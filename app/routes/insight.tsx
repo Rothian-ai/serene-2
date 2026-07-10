@@ -50,7 +50,7 @@ export default function Insight({ params }: Route.ComponentProps) {
         </SplitHeading>
       </Section>
 
-      <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">
+      <div className="container-site">
         <Plate kind={a.plate} image={a.image} alt="" className="aspect-[21/9]" parallax />
       </div>
 

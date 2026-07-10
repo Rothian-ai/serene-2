@@ -107,7 +107,7 @@ export function CinematicCarousel({
       </div>
 
       {/* ——— overlay content ——— */}
-      <div className="relative z-[1] mx-auto w-full max-w-[1440px] px-6 pb-10 pt-32 md:px-12 md:pb-12 lg:px-20">
+      <div className="container-site relative z-[1] pb-10 pt-32 md:pb-12">
         <div className="type-eyebrow flex items-center gap-2.5 text-gold">
           <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
           <span>The Frames</span>

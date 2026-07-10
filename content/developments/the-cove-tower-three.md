@@ -14,7 +14,7 @@ excerpt: Creek-front glass at the harbour's quietest bend — the entry point to
 positioning: Creek-front glass at the harbour's quietest bend.
 overview: The third tower at Dubai Creek Harbour's quietest bend — thirty-one floors of low-iron glass facing the creek, the wildlife sanctuary, and the Downtown skyline eight kilometres west. A district still being priced, with infrastructure already landed ahead of population.
 amenities: pool · Creekside Pool | gym · Waterfront Gym | pavilion · Residents' Pavilion | courts · Sports Courts | play · Kids' Play Deck | park · Promenade Park
-gallery: /images/cove-tower.jpg · Creek-front — Dubai Creek Harbour | /images/the-cove-tower-three-01.jpg · The towers over the marina | /images/the-cove-tower-three-02.jpg · Low-iron glass, in detail | /images/the-cove-tower-three-03.jpg · The skyline across the water at blue hour
+gallery: /images/cove-tower.jpg · Creek-front — Dubai Creek Harbour | /images/the-cove-tower-three-01.jpg · The towers over the marina | /images/the-cove-tower-three-02.jpg · Low-iron glass, in detail | /images/the-cove-tower-three-03.jpg · The skyline across the water at blue hour | /images/the-cove-tower-three-04.jpg · Towers over still water, at dusk
 mapLat: 25.2048
 mapLng: 55.3540
 mapZoom: 14

@@ -14,7 +14,7 @@ excerpt: Beachfront maisonettes on the Saadiyat boardwalk — the island's most 
 positioning: The last beachfront row on Saadiyat.
 overview: Beachfront maisonettes and simplex apartments directly on the Mamsha boardwalk — honed limestone, bleached timber, barefoot-first. The beach on one side, the museums on the other, and a strip the island's masterplan caps permanently.
 amenities: beach · Private Beach | pool · Beachfront Pool | spa · Seafront Spa | gym · Fitness Floor | retail · Boardwalk Retail | concierge · Concierge
-gallery: /images/mamsha-gardens.jpg · Beachfront — Saadiyat Island | /images/mamsha-gardens-01.jpg · The beachfront villa and pool | /images/mamsha-gardens-02.jpg · A room in natural light | /images/mamsha-gardens-03.jpg · The boardwalk, at the water's edge
+gallery: /images/mamsha-gardens.jpg · Beachfront — Saadiyat Island | /images/mamsha-gardens-01.jpg · The beachfront villa and pool | /images/mamsha-gardens-02.jpg · A room in natural light | /images/mamsha-gardens-03.jpg · The boardwalk, at the water's edge | /images/mamsha-gardens-04.jpg · Limestone, fluted by the sun
 mapLat: 24.5442
 mapLng: 54.4290
 mapZoom: 15

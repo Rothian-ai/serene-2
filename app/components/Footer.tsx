@@ -31,7 +31,7 @@ const COLS = [
 export function Footer() {
   return (
     <footer className="bg-ink text-ivory">
-      <div className="mx-auto max-w-[1440px] px-6 pb-10 pt-20 md:px-12 lg:px-20">
+      <div className="container-site pb-10 pt-20">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
             <img src="/logo/serene-mark-white.png" alt="Serene" className="h-14 w-auto" />

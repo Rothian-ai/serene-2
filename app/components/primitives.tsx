@@ -334,7 +334,7 @@ export function FullScreen({
           />
         </>
       )}
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 md:px-12 lg:px-20">{children}</div>
+      <div className="container-site relative">{children}</div>
       {cue && <PanelCue dark={tone !== "ivory"} />}
     </section>
   );
@@ -355,7 +355,7 @@ export function Section({
 }) {
   return (
     <section id={id} className={`${tight ? "py-8 md:py-12" : "py-12 md:py-18"} ${className}`}>
-      <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">{children}</div>
+      <div className="container-site">{children}</div>
     </section>
   );
 }

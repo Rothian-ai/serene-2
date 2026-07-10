@@ -115,7 +115,6 @@ export function CollaborationsBand() {
       clash = Math.max(0, Math.min(1, clash));
       head.style.opacity = String(1 - clash);
       head.style.transform = `translateY(${(-clash * 46).toFixed(1)}px) scale(${(1 - clash * 0.05).toFixed(3)})`;
-      head.style.filter = `blur(${(clash * 4).toFixed(1)}px)`;
       // column parallax — clamped so it stays a subtle drift, never a gap
       const scrolled = vh / 2 - rect.top;
       colRefs.current.forEach((col, i) => {
@@ -152,8 +151,8 @@ export function CollaborationsBand() {
     /* NOTE: no overflow-hidden here — an overflow-clipping ancestor disables
        position:sticky, which kills the pin and therefore the clash. */
     <section className="relative bg-ivory">
-      <div className="relative mx-auto h-[780px] max-w-[1440px] px-6 md:h-[900px] md:px-12 lg:px-20">
-        <div ref={headRef} className="sticky top-0 z-[1] pt-24 will-change-[opacity,transform,filter] md:pt-28">
+      <div className="container-site relative h-[780px] md:h-[900px]">
+        <div ref={headRef} className="sticky top-0 z-[1] pt-24 will-change-[opacity,transform] md:pt-28">
           <h2 className="mx-auto max-w-[22ch] text-center type-headline uppercase tracking-[0.06em]">
             A new realm of curated collaborations
           </h2>
@@ -178,7 +177,7 @@ export function CollaborationsBand() {
 
       <div
         ref={gridRef}
-        className="relative z-[2] mx-auto -mt-[320px] grid max-w-[1440px] grid-cols-2 gap-5 px-6 pb-24 md:-mt-[420px] md:grid-cols-4 md:px-12 lg:px-20"
+        className="container-site relative z-[2] -mt-[320px] grid grid-cols-2 gap-5 pb-24 md:-mt-[420px] md:grid-cols-4"
       >
         {columns.map((col, ci) => (
           <div

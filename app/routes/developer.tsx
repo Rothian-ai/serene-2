@@ -34,7 +34,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
         <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">{dev.tagline}</p>
       </Hero>
 
-      <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">
+      <div className="container-site">
         <Ledger
           className="!border-t-0 py-5"
           cells={[

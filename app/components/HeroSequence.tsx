@@ -72,7 +72,7 @@ function StaticHero() {
         <Plate kind="dusk" {...TITLE_BG} eager className="h-full w-full" />
         <div aria-hidden className="absolute inset-0" style={{ background: VIGNETTE }} />
       </div>
-      <div className="relative z-[1] mx-auto w-full max-w-[1440px] px-6 text-center">
+      <div className="container-site relative z-[1] text-center">
         <img
           src="/logo/serene-mark-white.png"
           alt="Serene"

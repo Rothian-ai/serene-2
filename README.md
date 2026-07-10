@@ -80,6 +80,10 @@ A development's `developer:` field references the developer's file name — the 
 then lists that development automatically. Copy an existing file as the template; the voice
 rules are in `brand-assets/brand-tokens.md` (composed · elevated · enduring).
 
+One image convention: a development's `gallery:` must carry **at least as many non-hero images
+as it has `reasons:`** — the "Why" carousel pairs one photograph per reason and never repeats
+one. Sourced placeholders are credited in `public/images/CREDITS.txt`.
+
 ### Onboarding a new developer (the standard client workflow)
 
 1. `content/developers/<slug>.md` — the profile.

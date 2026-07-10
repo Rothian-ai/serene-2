@@ -75,7 +75,7 @@ export function ReasonsCarousel({
       {/* the rail — negative margins let cards bleed to the viewport edge on scroll */}
       <div
         ref={rail}
-        className="mt-12 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:-mx-12 md:px-12 lg:-mx-20 lg:px-20 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="mt-12 -mx-6 flex snap-x snap-proximity gap-4 overflow-x-auto scroll-pl-6 px-6 pb-2 md:-mx-12 md:scroll-pl-12 md:px-12 lg:-mx-20 lg:scroll-pl-20 lg:px-20 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {reasons.map((r, i) => (
           <article
@@ -83,9 +83,12 @@ export function ReasonsCarousel({
             data-reason-card
             className="relative aspect-[3/4] w-[80vw] flex-none snap-start overflow-hidden bg-ink text-ivory sm:w-[54vw] md:w-[40vw] lg:w-[24rem]"
           >
+            {/* one photograph per card, never repeated — content convention:
+                each development's gallery carries at least as many non-hero
+                images as it has reasons (see README, "Adding content") */}
             <Plate
               kind={plate}
-              image={images.length ? images[i % images.length] : undefined}
+              image={images[i]}
               alt={`${title} — ${r.heading}`}
               className="absolute inset-0 h-full w-full"
             />

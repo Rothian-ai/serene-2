@@ -308,7 +308,7 @@ export default function Amelia() {
           className="absolute inset-0"
           style={{ background: "linear-gradient(to top, rgba(17,28,57,0.72), rgba(17,28,57,0.28) 55%, rgba(17,28,57,0.15))" }}
         />
-        <div className="relative z-[1] mx-auto flex min-h-[48svh] max-w-[1440px] flex-col items-center justify-center px-6 py-20 text-center">
+        <div className="container-site relative z-[1] flex min-h-[48svh] flex-col items-center justify-center py-20 text-center">
           <Reveal>
             <h2 className="type-display">Or begin directly.</h2>
             <div className="mt-9">

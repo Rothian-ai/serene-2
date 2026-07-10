@@ -14,7 +14,7 @@ excerpt: The first residence to carry the Bugatti name — sculpted glass above 
 positioning: The marque's first address, above Business Bay.
 overview: The first residential tower in the world to carry the Bugatti name — a sculpted-glass form above Business Bay whose curves are drawn from the marque's coachwork. Two to four bedrooms and a set of sky mansions, each reached by a private garage lift that carries the car to the residence floor.
 amenities: pool · Riviera-Inspired Pool | gym · Performance Gym | spa · Spa & Recovery Suite | concierge · Marque Concierge | parking · Garage-to-Sky Car Lift
-gallery: /images/about-glass.jpg · Sculpted glass — Business Bay | /images/the-cove-tower-three-02.jpg · The facade, in detail | /images/vela-crest-02.jpg · A residence in morning light
+gallery: /images/about-glass.jpg · Sculpted glass — Business Bay | /images/the-cove-tower-three-02.jpg · The facade, in detail | /images/vela-crest-02.jpg · A residence in morning light | /images/bugatti-residences-04.jpg · Sculpted metal, in daylight | /images/bugatti-residences-05.jpg · A lounge in low light
 mapLat: 25.1850
 mapLng: 55.2650
 mapZoom: 15

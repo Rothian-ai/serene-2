@@ -14,7 +14,7 @@ excerpt: Forty-two storeys of pale stone and low-iron glass above the Boulevard 
 positioning: The long view over Downtown Dubai.
 overview: Forty-two storeys of pale stone and low-iron glass above Sheikh Mohammed bin Rashid Boulevard — one to four bedrooms, three-metre ceilings throughout, composed for permanence rather than spectacle. Two streets from the fountain axis, in the emirate's most liquid residential market.
 amenities: pool · Infinity Sky Pool | gym · Fitness Floor | spa · Spa & Hammam | concierge · 24-Hour Concierge | courts · Padel Court | parking · Valet Parking
-gallery: /images/vela-crest.jpg · Exterior — Downtown Dubai | /images/vela-crest-01.jpg · The tower, from the Boulevard | /images/vela-crest-02.jpg · A residence in morning light | /images/vela-crest-03.jpg · The sky pool at dusk
+gallery: /images/vela-crest.jpg · Exterior — Downtown Dubai | /images/vela-crest-01.jpg · The tower, from the Boulevard | /images/vela-crest-02.jpg · A residence in morning light | /images/vela-crest-03.jpg · The sky pool at dusk | /images/vela-crest-04.jpg · Travertine, in detail
 mapLat: 25.1972
 mapLng: 55.2744
 mapZoom: 15

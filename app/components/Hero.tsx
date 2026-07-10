@@ -111,7 +111,7 @@ export function Hero({
         />
       </motion.div>
       <div className="relative z-[1] w-full">
-        <div className="mx-auto max-w-[1440px] px-6 pb-20 pt-40 md:px-12 lg:px-20">
+        <div className="container-site pb-20 pt-40">
           {overline && (
             <motion.div
               initial={animateIn ? { opacity: 0, y: 16 } : false}

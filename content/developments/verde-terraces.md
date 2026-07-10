@@ -14,7 +14,7 @@ excerpt: Sobha's in-house craft applied to garden terraces — every trade under
 positioning: Garden terraces, built by the hands that finish them.
 overview: Garden terraces in Sobha Hartland II, built by the one developer in the emirate that employs its own trades — two to four bedrooms over podium gardens, every finish accountable to a single roof. Ten minutes from Downtown, between the creek and Meydan, without Downtown's density.
 amenities: park · Forested Spine | pool · Garden Pool | gym · Fitness Pavilion | spa · Wellness Suite | play · Children's Garden | cycling · Cycling Track
-gallery: /images/verde-terraces.jpg · Planted terraces — Sobha Hartland II | /images/verde-terraces-01.jpg · Cascading planted balconies | /images/verde-terraces-02.jpg · A living room among the greenery | /images/verde-terraces-03.jpg · The landscaped terrace
+gallery: /images/verde-terraces.jpg · Planted terraces — Sobha Hartland II | /images/verde-terraces-01.jpg · Cascading planted balconies | /images/verde-terraces-02.jpg · A living room among the greenery | /images/verde-terraces-03.jpg · The landscaped terrace | /images/verde-terraces-04.jpg · Walnut, milled and finished
 mapLat: 25.1710
 mapLng: 55.2960
 mapZoom: 14

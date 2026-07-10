@@ -14,7 +14,7 @@ excerpt: The marque's first residential tower — sixty-five storeys over Downto
 positioning: The three-pointed star's first address.
 overview: The first residential tower in the world to carry the Mercedes-Benz name — sixty-five storeys over Downtown Dubai, its form drawn from the marque's design language. One to four bedrooms and a crown of penthouses, engineered end-to-end to the standard the name implies.
 amenities: pool · Sky Pool | gym · Performance Gym | spa · Recovery Suite | concierge · Marque Concierge | parking · Valet & EV Charging
-gallery: /images/amelia-dusk.jpg · The tower at dusk — Downtown | /images/vela-crest-01.jpg · From the Boulevard | /images/the-cove-tower-three-03.jpg · The skyline at blue hour
+gallery: /images/amelia-dusk.jpg · The tower at dusk — Downtown | /images/vela-crest-01.jpg · From the Boulevard | /images/the-cove-tower-three-03.jpg · The skyline at blue hour | /images/mercedes-benz-places-04.jpg · The tower's curve, in silhouette | /images/mercedes-benz-places-05.jpg · The skyline at blue hour, across the water
 mapLat: 25.1910
 mapLng: 55.2830
 mapZoom: 15

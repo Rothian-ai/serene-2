@@ -14,7 +14,7 @@ excerpt: Low-rise marina residences in Meraas's sea district — the walkable Me
 positioning: The Mediterranean quarter, ten minutes from Downtown.
 overview: Low-rise residences around the marina at Port de La Mer — Meraas's Mediterranean quarter on the Jumeirah coast. One to four bedrooms over the quays, in the rare Dubai district built to be walked rather than driven.
 amenities: pool · Lagoon Pools | gym · Marina Gym | concierge · Marina Concierge | courts · Padel Court | parking · Residents' Parking
-gallery: /images/ins-supply.jpg · The coast, from above | /images/saadiyat-grove-residences-03.jpg · The low-rise quarter | /images/verde-terraces-03.jpg · A landscaped terrace
+gallery: /images/ins-supply.jpg · The coast, from above | /images/saadiyat-grove-residences-03.jpg · The low-rise quarter | /images/verde-terraces-03.jpg · A landscaped terrace | /images/the-quays-port-de-la-mer-04.jpg · The marina at evening | /images/the-quays-port-de-la-mer-05.jpg · An arch opening to the sea
 mapLat: 25.2280
 mapLng: 55.2520
 mapZoom: 15

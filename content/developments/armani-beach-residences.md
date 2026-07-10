@@ -14,7 +14,7 @@ excerpt: Interiors by Armani/Casa on the Palm's outer crescent — beachfront re
 positioning: Armani's hand, on the Palm's quiet crescent.
 overview: Beachfront residences on Palm Jumeirah's outer crescent with interiors composed by Armani/Casa — the designer's full grammar, from the lobby to the door handles. Two to five bedrooms and a set of presidential suites, all facing open water.
 amenities: pool · Beachfront Pools | gym · Fitness Pavilion | spa · Armani/SPA | concierge · Residence Concierge | parking · Valet Parking
-gallery: /images/ins-sequence.jpg · Interior — Armani/Casa direction | /images/mamsha-gardens-02.jpg · A room in natural light | /images/mamsha-gardens-03.jpg · The water's edge
+gallery: /images/ins-sequence.jpg · Interior — Armani/Casa direction | /images/mamsha-gardens-02.jpg · A room in natural light | /images/mamsha-gardens-03.jpg · The water's edge | /images/armani-beach-residences-04.jpg · Stone and open water, at dusk | /images/armani-beach-residences-05.jpg · Marble bath in window light
 mapLat: 25.1124
 mapLng: 55.1390
 mapZoom: 14

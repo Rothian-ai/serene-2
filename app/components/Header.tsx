@@ -48,6 +48,16 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
 
   useEffect(() => setOpen(false), [location.pathname]);
 
+  // Sticky elements (e.g. the developments filter) pin below the bar via
+  // --header-offset; keep it in sync so they rise when the bar hides.
+  const barHidden = hidden && !open;
+  useEffect(() => {
+    document.documentElement.style.setProperty("--header-offset", barHidden ? "0px" : "68px");
+    return () => {
+      document.documentElement.style.setProperty("--header-offset", "68px");
+    };
+  }, [barHidden]);
+
   const overDark = tone === "dark" && !scrolled && !open;
   const bar = overDark
     ? "bg-transparent"
@@ -61,10 +71,10 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-40 transition-[transform,background-color] duration-500 ${bar} ${
-          hidden && !open ? "-translate-y-full" : "translate-y-0"
+          barHidden ? "-translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className={`mx-auto flex max-w-[1440px] items-center gap-8 px-6 py-4 md:px-12 lg:px-20 ${text}`}>
+        <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
           <Link to="/" className="flex items-center gap-3" aria-label="Serene — home">
             <img
               src={overDark ? "/logo/serene-mark-white.png" : "/logo/serene-mark.png"}

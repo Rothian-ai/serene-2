@@ -32,11 +32,9 @@ export default function Development({ params }: Route.ComponentProps) {
   const dev = getDeveloper(d.developer);
   const sections = parseSections(d.body);
   const adjacent = developments.filter((x) => x.slug !== d.slug).slice(0, 2);
-  const slides = d.gallery.length
-    ? d.gallery
-    : d.image
-      ? [{ src: d.image, caption: `${d.title} — ${d.district}, ${d.city}` }]
-      : [];
+  // The case carousel never repeats a photograph: unique gallery images only,
+  // and never the hero shot (it already owns the top of the page).
+  const caseImages = [...new Set(d.gallery.map((s) => s.src))].filter((src) => src !== d.image);
 
   const facts = [
     {
@@ -118,7 +116,7 @@ export default function Development({ params }: Route.ComponentProps) {
       {/* ③ the case — "Why [development]" reasons carousel, info inside the frames */}
       <ReasonsCarousel
         reasons={d.reasons}
-        images={slides.map((s) => s.src)}
+        images={caseImages}
         plate={d.plate}
         title={d.title}
         city={d.city}

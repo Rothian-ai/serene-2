@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router";
-import { gsap, useGsapContext } from "~/lib/gsap";
-import { Ledger, Plate } from "~/components/primitives";
+import { Eyebrow, Ledger, Plate, Reveal } from "~/components/primitives";
 import type { Development } from "~/lib/content";
 import { getDeveloper } from "~/lib/content";
 
 /**
- * Pinned horizontal showcase — the "masterpiece gallery". On desktop the
- * section pins to the viewport (GSAP ScrollTrigger) and the register pans
- * sideways as the visitor scrolls; the pin lasts exactly the track's overflow
- * width, so the last panel fully arrives before release — no early stop, no
- * jump, distance recomputed on every refresh/resize. On touch / reduced-motion
- * it degrades to a native swipe row (also the SSR first paint).
+ * Horizontal showcase — the developments register as a plain editorial
+ * slider. No pin, no scroll hijack: a CSS scroll-snap rail the visitor moves
+ * on their own terms (swipe, trackpad, or the ← → controls). SSR-complete by
+ * construction — the prerendered HTML paints every panel static.
  */
 
 function Panel({ development, index }: { development: Development; index: number }) {
@@ -19,9 +16,10 @@ function Panel({ development, index }: { development: Development; index: number
   return (
     <Link
       to={`/developments/${development.slug}`}
-      className="group flex w-[80vw] shrink-0 flex-col sm:w-[54vw] lg:w-[34vw]"
+      data-showcase-panel
+      className="group flex w-[80vw] flex-none snap-start flex-col sm:w-[54vw] lg:w-[34vw] xl:w-[30rem]"
     >
-      <div className="relative h-[52vh] overflow-hidden">
+      <div className="relative h-[52vh] max-h-[560px] overflow-hidden">
         <Plate
           kind={development.plate}
           image={development.image}
@@ -59,133 +57,66 @@ function Panel({ development, index }: { development: Development; index: number
   );
 }
 
-function Header() {
-  return (
-    <div className="mx-auto flex max-w-[1440px] items-baseline justify-between px-6 md:px-12 lg:px-20">
-      <div className="type-eyebrow flex items-center gap-2.5 text-brass">
-        <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
-        <span>Current Developments</span>
-      </div>
-    </div>
-  );
-}
+export function HorizontalShowcase({ developments }: { developments: Development[] }) {
+  const rail = useRef<HTMLDivElement>(null);
 
-function Track({
-  developments,
-  trackRef,
-}: {
-  developments: Development[];
-  trackRef?: React.Ref<HTMLDivElement>;
-}) {
-  return (
-    <div
-      ref={trackRef}
-      className="flex items-stretch gap-8 px-6 will-change-transform md:px-12 lg:px-20"
-    >
-      {developments.map((d, i) => (
-        <Panel key={d.slug} development={d} index={i} />
-      ))}
-      <Link
-        to="/developments"
-        className="group flex w-[70vw] shrink-0 flex-col justify-center sm:w-[40vw] lg:w-[24vw]"
-      >
-        <h3 className="type-headline max-w-[10ch]">The full register.</h3>
-        <span className="mt-6 inline-flex items-center gap-2.5 border-b border-gold pb-1.5 text-[12.5px] font-semibold uppercase tracking-[0.1em]">
-          All Developments
-          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-        </span>
-      </Link>
-    </div>
-  );
-}
-
-/** Desktop / motion-on — GSAP pin + scrub, distance = track overflow width. */
-function PinnedShowcase({ developments }: { developments: Development[] }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-
-  useGsapContext(
-    sectionRef,
-    () => {
-      const track = trackRef.current!;
-      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      gsap.to(track, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current!,
-          start: "top top",
-          end: () => "+=" + distance(),
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (progressRef.current) {
-              gsap.set(progressRef.current, { scaleX: self.progress });
-            }
-          },
-        },
-      });
-    },
-    [developments.length],
-  );
+  const scroll = (dir: number) => {
+    const el = rail.current;
+    if (!el) return;
+    const panel = el.querySelector<HTMLElement>("[data-showcase-panel]");
+    const step = panel ? panel.offsetWidth + 32 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex h-screen flex-col justify-center overflow-hidden py-20"
-    >
-      <Header />
-      <div className="mt-10">
-        <Track developments={developments} trackRef={trackRef} />
-      </div>
-      <div className="mx-auto mt-10 w-full max-w-[1440px] px-6 md:px-12 lg:px-20">
-        <div className="relative h-px w-full bg-ink/12">
-          <div
-            ref={progressRef}
-            className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-brass"
-          />
+    <section className="py-12 md:py-18">
+      <div className="container-site">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <Eyebrow className="text-brass">Current Developments</Eyebrow>
+            <div className="hidden items-center gap-3 md:flex">
+              <button
+                type="button"
+                onClick={() => scroll(-1)}
+                aria-label="Previous developments"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center border border-ink/30 text-ink transition-colors duration-300 hover:border-ink hover:bg-ink/5"
+              >
+                <span aria-hidden>←</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll(1)}
+                aria-label="Next developments"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center border border-ink/30 text-ink transition-colors duration-300 hover:border-ink hover:bg-ink/5"
+              >
+                <span aria-hidden>→</span>
+              </button>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* the rail — negative margins let panels bleed to the viewport edge.
+            Snap is proximity, not mandatory: mandatory snap cancels the
+            buttons' smooth scrollBy in Chrome; proximity still settles swipes. */}
+        <div
+          ref={rail}
+          className="-mx-6 mt-10 flex snap-x snap-proximity gap-8 overflow-x-auto scroll-pl-6 px-6 pb-2 md:-mx-12 md:scroll-pl-12 md:px-12 lg:-mx-20 lg:scroll-pl-20 lg:px-20 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {developments.map((d, i) => (
+            <Panel key={d.slug} development={d} index={i} />
+          ))}
+          <Link
+            to="/developments"
+            className="group flex w-[70vw] flex-none snap-start flex-col justify-center sm:w-[40vw] lg:w-[24vw]"
+          >
+            <h3 className="type-headline max-w-[10ch]">The full register.</h3>
+            <span className="mt-6 inline-flex items-center gap-2.5 border-b border-gold pb-1.5 text-[12.5px] font-semibold uppercase tracking-[0.1em]">
+              All Developments
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+            </span>
+          </Link>
         </div>
       </div>
     </section>
-  );
-}
-
-/** Touch / reduced-motion / SSR first paint — native swipe row (no pin). */
-function SwipeShowcase({ developments }: { developments: Development[] }) {
-  return (
-    <section className="py-24 md:py-32">
-      <Header />
-      <div className="mt-10 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <Track developments={developments} />
-      </div>
-    </section>
-  );
-}
-
-export function HorizontalShowcase({ developments }: { developments: Development[] }) {
-  // SSR + first paint render the swipe row; the pin is a post-mount, desktop,
-  // motion-on enhancement — so first paint is always correct.
-  const [enhanced, setEnhanced] = useState(false);
-
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 768px)");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setEnhanced(desktop.matches && !reduce.matches);
-    update();
-    desktop.addEventListener("change", update);
-    reduce.addEventListener("change", update);
-    return () => {
-      desktop.removeEventListener("change", update);
-      reduce.removeEventListener("change", update);
-    };
-  }, []);
-
-  return enhanced ? (
-    <PinnedShowcase developments={developments} />
-  ) : (
-    <SwipeShowcase developments={developments} />
   );
 }

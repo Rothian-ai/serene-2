@@ -103,6 +103,35 @@
   /* Blue depth gradients — cool, engineered (for hero/CTA grounds & dividers) */
   --grad-depth: linear-gradient(160deg, #111c39 0%, #1b2257 55%, #3c496b 100%);
   --grad-depth-radial: radial-gradient(120% 90% at 100% 0%, #3c496b 0%, #0a1526 70%);
+
+  /* Header height — sticky elements below the bar track this; the Header
+     component sets it to 0px while the bar is hidden on scroll-down. */
+  --header-offset: 68px;
+}
+
+/* ——— container-site: THE horizontal rhythm. One max-width + inline padding
+       for every band, so gutters never disagree between sections. Widens on
+       very large screens (≥1920px) so 4K doesn't read as a letterboxed strip. ——— */
+.container-site {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 1440px;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-site {
+    padding-inline: 3rem;
+  }
+}
+@media (min-width: 1024px) {
+  .container-site {
+    padding-inline: 5rem;
+  }
+}
+@media (min-width: 1920px) {
+  .container-site {
+    max-width: 1760px;
+  }
 }
 
 /* base */

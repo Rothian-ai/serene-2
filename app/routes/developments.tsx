@@ -39,9 +39,10 @@ export default function Developments() {
         </p>
       </Hero>
 
-      {/* filter — sticks just below the header as you scroll into the register */}
-      <div className="sticky top-[68px] z-30 border-y border-ink/12 bg-ivory/92 backdrop-blur-[3px]">
-        <div className="mx-auto flex max-w-[1440px] flex-wrap items-baseline gap-7 px-6 py-4 md:px-12 lg:px-20">
+      {/* filter — pins below the header, and rises to the top edge in step
+          with the bar's own hide/show transition (via --header-offset) */}
+      <div className="sticky top-[var(--header-offset)] z-30 border-y border-ink/12 bg-ivory/92 backdrop-blur-[3px] transition-[top] duration-500">
+        <div className="container-site flex flex-wrap items-baseline gap-7 py-4">
           {CITIES.map((c) => (
             <button
               key={c}

@@ -30,8 +30,8 @@ export function DevelopmentNarrative({
   const images = pool.length ? pool : gallery;
 
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-[1440px] px-6 md:px-12 lg:px-20">
+    <section className="py-12 md:py-18">
+      <div className="container-site">
         <Eyebrow className="text-brass">The Register</Eyebrow>
         <div className="mt-4 flex flex-col">
           {sections.map((s, i) => {
