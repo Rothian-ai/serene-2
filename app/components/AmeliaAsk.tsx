@@ -77,7 +77,7 @@ export function AmeliaAsk() {
               </label>
               <div
                 className={`flex items-center gap-4 border-b pb-4 transition-colors duration-300 ${
-                  focused ? "border-gold" : "border-ivory/30"
+                  focused ? "border-silver" : "border-ivory/30"
                 }`}
               >
                 <div className="relative min-w-0 flex-1">
@@ -90,7 +90,7 @@ export function AmeliaAsk() {
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                     autoComplete="off"
-                    className="w-full bg-transparent text-[1.05rem] font-light text-ivory caret-gold outline-none placeholder:text-ivory/40"
+                    className="w-full bg-transparent text-[1.05rem] font-light text-ivory caret-silver outline-none placeholder:text-ivory/40"
                     placeholder={reduced ? "Ask Amelia a question…" : undefined}
                   />
                   {!reduced && showGhost && (
@@ -130,7 +130,7 @@ export function AmeliaAsk() {
                   key={q}
                   type="button"
                   onClick={() => go(q)}
-                  className="cursor-pointer border border-ivory/22 px-3.5 py-2 text-left text-[13px] leading-snug text-ivory/75 transition-colors duration-300 hover:border-gold/70 hover:text-ivory"
+                  className="cursor-pointer border border-ivory/22 px-3.5 py-2 text-left text-[13px] leading-snug text-ivory/75 transition-colors duration-300 hover:border-silver hover:text-ivory"
                 >
                   {q}
                 </button>

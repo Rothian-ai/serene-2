@@ -7,7 +7,6 @@ import { SplitHeading } from "~/components/SplitHeading";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { ReasonsCarousel } from "~/components/ReasonsCarousel";
 import { AmenitiesShowcase } from "~/components/AmenitiesShowcase";
-import { CinematicCarousel } from "~/components/CinematicCarousel";
 import { LocationSection } from "~/components/LocationSection";
 import { developments, getDeveloper, getDevelopment, parseSections, renderMarkdown } from "~/lib/content";
 import { SITE, meta as buildMeta } from "~/lib/site";
@@ -82,19 +81,20 @@ export default function Development({ params }: Route.ComponentProps) {
         <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{d.excerpt}</p>
       </Hero>
 
-      {/* ① Overview — information first, before any imagery */}
+      {/* ① Overview — information first; the copy carries the width, the
+          ledger closes the row (no empty gutter between them) */}
       <Section>
-        <div className="grid gap-12 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-7">
+        <div className="grid gap-12 md:grid-cols-12 md:gap-7">
+          <div className="md:col-span-8">
             <Reveal>
               <Eyebrow className="text-brass">The Overview</Eyebrow>
               {d.positioning && (
-                <p className="type-title mt-5 max-w-[26ch] text-ink">{d.positioning}</p>
+                <h2 className="type-headline mt-5 max-w-[24ch] text-ink">{d.positioning}</h2>
               )}
             </Reveal>
             <Reveal delay={0.08}>
               {d.overview && (
-                <p className="type-body-lg mt-6 max-w-[54ch] text-ink/72">{d.overview}</p>
+                <p className="type-body-lg mt-7 max-w-[64ch] text-ink/72">{d.overview}</p>
               )}
             </Reveal>
           </div>
@@ -112,7 +112,10 @@ export default function Development({ params }: Route.ComponentProps) {
         </div>
       </Section>
 
-      {/* ② the case — "Why [development]" reasons carousel, info inside the frames */}
+      {/* ② amenities — directly below the overview */}
+      <AmenitiesShowcase amenities={d.amenities} plate={d.plate} title={d.title} />
+
+      {/* ③ the case — "Why [development]" reasons carousel, info inside the frames */}
       <ReasonsCarousel
         reasons={d.reasons}
         images={slides.map((s) => s.src)}
@@ -122,20 +125,20 @@ export default function Development({ params }: Route.ComponentProps) {
         intro={d.positioning}
       />
 
-      {/* ③ the register — sticky fact-rail + section-nav, chapter by chapter */}
+      {/* ④ the register — editorial chapters, each paired with a gallery image
+          (the gallery reads inline here; no separate image slider) */}
       {sections.length > 0 ? (
-        <DevelopmentNarrative sections={sections} facts={facts} />
+        <DevelopmentNarrative
+          sections={sections}
+          gallery={d.gallery}
+          plate={d.plate}
+          heroImage={d.image}
+        />
       ) : (
         <Section>
           <div className="prose-serene" dangerouslySetInnerHTML={{ __html: renderMarkdown(d.body) }} />
         </Section>
       )}
-
-      {/* ④ amenities — tab row over a sliding image carousel */}
-      <AmenitiesShowcase amenities={d.amenities} plate={d.plate} title={d.title} />
-
-      {/* ⑤ cinematic carousel — the imagery, after the information */}
-      <CinematicCarousel slides={slides} plate={d.plate} title={d.title} />
 
       {/* ④ the developer — trust anchor */}
       {dev && (

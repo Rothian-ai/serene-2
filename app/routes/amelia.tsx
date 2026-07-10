@@ -100,7 +100,7 @@ function Bubble({ msg, href, onEngage }: { msg: Msg; href: string; onEngage: () 
             target="_blank"
             rel="noopener noreferrer"
             onClick={onEngage}
-            className="mt-4 flex w-fit items-center gap-2 border-b border-gold pb-1 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-gold"
+            className="mt-4 flex w-fit items-center gap-2 border-b border-silver/60 pb-1 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-silver transition-colors duration-300 hover:border-ivory hover:text-ivory"
           >
             Continue with Amelia ↗
           </a>
@@ -202,7 +202,7 @@ export default function Amelia() {
     <div className="bg-navy text-ivory">
       <Section className="pt-40 pb-0">
         <div className="mx-auto max-w-[800px]">
-          <Eyebrow className="text-gold">Amelia</Eyebrow>
+          <Eyebrow className="text-silver">Amelia</Eyebrow>
           <h1 className="type-display mt-6 max-w-[16ch]">The advisory, in conversation.</h1>
           <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/78">
             Amelia is Serene's conversational advisor — the reason no one here will ever cold-call
@@ -247,7 +247,7 @@ export default function Amelia() {
                 key={q}
                 type="button"
                 onClick={() => send(q)}
-                className="cursor-pointer border border-ivory/22 px-3.5 py-2 text-left text-[13px] leading-snug text-ivory/75 transition-colors duration-300 hover:border-gold/70 hover:text-ivory"
+                className="cursor-pointer border border-ivory/22 px-3.5 py-2 text-left text-[13px] leading-snug text-ivory/75 transition-colors duration-300 hover:border-silver hover:text-ivory"
               >
                 {q}
               </button>
@@ -265,7 +265,7 @@ export default function Amelia() {
             <label htmlFor="amelia-composer" className="sr-only">
               Write to Amelia
             </label>
-            <div className="flex items-center gap-4 border-b border-ivory/30 pb-4 transition-colors duration-300 focus-within:border-gold">
+            <div className="flex items-center gap-4 border-b border-ivory/30 pb-4 transition-colors duration-300 focus-within:border-silver">
               <input
                 id="amelia-composer"
                 type="text"
@@ -273,7 +273,7 @@ export default function Amelia() {
                 onChange={(e) => setValue(e.target.value)}
                 autoComplete="off"
                 placeholder="Write to Amelia…"
-                className="w-full bg-transparent text-[1.05rem] font-light text-ivory caret-gold outline-none placeholder:text-ivory/40"
+                className="w-full bg-transparent text-[1.05rem] font-light text-ivory caret-silver outline-none placeholder:text-ivory/40"
               />
               <button
                 type="submit"
@@ -294,7 +294,7 @@ export default function Amelia() {
         <RevealGroup className="mx-auto grid max-w-[800px] gap-9 md:grid-cols-3">
           {PROMISES.map((p) => (
             <RevealItem key={p.k} className="border-t border-ivory/18 pt-4">
-              <div className="type-data text-gold">{p.k}</div>
+              <div className="type-data text-silver">{p.k}</div>
               <p className="mt-2 text-[15.5px] leading-relaxed text-ivory/75">{p.copy}</p>
             </RevealItem>
           ))}
