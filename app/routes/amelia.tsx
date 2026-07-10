@@ -81,7 +81,7 @@ export default function Amelia() {
         <div
           aria-hidden
           className="absolute inset-0"
-          style={{ background: "linear-gradient(to top, rgba(13,29,60,0.72), rgba(13,29,60,0.28) 55%, rgba(13,29,60,0.15))" }}
+          style={{ background: "linear-gradient(to top, rgba(17,28,57,0.72), rgba(17,28,57,0.28) 55%, rgba(17,28,57,0.15))" }}
         />
         <div className="relative z-[1] mx-auto flex min-h-[56svh] max-w-[1440px] flex-col items-center justify-center px-6 py-24 text-center">
           <Reveal>
@@ -96,7 +96,7 @@ export default function Amelia() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => track("amelia_engage", { ref, ...(context ? { context } : {}) })}
-                className="inline-block bg-gold px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 hover:bg-dawn"
+                className="btn-platinum inline-block px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.1em] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-[2px] active:translate-y-0 motion-reduce:transform-none motion-reduce:hover:translate-y-0"
               >
                 Begin with Amelia&nbsp;&nbsp;↗
               </a>

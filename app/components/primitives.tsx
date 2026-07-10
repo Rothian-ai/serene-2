@@ -94,17 +94,19 @@ export function Eyebrow({ children, className = "" }: { children: ReactNode; cla
   );
 }
 
-/* ——— Buttons: two species — solid and quiet. Gold fill exists once per page (Amelia). ——— */
+/* ——— Buttons: the primary action is polished platinum (the one metallic moment
+       per surface); everything else is flat blue/ink or a quiet line. Gold is
+       never a fill — it survives only as small accents (ticks, rails, one seal). ——— */
 
 const btnBase =
   "inline-block cursor-pointer text-[12.5px] font-semibold uppercase tracking-[0.1em] px-8 py-[15px] text-center transition-[background-color,border-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-[2px] active:translate-y-0 motion-reduce:transform-none motion-reduce:hover:translate-y-0";
 
-type BtnKind = "solid" | "solid-ivory" | "gold" | "line" | "line-ink";
+type BtnKind = "platinum" | "solid" | "solid-ivory" | "line" | "line-ink";
 
 const btnKinds: Record<BtnKind, string> = {
+  platinum: "btn-platinum",
   solid: "bg-ink text-ivory hover:bg-ink/85",
   "solid-ivory": "bg-ivory text-ink hover:bg-ivory/90",
-  gold: "bg-gold text-ink hover:bg-dawn",
   line: "border border-ivory/50 text-ivory hover:border-ivory hover:bg-ivory/5",
   "line-ink": "border border-ink/35 text-ink hover:border-ink",
 };

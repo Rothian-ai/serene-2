@@ -113,7 +113,7 @@ export function AmenitiesShowcase({
                     className="absolute inset-0"
                     style={{
                       background:
-                        "linear-gradient(to top, rgba(11,10,8,0.82) 0%, rgba(11,10,8,0.32) 42%, transparent 72%)",
+                        "linear-gradient(to top, rgba(10,21,38,0.82) 0%, rgba(10,21,38,0.32) 42%, transparent 72%)",
                     }}
                   />
                   <div className="absolute inset-x-0 bottom-0 max-w-[52ch] p-6 md:p-10">

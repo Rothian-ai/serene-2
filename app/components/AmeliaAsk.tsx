@@ -111,7 +111,7 @@ export function AmeliaAsk() {
                 </div>
                 <button
                   type="submit"
-                  className="shrink-0 cursor-pointer bg-gold px-7 py-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 hover:bg-dawn"
+                  className="btn-platinum shrink-0 cursor-pointer px-7 py-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 >
                   Ask&nbsp;&nbsp;↗
                 </button>

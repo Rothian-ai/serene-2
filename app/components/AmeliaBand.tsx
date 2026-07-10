@@ -29,7 +29,7 @@ export function AmeliaBand({
         <div className="mt-7">
           <Link
             to={to}
-            className="inline-block bg-gold px-8 py-[15px] text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 hover:bg-dawn"
+            className="btn-platinum inline-block px-8 py-[15px] text-[12.5px] font-semibold uppercase tracking-[0.1em] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-[2px] active:translate-y-0 motion-reduce:transform-none motion-reduce:hover:translate-y-0"
           >
             {cta}
           </Link>

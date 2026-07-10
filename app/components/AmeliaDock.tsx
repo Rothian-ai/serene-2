@@ -47,7 +47,7 @@ export function AmeliaDock() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.98 }}
             transition={{ duration: 0.3, ease: EASE_QUIET }}
-            className="mb-3 w-[min(86vw,360px)] origin-bottom-right bg-navy text-ivory shadow-[0_24px_60px_-20px_rgba(11,10,8,0.7)] ring-1 ring-gold/30"
+            className="mb-3 w-[min(86vw,360px)] origin-bottom-right bg-navy text-ivory shadow-[0_24px_60px_-20px_rgba(10,21,38,0.7)] ring-1 ring-gold/30"
           >
             <div className="flex items-center justify-between border-b border-ivory/12 px-5 py-3.5">
               <span className="type-eyebrow flex items-center gap-2 text-gold">
@@ -111,7 +111,7 @@ export function AmeliaDock() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label={open ? "Close Amelia" : "Ask Amelia"}
-        className="group flex cursor-pointer items-center gap-2.5 bg-navy px-5 py-3.5 text-ivory shadow-[0_16px_40px_-16px_rgba(11,10,8,0.7)] ring-1 ring-gold/40 transition-[transform,box-shadow,--tw-ring-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:ring-gold motion-reduce:transform-none motion-reduce:hover:translate-y-0"
+        className="group flex cursor-pointer items-center gap-2.5 bg-navy px-5 py-3.5 text-ivory shadow-[0_16px_40px_-16px_rgba(10,21,38,0.7)] ring-1 ring-gold/40 transition-[transform,box-shadow,--tw-ring-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:ring-gold motion-reduce:transform-none motion-reduce:hover:translate-y-0"
       >
         {open ? (
           <X size={17} strokeWidth={1.5} className="text-gold" />

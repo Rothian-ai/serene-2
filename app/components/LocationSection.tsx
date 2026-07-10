@@ -52,7 +52,7 @@ function MapPanel({
       // brass square marker — radius 0, in-brand (no default icon assets)
       const icon = L.divIcon({
         className: "",
-        html: '<span style="display:block;width:13px;height:13px;background:#d4a94a;box-shadow:0 0 0 3px rgba(212,169,74,0.25)"></span>',
+        html: '<span style="display:block;width:13px;height:13px;background:#c9a227;box-shadow:0 0 0 3px rgba(201,162,39,0.25)"></span>',
         iconSize: [13, 13],
         iconAnchor: [7, 7],
       });

@@ -178,7 +178,7 @@ export default function Home() {
               question arrives — and stays quiet until the next one does.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to="/amelia?ref=home-final" kind="gold">Speak with Amelia</CTA>
+              <CTA to="/amelia?ref=home-final" kind="platinum">Speak with Amelia</CTA>
               <CTA to="/contact" kind="line">Enquire</CTA>
             </div>
           </Reveal>

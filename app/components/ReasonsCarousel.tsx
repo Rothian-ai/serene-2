@@ -94,7 +94,7 @@ export function ReasonsCarousel({
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(11,10,8,0.9) 0%, rgba(11,10,8,0.62) 30%, rgba(11,10,8,0.18) 58%, transparent 80%)",
+                  "linear-gradient(to top, rgba(10,21,38,0.9) 0%, rgba(10,21,38,0.62) 30%, rgba(10,21,38,0.18) 58%, transparent 80%)",
               }}
             />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">

@@ -463,7 +463,7 @@ body {
 .serene-map .leaflet-container {
   height: 100%;
   width: 100%;
-  background: #e7e2d6;
+  background: #e1e4e8;
   font-family: inherit;
 }
 .serene-map .leaflet-tile-pane {
@@ -475,7 +475,7 @@ body {
   border-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
 }
 .serene-map .leaflet-control-attribution {
-  background: rgba(246, 241, 230, 0.72);
+  background: rgba(243, 244, 247, 0.72);
   font-size: 10px;
   color: color-mix(in srgb, var(--color-ink) 55%, transparent);
 }

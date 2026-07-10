@@ -106,7 +106,7 @@ export function Hero({
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(11,10,8,0.7) 0%, rgba(11,10,8,0.3) 42%, rgba(11,10,8,0.06) 65%, transparent 80%)",
+              "linear-gradient(to top, rgba(10,21,38,0.7) 0%, rgba(10,21,38,0.3) 42%, rgba(10,21,38,0.06) 65%, transparent 80%)",
           }}
         />
       </motion.div>

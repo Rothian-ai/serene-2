@@ -26,7 +26,7 @@ export function DevelopmentCard({
         <div
           aria-hidden
           className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{ background: "linear-gradient(to top, rgba(11,10,8,0.42), transparent 58%)" }}
+          style={{ background: "linear-gradient(to top, rgba(10,21,38,0.42), transparent 58%)" }}
         />
       </div>
       <h3 className={`type-title mt-4 transition-colors duration-300 group-hover:text-brass ${compact ? "text-[1.25rem]" : ""}`}>
@@ -65,7 +65,7 @@ export function DeveloperCard({ developer }: { developer: Developer }) {
         <div
           aria-hidden
           className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{ background: "linear-gradient(to top, rgba(11,10,8,0.42), transparent 58%)" }}
+          style={{ background: "linear-gradient(to top, rgba(10,21,38,0.42), transparent 58%)" }}
         />
       </div>
       <h3 className="type-title mt-4 text-[1.35rem] transition-colors duration-300 group-hover:text-brass">

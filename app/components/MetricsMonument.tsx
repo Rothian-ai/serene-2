@@ -42,7 +42,12 @@ export function MetricsMonument() {
             We publish what we are and answer what you ask — registered with the developers we
             represent, and built to inform rather than to chase.
           </p>
-          <p className="type-cap mt-5 text-fog">{SITE.rera} · verifiable.</p>
+          <p className="type-cap mt-5 flex items-center gap-2.5 text-fog">
+            <span aria-hidden className="seal-gold h-7 w-7 shrink-0 text-[13px] font-semibold leading-none">
+              ✓
+            </span>
+            {SITE.rera} · verifiable.
+          </p>
         </Reveal>
       </div>
 

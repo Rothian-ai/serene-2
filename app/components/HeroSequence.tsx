@@ -62,7 +62,7 @@ const AMELIA_BG = {
 
 /** A centred vignette — dark enough to read white text, light enough to keep the photo. */
 const VIGNETTE =
-  "radial-gradient(125% 105% at 50% 48%, rgba(11,10,8,0.5) 0%, rgba(11,10,8,0.66) 55%, rgba(11,10,8,0.86) 100%)";
+  "radial-gradient(125% 105% at 50% 48%, rgba(10,21,38,0.5) 0%, rgba(10,21,38,0.66) 55%, rgba(10,21,38,0.86) 100%)";
 
 /** Static fallback — reduced motion. The title-card over the photograph. */
 function StaticHero() {
@@ -81,7 +81,7 @@ function StaticHero() {
         <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
         <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
         <div className="mt-9 flex justify-center">
-          <CTA to="/amelia?ref=home-hero" kind="gold">Speak with Amelia</CTA>
+          <CTA to="/amelia?ref=home-hero" kind="platinum">Speak with Amelia</CTA>
         </div>
       </div>
     </div>
@@ -259,7 +259,7 @@ export function HeroSequence() {
                 <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
                 {isAmelia && (
                   <div className="mt-9 flex justify-center">
-                    <CTA to="/amelia?ref=home-hero" kind="gold">Speak with Amelia</CTA>
+                    <CTA to="/amelia?ref=home-hero" kind="platinum">Speak with Amelia</CTA>
                   </div>
                 )}
               </div>

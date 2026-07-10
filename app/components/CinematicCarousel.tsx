@@ -101,7 +101,7 @@ export function CinematicCarousel({
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(11,10,8,0.72) 0%, rgba(11,10,8,0.32) 40%, rgba(11,10,8,0.05) 66%, transparent 82%)",
+              "linear-gradient(to top, rgba(10,21,38,0.72) 0%, rgba(10,21,38,0.32) 40%, rgba(10,21,38,0.05) 66%, transparent 82%)",
           }}
         />
       </div>

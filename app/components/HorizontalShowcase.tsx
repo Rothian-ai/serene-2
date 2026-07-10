@@ -31,7 +31,7 @@ function Panel({ development, index }: { development: Development; index: number
         <div
           aria-hidden
           className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-70"
-          style={{ background: "linear-gradient(to top, rgba(11,10,8,0.62), transparent 58%)" }}
+          style={{ background: "linear-gradient(to top, rgba(10,21,38,0.62), transparent 58%)" }}
         />
         <span className="type-data absolute left-4 top-4 text-ivory/70">
           {String(index + 1).padStart(2, "0")}

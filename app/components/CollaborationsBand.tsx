@@ -65,7 +65,7 @@ function CardTile({ card, kind }: { card: Card; kind: "tall" | "short" | "" }) {
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: "linear-gradient(to top, rgba(11,10,8,0.6) 0%, rgba(11,10,8,0.05) 42%, transparent 62%)" }}
+        style={{ background: "linear-gradient(to top, rgba(10,21,38,0.6) 0%, rgba(10,21,38,0.05) 42%, transparent 62%)" }}
       />
       <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-4 md:p-5">
         <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-dawn" />
