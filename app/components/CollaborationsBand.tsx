@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router";
 import { useReducedMotion } from "framer-motion";
 import { Plate } from "~/components/primitives";
-import { developments } from "~/lib/content";
+import { developers, developments, getDeveloper } from "~/lib/content";
 
 /**
  * Collaborations — "A new realm of curated collaborations." A pinned heading +
@@ -11,41 +12,45 @@ import { developments } from "~/lib/content";
  * speeds for depth. All motion is client-only and collapses under
  * prefers-reduced-motion (the head stays put, the grid simply sits below).
  *
- * PLACEHOLDER roster/imagery for the design stage — logos are the collaboration
- * houses on hand; grid cards reuse the development photography. Swap for the
- * real collaboration set + licensed lockups before launch.
+ * The names are the registry itself — the developers we are registered with,
+ * set large; every grid card is a development, and opens its page.
  */
-
-const BRANDS = [
-  { name: "Giorgio Armani", logo: "/images/brands/armani.svg" },
-  { name: "Bulgari", logo: "/images/brands/bvlgari.svg" },
-  { name: "Fendi Casa", logo: "/images/brands/fendi.svg" },
-  { name: "Roberto Cavalli", logo: "/images/brands/cavalli.svg" },
-  { name: "Aston Martin", logo: "/images/brands/aston-martin.svg" },
-  { name: "Bugatti", logo: "/images/brands/bugatti.svg" },
-];
 
 const COL_SPEEDS = [0.85, 1.15, 0.9, 1.05];
 
-// build ~8 image cards from the developments (main + first gallery frame)
-type Card = { image?: string; plate: string; label: string };
-const CARDS: Card[] = developments
-  .flatMap((d) => {
-    const items: Card[] = [{ image: d.image, plate: d.plate, label: d.title }];
-    if (d.gallery[1]) items.push({ image: d.gallery[1].src, plate: d.plate, label: d.title });
-    return items;
-  })
-  .slice(0, 8);
+/** Real developer lockups (see public/images/brands/CREDITS). Rendered through
+    a CSS mask so mixed sources read as one ink-toned register. */
+const BRAND_LOGOS: Record<string, { src: string; w: string }> = {
+  emaar: { src: "/images/brands/dev-emaar.svg", w: "w-[120px] md:w-[150px]" },
+  aldar: { src: "/images/brands/dev-aldar.png", w: "w-[58px] md:w-[70px]" },
+  "sobha-realty": { src: "/images/brands/dev-sobha.svg", w: "w-[112px] md:w-[140px]" },
+  nakheel: { src: "/images/brands/dev-nakheel.svg", w: "w-[120px] md:w-[150px]" },
+  meraas: { src: "/images/brands/dev-meraas.svg", w: "w-[112px] md:w-[140px]" },
+  binghatti: { src: "/images/brands/dev-binghatti.svg", w: "w-[108px] md:w-[135px]" },
+  arada: { src: "/images/brands/dev-arada.svg", w: "w-[108px] md:w-[135px]" },
+};
 
-function BrandLogo({ src, name }: { src: string; name: string }) {
+// one card per development, in register order — the branded collaborations included
+type Card = { slug: string; image?: string; plate: string; label: string; developer: string };
+const CARDS: Card[] = developments
+  .slice(0, 8)
+  .map((d) => ({ slug: d.slug, image: d.image, plate: d.plate, label: d.title, developer: d.developer }));
+
+function BrandMark({ slug, name }: { slug: string; name: string }) {
+  const logo = BRAND_LOGOS[slug];
+  if (!logo) {
+    return (
+      <span className="font-light leading-none text-[clamp(1.6rem,3vw,2.4rem)] text-ink/80">{name}</span>
+    );
+  }
   return (
     <span
       role="img"
       aria-label={name}
-      className="block h-8 w-[130px] bg-ink/70 transition-colors duration-300 hover:bg-brass md:h-9 md:w-[150px]"
+      className={`block h-9 md:h-11 ${logo.w} bg-ink/80 transition-colors duration-300 group-hover:bg-brass`}
       style={{
-        WebkitMaskImage: `url("${src}")`,
-        maskImage: `url("${src}")`,
+        WebkitMaskImage: `url("${logo.src}")`,
+        maskImage: `url("${logo.src}")`,
         WebkitMaskRepeat: "no-repeat",
         maskRepeat: "no-repeat",
         WebkitMaskPosition: "center",
@@ -59,19 +64,31 @@ function BrandLogo({ src, name }: { src: string; name: string }) {
 
 function CardTile({ card, kind }: { card: Card; kind: "tall" | "short" | "" }) {
   const aspect = kind === "tall" ? "aspect-[3/4.6]" : kind === "short" ? "aspect-[3/3.2]" : "aspect-[3/4]";
+  const dev = getDeveloper(card.developer);
   return (
-    <article className={`relative overflow-hidden bg-ink text-ivory ${aspect}`}>
-      <Plate kind={card.plate as never} image={card.image} alt={card.label} className="absolute inset-0 h-full w-full" />
+    <Link
+      to={`/developments/${card.slug}`}
+      className={`group relative block overflow-hidden bg-ink text-ivory ${aspect}`}
+    >
+      <Plate
+        kind={card.plate as never}
+        image={card.image}
+        alt={card.label}
+        className="absolute inset-0 h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+      />
       <div
         aria-hidden
         className="absolute inset-0"
         style={{ background: "linear-gradient(to top, rgba(10,21,38,0.6) 0%, rgba(10,21,38,0.05) 42%, transparent 62%)" }}
       />
-      <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-4 md:p-5">
-        <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-dawn" />
-        <span className="type-title text-[1.05rem] text-ivory">{card.label}</span>
+      <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+        <div className="flex items-center gap-2">
+          <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-dawn" />
+          <span className="type-title text-[1.05rem] text-ivory">{card.label}</span>
+        </div>
+        {dev && <span className="type-eyebrow mt-1.5 block pl-3.5 text-ivory/60">{dev.name}</span>}
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -132,19 +149,28 @@ export function CollaborationsBand() {
     (col + row) % 3 === 0 ? "tall" : (col + row) % 3 === 1 ? "short" : "";
 
   return (
-    <section className="relative overflow-hidden bg-ivory">
-      <div className="relative mx-auto h-[900px] max-w-[1440px] px-6 md:h-[1040px] md:px-12 lg:px-20">
+    /* NOTE: no overflow-hidden here — an overflow-clipping ancestor disables
+       position:sticky, which kills the pin and therefore the clash. */
+    <section className="relative bg-ivory">
+      <div className="relative mx-auto h-[780px] max-w-[1440px] px-6 md:h-[900px] md:px-12 lg:px-20">
         <div ref={headRef} className="sticky top-0 z-[1] pt-24 will-change-[opacity,transform,filter] md:pt-28">
           <h2 className="mx-auto max-w-[22ch] text-center type-headline uppercase tracking-[0.06em]">
             A new realm of curated collaborations
           </h2>
           <p className="mx-auto mt-5 max-w-[58ch] text-center type-body-lg text-ink/64">
-            The residences we represent are shaped with the houses that define modern luxury — a
-            short, deliberate register of the names behind the addresses.
+            We represent only the institutions we are registered with — each name below carries
+            the addresses in the register.
           </p>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 border-b border-ink/12 pb-12 md:mt-14">
-            {BRANDS.map((b) => (
-              <BrandLogo key={b.name} src={b.logo} name={b.name} />
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-9 gap-y-8 border-b border-ink/12 pb-10 md:mt-12 md:gap-x-8 lg:gap-x-10">
+            {developers.map((dev) => (
+              <Link
+                key={dev.slug}
+                to={`/developers/${dev.slug}`}
+                className="group block text-center"
+                aria-label={dev.name}
+              >
+                <BrandMark slug={dev.slug} name={dev.name} />
+              </Link>
             ))}
           </div>
         </div>
@@ -152,7 +178,7 @@ export function CollaborationsBand() {
 
       <div
         ref={gridRef}
-        className="relative z-[2] mx-auto -mt-[340px] grid max-w-[1440px] grid-cols-2 gap-5 px-6 pb-24 md:-mt-[380px] md:grid-cols-4 md:px-12 lg:px-20"
+        className="relative z-[2] mx-auto -mt-[320px] grid max-w-[1440px] grid-cols-2 gap-5 px-6 pb-24 md:-mt-[420px] md:grid-cols-4 md:px-12 lg:px-20"
       >
         {columns.map((col, ci) => (
           <div

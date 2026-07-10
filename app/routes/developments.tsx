@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router";
-import { Eyebrow, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
-import { DevelopmentCard } from "~/components/cards";
+import { DevelopmentGridCard } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developments } from "~/lib/content";
 import { meta as buildMeta } from "~/lib/site";
@@ -60,41 +60,28 @@ export default function Developments() {
       </div>
 
       <Section className="pt-14">
-        <div className="flex flex-col gap-20">
-          {list.map((d, i) => {
-            const wide = i % 3 === 2;
-            const flip = i % 2 === 1;
-            if (wide) {
-              return (
-                <Reveal key={d.slug}>
-                  <DevelopmentCard development={d} aspect="aspect-[21/9]" />
-                </Reveal>
-              );
-            }
-            return (
-              <Reveal key={d.slug}>
-                <div className={`grid items-end gap-8 md:grid-cols-12`}>
-                  <div className={`md:col-span-7 ${flip ? "md:order-2 md:col-start-6" : ""}`}>
-                    <DevelopmentCard development={d} />
-                  </div>
-                  <p
-                    className={`type-body-lg hidden max-w-[36ch] text-ink/65 md:col-span-4 md:block ${
-                      flip ? "md:order-1 md:col-start-1" : "md:col-start-9"
-                    }`}
-                  >
-                    {d.excerpt}
-                  </p>
-                </div>
-              </Reveal>
-            );
-          })}
-          {list.length === 0 && (
-            <p className="type-body-lg text-ink/60">
-              No developments in this market at present. The registry grows steadily — ask Amelia
-              what is coming.
-            </p>
-          )}
-        </div>
+        <Reveal>
+          <SplitHeading as="h2" className="type-headline max-w-[18ch]">
+            The register, kept current.
+          </SplitHeading>
+          <p className="type-body-lg mt-4 max-w-[52ch] text-ink/65">
+            Each development, presented plainly — and answerable in full the moment you ask.
+          </p>
+        </Reveal>
+        {list.length > 0 ? (
+          <RevealGroup className="mt-12 grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((d) => (
+              <RevealItem key={d.slug} className="flex">
+                <DevelopmentGridCard development={d} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        ) : (
+          <p className="type-body-lg mt-12 text-ink/60">
+            No developments in this market at present. The registry grows steadily — ask Amelia
+            what is coming.
+          </p>
+        )}
       </Section>
 
       <AmeliaBand

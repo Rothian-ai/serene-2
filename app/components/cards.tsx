@@ -76,6 +76,112 @@ export function DeveloperCard({ developer }: { developer: Developer }) {
   );
 }
 
+/* Registry row — an institution as a ledger entry: number, plate, name and
+   tagline, the two facts that matter, and the arrow. The whole row is the link. */
+export function DeveloperRow({ developer, index }: { developer: Developer; index: number }) {
+  return (
+    <Link
+      to={`/developers/${developer.slug}`}
+      className="group grid items-center gap-x-7 gap-y-4 border-t border-ink/14 py-7 md:grid-cols-12 md:py-8"
+    >
+      <span className="type-data text-brass md:col-span-1">{String(index + 1).padStart(2, "0")}</span>
+      <div className="relative aspect-[16/10] overflow-hidden md:col-span-3">
+        <Plate
+          kind={developer.plate}
+          image={developer.image}
+          alt={developer.name}
+          className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        />
+      </div>
+      <div className="md:col-span-4">
+        <h3 className="type-title text-[1.45rem] transition-colors duration-300 group-hover:text-brass">
+          {developer.name}
+        </h3>
+        <p className="type-cap mt-1.5 text-fog">{developer.tagline}</p>
+      </div>
+      <dl className="hidden gap-x-9 md:col-span-3 md:flex">
+        <div>
+          <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-fog">Founded</dt>
+          <dd className="type-data mt-1">{developer.founded}</dd>
+        </div>
+        <div>
+          <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-fog">Delivered</dt>
+          <dd className="type-data mt-1">{developer.delivered}</dd>
+        </div>
+      </dl>
+      <span
+        aria-hidden
+        className="hidden text-right text-ink/45 transition-all duration-300 group-hover:translate-x-1 group-hover:text-ink md:col-span-1 md:block"
+      >
+        →
+      </span>
+    </Link>
+  );
+}
+
+/* Column card — the register in even columns: image, title, a line of
+   description, and a full-width quiet action. Facts stay one click away. */
+export function DevelopmentGridCard({ development }: { development: Development }) {
+  const dev = getDeveloper(development.developer);
+  return (
+    <Link to={`/developments/${development.slug}`} className="group flex h-full flex-col">
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <Plate
+          kind={development.plate}
+          image={development.image}
+          alt={development.title}
+          className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: "linear-gradient(to top, rgba(10,21,38,0.42), transparent 58%)" }}
+        />
+      </div>
+      <div className="type-eyebrow mt-5 text-brass">
+        {development.district}, {development.city}
+      </div>
+      <h3 className="type-title mt-2 transition-colors duration-300 group-hover:text-brass">
+        {development.title}
+      </h3>
+      <p className="mt-2.5 text-[15px] leading-relaxed text-ink/68">{development.excerpt}</p>
+      <p className="type-cap mt-3 text-fog">
+        {dev?.name ?? development.developer} · handover {development.handover} · from{" "}
+        {development.priceFrom}
+      </p>
+      <span className="mt-auto block pt-5">
+        <span className="block border border-ink/35 py-[13px] text-center text-[12px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-ivory">
+          View the development
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+/* Journal card — image-led, for the home grid. */
+export function InsightCard({ insight }: { insight: Insight }) {
+  return (
+    <Link to={`/insights/${insight.slug}`} className="group flex h-full flex-col">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <Plate
+          kind={insight.plate}
+          image={insight.image}
+          alt=""
+          className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        />
+      </div>
+      <div className="type-eyebrow mt-5 text-brass">
+        {insight.category} · {formatDate(insight.date)}
+      </div>
+      <h3 className="type-title mt-2.5 text-[1.25rem] transition-colors duration-300 group-hover:text-brass">
+        {insight.title}
+      </h3>
+      <p className="mt-2.5 text-[15px] leading-relaxed text-ink/68">{insight.excerpt}</p>
+      <span className="type-cap mt-4 text-fog">{insight.readingTime}</span>
+    </Link>
+  );
+}
+
 /* Journal-contents row — ledger grammar, not a blog card. */
 export function InsightRow({ insight }: { insight: Insight }) {
   return (

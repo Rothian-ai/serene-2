@@ -63,3 +63,9 @@ Collaboration LOGOS (brands/<brand>.svg) — brand wordmarks/marks via worldvect
 background plate stripped, painted monochrome via CSS mask. Trademarks of their respective owners;
 placeholders for the design stage only — remove or license before any public launch.
 brands/armani.svg · brands/bvlgari.svg · brands/fendi.svg · brands/cavalli.svg · brands/aston-martin.svg · brands/bugatti.svg
+
+brands/dev-*.svg, dev-aldar.png — developer lockups fetched 2026-07-10 from
+Wikimedia Commons (Emaar, Meraas, Aldar) and the developers' own sites
+(Nakheel, Sobha, Binghatti, Arada). Trademarks of their owners; used here for
+factual identification in a private design exercise, per client instruction.
+Confirm licensing with each developer before public launch.

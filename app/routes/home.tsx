@@ -3,11 +3,11 @@ import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Seam, Plate } from "~/components/primitives";
-import { DeveloperCard, InsightRow } from "~/components/cards";
+import { DeveloperRow, InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { developments, developers, insights } from "~/lib/content";
-import { SITE, meta as buildMeta } from "~/lib/site";
+import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -84,58 +84,27 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
-      {/* ③ Featured developments — pinned horizontal gallery */}
-      <HorizontalShowcase developments={developments} />
+      {/* ③ Featured developments — pinned horizontal gallery (the end card
+          carries the visitor to the full ten-strong register) */}
+      <HorizontalShowcase developments={developments.slice(0, 6)} />
 
       {/* ④ By the Record — animated credibility monument */}
       <MetricsMonument />
 
-      {/* ⑤ Why Serene — the trust monument */}
-      <Seam variant="ivory-ink" />
-      <div className="bg-ink text-ivory">
-        <Section>
-        <Eyebrow className="text-gold">Why Serene</Eyebrow>
-        <SplitHeading as="h2" className="type-display mt-6 max-w-[20ch]">
-          Trust is a matter of record.
-        </SplitHeading>
-        <RevealGroup className="mt-14 grid gap-9 md:grid-cols-3">
-            {[
-              {
-                k: "RERA LICENSED",
-                copy: `${SITE.legalName} operates under ${SITE.rera.replace("RERA Licence", "RERA licence")}. Verifiable, as it should be.`,
-              },
-              {
-                k: "REGISTERED DEVELOPERS",
-                copy: "We transact only with developers we are registered with — Emaar, Aldar, Sobha, and the institutions building the Emirates.",
-              },
-              {
-                k: "AI-NATIVE ADVISORY",
-                copy: "Every question answered on demand, with data. No cold calls. No follow-up campaigns. Ever.",
-              },
-            ].map((item) => (
-              <RevealItem key={item.k} className="border-t border-ivory/16 pt-4">
-                <div className="type-data text-gold">{item.k}</div>
-                <p className="mt-2.5 text-[15.5px] leading-relaxed text-ivory/75">{item.copy}</p>
-              </RevealItem>
-          ))}
-        </RevealGroup>
-        </Section>
-      </div>
-
-      {/* ⑥ Amelia — her one navy moment, now interactive */}
-      <Seam variant="ink-navy" />
-      <AmeliaAsk />
-      <Seam variant="navy-ivory" />
-
-      {/* ⑦ The registry */}
-      <Section>
+      {/* ⑤ The registry — the institutions, entered in the ledger */}
+      <Section className="pt-0">
         <Reveal exit>
           <Eyebrow className="text-brass">The Registry</Eyebrow>
         </Reveal>
-        <div className="mt-9 grid gap-10 md:grid-cols-3 md:gap-7">
+        <Reveal>
+          <SplitHeading as="h2" className="type-headline mt-6 max-w-[22ch]">
+            The institutions we are registered with.
+          </SplitHeading>
+        </Reveal>
+        <div className="mt-10 border-b border-ink/14">
           {registry.map((dev, i) => (
-            <Reveal key={dev.slug} delay={0.08 * i} className={i === 1 ? "md:mt-14" : ""}>
-              <DeveloperCard developer={dev} />
+            <Reveal key={dev.slug}>
+              <DeveloperRow developer={dev} index={i} />
             </Reveal>
           ))}
         </div>
@@ -144,20 +113,27 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ⑦b Collaborations — the house of names */}
+      {/* ⑥ Collaborations — the register, set large, then covered by its addresses */}
       <CollaborationsBand />
 
-      {/* ⑧ Insights — journal contents */}
-      <Section className="pt-0">
+      {/* ⑦ Amelia — her one navy moment, now interactive */}
+      <Seam variant="ivory-navy" />
+      <AmeliaAsk />
+      <Seam variant="navy-ivory" />
+
+      {/* ⑧ Insights — the journal, image-led */}
+      <Section>
         <Reveal exit>
           <Eyebrow className="text-brass">Insights</Eyebrow>
         </Reveal>
-        <Reveal className="mt-7 hairline-b">
+        <RevealGroup className="mt-9 grid gap-10 md:grid-cols-3 md:gap-7">
           {latest.map((i) => (
-            <InsightRow key={i.slug} insight={i} />
+            <RevealItem key={i.slug}>
+              <InsightCard insight={i} />
+            </RevealItem>
           ))}
-        </Reveal>
-        <div className="mt-9">
+        </RevealGroup>
+        <div className="mt-11">
           <QuietLink to="/insights">All Insights</QuietLink>
         </div>
       </Section>

@@ -15,12 +15,11 @@ import { SITE } from "~/lib/site";
 
 const METRICS: Array<{
   to: number;
-  prefix?: string;
   suffix?: string;
   label: string;
   accent?: boolean;
 }> = [
-  { to: 24, prefix: "AED ", suffix: "B+", label: "Transaction value advised", accent: true },
+  { to: 24, suffix: "B+", label: "AED in transactions advised", accent: true },
   { to: 11000, suffix: "+", label: "Residences placed for clients" },
   { to: 60, suffix: "+", label: "Communities across Dubai & Abu Dhabi" },
   { to: 18, suffix: "+", label: "Years on Emirates off-plan" },
@@ -31,14 +30,14 @@ export function MetricsMonument() {
     <Section>
       {/* header — title left, intent right */}
       <div className="grid gap-8 md:grid-cols-12 md:gap-7">
-        <Reveal className="md:col-span-4">
+        <Reveal className="md:col-span-5">
           <Eyebrow className="text-brass">By the Record</Eyebrow>
-          <SplitHeading as="h2" className="type-headline mt-5 max-w-[10ch]">
-            At a glance.
+          <SplitHeading as="h2" className="type-headline mt-5 max-w-[14ch]">
+            The measure of the house.
           </SplitHeading>
         </Reveal>
-        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
-          <p className="type-body-lg max-w-[52ch] text-ink/72">
+        <Reveal delay={0.1} className="md:col-span-5 md:col-start-8 md:pt-2">
+          <p className="type-body-lg max-w-[46ch] text-ink/72">
             We publish what we are and answer what you ask — registered with the developers we
             represent, and built to inform rather than to chase.
           </p>
@@ -51,18 +50,18 @@ export function MetricsMonument() {
         </Reveal>
       </div>
 
-      {/* the band — figures divided by hairline rules */}
-      <RevealGroup className="mt-12 grid grid-cols-2 gap-y-12 md:mt-16 md:grid-cols-4 md:gap-y-0">
+      {/* the band — four equal cells on one shared rule, figures set to one size */}
+      <RevealGroup className="mt-12 grid grid-cols-2 gap-x-7 gap-y-12 md:mt-16 md:grid-cols-4">
         {METRICS.map((m) => (
-          <RevealItem key={m.label} className="border-l border-ink/15 px-5 md:px-7">
+          <RevealItem key={m.label} className="border-t border-ink/14 pt-6">
             <div
-              className={`font-light leading-[0.92] tracking-[-0.03em] tabular-nums text-[clamp(3.25rem,7vw,6rem)] ${
+              className={`font-extralight leading-none tracking-[-0.02em] tabular-nums text-[clamp(2.5rem,3.8vw,3.75rem)] ${
                 m.accent ? "text-brass" : "text-ink"
               }`}
             >
-              <Counter to={m.to} prefix={m.prefix} suffix={m.suffix} />
+              <Counter to={m.to} suffix={m.suffix} />
             </div>
-            <p className="type-cap mt-5 max-w-[22ch] text-fog">{m.label}</p>
+            <p className="type-cap mt-4 text-fog">{m.label}</p>
           </RevealItem>
         ))}
       </RevealGroup>
