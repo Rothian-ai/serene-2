@@ -74,7 +74,7 @@ function StaticHero() {
       </div>
       <div className="container-site relative z-[1] text-center">
         <img
-          src="/logo/serene-mark-white.png"
+          src="/logo/serene-mark-only-white.png"
           alt="Serene"
           className="mx-auto h-20 w-auto md:h-28"
         />
@@ -194,7 +194,7 @@ export function HeroSequence() {
   ];
 
   return (
-    <section ref={rootRef} className="relative h-[320vh]">
+    <section ref={rootRef} className="relative h-[320vh] bg-ink">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-ink text-ivory">
         {/* crossfading grounds + ambient light (parallax + breath on wrap) */}
         <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
@@ -228,9 +228,11 @@ export function HeroSequence() {
           className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
         >
           <div className="pointer-events-auto">
+            {/* mark alone (sanctioned lockup 2) — cropped from the supplied
+                artwork; the wordmark would double the headline beneath it */}
             <img
               ref={markRef}
-              src="/logo/serene-mark-white.png"
+              src="/logo/serene-mark-only-white.png"
               alt="Serene"
               className="mx-auto h-20 w-auto md:h-28"
             />

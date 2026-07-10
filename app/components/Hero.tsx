@@ -46,7 +46,7 @@ export function Hero({
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
   return (
-    <div ref={ref} className={`relative flex ${height} items-end overflow-hidden bg-ink text-ivory`}>
+    <div ref={ref} className={`hero-4k relative flex ${height} items-end overflow-hidden bg-ink text-ivory`}>
       <motion.div
         className="absolute inset-x-0 top-0 -bottom-[10%]"
         style={reduced ? undefined : { y: bgY }}

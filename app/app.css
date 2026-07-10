@@ -134,6 +134,23 @@
   }
 }
 
+/* ——— 4K and larger (≥2240px, above laptop 1920s): heroes stop tracking the
+       full viewport and settle on a fixed cinematic stage — otherwise an
+       88svh hero on a 4K display is a ~1300px wall of image. ——— */
+@media (min-width: 2240px) {
+  /* inner-page heroes (Hero.tsx) — the svh min-heights collapse to a stage */
+  .hero-4k {
+    min-height: 0 !important;
+    height: min(52vh, 900px);
+  }
+  /* the pinned homepage sequence — a letterboxed stage, centred in the
+     viewport while pinned; the section's ink ground frames it above/below */
+  .hero-4k-home {
+    height: 880px !important;
+    top: calc((100vh - 880px) / 2) !important;
+  }
+}
+
 /* base */
 html {
   background: var(--color-ink);
@@ -478,9 +495,6 @@ body {
 }
 .loader-mark {
   animation: loader-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
-}
-.loader-word {
-  animation: loader-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
 }
 @keyframes hero-cue {
   0% { transform: translateY(-14px); }

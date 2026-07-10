@@ -61,10 +61,8 @@ export function LoadingSequence() {
         phase === "leaving" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <img src="/logo/serene-mark-white.png" alt="" className="loader-mark h-24 w-auto" />
-      <span className="loader-word mt-5 text-[15px] font-medium uppercase tracking-[0.3em] text-ivory">
-        Serene
-      </span>
+      {/* the lockup already carries the wordmark — the mark stands alone, dead-centre */}
+      <img src="/logo/serene-mark-white.png" alt="" className="loader-mark h-28 w-auto" />
     </div>
   );
 }

@@ -6,7 +6,6 @@ import {
   Reveal,
   RevealGroup,
   RevealItem,
-  Seam,
   Section,
 } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
@@ -26,21 +25,28 @@ export function meta() {
   });
 }
 
+/** The Serene Way — each movement carries its own photograph. */
 const MOVEMENTS = [
   {
     n: "01",
     title: "Ask",
     copy: "Bring a question — a district, a payment plan, a doubt. Amelia answers with data, at whatever hour the question arrives.",
+    image: "/images/about-ask.jpg",
+    alt: "A quiet lounge in warm evening light",
   },
   {
     n: "02",
     title: "Understand",
     copy: "Transaction histories, escrow rules, service charges, handover records. The full picture, stated plainly, before any commitment.",
+    image: "/images/about-understand.jpg",
+    alt: "An architectural section drawing, read in full",
   },
   {
     n: "03",
     title: "Decide",
     copy: "In your own time. When you are ready to proceed, we act. Until then, silence — ours, not yours.",
+    image: "/images/about-decide.jpg",
+    alt: "A door standing open to warm light",
   },
 ];
 
@@ -59,7 +65,7 @@ export default function About() {
         </p>
       </Hero>
 
-      {/* ② Stance — statement left, argument right */}
+      {/* ② Stance — statement left, argument right, then the light held wide */}
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal exit className="md:col-span-5">
@@ -81,20 +87,44 @@ export default function About() {
             </p>
           </Reveal>
         </div>
+
+        {/* the argument, in material — one wide, quiet plate */}
+        <Reveal className="mt-10 md:mt-14">
+          <Plate
+            kind="stone"
+            image="/images/about-light.jpg"
+            alt="An atrium in plaster and daylight"
+            className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/7]"
+            parallax
+          />
+          <p className="type-cap mt-3 text-fog">Room to think — the whole premise, in one frame.</p>
+        </Reveal>
       </Section>
 
-      {/* ③ The Serene Way — the site's only numbered device (flowing content) */}
-      <Section>
+      {/* ③ The Serene Way — three movements, each with its photograph */}
+      <Section className="pt-0">
         <Reveal exit>
           <Eyebrow className="text-brass">The Serene Way</Eyebrow>
         </Reveal>
-        <RevealGroup className="mt-9 grid gap-9 md:grid-cols-3">
+        <RevealGroup className="mt-9 grid gap-9 md:grid-cols-3 md:gap-7">
           {MOVEMENTS.map((m) => (
-            <RevealItem key={m.n} className="border-t border-ink/14 pt-4">
-              <div className="type-data text-brass">
-                {m.n} — {m.title.toUpperCase()}
+            <RevealItem key={m.n}>
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <Plate kind="interior" image={m.image} alt={m.alt} className="h-full w-full" />
+                <div
+                  aria-hidden
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(10,21,38,0.66) 0%, rgba(10,21,38,0.12) 38%, transparent 60%)",
+                  }}
+                />
+                <div className="absolute inset-x-5 bottom-5">
+                  <div className="type-data text-gold/90">{m.n}</div>
+                  <h3 className="type-title mt-1.5 text-ivory">{m.title}</h3>
+                </div>
               </div>
-              <p className="mt-2.5 max-w-[38ch] text-[15.5px] leading-relaxed text-ink/70">
+              <p className="mt-4 max-w-[38ch] text-[15.5px] leading-relaxed text-ink/70">
                 {m.copy}
               </p>
             </RevealItem>
@@ -102,7 +132,7 @@ export default function About() {
         </RevealGroup>
       </Section>
 
-      {/* ④ Licensing & registry — the open-corner frame monument (flowing content) */}
+      {/* ④ Licensing & registry — the open-corner frame monument */}
       <Section className="pt-0">
         <Reveal>
           <div className="relative border border-ink/18 p-8 md:p-12">
@@ -124,8 +154,7 @@ export default function About() {
         </Reveal>
       </Section>
 
-      {/* ⑤ The Commitment — the charter, on ink, held to its content */}
-      <Seam variant="ivory-ink" />
+      {/* ⑤ The Commitment — the charter, on ink, meeting the page on a hard edge */}
       <div className="bg-ink text-ivory">
         <Section>
           <div className="mx-auto max-w-[880px] text-center">
@@ -145,10 +174,9 @@ export default function About() {
           </div>
         </Section>
       </div>
-      <Seam variant="ink-ivory" />
 
       {/* ⑥ The Standard — counsel left, the material of it right */}
-      <Section className="pt-0">
+      <Section>
         <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-6">
             <Reveal exit>
