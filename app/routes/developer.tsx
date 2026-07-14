@@ -1,7 +1,8 @@
-import { Eyebrow, Ledger, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, Ledger, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { DevelopmentCard } from "~/components/cards";
+import { BrandMark } from "~/components/CollaborationsBand";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developmentsByDeveloper, getDeveloper, renderMarkdown } from "~/lib/content";
 import { meta as buildMeta } from "~/lib/site";
@@ -24,6 +25,12 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
   if (!dev) throw new Response("Not Found", { status: 404 });
   const theirs = developmentsByDeveloper(dev.slug);
 
+  const record = [
+    { k: "Founded", v: dev.founded },
+    { k: "Headquarters", v: dev.hq },
+    { k: "Delivered", v: dev.delivered },
+  ];
+
   return (
     <>
       <Hero plate={dev.plate} image={dev.image} height="min-h-[100svh]" scrollCue>
@@ -34,37 +41,74 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
         <p className="type-body-lg mt-6 max-w-[44ch] text-ivory/80">{dev.tagline}</p>
       </Hero>
 
-      <div className="container-site">
-        <Ledger
-          className="!border-t-0 py-5"
-          cells={[
-            { k: "Founded", v: dev.founded },
-            { k: "Headquarters", v: dev.hq },
-            { k: "Delivered", v: dev.delivered },
-            { k: "Notable", v: dev.notable.join(" · ") },
-          ]}
-        />
-      </div>
-
+      {/* ① The record — the institution's facts set large beside the house prose,
+          so neither floats alone in whitespace */}
       <Section>
-        <div className="grid gap-10 md:grid-cols-12">
-          <Reveal className="md:col-span-6 md:col-start-2">
-            <div
-              className="prose-serene"
-              dangerouslySetInnerHTML={{ __html: renderMarkdown(dev.body) }}
-            />
-          </Reveal>
+        <div className="grid gap-12 md:grid-cols-12 md:gap-7">
+          <div className="md:col-span-4">
+            <Reveal>
+              <BrandMark slug={dev.slug} name={dev.name} />
+              <dl className="mt-10 flex flex-col">
+                {record.map((f) => (
+                  <div key={f.k} className="border-t border-ink/14 py-5">
+                    <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-fog">
+                      {f.k}
+                    </dt>
+                    <dd className="type-title mt-1.5">{f.v}</dd>
+                  </div>
+                ))}
+                {dev.notable.length > 0 && (
+                  <div className="border-t border-ink/14 py-5">
+                    <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-fog">
+                      Notable works
+                    </dt>
+                    <dd className="mt-2 flex flex-col gap-1.5">
+                      {dev.notable.map((n) => (
+                        <span key={n} className="type-data">{n}</span>
+                      ))}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            </Reveal>
+          </div>
+
+          <div className="md:col-span-7 md:col-start-6">
+            <Reveal delay={0.1}>
+              <Eyebrow className="text-brass">The House</Eyebrow>
+              <div
+                className="prose-serene mt-7"
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(dev.body) }}
+              />
+            </Reveal>
+          </div>
         </div>
       </Section>
 
+      {/* ② the addresses they carry in the register */}
       {theirs.length > 0 && (
         <Section className="pt-0">
-          <Eyebrow className="text-brass">With Serene</Eyebrow>
-          <div className="mt-8 grid gap-10 md:grid-cols-2">
-            {theirs.map((d) => (
-              <DevelopmentCard key={d.slug} development={d} compact />
-            ))}
-          </div>
+          <Reveal>
+            <Eyebrow className="text-brass">With Serene</Eyebrow>
+            <SplitHeading as="h2" className="type-headline mt-5 max-w-[24ch]">
+              {theirs.length === 1
+                ? `One address in the register.`
+                : `${theirs.length} addresses in the register.`}
+            </SplitHeading>
+          </Reveal>
+          {theirs.length === 1 ? (
+            <Reveal className="mt-10">
+              <DevelopmentCard development={theirs[0]} aspect="aspect-[21/9]" />
+            </Reveal>
+          ) : (
+            <RevealGroup className="mt-10 grid gap-x-7 gap-y-12 md:grid-cols-2">
+              {theirs.map((d) => (
+                <RevealItem key={d.slug}>
+                  <DevelopmentCard development={d} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          )}
         </Section>
       )}
 

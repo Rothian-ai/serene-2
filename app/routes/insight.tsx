@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Eyebrow, Plate, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
-import { InsightRow } from "~/components/cards";
+import { InsightCard } from "~/components/cards";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { formatDate, getInsight, insights, renderMarkdown } from "~/lib/content";
 import { track } from "~/lib/analytics";
@@ -66,10 +66,10 @@ export default function Insight({ params }: Route.ComponentProps) {
 
       {related.length > 0 && (
         <Section className="pt-0">
-          <Eyebrow className="text-brass">Related</Eyebrow>
-          <div className="mt-6 hairline-b">
+          <Eyebrow className="text-brass">Continue reading</Eyebrow>
+          <div className="mt-8 grid gap-x-7 gap-y-12 md:grid-cols-2">
             {related.map((r) => (
-              <InsightRow key={r.slug} insight={r} />
+              <InsightCard key={r.slug} insight={r} />
             ))}
           </div>
         </Section>
