@@ -7,7 +7,7 @@ import { InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { developments, insights } from "~/lib/content";
-import { meta as buildMeta } from "~/lib/site";
+import { AMELIA_URL, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -137,7 +137,7 @@ export default function Home() {
               question arrives — and stays quiet until the next one does.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to="/amelia?ref=home-final" kind="platinum">Speak with Amelia</CTA>
+              <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
               <CTA to="/contact" kind="line">Enquire</CTA>
             </div>
           </Reveal>

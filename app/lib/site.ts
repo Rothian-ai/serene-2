@@ -19,7 +19,7 @@ export const SITE = {
  * set VITE_AMELIA_URL in .env for the production destination.
  */
 export const AMELIA_URL: string =
-  (import.meta.env.VITE_AMELIA_URL as string | undefined) ?? "https://amelia.serene.com";
+  (import.meta.env.VITE_AMELIA_URL as string | undefined) ?? "https://amelia.rothian.com/login";
 
 export function ameliaHref(ref: string, context?: string): string {
   const url = new URL(AMELIA_URL);

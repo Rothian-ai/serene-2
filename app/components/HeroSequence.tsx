@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { CTA, Plate } from "~/components/primitives";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
+import { AMELIA_URL } from "~/lib/site";
 
 /**
  * The homepage cinematic hero — a pinned, scroll-driven narrative over actual
@@ -26,8 +27,8 @@ const HERO_VIDEO = { webm: "", mp4: "" };
 const CHAPTERS = [
   {
     eyebrow: "",
-    title: "Serenity, elevated.",
-    sub: "Off-plan real estate and curated addresses across Dubai and Abu Dhabi.",
+    title: "UAE's First AI Native Real Estate Agency",
+    sub: "Serenity, elevated. Off-plan real estate and curated addresses across Dubai and Abu Dhabi.",
   },
   {
     eyebrow: "The Approach",
@@ -81,7 +82,7 @@ function StaticHero() {
         <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
         <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
         <div className="mt-9 flex justify-center">
-          <CTA to="/amelia?ref=home-hero" kind="platinum">Speak with Amelia</CTA>
+          <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
         </div>
       </div>
     </div>
@@ -101,6 +102,7 @@ export function HeroSequence() {
   const markRef = useRef<HTMLImageElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useGsapContext(
     rootRef,
@@ -134,6 +136,7 @@ export function HeroSequence() {
           "-=0.4",
         )
         .from(subRef.current, { autoAlpha: 0, y: 20, duration: 0.7 }, "-=0.55")
+        .from(ctaRef.current, { autoAlpha: 0, y: 16, duration: 0.6 }, "-=0.4")
         .from(cueRef.current, { autoAlpha: 0, duration: 0.6 }, "-=0.15");
 
       // ——— sequence: chapters + grounds crossfade on scrub ———
@@ -242,32 +245,30 @@ export function HeroSequence() {
             <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">
               {CHAPTERS[0].sub}
             </p>
+            <div ref={ctaRef} className="mt-9 flex justify-center">
+              <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+            </div>
           </div>
         </div>
 
         {/* chapters 2 & 3 — hidden until the scrub brings them in */}
-        {CHAPTERS.slice(1).map((c, i) => {
-          const isAmelia = i === 1; // third chapter
-          return (
-            <div
-              key={c.eyebrow}
-              ref={(el) => { chapterRefs.current[i + 1] = el; }}
-              className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
-              style={{ opacity: 0, visibility: "hidden" }}
-            >
-              <div className="pointer-events-auto">
-                <Eyebrow>{c.eyebrow}</Eyebrow>
-                <h2 className="type-display mx-auto max-w-[20ch]">{c.title}</h2>
-                <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
-                {isAmelia && (
-                  <div className="mt-9 flex justify-center">
-                    <CTA to="/amelia?ref=home-hero" kind="platinum">Speak with Amelia</CTA>
-                  </div>
-                )}
+        {CHAPTERS.slice(1).map((c, i) => (
+          <div
+            key={c.eyebrow}
+            ref={(el) => { chapterRefs.current[i + 1] = el; }}
+            className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
+            style={{ opacity: 0, visibility: "hidden" }}
+          >
+            <div className="pointer-events-auto">
+              <Eyebrow>{c.eyebrow}</Eyebrow>
+              <h2 className="type-display mx-auto max-w-[20ch]">{c.title}</h2>
+              <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
+              <div className="mt-9 flex justify-center">
+                <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
 
         {/* scroll cue */}
         <div

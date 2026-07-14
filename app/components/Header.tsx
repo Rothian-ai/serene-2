@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { AMELIA_URL } from "~/lib/site";
 
 const NAV = [
   { to: "/developments", label: "Developments" },
@@ -100,12 +101,14 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
             >
               Contact
             </Link>
-            <Link
-              to="/amelia"
+            <a
+              href={AMELIA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`border px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors ${amelia}`}
             >
-              Speak with Amelia
-            </Link>
+              Ask Amelia
+            </a>
           </nav>
           <button
             type="button"
@@ -157,12 +160,14 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 transition={{ delay: 0.45 }}
                 className="mt-10"
               >
-                <Link
-                  to="/amelia"
+                <a
+                  href={AMELIA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="border border-gold/65 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-gold"
                 >
-                  Speak with Amelia
-                </Link>
+                  Ask Amelia
+                </a>
               </motion.div>
             </nav>
           </motion.div>

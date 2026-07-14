@@ -1,16 +1,16 @@
-import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { Eyebrow, Section } from "~/components/primitives";
 import { viewportOnce } from "~/lib/motion";
+import { ameliaHref } from "~/lib/site";
 
 /**
  * The contextual Amelia threshold — the one navy surface on any page.
- * Lands on /amelia (the gateway) carrying its context; the gateway makes
- * the promise in full before the external handoff.
+ * Hands off to Amelia's external platform, carrying its ref/context so the
+ * conversation opens with the page's intent.
  */
 export function AmeliaBand({
   title,
-  cta = "Speak with Amelia",
+  cta = "Ask Amelia",
   refId,
   context,
   caption = "Answers on demand. No call-backs, no lists.",
@@ -21,18 +21,20 @@ export function AmeliaBand({
   context?: string;
   caption?: string;
 }) {
-  const to = `/amelia?ref=${refId}${context ? `&context=${context}` : ""}`;
+  const href = ameliaHref(refId, context);
   return (
     <div className="bg-navy text-ivory">
       <Section tight className="text-center">
         <h2 className="type-headline">{title}</h2>
         <div className="mt-7">
-          <Link
-            to={to}
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-platinum inline-block px-8 py-[15px] text-[12.5px] font-semibold uppercase tracking-[0.1em] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-[2px] active:translate-y-0 motion-reduce:transform-none motion-reduce:hover:translate-y-0"
           >
             {cta}
-          </Link>
+          </a>
         </div>
         <p className="type-cap mt-4 text-silver">{caption}</p>
       </Section>
