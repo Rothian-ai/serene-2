@@ -30,7 +30,7 @@ const MOVEMENTS = [
   {
     n: "01",
     title: "Ask",
-    copy: "Bring a question — a district, a payment plan, a doubt. Amelia answers with data, at whatever hour the question arrives.",
+    copy: "Bring a question: a district, a payment plan, a doubt. Amelia answers with data, at whatever hour the question arrives.",
     image: "/images/about-ask.jpg",
     alt: "A quiet lounge in warm evening light",
   },
@@ -44,7 +44,7 @@ const MOVEMENTS = [
   {
     n: "03",
     title: "Decide",
-    copy: "In your own time. When you are ready to proceed, we act. Until then, silence — ours, not yours.",
+    copy: "In your own time. When you are ready to proceed, we act. Until then, silence. Ours, not yours.",
     image: "/images/about-decide.jpg",
     alt: "A door standing open to warm light",
   },
@@ -60,7 +60,7 @@ export default function About() {
           Built on information, not persistence.
         </SplitHeading>
         <p className="type-body-lg mt-6 max-w-[42ch] text-ivory/72">
-          A licensed advisory for off-plan property in Dubai and Abu Dhabi — with the one
+          A licensed advisory for off-plan property in Dubai and Abu Dhabi, with the one
           conviction that serious buyers are persuaded by information, never pressure.
         </p>
       </Hero>
@@ -77,7 +77,7 @@ export default function About() {
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
             <p className="type-body-lg text-ink/80">
               Buying off-plan in the Emirates is a sound decision too often wrapped in an unsound
-              experience — the calls, the pressure, the urgency that isn't yours. We removed all
+              experience: the calls, the pressure, the urgency that isn't yours. We removed all
               of it. What remains is an advisory: licensed, registered, and staffed by an
               intelligence that answers questions instead of chasing closings.
             </p>
@@ -97,7 +97,7 @@ export default function About() {
             className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/7]"
             parallax
           />
-          <p className="type-cap mt-3 text-fog">Room to think — the whole premise, in one frame.</p>
+          <p className="type-cap mt-3 text-fog">Room to think: the whole premise, in one frame.</p>
         </Reveal>
       </Section>
 
@@ -168,7 +168,7 @@ export default function About() {
               <p className="type-body-lg mx-auto mt-8 max-w-[58ch] text-ivory/75">
                 No cold calls. No follow-up campaigns. No passing your number to a sales floor. If
                 you leave, you have left; if you return, we simply pick up where you stopped. This
-                is not a courtesy — it is the model, in writing.
+                is not a courtesy. It is the model, in writing.
               </p>
             </Reveal>
           </div>
@@ -187,7 +187,7 @@ export default function About() {
             </SplitHeading>
             <Reveal delay={0.1}>
               <p className="type-body-lg mt-7 max-w-[52ch] text-ink/78">
-                Private banking earned its trust by being available and never insistent — present
+                Private banking earned its trust by being available and never insistent, present
                 when called upon, invisible otherwise. We hold the acquisition of property to the
                 same standard: a house you can consult at any hour, and one that will never consult
                 you uninvited.
@@ -205,7 +205,7 @@ export default function About() {
               className="aspect-[4/5]"
               parallax
             />
-            <p className="type-cap mt-3 text-fog">Present when called upon — invisible otherwise.</p>
+            <p className="type-cap mt-3 text-fog">Present when called upon, invisible otherwise.</p>
           </Reveal>
         </div>
       </Section>

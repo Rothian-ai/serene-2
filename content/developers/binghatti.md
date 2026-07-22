@@ -4,7 +4,7 @@ founded: 2008
 hq: Dubai
 delivered: 20,000+ residences
 notable: Bugatti Residences | Mercedes-Benz Places | Burj Binghatti
-tagline: The house of branded towers — Bugatti, Mercedes-Benz, and its own name.
+tagline: The house of branded towers: Bugatti, Mercedes-Benz, and its own name.
 image: /images/the-cove-tower-three-02.jpg
 plate: render
 ---

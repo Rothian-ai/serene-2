@@ -15,7 +15,7 @@ export function meta({ params }: Route.MetaArgs) {
   if (!dev) return buildMeta({ title: "Developer", description: "Registered developer profile." });
   return buildMeta({
     title: dev.name,
-    description: `${dev.name} — registered Serene developer. Founded ${dev.founded}; ${dev.delivered} delivered. ${dev.tagline}`,
+    description: `${dev.name}: registered Serene developer. Founded ${dev.founded}; ${dev.delivered} delivered. ${dev.tagline}`,
     path: `/developers/${dev.slug}`,
   });
 }

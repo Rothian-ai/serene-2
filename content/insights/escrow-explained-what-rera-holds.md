@@ -13,7 +13,7 @@ The single most important fact about buying off-plan in Dubai is that your money
 
 ## What the account holds
 
-The escrow account holds every dirham a buyer pays toward an off-plan unit. Funds sit at a DLD-accredited trustee bank, ring-fenced in the project's name — never in the developer's own accounts, and never available to the developer on demand. Your exposure is to the project, held in trust, not to the company selling it.
+The escrow account holds every dirham a buyer pays toward an off-plan unit. Funds sit at a DLD-accredited trustee bank, ring-fenced in the project's name, never in the developer's own accounts, and never available to the developer on demand. Your exposure is to the project, held in trust, not to the company selling it.
 
 ## How the DLD regulates it
 
@@ -21,12 +21,12 @@ Law No. 8 of 2007 places project escrow accounts under the Dubai Land Department
 
 ## When funds are released
 
-The developer draws against the account only when an independent engineer certifies the corresponding construction milestone — typically foundation, structure by stage, envelope, services, and completion. Each release is tied to verified progress, so money leaves the account at the pace the building actually rises.
+The developer draws against the account only when an independent engineer certifies the corresponding construction milestone: typically foundation, structure by stage, envelope, services, and completion. Each release is tied to verified progress, so money leaves the account at the pace the building actually rises.
 
-If a project stalls, the account is frozen, not lost. The DLD's cancellation process, run through RERA, returns escrowed funds to buyers by decision of the committee — a mechanism with an imperfect but real track record across the 2009 and 2020 stress tests, and the reason Dubai's off-plan market survived both.
+If a project stalls, the account is frozen, not lost. The DLD's cancellation process, run through RERA, returns escrowed funds to buyers by decision of the committee. It is a mechanism with an imperfect but real track record across the 2009 and 2020 stress tests, and the reason Dubai's off-plan market survived both.
 
 ## The questions to ask before a deposit
 
 First: **is the escrow account registered and funded?** The account number appears on the sales agreement, and its registration is verifiable with the DLD directly. Second: **what is the milestone schedule?** A schedule weighted heavily toward early milestones front-loads your exposure; a completion-weighted plan does the opposite.
 
-Every development Serene presents publishes both answers. Ask Amelia for the escrow filing of any project in the registry — it is the first document she will show you anyway.
+Every development Serene presents publishes both answers. Ask Amelia for the escrow filing of any project in the registry. It is the first document she will show you anyway.

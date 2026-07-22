@@ -62,7 +62,7 @@ export function CinematicCarousel({
   return (
     <section
       aria-roledescription="carousel"
-      aria-label={`${title} — gallery`}
+      aria-label={`${title} gallery`}
       className="relative flex min-h-[78svh] flex-col justify-end overflow-hidden bg-ink text-ivory"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -108,8 +108,7 @@ export function CinematicCarousel({
 
       {/* ——— overlay content ——— */}
       <div className="container-site relative z-[1] pb-10 pt-32 md:pb-12">
-        <div className="type-eyebrow flex items-center gap-2.5 text-gold">
-          <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
+        <div className="type-eyebrow text-gold">
           <span>The Frames</span>
         </div>
 

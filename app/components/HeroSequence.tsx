@@ -33,19 +33,18 @@ const CHAPTERS = [
   {
     eyebrow: "The Approach",
     title: "Advised with data, never persuasion.",
-    sub: "Districts, payment plans, escrow, handover records — the full picture, before any commitment.",
+    sub: "Districts, payment plans, escrow, handover records: the full picture, before any commitment.",
   },
   {
     eyebrow: "Amelia",
     title: "Ask anything. Answered on the record.",
-    sub: "An AI advisory available at any hour — and incapable of a cold call.",
+    sub: "An AI advisory available at any hour, and incapable of a cold call.",
   },
 ] as const;
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="type-eyebrow mb-6 flex items-center justify-center gap-2.5 text-ivory/75">
-      <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
+    <div className="type-eyebrow mb-6 flex items-center justify-center text-ivory/75">
       <span>{children}</span>
     </div>
   );

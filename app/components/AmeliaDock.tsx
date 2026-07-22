@@ -64,7 +64,7 @@ export function AmeliaDock() {
             </div>
             <div className="px-5 py-5">
               <p className="text-[14.5px] leading-relaxed text-ivory/80">
-                Ask anything about off-plan in Dubai and Abu Dhabi. Answered on demand — no
+                Ask anything about off-plan in Dubai and Abu Dhabi. Answered on demand. No
                 call-backs, ever.
               </p>
               <form

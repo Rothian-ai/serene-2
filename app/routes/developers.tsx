@@ -13,7 +13,7 @@ export function meta() {
   return buildMeta({
     title: "Developers",
     description:
-      "The Serene registry: the developers we are registered with, presented as institutions — track records, delivery history, notable works.",
+      "The Serene registry: the developers we are registered with, presented as institutions with track records, delivery history, and notable works.",
     path: "/developers",
   });
 }
@@ -55,7 +55,7 @@ function RegistryEntry({ developer, flip }: { developer: Developer; flip: boolea
           ]}
         />
         {developer.notable.length > 0 && (
-          <p className="type-cap mt-5 text-fog">Notable — {developer.notable.join(" · ")}</p>
+          <p className="type-cap mt-5 text-fog">Notable: {developer.notable.join(" · ")}</p>
         )}
         <span className="mt-7 inline-flex items-center gap-2.5 border-b border-gold pb-1.5 text-[12.5px] font-semibold uppercase tracking-[0.1em]">
           The full record
@@ -81,7 +81,7 @@ export default function Developers() {
         <Reveal delay={0.1}>
           <p className="type-body-lg mt-6 max-w-[54ch] text-ink/70">
             We transact only with developers we are registered with. Each is presented here the way
-            it deserves — as an institution with a record, not a logo on a slide.
+            it deserves, as an institution with a record, not a logo on a slide.
           </p>
           <Ledger
             className="mt-10"
@@ -104,7 +104,7 @@ export default function Developers() {
       </Section>
 
       <AmeliaBand
-        title="Delivery records, escrow history, handover punctuality — ask."
+        title="Delivery records, escrow history, handover punctuality. Ask."
         cta="Ask Amelia about our partners"
         refId="developers-index"
       />

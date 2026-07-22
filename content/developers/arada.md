@@ -4,7 +4,7 @@ founded: 2017
 hq: Sharjah
 delivered: 10,000+ homes
 notable: Aljada | Masaar | Armani Beach Residences
-tagline: The Emirates' youngest major — Aljada, Masaar, and the Armani coast.
+tagline: The Emirates' youngest major: Aljada, Masaar, and the Armani coast.
 image: /images/vela-crest-02.jpg
 plate: interior
 ---

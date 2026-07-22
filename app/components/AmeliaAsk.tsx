@@ -58,7 +58,7 @@ export function AmeliaAsk() {
           <Reveal>
             <h2 className="type-headline max-w-[20ch]">Conversation, not cold calls.</h2>
             <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/78">
-              Amelia is Serene's conversational advisor — awake at every hour, fluent in the
+              Amelia is Serene's conversational advisor, awake at every hour, fluent in the
               record: escrow rules, service charges, handover dates, yields. She replaced the
               sales floor with answers, and she follows up with no one.
             </p>
@@ -138,7 +138,7 @@ export function AmeliaAsk() {
             </div>
             <p className="type-cap mt-7 text-silver">
               The conversation begins on the next page and continues on her platform. No
-              call-backs, no lists — ever.
+              call-backs, no lists, ever.
             </p>
           </Reveal>
         </div>

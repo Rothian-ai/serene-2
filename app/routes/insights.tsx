@@ -10,7 +10,7 @@ export function meta() {
   return buildMeta({
     title: "Insights",
     description:
-      "Market analysis, investment guides, and developer spotlights for UAE off-plan real estate — written to inform, not to sell.",
+      "Market analysis, investment guides, and developer spotlights for UAE off-plan real estate, written to inform, not to sell.",
     path: "/insights",
   });
 }

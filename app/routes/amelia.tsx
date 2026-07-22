@@ -15,7 +15,7 @@ export function meta() {
   return buildMeta({
     title: "Amelia",
     description:
-      "Talk with Amelia — Serene's conversational AI advisor for UAE off-plan real estate. Around-the-clock, data-rich investment answers, and never a cold call.",
+      "Talk with Amelia, Serene's conversational AI advisor for UAE off-plan real estate. Around-the-clock, data-rich investment answers, and never a cold call.",
     path: "/amelia",
   });
 }
@@ -35,7 +35,7 @@ function handoverAnswer(): string {
     return m && Number(m[0]) < 2028;
   });
   if (before.length === 0) {
-    return "None of the current register completes before 2028 — the earliest handovers land that year. I can set the full schedule against your horizon on the platform.";
+    return "None of the current register completes before 2028. The earliest handovers land that year. I can set the full schedule against your horizon on the platform.";
   }
   const list = before.map((d) => `${d.title} (${d.handover})`).join(" · ");
   return `Of the ${developments.length} addresses in the register today, ${before.length} complete before 2028: ${list}. Each is anchored to RERA escrow and a developer we are registered with.`;
@@ -43,7 +43,7 @@ function handoverAnswer(): string {
 
 function scriptedAnswer(q: string): string | null {
   if (q === CHIPS[0]) {
-    return "Every dirham paid for off-plan in Dubai sits in a RERA-regulated escrow account, released to the developer only against certified construction progress — never on demand. Abu Dhabi holds the same discipline under ADREC. If a project stalls, the account holds your money; the developer does not.";
+    return "Every dirham paid for off-plan in Dubai sits in a RERA-regulated escrow account, released to the developer only against certified construction progress, never on demand. Abu Dhabi holds the same discipline under ADREC. If a project stalls, the account holds your money; the developer does not.";
   }
   if (q === CHIPS[1]) return handoverAnswer();
   if (q === CHIPS[2]) {
@@ -53,18 +53,18 @@ function scriptedAnswer(q: string): string | null {
 }
 
 const GENERIC_REPLY =
-  "I answer that properly with figures, not reassurance — and the figures live on my platform. Continue there and your question comes with me.";
+  "I answer that properly with figures, not reassurance, and the figures live on my platform. Continue there and your question comes with me.";
 
 /* ——— the conversation ——— */
 
 type Msg = { id: number; from: "amelia" | "you"; body: string; handoff?: boolean };
 
 const OPENING: Msg[] = [
-  { id: 1, from: "amelia", body: "Welcome. I'm Amelia — Serene's advisory intelligence." },
+  { id: 1, from: "amelia", body: "Welcome. I'm Amelia, Serene's advisory intelligence." },
   {
     id: 2,
     from: "amelia",
-    body: "I exist so that no one has to call you. Escrow rules, payment plans, service charges, handover records, yields — ask in your own words, at any hour, and I answer from the record.",
+    body: "I exist so that no one has to call you. Escrow rules, payment plans, service charges, handover records, yields: ask in your own words, at any hour, and I answer from the record.",
   },
 ];
 
@@ -205,7 +205,7 @@ export default function Amelia() {
           <Eyebrow className="text-silver">Amelia</Eyebrow>
           <h1 className="type-display mt-6 max-w-[16ch]">The advisory, in conversation.</h1>
           <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/78">
-            Amelia is Serene's conversational advisor — the reason no one here will ever cold-call
+            Amelia is Serene's conversational advisor, the reason no one here will ever cold-call
             you. She holds the record and answers around the clock; the decision keeps your pace.
           </p>
         </div>
@@ -283,7 +283,7 @@ export default function Amelia() {
               </button>
             </div>
             <p className="type-cap mt-4 text-silver">
-              The full advisory lives on Amelia's own platform — your question travels with you.
+              The full advisory lives on Amelia's own platform. Your question travels with you.
             </p>
           </form>
         </div>

@@ -11,7 +11,7 @@ export const SITE = {
   email: "enquiries@serene.com",
   careersEmail: "careers@serene.com",
   office: "Boulevard Plaza Tower One, Downtown Dubai",
-  hours: "Sunday–Friday, 9:00–18:00 GST",
+  hours: "Sunday to Friday, 9:00 to 18:00 GST",
 } as const;
 
 /**
@@ -29,7 +29,7 @@ export function ameliaHref(ref: string, context?: string): string {
 }
 
 export function pageTitle(title?: string): string {
-  return title ? `${title} — Serene` : "Serene — Off-Plan Real Estate, Dubai & Abu Dhabi";
+  return title ? `${title} · Serene` : "Serene · Off-Plan Real Estate, Dubai & Abu Dhabi";
 }
 
 export function meta(opts: { title?: string; description: string; path?: string }) {

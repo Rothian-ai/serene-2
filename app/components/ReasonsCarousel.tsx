@@ -89,7 +89,7 @@ export function ReasonsCarousel({
             <Plate
               kind={plate}
               image={images[i]}
-              alt={`${title} — ${r.heading}`}
+              alt={`${title}, ${r.heading}`}
               className="absolute inset-0 h-full w-full"
             />
             <div

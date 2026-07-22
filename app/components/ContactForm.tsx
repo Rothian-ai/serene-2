@@ -58,7 +58,7 @@ export function ContactForm() {
       <div className="border border-ink/18 p-8" role="status">
         <p className="type-title">Received.</p>
         <p className="mt-3 max-w-[48ch] text-[15.5px] text-ink/75">
-          We reply within one business day — one reply, no follow-up campaign.
+          We reply within one business day. One reply, no follow-up campaign.
         </p>
       </div>
     );
@@ -79,7 +79,7 @@ export function ContactForm() {
         </div>
       </div>
       <div className="mt-6">
-        <label htmlFor="cf-phone" className={label}>Phone — optional; we never require it</label>
+        <label htmlFor="cf-phone" className={label}>Phone, optional; we never require it</label>
         <input id="cf-phone" name="phone" type="tel" autoComplete="tel" className={field} />
       </div>
       <div className="mt-6">
@@ -88,8 +88,8 @@ export function ContactForm() {
         {errors.message && <p className="type-cap mt-1 text-brass">{errors.message}</p>}
       </div>
       <p className="type-cap mt-6 max-w-[56ch] text-fog">
-        Your details are used to answer this enquiry and for nothing else. No lists, no campaigns —
-        see the privacy policy.
+        Your details are used to answer this enquiry and for nothing else. No lists, no campaigns.
+        See the privacy policy.
       </p>
       <div className="mt-6 flex items-center gap-4">
         <button
@@ -101,7 +101,7 @@ export function ContactForm() {
         </button>
         {status === "error" && (
           <p className="type-cap text-brass" role="alert">
-            Something interrupted the send. Your message is intact — try once more.
+            Something interrupted the send. Your message is intact. Try once more.
           </p>
         )}
       </div>

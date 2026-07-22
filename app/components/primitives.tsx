@@ -83,12 +83,11 @@ export function Seam({ variant }: { variant: keyof typeof seamMap }) {
   return <div aria-hidden className={`h-16 w-full bg-gradient-to-b ${seamMap[variant]} md:h-24`} />;
 }
 
-/* ——— Eyebrow: gold tick + tracked label. Colour from parent (brass on ivory, gold on dark). ——— */
+/* ——— Eyebrow: tracked label. Colour from parent (brass on ivory, gold on dark). ——— */
 
 export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`type-eyebrow flex items-center gap-2.5 ${className}`}>
-      <span aria-hidden className="h-px w-[22px] bg-current opacity-90" />
+    <div className={`type-eyebrow flex items-center ${className}`}>
       <span>{children}</span>
     </div>
   );

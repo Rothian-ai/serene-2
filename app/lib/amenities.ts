@@ -17,7 +17,7 @@ const img = (key: string) => `/images/amenities/${key}.jpg`;
 export const AMENITY_LIBRARY: Record<string, AmenityDetail> = {
   pool: {
     image: img("pool"),
-    blurb: "Water on the roofline — a still pool set against the skyline, kept for residents alone.",
+    blurb: "Water on the roofline: a still pool set against the skyline, kept for residents alone.",
   },
   gym: {
     image: img("gym"),
@@ -25,11 +25,11 @@ export const AMENITY_LIBRARY: Record<string, AmenityDetail> = {
   },
   spa: {
     image: img("spa"),
-    blurb: "A quiet spa and hammam for the slow end of the day — steam, stone, and low light.",
+    blurb: "A quiet spa and hammam for the slow end of the day: steam, stone, and low light.",
   },
   concierge: {
     image: img("concierge"),
-    blurb: "A round-the-clock concierge who arranges the day before you ask — discreet, resident-only.",
+    blurb: "A round-the-clock concierge who arranges the day before you ask. Discreet, resident-only.",
   },
   courts: {
     image: img("courts"),
@@ -41,7 +41,7 @@ export const AMENITY_LIBRARY: Record<string, AmenityDetail> = {
   },
   park: {
     image: img("park"),
-    blurb: "Landscaped gardens and shaded walks threaded through the podium — green at ground level.",
+    blurb: "Landscaped gardens and shaded walks threaded through the podium: green at ground level.",
   },
   play: {
     image: img("play"),
@@ -49,7 +49,7 @@ export const AMENITY_LIBRARY: Record<string, AmenityDetail> = {
   },
   beach: {
     image: img("beach"),
-    blurb: "Direct access to the sand — the shoreline as an extension of the address.",
+    blurb: "Direct access to the sand: the shoreline as an extension of the address.",
   },
   cycling: {
     image: img("cycling"),
@@ -57,11 +57,11 @@ export const AMENITY_LIBRARY: Record<string, AmenityDetail> = {
   },
   pavilion: {
     image: img("pavilion"),
-    blurb: "A residents' pavilion for gathering — lounge, library, and terrace under one roof.",
+    blurb: "A residents' pavilion for gathering: lounge, library, and terrace under one roof.",
   },
   retail: {
     image: img("retail"),
-    blurb: "Boardwalk retail and cafés at the door — the essentials, curated and close.",
+    blurb: "Boardwalk retail and cafés at the door: the essentials, curated and close.",
   },
 };
 

@@ -7,13 +7,13 @@ updated: July 2026
 
 ## The short version
 
-This site sets one category of cookies — analytics — and only after you accept the notice. Decline, and nothing loads. Your choice is remembered in your browser's local storage either way.
+This site sets one category of cookies, analytics, and only after you accept the notice. Decline, and nothing loads. Your choice is remembered in your browser's local storage either way.
 
 ## The cookies
 
 | Cookie | Provider | Purpose | Consent |
 |---|---|---|---|
-| `_ga`, `_ga_*` | Google Analytics 4 | Anonymised usage measurement | Required — loads only after acceptance |
+| `_ga`, `_ga_*` | Google Analytics 4 | Anonymised usage measurement | Required. Loads only after acceptance |
 | `serene-consent` (local storage) | Serene | Remembers your accept/decline choice | Strictly necessary |
 | `serene-visited` (session storage) | Serene | Skips the loading sequence on repeat views | Strictly necessary |
 

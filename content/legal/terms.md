@@ -9,9 +9,9 @@ updated: July 2026
 
 serene.com is operated by Serene Real Estate LLC, a real estate advisory licensed under RERA, Dubai, UAE. Use of the site constitutes acceptance of these terms.
 
-## What the site is — and isn't
+## What the site is and isn't
 
-The site presents off-plan developments, developer profiles, and market analysis for information. Nothing on it constitutes investment, legal, or tax advice, and no content forms an offer capable of acceptance. Prices, handover dates, and payment plans are set by developers and may change; the filed documents — Sale and Purchase Agreements and escrow filings — govern in every case.
+The site presents off-plan developments, developer profiles, and market analysis for information. Nothing on it constitutes investment, legal, or tax advice, and no content forms an offer capable of acceptance. Prices, handover dates, and payment plans are set by developers and may change; the filed documents, Sale and Purchase Agreements and escrow filings, govern in every case.
 
 ## Amelia
 

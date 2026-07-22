@@ -11,7 +11,7 @@ export function meta() {
   return buildMeta({
     title: "FAQs",
     description:
-      "Plain answers on buying off-plan in the UAE, working with Serene, Amelia, and the legal framework — escrow, RERA, and your protections.",
+      "Plain answers on buying off-plan in the UAE, working with Serene, Amelia, and the legal framework: escrow, RERA, and your protections.",
     path: "/faqs",
   });
 }

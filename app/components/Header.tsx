@@ -76,7 +76,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
         }`}
       >
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
-          <Link to="/" className="flex items-center gap-3" aria-label="Serene — home">
+          <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
             {/* mark alone — the wordmark beside it is the live "SERENE" span */}
             <img
               src={overDark ? "/logo/serene-mark-white.png" : "/logo/serene-mark.png"}

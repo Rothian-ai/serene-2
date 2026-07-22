@@ -8,7 +8,7 @@ export function meta() {
   return buildMeta({
     title: "Contact",
     description:
-      "Write to Serene. One reply within a business day — no lists, no campaigns. Office in Downtown Dubai.",
+      "Write to Serene. One reply within a business day: no lists, no campaigns. Office in Downtown Dubai.",
     path: "/contact",
   });
 }

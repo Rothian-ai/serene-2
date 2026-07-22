@@ -19,7 +19,7 @@ export function meta({ params }: Route.MetaArgs) {
   if (!d) return buildMeta({ title: "Development", description: "Off-plan development." });
   return buildMeta({
     title: d.title,
-    description: `${d.title} — ${d.district}, ${d.city}. Off-plan by ${getDeveloper(d.developer)?.name ?? d.developer}; handover ${d.handover}, from ${d.priceFrom}.`,
+    description: `${d.title}: ${d.district}, ${d.city}. Off-plan by ${getDeveloper(d.developer)?.name ?? d.developer}; handover ${d.handover}, from ${d.priceFrom}.`,
     path: `/developments/${d.slug}`,
   });
 }
@@ -168,7 +168,7 @@ export default function Development({ params }: Route.ComponentProps) {
       <LocationSection landmarks={d.landmarks} map={d.map} district={d.district} city={d.city} />
 
       <AmeliaBand
-        title="Payment plans, projected yields, escrow — ask."
+        title="Payment plans, projected yields, escrow. Ask."
         cta={`Ask Amelia about ${d.title}`}
         refId="development"
         context={d.slug}

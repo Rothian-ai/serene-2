@@ -8,7 +8,7 @@ export function meta() {
   return buildMeta({
     title: "Careers",
     description:
-      "Work at Serene — a small advisory holding itself to an unusual standard: no cold calls, no pressure, information first.",
+      "Work at Serene, a small advisory holding itself to an unusual standard: no cold calls, no pressure, information first.",
     path: "/careers",
   });
 }
@@ -24,7 +24,7 @@ export default function Careers() {
         <h1 className="type-display mt-6 max-w-[18ch]">Composure is a discipline.</h1>
         <p className="type-body-lg mt-6 max-w-[54ch] text-ink/70">
           We are a small house with an unusual rule: nobody here chases anybody. If you would
-          rather be right than loud — in research, in engineering, in advisory — we would like
+          rather be right than loud, in research, in engineering, in advisory, we would like
           to hear from you.
         </p>
       </Section>

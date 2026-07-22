@@ -157,7 +157,7 @@ export function CollaborationsBand() {
             A new realm of curated collaborations
           </h2>
           <p className="mx-auto mt-5 max-w-[58ch] text-center type-body-lg text-ink/64">
-            We represent only the institutions we are registered with — each name below carries
+            We represent only the institutions we are registered with. Each name below carries
             the addresses in the register.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-x-9 gap-y-8 border-b border-ink/12 pb-10 md:mt-12 md:gap-x-8 lg:gap-x-10">

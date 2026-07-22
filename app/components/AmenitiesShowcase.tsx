@@ -64,7 +64,7 @@ export function AmenitiesShowcase({
       {/* tab row — icon + label, active underlined in brass */}
       <div
         role="tablist"
-        aria-label={`${title} — amenities`}
+        aria-label={`${title}, amenities`}
         className="mt-9 flex gap-8 overflow-x-auto border-b border-ink/12 [scrollbar-width:none] md:gap-10 [&::-webkit-scrollbar]:hidden"
       >
         {amenities.map((a, i) => {
@@ -104,7 +104,7 @@ export function AmenitiesShowcase({
                   <Plate
                     kind={plate}
                     image={detail.image}
-                    alt={`${a.label} — ${title}`}
+                    alt={`${a.label}, ${title}`}
                     eager
                     className="absolute inset-0 h-full w-full"
                   />

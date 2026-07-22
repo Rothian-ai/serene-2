@@ -38,7 +38,7 @@ export function MetricsMonument() {
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-5 md:col-start-8 md:pt-2">
           <p className="type-body-lg max-w-[46ch] text-ink/72">
-            We publish what we are and answer what you ask — registered with the developers we
+            We publish what we are and answer what you ask, registered with the developers we
             represent, and built to inform rather than to chase.
           </p>
           <p className="type-cap mt-5 flex items-center gap-2.5 text-fog">

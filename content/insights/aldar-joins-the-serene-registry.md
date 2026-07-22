@@ -3,13 +3,13 @@ title: Aldar joins the Serene registry
 category: Developer Spotlights
 date: 2026-06-05
 readingTime: 3 min
-excerpt: Serene is now registered with Aldar for its island residential portfolio — Saadiyat and Yas enter the registry, with full escrow and handover histories available through Amelia.
+excerpt: Serene is now registered with Aldar for its island residential portfolio. Saadiyat and Yas enter the registry, with full escrow and handover histories available through Amelia.
 featured: 3
 image: /images/ins-aldar.jpg
 plate: dusk
 ---
 
-Serene is now formally registered with Aldar, Abu Dhabi's principal developer — the custodian of Saadiyat Island's cultural district and the Yas Island masterplan.
+Serene is now formally registered with Aldar, Abu Dhabi's principal developer and the custodian of Saadiyat Island's cultural district and the Yas Island masterplan.
 
 ## What registration means
 
@@ -21,6 +21,6 @@ Two Saadiyat developments join at registration: **Saadiyat Grove Residences**, l
 
 ## The Abu Dhabi case, briefly
 
-Abu Dhabi's residential market runs on different physics than Dubai's: supply released by design rather than by cycle, anchored by institutions — museums, universities — that do not leave. For portfolios already holding Dubai exposure, Saadiyat is the diversification that stays within the same legal framework.
+Abu Dhabi's residential market runs on different physics than Dubai's: supply released by design rather than by cycle, anchored by institutions, museums and universities, that do not leave. For portfolios already holding Dubai exposure, Saadiyat is the diversification that stays within the same legal framework.
 
 Aldar's delivery record, escrow filings, and handover punctuality are available through Amelia, unedited. Ask her to compare the island's rental depth against the Dubai districts you already know.

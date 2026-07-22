@@ -9,7 +9,7 @@ image: /images/dev-emaar.jpg
 plate: glass
 ---
 
-Emaar built the buildings people draw when they draw Dubai. The Burj Khalifa, the Opera District, the fountain — and beneath the icons, a delivery machine that has handed over more than a hundred thousand homes with a punctuality record the emirate's escrow data confirms.
+Emaar built the buildings people draw when they draw Dubai. The Burj Khalifa, the Opera District, the fountain. Beneath the icons, a delivery machine that has handed over more than a hundred thousand homes with a punctuality record the emirate's escrow data confirms.
 
 For off-plan buyers, Emaar's significance is simple: it is the market's reference asset. Emaar launches set district pricing; Emaar handovers move rental indices. Buying Emaar off-plan is the closest this market comes to buying the index itself.
 

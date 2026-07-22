@@ -33,7 +33,7 @@ export default function Developments() {
           Off-plan, considered.
         </SplitHeading>
         <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/75">
-          A short register of developments in Dubai and Abu Dhabi — each anchored to a developer we
+          A short register of developments in Dubai and Abu Dhabi, each anchored to a developer we
           are registered with, each presented with the facts investors scan first: developer,
           handover, payment plan, price.
         </p>
@@ -66,7 +66,7 @@ export default function Developments() {
             The register, kept current.
           </SplitHeading>
           <p className="type-body-lg mt-4 max-w-[52ch] text-ink/65">
-            Each development, presented plainly — and answerable in full the moment you ask.
+            Each development, presented plainly, and answerable in full the moment you ask.
           </p>
         </Reveal>
         {list.length > 0 ? (
@@ -79,14 +79,14 @@ export default function Developments() {
           </RevealGroup>
         ) : (
           <p className="type-body-lg mt-12 text-ink/60">
-            No developments in this market at present. The registry grows steadily — ask Amelia
+            No developments in this market at present. The registry grows steadily. Ask Amelia
             what is coming.
           </p>
         )}
       </Section>
 
       <AmeliaBand
-        title="Yields, payment plans, districts — compare them properly."
+        title="Yields, payment plans, districts. Compare them properly."
         refId="developments-index"
       />
     </>
