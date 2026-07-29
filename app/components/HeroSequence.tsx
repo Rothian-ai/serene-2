@@ -35,7 +35,7 @@ const CHAPTERS = [
     sub: "Districts, payment plans, escrow, handover records: the full picture, before any commitment.",
   },
   {
-    eyebrow: "Amelia",
+    eyebrow: "The Advisory",
     title: "Ask anything. Answered on the record.",
     sub: "An AI advisory available at any hour, and incapable of a cold call.",
   },
