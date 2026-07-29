@@ -53,7 +53,7 @@ export function AmeliaAsk() {
   return (
     <div className="bg-navy text-ivory">
       <Section>
-        <Eyebrow className="text-gold">Amelia</Eyebrow>
+        <Eyebrow className="text-silver">Amelia</Eyebrow>
         <div className="mt-9 max-w-[860px]">
           <Reveal>
             <h2 className="type-headline max-w-[20ch]">Conversation, not cold calls.</h2>

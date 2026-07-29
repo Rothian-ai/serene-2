@@ -28,7 +28,7 @@ export default function Developments() {
   return (
     <>
       <Hero plate="dusk" image="/images/saadiyat-grove.jpg" height="min-h-[64svh]">
-        <Eyebrow className="text-gold">Developments</Eyebrow>
+        <Eyebrow className="text-silver">Developments</Eyebrow>
         <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[16ch]">
           Off-plan, considered.
         </SplitHeading>

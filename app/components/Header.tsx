@@ -65,7 +65,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     : "bg-ivory/95 backdrop-blur-[2px] border-b border-ink/12";
   const text = overDark ? "text-ivory" : "text-ink";
   const amelia = overDark
-    ? "border-gold/65 text-gold hover:border-gold"
+    ? "border-silver/70 text-silver hover:border-silver"
     : "border-brass text-brass hover:border-ink hover:text-ink";
 
   return (
@@ -79,7 +79,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
           <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
             {/* mark alone — the wordmark beside it is the live "SERENE" span */}
             <img
-              src={overDark ? "/logo/serene-mark-white.png" : "/logo/serene-mark.png"}
+              src="/logo/serene-mark.png"
               alt=""
               className="h-9 w-auto"
             />
@@ -164,7 +164,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   href={AMELIA_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-gold/65 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-gold"
+                  className="border border-silver/70 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-silver"
                 >
                   Ask Amelia
                 </a>

@@ -1,7 +1,7 @@
 ---
-title: Escrow Explained: What the Escrow Account Holds, How DLD Regulates It, and When Funds Are Released
+title: 'Escrow Explained: What the Escrow Account Holds, How DLD Regulates It, and When Funds Are Released'
 category: Investment Guides
-date: 2026-06-18
+date: '2026-06-18'
 readingTime: 5 min
 excerpt: Learn how off-plan buyer funds are safeguarded, how the Dubai Land Department regulates project escrow accounts, and the critical questions to ask before making a deposit.
 featured: 2

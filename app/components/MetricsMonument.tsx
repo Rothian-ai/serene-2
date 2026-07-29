@@ -31,7 +31,7 @@ export function MetricsMonument() {
       {/* header — title left, intent right */}
       <div className="grid gap-8 md:grid-cols-12 md:gap-7">
         <Reveal className="md:col-span-5">
-          <Eyebrow className="text-brass">By the Record</Eyebrow>
+          <Eyebrow className="text-fog">By the Record</Eyebrow>
           <SplitHeading as="h2" className="type-headline mt-5 max-w-[14ch]">
             The measure of the house.
           </SplitHeading>
@@ -42,7 +42,7 @@ export function MetricsMonument() {
             represent, and built to inform rather than to chase.
           </p>
           <p className="type-cap mt-5 flex items-center gap-2.5 text-fog">
-            <span aria-hidden className="seal-gold h-7 w-7 shrink-0 text-[13px] font-semibold leading-none">
+            <span aria-hidden className="seal-platinum h-7 w-7 shrink-0 text-[13px] font-semibold leading-none">
               ✓
             </span>
             {SITE.rera} · verifiable.

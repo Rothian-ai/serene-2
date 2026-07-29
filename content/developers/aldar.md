@@ -1,9 +1,12 @@
 ---
 name: Aldar
-founded: 2004
+founded: '2004'
 hq: Abu Dhabi
 delivered: 41,000+ homes
-notable: Saadiyat Island | Yas Island | Al Raha Beach
+notable:
+  - Saadiyat Island
+  - Yas Island
+  - Al Raha Beach
 tagline: Abu Dhabi's principal developer. Saadiyat, Yas, and beyond.
 image: /images/dev-aldar.jpg
 plate: dusk

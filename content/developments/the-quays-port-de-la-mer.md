@@ -10,16 +10,53 @@ priceFrom: AED 2.4M
 featured: 9
 image: /images/ins-supply.jpg
 plate: dusk
-excerpt: Low-rise marina residences in Meraas's sea district: the walkable Mediterranean quarter ten minutes from Downtown.
+excerpt: 'Low-rise marina residences in Meraas''s sea district: the walkable Mediterranean quarter ten minutes from Downtown.'
 positioning: The Mediterranean quarter, ten minutes from Downtown.
-overview: Low-rise residences around the marina at Port de La Mer: Meraas's Mediterranean quarter on the Jumeirah coast. One to four bedrooms over the quays, in the rare Dubai district built to be walked rather than driven.
-amenities: pool · Lagoon Pools | gym · Marina Gym | concierge · Marina Concierge | courts · Padel Court | parking · Residents' Parking
-gallery: /images/ins-supply.jpg · The coast, from above | /images/saadiyat-grove-residences-03.jpg · The low-rise quarter | /images/verde-terraces-03.jpg · A landscaped terrace | /images/the-quays-port-de-la-mer-04.jpg · The marina at evening | /images/the-quays-port-de-la-mer-05.jpg · An arch opening to the sea
-mapLat: 25.2280
-mapLng: 55.2520
-mapZoom: 15
-landmarks: 5 min · La Mer Beach | 10 min · City Walk | 12 min · Downtown Dubai | 20 min · Dubai International Airport
-reasons: A district, not a tower · Meraas builds neighbourhoods, tenancy-curated, low-rise, walkable, and their values defend accordingly. | The city's nearest sea · Jumeirah beachfront ten minutes from the Boulevard; no other marina sits this close to Downtown. | An entry price that isn't one · From AED 2.4M, the most accessible address in this register, in a district whose premiums have only widened. | 60 / 40, escrowed · Sixty per cent across construction, forty on handover, held in RERA-regulated escrow throughout.
+overview: 'Low-rise residences around the marina at Port de La Mer: Meraas''s Mediterranean quarter on the Jumeirah coast. One to four bedrooms over the quays, in the rare Dubai district built to be walked rather than driven.'
+amenities:
+  - icon: pool
+    label: Lagoon Pools
+  - icon: gym
+    label: Marina Gym
+  - icon: concierge
+    label: Marina Concierge
+  - icon: courts
+    label: Padel Court
+  - icon: parking
+    label: Residents' Parking
+gallery:
+  - src: /images/ins-supply.jpg
+    caption: The coast, from above
+  - src: /images/saadiyat-grove-residences-03.jpg
+    caption: The low-rise quarter
+  - src: /images/verde-terraces-03.jpg
+    caption: A landscaped terrace
+  - src: /images/the-quays-port-de-la-mer-04.jpg
+    caption: The marina at evening
+  - src: /images/the-quays-port-de-la-mer-05.jpg
+    caption: An arch opening to the sea
+landmarks:
+  - time: 5 min
+    place: La Mer Beach
+  - time: 10 min
+    place: City Walk
+  - time: 12 min
+    place: Downtown Dubai
+  - time: 20 min
+    place: Dubai International Airport
+reasons:
+  - heading: A district, not a tower
+    body: Meraas builds neighbourhoods, tenancy-curated, low-rise, walkable, and their values defend accordingly.
+  - heading: The city's nearest sea
+    body: Jumeirah beachfront ten minutes from the Boulevard; no other marina sits this close to Downtown.
+  - heading: An entry price that isn't one
+    body: From AED 2.4M, the most accessible address in this register, in a district whose premiums have only widened.
+  - heading: 60 / 40, escrowed
+    body: Sixty per cent across construction, forty on handover, held in RERA-regulated escrow throughout.
+map:
+  lat: 25.228
+  lng: 55.252
+  zoom: 15
 ---
 
 ## The Residence

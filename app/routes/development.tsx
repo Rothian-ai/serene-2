@@ -69,7 +69,7 @@ export default function Development({ params }: Route.ComponentProps) {
       />
 
       <Hero plate={d.plate} image={d.image} height="min-h-[74svh]" scrollCue>
-        <Eyebrow className="text-dawn">
+        <Eyebrow className="text-silver">
           <Link to="/developments" className="hover:underline">Developments</Link>
           <span aria-hidden>·</span> {d.district}, {d.city}
         </Eyebrow>
@@ -85,7 +85,7 @@ export default function Development({ params }: Route.ComponentProps) {
         <div className="grid gap-12 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-8">
             <Reveal>
-              <Eyebrow className="text-brass">The Overview</Eyebrow>
+              <Eyebrow className="text-fog">The Overview</Eyebrow>
               {d.positioning && (
                 <h2 className="type-headline mt-5 max-w-[24ch] text-ink">{d.positioning}</h2>
               )}
@@ -144,7 +144,7 @@ export default function Development({ params }: Route.ComponentProps) {
           <Section tight>
             <div className="grid items-center gap-8 md:grid-cols-12">
               <div className="md:col-span-8">
-                <Eyebrow className="text-gold">The Developer</Eyebrow>
+                <Eyebrow className="text-silver">The Developer</Eyebrow>
                 <h2 className="type-headline mt-3">{dev.name}</h2>
                 <Ledger
                   dark

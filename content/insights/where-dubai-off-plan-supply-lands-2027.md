@@ -1,7 +1,7 @@
 ---
 title: Where Dubai's off-plan supply actually lands in 2027
 category: Market Analysis
-date: 2026-07-02
+date: '2026-07-02'
 readingTime: 6 min
 excerpt: Announced pipelines and delivered homes are different numbers. We traced every 2027 handover in the registry to its escrow filings. Here is the honest supply picture.
 featured: 1

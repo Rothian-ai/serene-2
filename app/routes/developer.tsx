@@ -34,7 +34,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
   return (
     <>
       <Hero plate={dev.plate} image={dev.image} height="min-h-[100svh]" scrollCue>
-        <Eyebrow className="text-dawn">Registered Developer</Eyebrow>
+        <Eyebrow className="text-silver">Registered Developer</Eyebrow>
         <SplitHeading as="h1" className="type-display-xl mt-4" mode="chars">
           {dev.name}
         </SplitHeading>
@@ -75,7 +75,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
 
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.1}>
-              <Eyebrow className="text-brass">The House</Eyebrow>
+              <Eyebrow className="text-fog">The House</Eyebrow>
               <div
                 className="prose-serene mt-7"
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(dev.body) }}
@@ -89,7 +89,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
       {theirs.length > 0 && (
         <Section className="pt-0">
           <Reveal>
-            <Eyebrow className="text-brass">With Serene</Eyebrow>
+            <Eyebrow className="text-fog">With Serene</Eyebrow>
             <SplitHeading as="h2" className="type-headline mt-5 max-w-[24ch]">
               {theirs.length === 1
                 ? `One address in the register.`

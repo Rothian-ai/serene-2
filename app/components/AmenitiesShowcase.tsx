@@ -34,7 +34,7 @@ export function AmenitiesShowcase({
     <Section>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <Reveal>
-          <Eyebrow className="text-brass">Amenities</Eyebrow>
+          <Eyebrow className="text-fog">Amenities</Eyebrow>
           <SplitHeading as="h2" className="type-headline mt-5 max-w-[16ch]">
             A world of amenities.
           </SplitHeading>

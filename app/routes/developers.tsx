@@ -73,7 +73,7 @@ export default function Developers() {
     <>
       <Section className="pt-40">
         <Reveal exit>
-          <Eyebrow className="text-brass">The Registry</Eyebrow>
+          <Eyebrow className="text-fog">The Registry</Eyebrow>
         </Reveal>
         <SplitHeading as="h1" className="type-display mt-6 max-w-[20ch]">
           The institutions behind every address.

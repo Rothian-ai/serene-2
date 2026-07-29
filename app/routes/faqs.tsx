@@ -42,7 +42,7 @@ export default function Faqs() {
       />
 
       <Section className="pt-40">
-        <Eyebrow className="text-brass">Questions</Eyebrow>
+        <Eyebrow className="text-fog">Questions</Eyebrow>
         <h1 className="type-display mt-6">Asked, answered.</h1>
         <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
           {CATEGORIES.map((c) => (

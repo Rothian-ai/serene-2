@@ -35,7 +35,7 @@ function Panel({ development, index }: { development: Development; index: number
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="absolute inset-x-4 bottom-4 translate-y-1 transition-transform duration-500 group-hover:translate-y-0">
-          <div className="type-eyebrow text-gold">
+          <div className="type-eyebrow text-silver">
             {development.district}, {development.city}
           </div>
           <h3 className="type-title mt-2 text-ivory">{development.title}</h3>
@@ -73,7 +73,7 @@ export function HorizontalShowcase({ developments }: { developments: Development
       <div className="container-site">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <Eyebrow className="text-brass">Current Developments</Eyebrow>
+            <Eyebrow className="text-fog">Current Developments</Eyebrow>
             <div className="hidden items-center gap-3 md:flex">
               <button
                 type="button"

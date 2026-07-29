@@ -1,7 +1,7 @@
 ---
 title: Aldar joins the Serene registry
 category: Developer Spotlights
-date: 2026-06-05
+date: '2026-06-05'
 readingTime: 3 min
 excerpt: Serene is now registered with Aldar for its island residential portfolio. Saadiyat and Yas enter the registry, with full escrow and handover histories available through Amelia.
 featured: 3

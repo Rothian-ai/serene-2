@@ -108,7 +108,7 @@ export function CinematicCarousel({
 
       {/* ——— overlay content ——— */}
       <div className="container-site relative z-[1] pb-10 pt-32 md:pb-12">
-        <div className="type-eyebrow text-gold">
+        <div className="type-eyebrow text-silver">
           <span>The Frames</span>
         </div>
 
@@ -138,7 +138,7 @@ export function CinematicCarousel({
                     aria-label={`Go to frame ${i + 1}`}
                     aria-current={i === active ? "true" : undefined}
                     className={`h-px w-8 cursor-pointer transition-colors duration-300 ${
-                      i === active ? "bg-gold" : "bg-ivory/25 hover:bg-ivory/50"
+                      i === active ? "bg-silver" : "bg-ivory/25 hover:bg-ivory/50"
                     }`}
                   />
                 ))}

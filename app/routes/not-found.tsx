@@ -15,7 +15,7 @@ export default function NotFound() {
     <>
       <div className="bg-ink text-ivory">
         <Section className="pt-48 text-center">
-          <Eyebrow className="justify-center text-gold">404</Eyebrow>
+          <Eyebrow className="justify-center text-silver">404</Eyebrow>
           <h1 className="type-display mt-6">
             This address doesn't exist. The developments below do.
           </h1>

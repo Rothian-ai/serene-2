@@ -10,16 +10,53 @@ priceFrom: AED 21M
 featured: 7
 image: /images/ins-sequence.jpg
 plate: interior
-excerpt: Interiors by Armani/Casa on the Palm's outer crescent: beachfront residences composed in the designer's own hand.
+excerpt: 'Interiors by Armani/Casa on the Palm''s outer crescent: beachfront residences composed in the designer''s own hand.'
 positioning: Armani's hand, on the Palm's quiet crescent.
-overview: Beachfront residences on Palm Jumeirah's outer crescent with interiors composed by Armani/Casa: the designer's full grammar, from the lobby to the door handles. Two to five bedrooms and a set of presidential suites, all facing open water.
-amenities: pool · Beachfront Pools | gym · Fitness Pavilion | spa · Armani/SPA | concierge · Residence Concierge | parking · Valet Parking
-gallery: /images/ins-sequence.jpg · Interior, Armani/Casa direction | /images/mamsha-gardens-02.jpg · A room in natural light | /images/mamsha-gardens-03.jpg · The water's edge | /images/armani-beach-residences-04.jpg · Stone and open water, at dusk | /images/armani-beach-residences-05.jpg · Marble bath in window light
-mapLat: 25.1124
-mapLng: 55.1390
-mapZoom: 14
-landmarks: 6 min · Palm West Beach | 10 min · Nakheel Mall | 18 min · Dubai Marina | 35 min · Dubai International Airport
-reasons: A designer, not a licence · Armani/Casa composed these interiors directly: the difference between a branded building and a designed one. | The outer crescent · Open-water frontage on the Palm's quietest arc, where supply is fixed by geography. | Beachfront depth · Palm beachfront has out-held the wider market in every correction since 2015. | 60 / 40, escrowed · Sixty per cent across construction, forty on handover, held in RERA-regulated escrow throughout.
+overview: 'Beachfront residences on Palm Jumeirah''s outer crescent with interiors composed by Armani/Casa: the designer''s full grammar, from the lobby to the door handles. Two to five bedrooms and a set of presidential suites, all facing open water.'
+amenities:
+  - icon: pool
+    label: Beachfront Pools
+  - icon: gym
+    label: Fitness Pavilion
+  - icon: spa
+    label: Armani/SPA
+  - icon: concierge
+    label: Residence Concierge
+  - icon: parking
+    label: Valet Parking
+gallery:
+  - src: /images/ins-sequence.jpg
+    caption: Interior, Armani/Casa direction
+  - src: /images/mamsha-gardens-02.jpg
+    caption: A room in natural light
+  - src: /images/mamsha-gardens-03.jpg
+    caption: The water's edge
+  - src: /images/armani-beach-residences-04.jpg
+    caption: Stone and open water, at dusk
+  - src: /images/armani-beach-residences-05.jpg
+    caption: Marble bath in window light
+landmarks:
+  - time: 6 min
+    place: Palm West Beach
+  - time: 10 min
+    place: Nakheel Mall
+  - time: 18 min
+    place: Dubai Marina
+  - time: 35 min
+    place: Dubai International Airport
+reasons:
+  - heading: A designer, not a licence
+    body: 'Armani/Casa composed these interiors directly: the difference between a branded building and a designed one.'
+  - heading: The outer crescent
+    body: Open-water frontage on the Palm's quietest arc, where supply is fixed by geography.
+  - heading: Beachfront depth
+    body: Palm beachfront has out-held the wider market in every correction since 2015.
+  - heading: 60 / 40, escrowed
+    body: Sixty per cent across construction, forty on handover, held in RERA-regulated escrow throughout.
+map:
+  lat: 25.1124
+  lng: 55.139
+  zoom: 14
 ---
 
 ## The Residence

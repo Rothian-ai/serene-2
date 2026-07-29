@@ -138,7 +138,7 @@ export function DevelopmentGridCard({ development }: { development: Development 
           style={{ background: "linear-gradient(to top, rgba(10,21,38,0.42), transparent 58%)" }}
         />
       </div>
-      <div className="type-eyebrow mt-5 text-brass">
+      <div className="type-eyebrow mt-5 text-fog">
         {development.district}, {development.city}
       </div>
       <h3 className="type-title mt-2 transition-colors duration-300 group-hover:text-brass">
@@ -170,7 +170,7 @@ export function InsightCard({ insight }: { insight: Insight }) {
           className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
         />
       </div>
-      <div className="type-eyebrow mt-5 text-brass">
+      <div className="type-eyebrow mt-5 text-fog">
         {insight.category} · {formatDate(insight.date)}
       </div>
       <h3 className="type-title mt-2.5 text-[1.25rem] transition-colors duration-300 group-hover:text-brass">

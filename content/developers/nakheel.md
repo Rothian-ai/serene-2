@@ -1,9 +1,12 @@
 ---
 name: Nakheel
-founded: 2000
+founded: '2000'
 hq: Dubai
 delivered: 50,000+ homes
-notable: Palm Jumeirah | The World Islands | Jumeirah Islands
+notable:
+  - Palm Jumeirah
+  - The World Islands
+  - Jumeirah Islands
 tagline: Master developer of the coastline. Palm Jumeirah, first and still.
 image: /images/mamsha-gardens-03.jpg
 plate: stone

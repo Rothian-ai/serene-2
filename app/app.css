@@ -26,6 +26,9 @@
   --color-gold: #c9a227;     /* Gold — accent only (one moment of value per surface) */
   --color-navy: #111c39;     /* Navy — the deep-blue co-primary ground (Amelia) */
   --color-silver: #aeb4bd;   /* Silver — platinum ramp mid, architectural accents */
+  --color-steel: #8a9099;    /* Steel — platinum ramp deeper mid (silver text/detail on light) */
+  --color-platinum: #cbcfd6; /* Platinum — light silver surface */
+  --color-frost: #e1e4e8;    /* Frost — the lightest silver surface (section grounds) */
   /* Gold-on-light text must clear WCAG 4.5:1 on the Pearl surface. Nominal
      Antique #A67C00 is only ~3.5:1, so the `brass` TEXT token runs deeper
      (5.8:1 on Pearl); Slate #6b7078 is the muted text tone (4.5:1). */
@@ -165,7 +168,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 ::selection {
-  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  background: color-mix(in srgb, var(--color-silver) 55%, transparent);
 }
 :focus-visible {
   outline: 2px solid var(--color-gold);
@@ -391,6 +394,20 @@ body {
     0 6px 14px rgba(10, 21, 38, 0.45),
     inset 0 1px 2px rgba(255, 255, 255, 0.6),
     inset 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Platinum seal — the silver counterpart (Brand Guidelines §4 "Platinum seal"),
+   for value marks that should read cool/silver rather than gold. */
+.seal-platinum {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #2b3038;
+  background: conic-gradient(from 210deg, #eef1f4, #9aa0a9, #f7f8fa, #aeb4bd, #eef1f4, #8a9099, #eef1f4);
+  box-shadow:
+    0 6px 14px rgba(10, 21, 38, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.85),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 /* plates — CSS-composed photographic stand-ins (see /content README).

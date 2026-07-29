@@ -25,7 +25,7 @@ export default function Insights() {
   return (
     <>
       <Section className="pt-40">
-        <Eyebrow className="text-brass">Insights</Eyebrow>
+        <Eyebrow className="text-fog">Insights</Eyebrow>
         <h1 className="type-display mt-6">The journal.</h1>
         <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
           {CATEGORIES.map((c) => (
@@ -56,7 +56,7 @@ export default function Insights() {
                 <Reveal key={a.slug}>
                   <article className="grid items-center gap-8 md:grid-cols-12 md:gap-7">
                     <div className={`md:col-span-5 ${flip ? "md:order-2 md:col-start-8" : ""}`}>
-                      <Eyebrow className="text-brass">
+                      <Eyebrow className="text-fog">
                         {a.category} · {formatDate(a.date)}
                       </Eyebrow>
                       <h2 className="type-headline mt-5">

@@ -20,7 +20,7 @@ export default function Careers() {
   return (
     <>
       <Section className="pt-40">
-        <Eyebrow className="text-brass">Careers</Eyebrow>
+        <Eyebrow className="text-fog">Careers</Eyebrow>
         <h1 className="type-display mt-6 max-w-[18ch]">Composure is a discipline.</h1>
         <p className="type-body-lg mt-6 max-w-[54ch] text-ink/70">
           We are a small house with an unusual rule: nobody here chases anybody. If you would
@@ -30,7 +30,7 @@ export default function Careers() {
       </Section>
 
       <Section className="pt-0">
-        <Eyebrow className="text-brass">Open Positions</Eyebrow>
+        <Eyebrow className="text-fog">Open Positions</Eyebrow>
         <div className="mt-6 hairline-b max-w-[880px]">
           {ROLES.length > 0 ? (
             ROLES.map((r) => (

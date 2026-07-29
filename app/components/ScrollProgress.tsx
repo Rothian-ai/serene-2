@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger, useGsapContext } from "~/lib/gsap";
 
 /**
- * A hairline gold reading-progress bar pinned to the top of the viewport,
+ * A hairline platinum reading-progress bar pinned to the top of the viewport,
  * scrubbed by whole-document scroll. Client-only enhancement; absent under
  * reduced motion (the bar simply never mounts its animation, staying at 0).
  */
@@ -26,7 +26,7 @@ export function ScrollProgress() {
       aria-hidden
       className="pointer-events-none fixed inset-x-0 top-0 z-[65] h-[2px]"
     >
-      <div ref={barRef} className="h-full w-full bg-gold" />
+      <div ref={barRef} className="h-full w-full" style={{ background: "var(--metal-platinum)" }} />
     </div>
   );
 }

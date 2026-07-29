@@ -7,7 +7,7 @@ export function LegalPage({ slug }: { slug: string }) {
   if (!doc) throw new Response("Not Found", { status: 404 });
   return (
     <Section className="pt-40">
-      <Eyebrow className="text-brass">Legal</Eyebrow>
+      <Eyebrow className="text-fog">Legal</Eyebrow>
       <h1 className="type-display mt-6">{doc.title}</h1>
       {doc.updated && <p className="type-cap mt-4 text-fog">Last updated {doc.updated}</p>}
       <div

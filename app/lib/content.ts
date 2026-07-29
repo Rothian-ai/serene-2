@@ -1,38 +1,41 @@
 import { marked } from "marked";
+import { load as loadYaml } from "js-yaml";
 
 /**
  * Content collections.
  *
  * Every development, developer profile, and insight article is a markdown
- * file in /content with flat frontmatter. Adding content = adding a file;
- * no component ever hard-codes an entity. Lists (e.g. `notable`) are
- * pipe-separated: `notable: Burj Khalifa | Dubai Mall`.
+ * file in /content with standard YAML frontmatter. Adding content = adding a
+ * file — by hand, or through the Decap CMS admin at /admin (see ADD-CONTENT.md).
+ * No component ever hard-codes an entity. Structured fields (amenities, gallery,
+ * reasons, landmarks, map) are YAML arrays/objects.
  */
 
-type Frontmatter = Record<string, string>;
+type Frontmatter = Record<string, unknown>;
+
+const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 
 function parseFrontmatter(raw: string): { data: Frontmatter; body: string } {
-  const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(raw);
+  const match = FRONTMATTER.exec(raw);
   if (!match) return { data: {}, body: raw };
-  const data: Frontmatter = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    const idx = line.indexOf(":");
-    if (idx === -1) continue;
-    const key = line.slice(0, idx).trim();
-    const value = line.slice(idx + 1).trim();
-    if (key) data[key] = value;
-  }
+  const data = (loadYaml(match[1]) as Frontmatter) ?? {};
   return { data, body: raw.slice(match[0].length) };
 }
 
-function list(value: string | undefined): string[] {
-  return value ? value.split("|").map((s) => s.trim()).filter(Boolean) : [];
-}
+/** Coerce a frontmatter value to a string (numbers tolerated). */
+const str = (v: unknown, fallback = ""): string =>
+  typeof v === "string" ? v : v == null ? fallback : String(v);
+/** Coerce to a number, or undefined when absent. */
+const num = (v: unknown): number | undefined =>
+  typeof v === "number" ? v : v == null || v === "" ? undefined : Number(v);
+/** A date value YAML may have parsed as a Date → ISO `YYYY-MM-DD` string. */
+const isoDate = (v: unknown): string =>
+  v instanceof Date ? v.toISOString().slice(0, 10) : str(v);
 
 /**
- * Structured lists share the flat, pipe-separated frontmatter grammar: each
- * item is split on the middle-dot `·` into its fields (an in-family separator,
- * cf. `notable.join(" · ")`). Whitespace around `|` and `·` is tolerated.
+ * Structured lists are YAML arrays of objects, e.g.
+ *   amenities:
+ *     - { icon: pool, label: Rooftop Pool }
  */
 export interface Amenity {
   icon: string;
@@ -49,45 +52,6 @@ export interface GalleryImage {
 export interface Reason {
   heading: string;
   body: string;
-}
-
-/** `pool · Rooftop Pool` → { icon: "pool", label: "Rooftop Pool" }. Single token → generic icon. */
-function parseAmenities(value: string | undefined): Amenity[] {
-  return list(value).map((item) => {
-    const [first, ...rest] = item.split(/\s*·\s*/);
-    if (rest.length === 0) return { icon: "amenity", label: first };
-    return { icon: first.toLowerCase(), label: rest.join(" · ") };
-  });
-}
-
-/** `3 min · Dubai Opera` → { time: "3 min", place: "Dubai Opera" }. `time` kept raw. */
-function parseLandmarks(value: string | undefined): Landmark[] {
-  return list(value)
-    .map((item) => {
-      const [time, ...rest] = item.split(/\s*·\s*/);
-      return { time: time.trim(), place: rest.join(" · ").trim() };
-    })
-    .filter((l) => l.place);
-}
-
-/** `/images/x.jpg · Exterior` → { src, caption }. Caption optional. */
-function parseGallery(value: string | undefined): GalleryImage[] {
-  return list(value)
-    .map((item) => {
-      const [src, ...rest] = item.split(/\s*·\s*/);
-      return { src: src.trim(), caption: rest.join(" · ").trim() || undefined };
-    })
-    .filter((g) => g.src);
-}
-
-/** `The most liquid market · Downtown has survived every cycle…` → { heading, body }. */
-function parseReasons(value: string | undefined): Reason[] {
-  return list(value)
-    .map((item) => {
-      const [heading, ...rest] = item.split(/\s*·\s*/);
-      return { heading: heading.trim(), body: rest.join(" · ").trim() };
-    })
-    .filter((r) => r.heading && r.body);
 }
 
 export function renderMarkdown(body: string): string {
@@ -226,54 +190,57 @@ const legalFiles = import.meta.glob("../../content/legal/*.md", {
 
 export const developments: Development[] = load(developmentFiles, (slug, d, body) => ({
   slug,
-  title: d.title ?? slug,
-  developer: d.developer ?? "",
-  district: d.district ?? "",
-  city: (d.city as Development["city"]) ?? "Dubai",
-  status: d.status ?? "",
-  handover: d.handover ?? "",
-  paymentPlan: d.paymentPlan ?? "",
-  priceFrom: d.priceFrom ?? "",
-  excerpt: d.excerpt ?? "",
-  plate: (d.plate as PlateKind) ?? "render",
-  image: d.image || undefined,
-  featured: d.featured ? Number(d.featured) : undefined,
-  positioning: d.positioning || undefined,
-  overview: d.overview || undefined,
-  amenities: parseAmenities(d.amenities),
-  gallery: parseGallery(d.gallery),
-  reasons: parseReasons(d.reasons),
-  landmarks: parseLandmarks(d.landmarks),
-  map:
-    d.mapLat && d.mapLng
-      ? { lat: Number(d.mapLat), lng: Number(d.mapLng), zoom: Number(d.mapZoom) || 15 }
-      : undefined,
+  title: str(d.title, slug),
+  developer: str(d.developer),
+  district: str(d.district),
+  city: (str(d.city, "Dubai") as Development["city"]),
+  status: str(d.status),
+  handover: str(d.handover),
+  paymentPlan: str(d.paymentPlan),
+  priceFrom: str(d.priceFrom),
+  excerpt: str(d.excerpt),
+  plate: (str(d.plate, "render") as PlateKind),
+  image: str(d.image) || undefined,
+  featured: num(d.featured),
+  positioning: str(d.positioning) || undefined,
+  overview: str(d.overview) || undefined,
+  amenities: (d.amenities as Amenity[] | undefined) ?? [],
+  gallery: (d.gallery as GalleryImage[] | undefined) ?? [],
+  reasons: (d.reasons as Reason[] | undefined) ?? [],
+  landmarks: (d.landmarks as Landmark[] | undefined) ?? [],
+  map: d.map
+    ? {
+        lat: Number((d.map as Record<string, unknown>).lat),
+        lng: Number((d.map as Record<string, unknown>).lng),
+        zoom: Number((d.map as Record<string, unknown>).zoom) || 15,
+      }
+    : undefined,
   body,
 })).sort((a, b) => (a.featured ?? 99) - (b.featured ?? 99));
 
 export const developers: Developer[] = load(developerFiles, (slug, d, body) => ({
   slug,
-  name: d.name ?? slug,
-  founded: d.founded ?? "",
-  hq: d.hq ?? "",
-  delivered: d.delivered ?? "",
-  notable: list(d.notable),
-  tagline: d.tagline ?? "",
-  plate: (d.plate as PlateKind) ?? "glass",
-  image: d.image || undefined,
+  name: str(d.name, slug),
+  founded: str(d.founded),
+  hq: str(d.hq),
+  delivered: str(d.delivered),
+  notable: (d.notable as string[] | undefined) ?? [],
+  tagline: str(d.tagline),
+  plate: (str(d.plate, "glass") as PlateKind),
+  image: str(d.image) || undefined,
   body,
 })).sort((a, b) => a.name.localeCompare(b.name));
 
 export const insights: Insight[] = load(insightFiles, (slug, d, body) => ({
   slug,
-  title: d.title ?? slug,
-  category: (d.category as Insight["category"]) ?? "Journal",
-  date: d.date ?? "",
-  readingTime: d.readingTime ?? "4 min",
-  excerpt: d.excerpt ?? "",
-  plate: (d.plate as PlateKind) ?? "dusk",
-  image: d.image || undefined,
-  featured: d.featured ? Number(d.featured) : undefined,
+  title: str(d.title, slug),
+  category: (str(d.category, "Journal") as Insight["category"]),
+  date: isoDate(d.date),
+  readingTime: str(d.readingTime, "4 min"),
+  excerpt: str(d.excerpt),
+  plate: (str(d.plate, "dusk") as PlateKind),
+  image: str(d.image) || undefined,
+  featured: num(d.featured),
   body,
 })).sort((a, b) => (b.date > a.date ? 1 : -1));
 
@@ -281,7 +248,7 @@ export const legal: Record<string, { title: string; updated: string; body: strin
   Object.fromEntries(
     load(legalFiles, (slug, d, body) => [
       slug,
-      { title: d.title ?? slug, updated: d.updated ?? "", body },
+      { title: str(d.title, slug), updated: str(d.updated), body },
     ] as const).map(([k, v]) => [k, v]),
   );
 

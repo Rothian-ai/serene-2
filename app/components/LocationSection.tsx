@@ -104,7 +104,7 @@ export function LocationSection({
         {/* ——— left: the orientation + landmark list (primary) ——— */}
         <div className="md:col-span-5">
           <Reveal>
-            <Eyebrow className="text-brass">The Location</Eyebrow>
+            <Eyebrow className="text-fog">The Location</Eyebrow>
             <h2 className="type-headline mt-5">
               {district}, {city}.
             </h2>

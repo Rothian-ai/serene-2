@@ -55,7 +55,7 @@ export default function About() {
     <>
       {/* ① Hero — photographic, held short; the page reads on, not down */}
       <Hero plate="glass" image="/images/about-glass.jpg" height="min-h-[64svh]">
-        <Eyebrow className="text-gold">The House</Eyebrow>
+        <Eyebrow className="text-silver">The House</Eyebrow>
         <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
           Built on information, not persistence.
         </SplitHeading>
@@ -69,7 +69,7 @@ export default function About() {
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal exit className="md:col-span-5">
-            <Eyebrow className="text-brass">Why we exist</Eyebrow>
+            <Eyebrow className="text-fog">Why we exist</Eyebrow>
             <SplitHeading as="h2" className="type-headline mt-6 max-w-[16ch]">
               A sound decision deserves an unhurried process.
             </SplitHeading>
@@ -104,7 +104,7 @@ export default function About() {
       {/* ③ The Serene Way — three movements, each with its photograph */}
       <Section className="pt-0">
         <Reveal exit>
-          <Eyebrow className="text-brass">The Serene Way</Eyebrow>
+          <Eyebrow className="text-fog">The Serene Way</Eyebrow>
         </Reveal>
         <RevealGroup className="mt-9 grid gap-9 md:grid-cols-3 md:gap-7">
           {MOVEMENTS.map((m) => (
@@ -120,7 +120,7 @@ export default function About() {
                   }}
                 />
                 <div className="absolute inset-x-5 bottom-5">
-                  <div className="type-data text-gold/90">{m.n}</div>
+                  <div className="type-data text-silver/90">{m.n}</div>
                   <h3 className="type-title mt-1.5 text-ivory">{m.title}</h3>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function About() {
       <Section className="pt-0">
         <Reveal>
           <div className="relative border border-ink/18 p-8 md:p-12">
-            <Eyebrow className="text-brass">Licensed &amp; Registered</Eyebrow>
+            <Eyebrow className="text-fog">Licensed &amp; Registered</Eyebrow>
             <Ledger
               className="mt-6"
               cells={[
@@ -159,7 +159,7 @@ export default function About() {
         <Section>
           <div className="mx-auto max-w-[880px] text-center">
             <Reveal exit>
-              <Eyebrow className="justify-center text-gold">The Commitment</Eyebrow>
+              <Eyebrow className="justify-center text-silver">The Commitment</Eyebrow>
             </Reveal>
             <SplitHeading as="h2" mode="chars" className="type-display mt-6">
               You will never receive a call you didn't ask for.
@@ -180,7 +180,7 @@ export default function About() {
         <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-6">
             <Reveal exit>
-              <Eyebrow className="text-brass">The Standard</Eyebrow>
+              <Eyebrow className="text-fog">The Standard</Eyebrow>
             </Reveal>
             <SplitHeading as="h2" className="type-headline mt-6 max-w-[20ch]">
               Counsel that waits for the question.

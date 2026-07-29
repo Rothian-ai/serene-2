@@ -1,10 +1,13 @@
 ---
 name: Meraas
-founded: 2007
+founded: '2007'
 hq: Dubai
 delivered: 15,000+ homes
-notable: City Walk | Bluewaters | Port de La Mer
-tagline: Dubai's urban curator: City Walk, Bluewaters, the sea districts.
+notable:
+  - City Walk
+  - Bluewaters
+  - Port de La Mer
+tagline: 'Dubai''s urban curator: City Walk, Bluewaters, the sea districts.'
 image: /images/saadiyat-grove-residences-03.jpg
 plate: glass
 ---

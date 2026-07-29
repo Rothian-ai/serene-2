@@ -43,7 +43,7 @@ export function ReasonsCarousel({
     <Section>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <Reveal>
-          <Eyebrow className="text-brass">The Case</Eyebrow>
+          <Eyebrow className="text-fog">The Case</Eyebrow>
           <SplitHeading as="h2" className="type-headline mt-5 max-w-[18ch]">
             {`Why ${city}. Why ${title}.`}
           </SplitHeading>
@@ -101,7 +101,7 @@ export function ReasonsCarousel({
               }}
             />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-              <div className="type-data text-gold/85">{String(i + 1).padStart(2, "0")}</div>
+              <div className="type-data text-silver/85">{String(i + 1).padStart(2, "0")}</div>
               <h3 className="type-title mt-2.5 max-w-[17ch] text-ivory">{r.heading}</h3>
               <p className="mt-3 max-w-[34ch] text-[15px] leading-relaxed text-ivory/85">{r.body}</p>
             </div>

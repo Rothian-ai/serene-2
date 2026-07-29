@@ -3,10 +3,10 @@ import { HorizontalShowcase } from "~/components/HorizontalShowcase";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plate } from "~/components/primitives";
-import { InsightCard } from "~/components/cards";
+import { DeveloperCard, InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
-import { developments, insights } from "~/lib/content";
+import { developers, developments, insights } from "~/lib/content";
 import { AMELIA_URL, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -27,11 +27,38 @@ export default function Home() {
       {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence */}
       <HeroSequence />
 
-      {/* ② The House — statement on top, a wide plate, then the principles */}
+      {/* ② Developers — the registry leads, set on a light silver (frost) ground.
+          The silver mark reinforces the platinum-led brand on a light surface. */}
+      <div className="bg-frost">
+        <Section>
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
+            <Reveal>
+              <img src="/logo/serene-mark.png" alt="" className="mb-6 h-11 w-auto" />
+              <Eyebrow className="text-fog">The Registry</Eyebrow>
+              <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
+                The institutions behind every address.
+              </SplitHeading>
+            </Reveal>
+            <QuietLink to="/developers">All developers</QuietLink>
+          </div>
+          <RevealGroup className="mt-10 grid grid-cols-2 gap-6 md:mt-14 md:grid-cols-4 md:gap-7">
+            {developers.slice(0, 4).map((d) => (
+              <RevealItem key={d.slug}>
+                <DeveloperCard developer={d} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </Section>
+      </div>
+
+      {/* ③ Developments — the featured register, a pinned horizontal gallery */}
+      <HorizontalShowcase developments={developments.slice(0, 6)} />
+
+      {/* ④ The House — statement on top, a wide plate, then the principles */}
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal className="md:col-span-5" exit>
-            <Eyebrow className="text-brass">The House</Eyebrow>
+            <Eyebrow className="text-fog">The House</Eyebrow>
             <SplitHeading as="h2" className="type-display mt-5 max-w-[12ch]">
               A quieter way to acquire.
             </SplitHeading>
@@ -83,18 +110,14 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
-      {/* ③ Featured developments — horizontal slider (the end card carries
-          the visitor to the full register) */}
-      <HorizontalShowcase developments={developments.slice(0, 6)} />
-
-      {/* ④ By the Record — animated credibility monument */}
+      {/* ⑤ By the Record — animated credibility monument */}
       <MetricsMonument />
 
       {/* ⑤ The registry — hidden for now: the collaborations band below already
           carries the developer register. Restore by uncommenting.
       <Section className="pt-0">
         <Reveal exit>
-          <Eyebrow className="text-brass">The Registry</Eyebrow>
+          <Eyebrow className="text-fog">The Registry</Eyebrow>
         </Reveal>
         ...
       </Section> */}
@@ -108,7 +131,7 @@ export default function Home() {
       {/* ⑧ Insights — the journal, image-led */}
       <Section>
         <Reveal exit>
-          <Eyebrow className="text-brass">Insights</Eyebrow>
+          <Eyebrow className="text-fog">Insights</Eyebrow>
         </Reveal>
         <RevealGroup className="mt-9 grid gap-10 md:grid-cols-3 md:gap-7">
           {latest.map((i) => (
@@ -126,7 +149,7 @@ export default function Home() {
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
-            <Eyebrow className="justify-center text-gold">The Threshold</Eyebrow>
+            <Eyebrow className="justify-center text-silver">The Threshold</Eyebrow>
           </Reveal>
           <SplitHeading as="h2" className="type-display mt-6" mode="chars">
             When you have questions, ask.

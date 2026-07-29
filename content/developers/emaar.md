@@ -1,9 +1,12 @@
 ---
 name: Emaar
-founded: 1997
+founded: '1997'
 hq: Dubai
 delivered: 108,000+ homes
-notable: Burj Khalifa | Dubai Mall | Dubai Creek Harbour
+notable:
+  - Burj Khalifa
+  - Dubai Mall
+  - Dubai Creek Harbour
 tagline: Skyline-defining. 108,000 homes delivered since 2002.
 image: /images/dev-emaar.jpg
 plate: glass

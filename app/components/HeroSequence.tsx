@@ -74,7 +74,7 @@ function StaticHero() {
       </div>
       <div className="container-site relative z-[1] text-center">
         <img
-          src="/logo/serene-mark-only-white.png"
+          src="/logo/serene-mark.png"
           alt="Serene"
           className="mx-auto h-20 w-auto md:h-28"
         />
@@ -218,7 +218,7 @@ export function HeroSequence() {
         <div className="absolute right-8 top-1/2 z-[2] hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex">
           <span className="type-data text-ivory/50">01</span>
           <div className="relative h-40 w-px bg-ivory/20">
-            <div ref={railRef} className="absolute inset-x-0 top-0 h-full origin-top scale-y-0 bg-gold" />
+            <div ref={railRef} className="absolute inset-x-0 top-0 h-full origin-top scale-y-0 bg-silver" />
           </div>
           <span className="type-data text-ivory/50">03</span>
         </div>
@@ -234,7 +234,7 @@ export function HeroSequence() {
                 artwork; the wordmark would double the headline beneath it */}
             <img
               ref={markRef}
-              src="/logo/serene-mark-only-white.png"
+              src="/logo/serene-mark.png"
               alt="Serene"
               className="mx-auto h-20 w-auto md:h-28"
             />

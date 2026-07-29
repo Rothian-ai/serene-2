@@ -72,9 +72,9 @@ function AmeliaAvatar() {
   return (
     <span
       aria-hidden
-      className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center border border-gold/45"
+      className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center border border-silver/50"
     >
-      <Sparkles size={14} className="text-gold" />
+      <Sparkles size={14} className="text-silver" />
     </span>
   );
 }

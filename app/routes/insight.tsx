@@ -42,7 +42,7 @@ export default function Insight({ params }: Route.ComponentProps) {
       />
 
       <Section className="pt-44 pb-10 text-center">
-        <Eyebrow className="justify-center text-brass">
+        <Eyebrow className="justify-center text-fog">
           {a.category} · {formatDate(a.date)} · {a.readingTime}
         </Eyebrow>
         <SplitHeading as="h1" className="type-display mx-auto mt-6 max-w-[22ch]">
@@ -66,7 +66,7 @@ export default function Insight({ params }: Route.ComponentProps) {
 
       {related.length > 0 && (
         <Section className="pt-0">
-          <Eyebrow className="text-brass">Continue reading</Eyebrow>
+          <Eyebrow className="text-fog">Continue reading</Eyebrow>
           <div className="mt-8 grid gap-x-7 gap-y-12 md:grid-cols-2">
             {related.map((r) => (
               <InsightCard key={r.slug} insight={r} />

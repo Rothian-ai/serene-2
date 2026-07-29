@@ -170,7 +170,7 @@ export function ErrorBoundary() {
   const notFound = isRouteErrorResponse(error) && error.status === 404;
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-ink px-6 text-center text-ivory">
-      <p className="type-eyebrow text-gold">{notFound ? "404" : "Error"}</p>
+      <p className="type-eyebrow text-silver">{notFound ? "404" : "Error"}</p>
       <h1 className="type-headline mt-5">
         {notFound
           ? "This address doesn't exist."

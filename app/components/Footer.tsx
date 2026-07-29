@@ -34,7 +34,7 @@ export function Footer() {
       <div className="container-site pb-10 pt-20">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
-            <img src="/logo/serene-mark-white.png" alt="Serene" className="h-14 w-auto" />
+            <img src="/logo/serene-mark.png" alt="Serene" className="h-14 w-auto" />
             <p className="type-cap mt-4 text-silver">{SITE.tagline}</p>
           </div>
           {COLS.map((col) => (
