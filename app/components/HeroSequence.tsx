@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
-import { CTA, Plate } from "~/components/primitives";
+import { Plate } from "~/components/primitives";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
-import { AMELIA_URL } from "~/lib/site";
 
 /**
  * The homepage cinematic hero — a pinned, scroll-driven narrative over actual
@@ -50,6 +49,15 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Inert coming-soon chip — the CTA is kept, but has nowhere to go yet. */
+function ComingSoon() {
+  return (
+    <span className="btn-platinum inline-block cursor-default px-8 py-[15px] text-[12.5px] font-semibold uppercase tracking-[0.1em]">
+      Coming Soon
+    </span>
+  );
+}
+
 // Chapter-1 (title card / LCP) and chapter-3 grounds. Swapped per request:
 // the title card now opens on amelia-dusk, and the skyline moves to Amelia's slide.
 const TITLE_BG = { image: "/images/amelia-dusk.jpg" };
@@ -81,7 +89,7 @@ function StaticHero() {
         <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
         <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
         <div className="mt-9 flex justify-center">
-          <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+          <ComingSoon />
         </div>
       </div>
     </div>
@@ -245,7 +253,7 @@ export function HeroSequence() {
               {CHAPTERS[0].sub}
             </p>
             <div ref={ctaRef} className="mt-9 flex justify-center">
-              <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+              <ComingSoon />
             </div>
           </div>
         </div>
@@ -263,7 +271,7 @@ export function HeroSequence() {
               <h2 className="type-display mx-auto max-w-[20ch]">{c.title}</h2>
               <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
               <div className="mt-9 flex justify-center">
-                <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+                <ComingSoon />
               </div>
             </div>
           </div>
