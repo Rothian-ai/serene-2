@@ -1,0 +1,53 @@
+# Serene — Apache/LiteSpeed config for static hosting (Hostinger).
+# Lives in public/ so Vite copies it into build/client on every build.
+
+# --- HTTPS ---------------------------------------------------------------
+# Belt-and-braces alongside Hostinger's "Force HTTPS" toggle.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # --- SPA fallback ------------------------------------------------------
+  # Prerendered routes exist as real files and are served directly. Anything
+  # else (the catch-all hero, /admin) falls through to the SPA shell with a
+  # 200 so React Router can boot and resolve the route client-side.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /__spa-fallback.html [L]
+</IfModule>
+
+# --- Caching -------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Hashed build output: filename changes whenever content does, so cache hard.
+  <FilesMatch "\.(js|css|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML must never be cached, or repeat visitors load a stale document that
+  # references asset filenames deleted by the last deploy.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Images and fonts are not hashed; a week is a safe middle ground.
+  <FilesMatch "\.(png|jpe?g|svg|webp|avif|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+# --- Compression ---------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+    application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Misc ----------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+ErrorDocument 404 /__spa-fallback.html

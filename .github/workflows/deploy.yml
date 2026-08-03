@@ -1,0 +1,53 @@
+# Build the static site and sync it to Hostinger over FTP.
+#
+# Hostinger's shared hosting cannot run `npm run build` itself, so the build
+# happens here and only the output (build/client) is uploaded to public_html.
+# Which branch is live is decided by the `on.push.branches` list below.
+
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [alpha]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch or tag to build and deploy"
+        required: false
+        default: alpha
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: hostinger-deploy
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Fail loudly rather than syncing an empty or malformed directory.
+      - name: Verify build output
+        run: |
+          test -f dist/index.html
+          test -f dist/.htaccess
+
+      - name: Sync to public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
