@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Plate } from "~/components/primitives";
+import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
 
 /**
@@ -81,11 +82,7 @@ function StaticHero() {
         <div aria-hidden className="absolute inset-0" style={{ background: VIGNETTE }} />
       </div>
       <div className="container-site relative z-[1] text-center">
-        <img
-          src="/logo/serene-mark.png"
-          alt="Serene"
-          className="mx-auto h-20 w-auto md:h-28"
-        />
+        <SereneMark title="Serene" className="mx-auto h-20 w-auto md:h-28" />
         <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
         <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
         <div className="mt-9 flex justify-center">
@@ -106,7 +103,7 @@ export function HeroSequence() {
   const scrimRef = useRef<HTMLDivElement>(null);
   const bgRefs = useRef<Array<HTMLDivElement | null>>([]);
   const chapterRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const markRef = useRef<HTMLImageElement>(null);
+  const markRef = useRef<SVGSVGElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -238,12 +235,11 @@ export function HeroSequence() {
           className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center px-6 text-center"
         >
           <div className="pointer-events-auto">
-            {/* mark alone (sanctioned lockup 2) — cropped from the supplied
-                artwork; the wordmark would double the headline beneath it */}
-            <img
+            {/* mark alone (sanctioned lockup 2) — the wordmark would double the
+                headline beneath it */}
+            <SereneMark
               ref={markRef}
-              src="/logo/serene-mark.png"
-              alt="Serene"
+              title="Serene"
               className="mx-auto h-20 w-auto md:h-28"
             />
             <h1 ref={headlineRef} className="type-display mt-8 max-w-[20ch]">

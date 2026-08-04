@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SereneMark } from "~/components/SereneMark";
 
 /**
  * Once per session: ink ground, the mark rising, cross-fade out. ≤1.8s, skipped
@@ -61,8 +62,8 @@ export function LoadingSequence() {
         phase === "leaving" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {/* the lockup already carries the wordmark — the mark stands alone, dead-centre */}
-      <img src="/logo/serene-mark.png" alt="" className="loader-mark h-28 w-auto" />
+      {/* the mark stands alone, dead-centre */}
+      <SereneMark className="loader-mark h-28 w-auto" />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
+import { SereneMark } from "~/components/SereneMark";
 
 /**
  * Alpha (coming-soon) header: the mark and a single inert "Coming Soon" chip.
@@ -40,7 +41,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     >
       <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
         <Link to="/" className="flex items-center gap-3" aria-label="Serene — home">
-          <img src="/logo/serene-mark.png" alt="" className="h-9 w-auto" />
+          <SereneMark tone={overDark ? "platinum" : "graphite"} className="h-9 w-auto" />
           <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
         </Link>
         <span
