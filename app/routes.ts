@@ -16,5 +16,11 @@ export default [
   route("privacy", "routes/legal-privacy.tsx"),
   route("cookies", "routes/legal-cookies.tsx"),
   route("terms", "routes/legal-terms.tsx"),
+
+  // Backend (Vercel/SSR): enquiry sink + admin submissions dashboard.
+  route("api/submit", "routes/api.submit.tsx"),
+  route("dashboard", "routes/dashboard.tsx"),
+  route("dashboard/login", "routes/dashboard.login.tsx"),
+
   route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;

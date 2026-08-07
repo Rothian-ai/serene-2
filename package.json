@@ -9,7 +9,10 @@
     "cms": "npx --yes decap-server"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
     "@react-router/node": "^7.1.1",
+    "@vercel/react-router": "^1.3.2",
     "framer-motion": "^11.15.0",
     "gsap": "^3.15.0",
     "isbot": "^5",
@@ -18,6 +21,8 @@
     "lenis": "^1.1.18",
     "lucide-react": "^0.469.0",
     "marked": "^15.0.4",
+    "nodemailer": "^9.0.5",
+    "pg": "^8.22.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.1.1"
@@ -28,8 +33,10 @@
     "@types/js-yaml": "^4.0.9",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^22.10.2",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "prisma": "^7.9.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.7",
