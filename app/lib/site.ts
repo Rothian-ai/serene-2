@@ -18,14 +18,28 @@ export const SITE = {
  * Amelia — the external AI sales platform. The single integration point:
  * set VITE_AMELIA_URL in .env for the production destination.
  */
+const AMELIA_FALLBACK = "https://amelia.rothian.com/login";
+
+/**
+ * A trimmed, non-empty env value wins; anything blank falls back. Note `||`,
+ * not `??`: an env var that exists but is empty (a real deployment case, e.g.
+ * a blank value in Vercel) must NOT win, or every ameliaHref() call throws.
+ */
 export const AMELIA_URL: string =
-  (import.meta.env.VITE_AMELIA_URL as string | undefined) ?? "https://amelia.rothian.com/login";
+  (import.meta.env.VITE_AMELIA_URL as string | undefined)?.trim() || AMELIA_FALLBACK;
 
 export function ameliaHref(ref: string, context?: string): string {
-  const url = new URL(AMELIA_URL);
-  url.searchParams.set("ref", ref);
-  if (context) url.searchParams.set("context", context);
-  return url.toString();
+  const params = new URLSearchParams({ ref, ...(context ? { context } : {}) });
+  // A malformed AMELIA_URL must never throw here: this runs during prerender,
+  // so one bad value would fail the entire production build.
+  try {
+    const url = new URL(AMELIA_URL);
+    params.forEach((value, key) => url.searchParams.set(key, value));
+    return url.toString();
+  } catch {
+    const base = AMELIA_URL || AMELIA_FALLBACK;
+    return `${base}${base.includes("?") ? "&" : "?"}${params}`;
+  }
 }
 
 export function pageTitle(title?: string): string {
