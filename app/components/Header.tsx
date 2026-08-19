@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { SereneMark } from "~/components/SereneMark";
 import { AMELIA_URL } from "~/lib/site";
 
 const NAV = [
@@ -78,11 +79,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
           <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
             {/* mark alone — the wordmark beside it is the live "SERENE" span */}
-            <img
-              src="/logo/serene-mark.png"
-              alt=""
-              className="h-9 w-auto"
-            />
+            <SereneMark tone={overDark ? "platinum" : "graphite"} className="h-9 w-auto" />
             <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
           </Link>
           <nav className="ml-auto hidden items-center gap-8 lg:flex" aria-label="Primary">
