@@ -9,7 +9,7 @@ type Status = "idle" | "sending" | "success" | "error";
  * Set VITE_CONTACT_ENDPOINT (e.g. a Formspree/serverless URL) for production;
  * without it the form completes locally so the flow can be exercised in dev.
  */
-const ENDPOINT = (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) ?? "";
+const ENDPOINT = (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) ?? "/api/submit";
 
 const field =
   "w-full border-b border-ink/25 bg-transparent py-2.5 text-[15.5px] outline-none transition-colors focus:border-b-2 focus:border-gold";
@@ -66,6 +66,8 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate>
+      <input type="hidden" name="type" value="contact" />
+      <input type="hidden" name="source" value="contact-page" />
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className={label}>Name</label>

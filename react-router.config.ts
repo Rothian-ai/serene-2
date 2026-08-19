@@ -1,10 +1,12 @@
 import type { Config } from "@react-router/dev/config";
+import { vercelPreset } from "@vercel/react-router/vite";
 import { readdirSync } from "node:fs";
 
 /**
- * Static site generation: every route — including every content-collection
- * entry — is prerendered to crawlable HTML at build time. New content files
- * are picked up automatically on the next build.
+ * Vercel target. `ssr: true` gives us server routes (the /dashboard admin and
+ * the /api/submit endpoint need a runtime + database). The marketing pages are
+ * still prerendered to static HTML at build for speed/SEO; everything not in the
+ * list (dashboard, api) is server-rendered on demand by the Vercel function.
  */
 function slugs(dir: string): string[] {
   try {
@@ -17,7 +19,8 @@ function slugs(dir: string): string[] {
 }
 
 export default {
-  ssr: false,
+  ssr: true,
+  presets: [vercelPreset()],
   async prerender() {
     return [
       "/",

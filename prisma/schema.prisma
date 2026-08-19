@@ -1,0 +1,46 @@
+// Serene — submissions datastore (Neon Postgres via Prisma).
+// DATABASE_URL is the pooled Neon connection (runtime); DIRECT_URL is the
+// direct connection used for migrations. Both live in .env / Vercel env vars.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SubmissionType {
+  CONTACT
+  REGISTER_INTEREST
+  CAREERS
+}
+
+enum SubmissionStatus {
+  NEW
+  IN_PROGRESS
+  CONTACTED
+  CLOSED
+  ARCHIVED
+}
+
+/// One enquiry from any entry point on the site (contact form, register-interest,
+/// careers). `type` distinguishes them; `context`/`source` capture where it came
+/// from (e.g. a development slug, the page path).
+model Submission {
+  id        String           @id @default(cuid())
+  type      SubmissionType   @default(CONTACT)
+  status    SubmissionStatus @default(NEW)
+  name      String
+  email     String
+  phone     String?
+  message   String?
+  context   String? // e.g. the development slug or role applied for
+  source    String? // e.g. "contact-page", "development:vela-crest"
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([status])
+  @@index([type])
+  @@index([createdAt])
+}
