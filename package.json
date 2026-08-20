@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "node scripts/generate-sitemap.mjs && react-router build",
+    "build": "prisma generate && node scripts/generate-sitemap.mjs && react-router build",
     "typecheck": "react-router typegen && tsc",
     "cms": "npx --yes decap-server"
   },
