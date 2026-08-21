@@ -1,9 +1,9 @@
 ---
 title: 'Escrow Explained: What the Escrow Account Holds, How DLD Regulates It, and When Funds Are Released'
-category: Investment Guides
+category: Buyer Guides
 date: '2026-06-18'
 readingTime: 5 min
-excerpt: Learn how off-plan buyer funds are safeguarded, how the Dubai Land Department regulates project escrow accounts, and the critical questions to ask before making a deposit.
+excerpt: "Learn how off-plan buyer funds are safeguarded, how the Dubai Land Department regulates project escrow accounts, and the critical questions to ask before making a deposit."
 featured: 2
 image: /images/ins-escrow.jpg
 plate: glass
@@ -29,4 +29,4 @@ If a project stalls, the account is frozen, not lost. The DLD's cancellation pro
 
 First: **is the escrow account registered and funded?** The account number appears on the sales agreement, and its registration is verifiable with the DLD directly. Second: **what is the milestone schedule?** A schedule weighted heavily toward early milestones front-loads your exposure; a completion-weighted plan does the opposite.
 
-Every development Serene Bay presents publishes both answers. Ask Amelia for the escrow filing of any project in the registry. It is the first document she will show you anyway.
+Both answers are verifiable before you pay anything, and both belong in the due diligence you see before a project reaches your shortlist — not after. What escrow does not do is watch the build on your behalf or inspect the finished unit, which is why [construction monitoring and independent snagging](/lifecycle) sit inside the model rather than alongside it.

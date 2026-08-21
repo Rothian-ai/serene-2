@@ -11,16 +11,15 @@ import { AMELIA_URL } from "~/lib/site";
  * Conversion sits in the bar's own action, not in the link list.
  */
 const NAV = [
-  { to: "/developments", label: "Developments" },
   { to: "/difference", label: "The Difference" },
-  { to: "/lifecycle", label: "Lifecycle" },
+  { to: "/lifecycle", label: "The Lifecycle" },
   { to: "/insights", label: "Insights" },
+  { to: "/faqs", label: "Questions" },
   { to: "/about", label: "About" },
 ];
 
 const SECONDARY = [
-  { to: "/developers", label: "Developers" },
-  { to: "/faqs", label: "FAQs" },
+  { to: "/amelia", label: "Amelia" },
   { to: "/careers", label: "Careers" },
   { to: "/contact", label: "Contact" },
 ];
@@ -57,15 +56,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
 
   useEffect(() => setOpen(false), [location.pathname]);
 
-  // Sticky elements (e.g. the developments filter) pin below the bar via
-  // --header-offset; keep it in sync so they rise when the bar hides.
   const barHidden = hidden && !open;
-  useEffect(() => {
-    document.documentElement.style.setProperty("--header-offset", barHidden ? "0px" : "68px");
-    return () => {
-      document.documentElement.style.setProperty("--header-offset", "68px");
-    };
-  }, [barHidden]);
 
   // a link is current when the path is it, or sits beneath it (/insights/x)
   const active = (to: string) =>

@@ -1,5 +1,10 @@
 # Decap CMS — Serene Bay content admin.
 #
+# The beta site is informative: it carries no property inventory and no
+# developer partnerships, so there are two collections — the journal and the
+# legal pages (the latter edited in-repo). The developments/developers
+# collections were removed with the listings they described.
+#
 # LOCAL EDITING (the current workflow): `local_backend: true` plus a running
 # `npm run cms` (the decap-server proxy) lets the admin read/write the files in
 # /content and /public/images directly on your machine. No login needed.
@@ -10,8 +15,8 @@
 # commits to `branch`, which triggers a rebuild/redeploy.
 backend:
   name: github
-  repo: your-org/serene # ← set to the real GitHub repo for remote editing
-  branch: main
+  repo: your-org/serene-bay # ← set to the real GitHub repo for remote editing
+  branch: beta
 
 local_backend: true
 
@@ -19,96 +24,6 @@ media_folder: "public/images"
 public_folder: "/images"
 
 collections:
-  - name: developments
-    label: Developments
-    label_singular: Development
-    folder: content/developments
-    create: true
-    extension: md
-    format: yaml-frontmatter
-    identifier_field: title
-    summary: "{{title}} — {{district}}, {{city}}"
-    sortable_fields: [featured, title]
-    fields:
-      - { label: Title, name: title, widget: string }
-      - label: Developer
-        name: developer
-        widget: relation
-        collection: developers
-        value_field: "{{slug}}"
-        search_fields: [name]
-        display_fields: [name]
-      - { label: District, name: district, widget: string }
-      - { label: City, name: city, widget: select, options: [Dubai, Abu Dhabi], default: Dubai }
-      - { label: Status, name: status, widget: string, hint: "e.g. Under construction" }
-      - { label: Handover, name: handover, widget: string, hint: "e.g. Q4 2028" }
-      - { label: Payment plan, name: paymentPlan, widget: string, hint: "e.g. 80 / 20" }
-      - { label: Price from, name: priceFrom, widget: string, hint: "e.g. AED 3.2M" }
-      - { label: "Featured order (lower = earlier; leave blank if not featured)", name: featured, widget: number, required: false, value_type: int }
-      - { label: Hero image, name: image, widget: image, required: false }
-      - { label: Plate style, name: plate, widget: select, options: [hero, render, stone, interior, dusk, glass], default: render }
-      - { label: Excerpt, name: excerpt, widget: text }
-      - { label: Positioning line, name: positioning, widget: string, required: false }
-      - { label: Overview, name: overview, widget: text, required: false }
-      - label: Amenities
-        name: amenities
-        widget: list
-        required: false
-        fields:
-          - { label: Icon, name: icon, widget: select, options: [pool, gym, spa, concierge, courts, parking, park, play, beach, cycling, pavilion, retail, amenity], default: amenity }
-          - { label: Label, name: label, widget: string }
-      - label: Gallery
-        name: gallery
-        widget: list
-        required: false
-        fields:
-          - { label: Image, name: src, widget: image }
-          - { label: Caption, name: caption, widget: string, required: false }
-      - label: Landmarks
-        name: landmarks
-        widget: list
-        required: false
-        fields:
-          - { label: Time, name: time, widget: string, hint: "e.g. 3 min" }
-          - { label: Place, name: place, widget: string }
-      - label: "Reasons to buy"
-        name: reasons
-        widget: list
-        required: false
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - { label: Body, name: body, widget: text }
-      - label: Map
-        name: map
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-          - { label: Latitude, name: lat, widget: number, value_type: float }
-          - { label: Longitude, name: lng, widget: number, value_type: float }
-          - { label: Zoom, name: zoom, widget: number, value_type: int, default: 15 }
-      - { label: Body, name: body, widget: markdown }
-
-  - name: developers
-    label: Developers
-    label_singular: Developer
-    folder: content/developers
-    create: true
-    extension: md
-    format: yaml-frontmatter
-    identifier_field: name
-    summary: "{{name}}"
-    fields:
-      - { label: Name, name: name, widget: string }
-      - { label: Founded, name: founded, widget: string, required: false }
-      - { label: HQ, name: hq, widget: string, required: false }
-      - { label: Delivered, name: delivered, widget: string, required: false }
-      - { label: Tagline, name: tagline, widget: text, required: false }
-      - { label: Plate style, name: plate, widget: select, options: [hero, render, stone, interior, dusk, glass], default: glass }
-      - { label: Image, name: image, widget: image, required: false }
-      - { label: Notable works, name: notable, widget: list, required: false, field: { label: Work, name: work, widget: string } }
-      - { label: Body, name: body, widget: markdown }
-
   - name: insights
     label: Insights
     label_singular: Insight
@@ -121,7 +36,7 @@ collections:
     sortable_fields: [date, title]
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Category, name: category, widget: select, options: ["Market Analysis", "Investment Guides", "Developer Spotlights", "Journal"], default: Journal }
+      - { label: Category, name: category, widget: select, options: ["Market Analysis", "Buyer Guides", "The Model", "Journal"], default: Journal }
       - { label: Date, name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
       - { label: Reading time, name: readingTime, widget: string, default: "4 min" }
       - { label: Excerpt, name: excerpt, widget: text }

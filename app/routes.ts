@@ -6,10 +6,6 @@ export default [
   // The two strategy pillars: how the model differs, and how long it runs.
   route("difference", "routes/difference.tsx"),
   route("lifecycle", "routes/lifecycle.tsx"),
-  route("developments", "routes/developments.tsx"),
-  route("developments/:slug", "routes/development.tsx"),
-  route("developers", "routes/developers.tsx"),
-  route("developers/:slug", "routes/developer.tsx"),
   route("insights", "routes/insights.tsx"),
   route("insights/:slug", "routes/insight.tsx"),
   route("amelia", "routes/amelia.tsx"),

@@ -1,77 +1,86 @@
 # Adding content
 
-Every developer, development, and insight is a markdown file in `content/`, with
-standard **YAML frontmatter** and the article text below it. Adding an entry =
-adding a file. There are two ways to do it.
+The beta site is informative: it explains the Serene Bay model and the market it
+exists to answer. It carries **no property inventory and no developer
+partnerships**, because the strategy names none — the partner network is still to
+be formalised (see `docs/serene-bay-value-chain-strategy.md`, §7).
 
-## 1. With the CMS (recommended)
+So there are two kinds of editable content:
+
+| What | Where | Edited how |
+|---|---|---|
+| Journal articles | `content/insights/*.md` | CMS at `/admin`, or by hand |
+| Legal pages | `content/legal/*.md` | By hand (counsel-reviewed) |
+
+Everything else on the site — the four commitments, the nine lifecycle stages,
+the comparison table, the market figures — is **not** content. It lives in
+`app/lib/strategy.ts`, because it is the positioning rather than editorial. Edit
+that module and every page that composes from it updates together.
+
+## 1. With the CMS (recommended for the journal)
 
 The site ships a [Decap CMS](https://decapcms.org) admin. For local editing you
 run two things side by side:
 
 ```bash
-npm run dev    # the site, on http://localhost:4321
-npm run cms    # the Decap local proxy (reads/writes your files), on :8081
+npm run dev
+```
+
+```bash
+npm run cms
 ```
 
 Then open **http://localhost:4321/admin/**. No login is needed in local mode.
-Pick a collection (Developments / Developers / Insights), fill the form, upload
-images, and **Save** — Decap writes the markdown file into `content/…` and any
-uploaded images into `public/images/`. Review the change, then commit and push;
-your host rebuilds and the entry goes live.
+Pick **Insights**, fill the form, upload images, and **Save** — Decap writes the
+markdown file into `content/insights/` and any uploaded images into
+`public/images/`. Review the change, then commit and push; your host rebuilds and
+the article goes live.
 
 > Images uploaded through the CMS land in `public/images/` and are referenced as
 > `/images/<file>` — the same convention the existing content uses.
 
 ## 2. By hand
 
-Copy an existing file in the same folder, rename it (the **filename is the URL
-slug** — e.g. `vela-crest.md` → `/developments/vela-crest`), and edit the YAML.
-Structured fields are YAML lists/objects:
+Copy an existing file in `content/insights/`, rename it (the **filename is the
+URL slug** — e.g. `why-independent-snagging-matters.md` becomes
+`/insights/why-independent-snagging-matters`), and edit the YAML:
 
 ```yaml
 ---
-title: Example Tower
-developer: emaar # a developer slug (a filename in content/developers)
-district: Downtown Dubai
-city: Dubai # Dubai | Abu Dhabi
-status: Under construction
-handover: Q4 2028
-paymentPlan: 80 / 20
-priceFrom: AED 3.2M
-featured: 1 # optional: lower sorts earlier; omit if not featured
-image: /images/example.jpg
+title: 'How Late Dubai Off-Plan Projects Actually Run'
+category: Market Analysis # Market Analysis | Buyer Guides | The Model | Journal
+date: '2026-08-01'
+readingTime: 5 min
+excerpt: One or two sentences for the cards and the listing page.
+featured: 2 # optional; the journal sorts by date, so this is informational
+image: /images/ins-supply.jpg
 plate: render # hero | render | stone | interior | dusk | glass
-excerpt: "One line for cards and search."
-amenities:
-  - { icon: pool, label: Infinity Sky Pool }
-  - { icon: gym, label: Fitness Floor }
-gallery:
-  - { src: /images/example-01.jpg, caption: "Exterior" }
-landmarks:
-  - { time: 5 min, place: The Dubai Mall }
-reasons:
-  - heading: The most liquid market
-    body: "A sentence on why."
-map: { lat: 25.1972, lng: 55.2744, zoom: 15 }
 ---
 
-## The Residence
-
-Markdown body goes here — `##` headings become the on-page section nav.
+Body in markdown. `##` headings structure the article.
 ```
 
-Amenity `icon` values map to the glyph set in `app/lib/amenities.ts`
-(`pool, gym, spa, concierge, courts, parking, park, play, beach, cycling,
-pavilion, retail`).
+## House rules for journal content
+
+These are not style preferences — they are the reason the site is credible.
+
+- **No figures about Serene Bay.** No transaction volume, no returns, no years
+  of trading, no client counts, no awards. It is a new house. Every number on
+  this site is a published *market* figure with its source named and linked.
+- **Cite market claims.** If an article states a market fact, link the source at
+  the point of use or in a closing `**Source:**` line. The strategy document's
+  own source list is the starting point.
+- **No named developer partnerships or projects.** Discuss developers as a
+  category — delivery records, tiering, incentives — not as partners.
+- **No guarantees.** Delays, yields and lending terms are described as ranges
+  drawn from published research, never as promises.
 
 ## Publishing / remote editing
 
 Content is compiled at **build time**, so a new file appears after the next
-build/deploy. Point your host (Vercel / Netlify / Cloudflare Pages) at the repo
-so a push auto-rebuilds.
+build/deploy. Point your host at the repo so a push auto-rebuilds.
 
-To let a non-technical editor manage content remotely (no repo, from the live
+To let a non-technical editor manage the journal remotely (no repo, from the live
 `/admin`), set the real GitHub `repo` in `public/admin/config.yml` and add a
 GitHub OAuth provider or Decap Cloud — then each save commits to the branch and
 triggers a rebuild.

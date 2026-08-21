@@ -1,9 +1,9 @@
 ---
 title: 'Who Actually Pays the Broker on an Off-Plan Purchase in Dubai'
-category: Investment Guides
+category: The Model
 date: '2026-08-14'
 readingTime: 6 min
-excerpt: Developer marketing frames the broker's commission as a cost the buyer avoids by going direct. For off-plan sales in Dubai that is not how the money moves — and the difference matters more than the arithmetic suggests.
+excerpt: "Developer marketing frames the broker's commission as a cost the buyer avoids by going direct. For off-plan sales in Dubai that is not how the money moves — and the difference matters more than the arithmetic suggests."
 featured: 1
 image: /images/ins-escrow.jpg
 plate: glass

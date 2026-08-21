@@ -23,8 +23,7 @@ npm run build      # sitemap + static build → build/client (deploy this folder
 npm run typecheck  # route typegen + tsc
 ```
 
-The build prerenders **every route** — including each development, developer, and insight —
-to static HTML for SEO. Deploy `build/client` to any static host behind HTTPS; configure the
+The build prerenders **every route** — including each insight — to static HTML for SEO. Deploy `build/client` to any static host behind HTTPS; configure the
 host's SPA fallback to `__spa-fallback.html` for unknown paths.
 
 ## Structure
@@ -32,10 +31,11 @@ host's SPA fallback to `__spa-fallback.html` for unknown paths.
 ```
 app/
   root.tsx            Shell: Lenis↔GSAP wiring, page transitions, scroll progress, header/footer
-  routes/             One file per page (home, developments, development, developer, insight, …)
+  routes/             One file per page (home, difference, lifecycle, about, insight, …)
   components/         UI + cinematic layer (see Motion below); primitives.tsx = the design system
   lib/
-    content.ts        Markdown content collections + parseSections (masterpiece section-nav)
+    content.ts        Markdown content collections (the journal + legal pages)
+    strategy.ts       THE strategy: commitments, the nine stages, the comparison, market figures
     site.ts           Site constants, Amelia gateway, <meta> builder
     gsap.ts           GSAP foundation: plugin registration + useGsapContext (scoped, reduced-motion safe)
     motion.ts         Framer variants/eases + the reveal repertoire
@@ -132,7 +132,6 @@ Copy `.env.example` to `.env`:
 
 - [ ] Replace the placeholder RERA licence number in `app/lib/site.ts` (`SITE.rera`) — it
       appears in the footer, About, FAQs, and Developers pages automatically.
-- [ ] Confirm the real developer registry and update `/content/developers`.
 - [ ] Set the production `VITE_AMELIA_URL`, `VITE_GA_ID`, `VITE_CONTACT_ENDPOINT`.
 - [ ] Have counsel review `/content/legal/*.md` (marked as drafts).
 - [ ] Replace the Unsplash placeholder photography with client-licensed/commissioned imagery

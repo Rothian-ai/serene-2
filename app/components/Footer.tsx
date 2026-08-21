@@ -7,15 +7,13 @@ const COLS = [
     links: [
       { to: "/difference", label: "The Difference" },
       { to: "/lifecycle", label: "The Lifecycle" },
-      { to: "/faqs", label: "FAQs" },
     ],
   },
   {
-    title: "Explore",
+    title: "Read",
     links: [
-      { to: "/developments", label: "Developments" },
-      { to: "/developers", label: "Developers" },
       { to: "/insights", label: "Insights" },
+      { to: "/faqs", label: "Questions" },
     ],
   },
   {

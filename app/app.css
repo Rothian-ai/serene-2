@@ -107,9 +107,6 @@
   --grad-depth: linear-gradient(160deg, #111c39 0%, #1b2257 55%, #3c496b 100%);
   --grad-depth-radial: radial-gradient(120% 90% at 100% 0%, #3c496b 0%, #0a1526 70%);
 
-  /* Header height — sticky elements below the bar track this; the Header
-     component sets it to 0px while the bar is hidden on scroll-down. */
-  --header-offset: 68px;
 }
 
 /* ——— container-site: THE horizontal rhythm. One max-width + inline padding
@@ -516,31 +513,6 @@ body {
 @keyframes hero-cue {
   0% { transform: translateY(-14px); }
   100% { transform: translateY(44px); }
-}
-
-/* location map — Leaflet + OpenStreetMap, kept inside the palette.
-   The tile pane is desaturated (warm grey) while the marker keeps its brass. */
-.serene-map .leaflet-container {
-  height: 100%;
-  width: 100%;
-  background: #e1e4e8;
-  font-family: inherit;
-}
-.serene-map .leaflet-tile-pane {
-  filter: grayscale(1) contrast(1.02) brightness(1.03);
-}
-.serene-map .leaflet-control-zoom a {
-  border-radius: 0;
-  color: var(--color-ink);
-  border-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
-}
-.serene-map .leaflet-control-attribution {
-  background: rgba(243, 244, 247, 0.72);
-  font-size: 10px;
-  color: color-mix(in srgb, var(--color-ink) 55%, transparent);
-}
-.serene-map .leaflet-control-attribution a {
-  color: var(--color-brass);
 }
 
 /* cinematic carousel — slow ken-burns breath on the active slide

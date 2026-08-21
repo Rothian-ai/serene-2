@@ -15,7 +15,10 @@ export function meta() {
   });
 }
 
-const CATEGORIES = ["All", "Market Analysis", "Investment Guides", "Developer Spotlights", "Journal"] as const;
+/* Categories track what the journal is actually for on an informative site:
+   the market's own numbers, the buyer's practical questions, and the model
+   itself. "Developer Spotlights" went with the registry. */
+const CATEGORIES = ["All", "Market Analysis", "Buyer Guides", "The Model", "Journal"] as const;
 
 export default function Insights() {
   const [params, setParams] = useSearchParams();

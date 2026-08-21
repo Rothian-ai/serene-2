@@ -12,7 +12,6 @@ import {
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { AmeliaBand } from "~/components/AmeliaBand";
-import { developers } from "~/lib/content";
 import { COMMITMENTS } from "~/lib/strategy";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
@@ -176,15 +175,16 @@ export default function About() {
               className="mt-6"
               cells={[
                 { k: "Licence", v: SITE.rera },
-                { k: "Registered developers", v: String(developers.length) },
-                { k: "Markets", v: "Dubai · Abu Dhabi" },
                 { k: "Advisor pay", v: "Salaried" },
+                { k: "Markets", v: "Dubai · Abu Dhabi" },
+                { k: "Represents", v: "Buyers only" },
               ]}
             />
             <p className="mt-6 max-w-[62ch] text-[15.5px] leading-relaxed text-ink/70">
-              Every development we present is anchored to a developer we are formally registered
-              with, and every transaction moves through RERA-regulated escrow. Verify the licence;
-              we would in your position.
+              We transact only under formal broker registration with each developer, and every
+              purchase moves through RERA-regulated escrow. We take no seller-side listings, so
+              the dual-agency conflict a buyer would otherwise carry does not exist here. Verify
+              the licence; we would in your position.
             </p>
           </div>
         </Reveal>
@@ -234,7 +234,7 @@ export default function About() {
                 house you can consult at any hour, and one that will never consult you uninvited.
               </p>
               <div className="mt-9">
-                <QuietLink to="/developments">See what we represent</QuietLink>
+                <QuietLink to="/faqs">The questions we get asked</QuietLink>
               </div>
             </Reveal>
           </div>

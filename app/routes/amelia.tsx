@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Eyebrow, Plate, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
-import { developments } from "~/lib/content";
 import { ameliaHref, meta as buildMeta } from "~/lib/site";
 import { track } from "~/lib/analytics";
 import { EASE_QUIET } from "~/lib/motion";
@@ -25,27 +24,17 @@ export function meta() {
 
 const CHIPS = [
   "What protects my deposit under UAE escrow law?",
-  "Which handovers complete before 2028?",
+  "How late do Dubai off-plan projects actually run?",
   "Does buying direct from the developer save me money?",
 ];
-
-function handoverAnswer(): string {
-  const before = developments.filter((d) => {
-    const m = d.handover.match(/20\d{2}/);
-    return m && Number(m[0]) < 2028;
-  });
-  if (before.length === 0) {
-    return "None of the current register completes before 2028. The earliest handovers land that year. I can set the full schedule against your horizon on the platform.";
-  }
-  const list = before.map((d) => `${d.title} (${d.handover})`).join(" · ");
-  return `Of the ${developments.length} addresses in the register today, ${before.length} complete before 2028: ${list}. Each is anchored to RERA escrow and a developer we are registered with.`;
-}
 
 function scriptedAnswer(q: string): string | null {
   if (q === CHIPS[0]) {
     return "Every dirham paid for off-plan in Dubai sits in a RERA-regulated escrow account, released to the developer only against certified construction progress, never on demand. Abu Dhabi holds the same discipline under ADREC. If a project stalls, the account holds your money; the developer does not.";
   }
-  if (q === CHIPS[1]) return handoverAnswer();
+  if (q === CHIPS[1]) {
+    return "Roughly 40–50% of Dubai off-plan projects see some delay, averaging around 8.5 months across the market in 2024–2026 — improved from about 12 months in 2018–2020. Smaller-tier developers regularly exceed 10 to 18 months. That is why delivery record is part of the due diligence you see before a project reaches your shortlist, and why we monitor construction against the DLD tracker rather than waiting for a developer to disclose a slip.";
+  }
   if (q === CHIPS[2]) {
     return "No. On off-plan and primary sales in Dubai the developer pays the broker's commission out of its own project economics, not you — so the headline price does not change when you go direct. The developer simply keeps the commission budget. What you give up is representation, cross-developer comparison, and everything after the signature. It is only in the secondary market that a buyer typically pays the agent's fee directly.";
   }

@@ -154,7 +154,7 @@ export default function Lifecycle() {
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
               <CTA to="/contact" kind="platinum">Speak with an advisor</CTA>
-              <CTA to="/developments" kind="line">See the register</CTA>
+              <CTA to="/faqs" kind="line">Read the questions first</CTA>
             </div>
           </Reveal>
         </Section>

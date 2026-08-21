@@ -266,6 +266,19 @@ export const MARKET_FACTS: MarketFact[] = [
 ];
 
 /* ————————————————————————————————————————————————
+   §2.5 — Where the overseas buyer comes from. Published shares of *foreign
+   buyers* by nationality, not of all transactions.
+———————————————————————————————————————————————— */
+
+export const BUYER_ORIGINS = [
+  { country: "India", share: "22%" },
+  { country: "United Kingdom", share: "17%" },
+  { country: "China", share: "14%" },
+  { country: "Saudi Arabia", share: "11%" },
+  { country: "Russia", share: "9%" },
+] as const;
+
+/* ————————————————————————————————————————————————
    §6 — The rebuttal, in short form for reuse on the homepage
 ———————————————————————————————————————————————— */
 

@@ -15,7 +15,6 @@ import { ComparisonTable } from "~/components/ComparisonTable";
 import { DirectRebuttal } from "~/components/DirectRebuttal";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { COMMITMENTS, PROBLEMS } from "~/lib/strategy";
-import { developers } from "~/lib/content";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -185,20 +184,22 @@ export default function Difference() {
               className="mt-6"
               cells={[
                 { k: "Licence", v: SITE.rera },
-                { k: "Registered developers", v: String(developers.length) },
-                { k: "Markets", v: "Dubai · Abu Dhabi" },
                 { k: "Advisor pay", v: "Salaried" },
+                { k: "Markets", v: "Dubai · Abu Dhabi" },
+                { k: "Represents", v: "Buyers only" },
               ]}
             />
             <p className="mt-6 max-w-[62ch] text-[15.5px] leading-relaxed text-ink/70">
-              Every development we present is anchored to a developer we are formally registered
-              with, and every transaction moves through RERA-regulated escrow. RERA's Form A, B and
-              I framework already provides for documented broker relationships and disclosed
-              commission — we use it as intended. Verify the licence; we would in your position.
+              We transact only under formal broker registration with each developer, and every
+              purchase moves through RERA-regulated escrow. RERA's Form A, B and I framework
+              already provides for documented broker relationships and disclosed commission — we
+              use it as intended. And because we take no seller-side listings, the dual-agency
+              conflict is designed out rather than disclosed. Verify the licence; we would in your
+              position.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <CTA to="/contact" kind="solid">Speak with an advisor</CTA>
-              <CTA to="/developments" kind="line-ink">See the register</CTA>
+              <CTA to="/lifecycle" kind="line-ink">The nine stages</CTA>
             </div>
           </div>
         </Reveal>
