@@ -287,6 +287,47 @@ export const MARKET_FACTS: MarketFact[] = [
 ];
 
 /* ————————————————————————————————————————————————
+   THE VALUE PROPOSITION — the four commitments (§3) expressed as what the
+   buyer actually receives, plus the white space that makes it possible (§2.7).
+   The commitments say how we are built; this says what you get for it.
+———————————————————————————————————————————————— */
+
+export interface ValueItem {
+  k: string;
+  title: string;
+  copy: string;
+  /** what the rest of the market offers in its place */
+  instead: string;
+}
+
+export const VALUE_PROPOSITION: ValueItem[] = [
+  {
+    k: "01",
+    title: "A shortlist chosen on your objective",
+    copy: "Because no advisor's pay moves with the outcome, a shortlist can cross developers on merit — including projects that pay us less than the alternative. You also see the due diligence behind it: escrow verification, registration, construction status and the developer's actual delivery record.",
+    instead: "A shortlist shaped by which developer relationship pays the agency best, or by one developer's own inventory.",
+  },
+  {
+    k: "02",
+    title: "Representation, not a sales process",
+    copy: "In an off-plan transaction the other side of the table is a professional, repeat-player sales organisation. We are the counterpart to it: the party whose only job is your side of the same conversation, and which is not paid more for a yes than for a no.",
+    instead: "A negotiation in which every professional in the room is paid by the seller.",
+  },
+  {
+    k: "03",
+    title: "The contract explained before you sign it",
+    copy: "Payment schedule, delay and cancellation clauses, resale and assignment restrictions — in plain language, before signature. Where you want it, independent UAE-qualified counsel reviews the SPA rather than the developer's own legal team explaining a contract the developer wrote.",
+    instead: "A contract explained by the party that drafted it, at the moment you are ready to commit.",
+  },
+  {
+    k: "04",
+    title: "Someone still there in year three",
+    copy: "Construction monitoring against the public project tracker, independent snagging before final sign-off, then tenanting, management, mortgage and refinance, and eventually the resale. Six of the nine stages happen after the point the market is paid.",
+    instead: "A relationship that ends at reservation, and a new stranger to brief at every stage after it.",
+  },
+];
+
+/* ————————————————————————————————————————————————
    §2.5 — Where the overseas buyer comes from. Published shares of *foreign
    buyers* by nationality, not of all transactions.
 ———————————————————————————————————————————————— */

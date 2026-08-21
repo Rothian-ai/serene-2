@@ -10,14 +10,15 @@ import { SereneMark } from "~/components/SereneMark";
  * Conversion sits in the bar's own action, not in the link list.
  */
 const NAV = [
+  { to: "/off-plan", label: "Off-Plan" },
   { to: "/difference", label: "The Difference" },
   { to: "/lifecycle", label: "The Lifecycle" },
   { to: "/insights", label: "Insights" },
-  { to: "/faqs", label: "Questions" },
   { to: "/about", label: "About" },
 ];
 
 const SECONDARY = [
+  { to: "/faqs", label: "Questions" },
   { to: "/careers", label: "Careers" },
   { to: "/privacy", label: "Privacy" },
 ];

@@ -3,8 +3,9 @@ import { SITE } from "~/lib/site";
 
 const COLS = [
   {
-    title: "The Model",
+    title: "Understand",
     links: [
+      { to: "/off-plan", label: "Off-Plan, Explained" },
       { to: "/difference", label: "The Difference" },
       { to: "/lifecycle", label: "The Lifecycle" },
     ],

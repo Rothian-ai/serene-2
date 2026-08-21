@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
+import { Link } from "react-router";
 import { CTA, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
@@ -46,6 +47,25 @@ function Actions() {
         See the nine stages
       </CTA>
     </>
+  );
+}
+
+/**
+ * The newcomer's way in. Deliberately a text link rather than a third button:
+ * most first-time buyers are not ready to talk to anyone yet, and the contact
+ * form has to stay the only primary action on the page.
+ */
+function NewToOffPlan() {
+  return (
+    <Link
+      to="/off-plan"
+      className="group inline-flex items-center gap-2.5 border-b border-gold/60 pb-1 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ivory/85 transition-colors hover:border-gold hover:text-ivory"
+    >
+      New to off-plan? Start here
+      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+        →
+      </span>
+    </Link>
   );
 }
 
@@ -138,8 +158,13 @@ export function HomeHero() {
         <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">
           {COPY.sub}
         </p>
-        <div ref={ctaRef} className="mt-9 flex flex-wrap justify-center gap-4">
-          <Actions />
+        <div ref={ctaRef}>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Actions />
+          </div>
+          <div className="mt-8 flex justify-center">
+            <NewToOffPlan />
+          </div>
         </div>
       </div>
 

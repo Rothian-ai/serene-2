@@ -41,7 +41,8 @@ app/
   components/         UI + cinematic layer (see Motion below); primitives.tsx = the design system
   lib/
     content.ts        Markdown content collections (the journal + legal pages)
-    strategy.ts       THE strategy: commitments, the nine stages, the comparison, market figures
+    strategy.ts       THE strategy: commitments, nine stages, comparison, value proposition
+    offplan.ts        The /off-plan explainer: process, payment plans, Emirates, FAQ (all sourced)
     site.ts           Site constants, Amelia gateway, <meta> builder
     gsap.ts           GSAP foundation: plugin registration + useGsapContext (scoped, reduced-motion safe)
     motion.ts         Framer variants/eases + the reveal repertoire
@@ -145,6 +146,11 @@ Copy `.env.example` to `.env`:
 - [ ] Update `BASE` in `scripts/generate-sitemap.mjs` + `SITE.url` if the domain differs
       (both currently point at the placeholder `serene.com`).
 - [ ] Confirm the legal entity name in `SITE.legalName` and the office address in `SITE.office`.
+- [ ] **Have a UAE-qualified adviser verify `app/lib/offplan.ts` in full.** The /off-plan
+      explainer is the one page whose facts come from outside the strategy document — the
+      document is Dubai-only, so the Emirate comparison, payment-plan structures and fee
+      lines were researched separately and each carries a source link. Regulation and fees
+      change; the Emirate rows in particular need signing off before launch.
 - [ ] Review `app/lib/strategy.ts`: the four market figures each carry a published source. If a
       figure is refreshed, update its `source`/`href` with it. **No figure on this site describes
       Serene's own performance** — that is deliberate, and should stay that way until there

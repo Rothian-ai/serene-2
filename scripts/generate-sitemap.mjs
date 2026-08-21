@@ -14,6 +14,7 @@ const slugs = (dir) => {
 
 const routes = [
   "/",
+  "/off-plan",
   "/difference",
   "/lifecycle",
   "/about",

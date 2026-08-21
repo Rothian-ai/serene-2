@@ -3,6 +3,8 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 export default [
   index("routes/home.tsx"),
   route("about", "routes/about.tsx"),
+  // The explainer for newcomers: what off-plan is and how the market works.
+  route("off-plan", "routes/off-plan.tsx"),
   // The two strategy pillars: how the model differs, and how long it runs.
   route("difference", "routes/difference.tsx"),
   route("lifecycle", "routes/lifecycle.tsx"),

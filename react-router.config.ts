@@ -24,6 +24,7 @@ export default {
   async prerender() {
     return [
       "/",
+      "/off-plan",
       "/difference",
       "/lifecycle",
       "/about",
