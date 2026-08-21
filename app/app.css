@@ -3,7 +3,7 @@
 /* ————————————————————————————————————————————————
    FACADE — the Serene design system
    Warm ink, warm ivory, disciplined gold. Radius 0.
-   Gold is an edge, never a wall. Navy belongs to Amelia.
+   Gold is an edge, never a wall. Navy carries transparency & conversion.
 ———————————————————————————————————————————————— */
 
 @font-face {
@@ -24,7 +24,7 @@
   --color-ink: #0a1526;      /* deep navy-black — primary dark ground & text on light */
   --color-ivory: #f3f4f7;    /* Pearl — primary light surface (platinum ramp top) */
   --color-gold: #c9a227;     /* Gold — accent only (one moment of value per surface) */
-  --color-navy: #111c39;     /* Navy — the deep-blue co-primary ground (Amelia) */
+  --color-navy: #111c39;     /* Navy — deep-blue co-primary ground (how-we-are-paid, conversion) */
   --color-silver: #aeb4bd;   /* Silver — platinum ramp mid, architectural accents */
   --color-steel: #8a9099;    /* Steel — platinum ramp deeper mid (silver text/detail on light) */
   --color-platinum: #cbcfd6; /* Platinum — light silver surface */
@@ -143,11 +143,10 @@
     min-height: 0 !important;
     height: min(52vh, 900px);
   }
-  /* the pinned homepage sequence — a letterboxed stage, centred in the
-     viewport while pinned; the section's ink ground frames it above/below */
+  /* the homepage hero — a fixed cinematic stage rather than 92svh of image */
   .hero-4k-home {
-    height: 880px !important;
-    top: calc((100vh - 880px) / 2) !important;
+    min-height: 0 !important;
+    height: 880px;
   }
 }
 
@@ -352,6 +351,71 @@ body {
   animation: sheensweep 0.9s var(--ease-quiet) forwards;
 }
 
+/* ————————————————————————————————————————————————
+   FORM CONTROLS — native elements dragged into the house language.
+   A bare <select> and <input type=checkbox> render with OS chrome (rounded
+   grey box, platform arrow, blue tick) which reads as unstyled next to the
+   underline text inputs. Both are reset to appearance:none and rebuilt: radius
+   0, hairline rules, gold only as the focus/checked accent.
+———————————————————————————————————————————————— */
+
+.field-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* room for the chevron, which is painted as a background image so no extra
+     element is needed and the control stays a single focusable node */
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%236b7078' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.15rem center;
+  background-size: 12px 8px;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.field-select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23795a00' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
+}
+/* The open dropdown list is OS-drawn and largely unstylable; setting the
+   option colours at least stops a dark-mode UA painting white-on-white. */
+.field-select option {
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.field-check {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 38%, transparent);
+  background: var(--color-white);
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-quiet), background-color 0.25s var(--ease-quiet);
+}
+.field-check:hover {
+  border-color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+}
+.field-check::before {
+  content: "";
+  width: 0.62rem;
+  height: 0.62rem;
+  transform: scale(0);
+  transition: transform 0.18s var(--ease-quiet);
+  background: var(--color-ink);
+  /* a tick, not a filled square — the one place a glyph beats a block */
+  clip-path: polygon(14% 46%, 0 60%, 39% 100%, 100% 22%, 86% 8%, 39% 72%);
+}
+.field-check:checked {
+  border-color: var(--color-ink);
+}
+.field-check:checked::before {
+  transform: scale(1);
+}
+
 /* Squared tags (pills kept radius-0 to hold the architectural language) */
 .pill {
   display: inline-flex;
@@ -515,21 +579,11 @@ body {
   100% { transform: translateY(44px); }
 }
 
-/* cinematic carousel — slow ken-burns breath on the active slide
-   (gated in JS to desktop + motion-on; neutralised by the reduced-motion rule) */
-@keyframes carousel-kenburns {
-  from { transform: scale(1.01); }
-  to { transform: scale(1.07); }
-}
-.carousel-kenburns {
-  animation: carousel-kenburns 14s ease-out both;
-  transform-origin: 50% 52%;
-}
 .will-change-transform {
   will-change: transform;
 }
 
-/* collaborations marquee — a slow, continuous drift of the brand wall.
+/* marquee — a slow, continuous drift of a text strip (MarqueeStrip).
    The track holds two identical halves; translating by -50% loops seamlessly.
    Pauses on hover/focus; neutralised to a static row under reduced motion. */
 @keyframes marquee {

@@ -10,8 +10,8 @@ import {
 } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
-import { LifecycleSpine } from "~/components/LifecycleRail";
-import { AmeliaBand } from "~/components/AmeliaBand";
+import { StickyStages } from "~/components/StickyStages";
+import { ConversationBand } from "~/components/ConversationBand";
 import { STAGES } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
@@ -37,7 +37,7 @@ const PRINCIPLES = [
   },
   {
     k: "The next stage comes to you",
-    copy: "Each introduction is logged against your record, so Amelia can raise the next relevant stage herself — a snagging inspection as handover approaches, a refinance conversation as a fixed term ends — instead of relying on you to remember to come back.",
+    copy: "Every introduction is logged against your record, so the next relevant stage is raised with you rather than left to your memory — a snagging inspection as handover approaches, a refinance conversation as a fixed term ends.",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function Lifecycle() {
           <Eyebrow className="text-fog">Stage by Stage</Eyebrow>
         </Reveal>
         <div className="mt-9">
-          <LifecycleSpine />
+          <StickyStages />
         </div>
       </Section>
 
@@ -160,9 +160,14 @@ export default function Lifecycle() {
         </Section>
       </div>
 
-      <AmeliaBand
-        title="Questions about a later stage? Ask now, years early."
-        refId="lifecycle"
+      <ConversationBand
+        eyebrow="Stage One"
+        title="Questions about a later stage are welcome years early."
+        copy="Most buyers ask about snagging in month thirty. Asking in month one is how the answer changes what you buy in the first place."
+        secondary="Why we work this way"
+        secondaryTo="/difference"
+        image="/images/vela-crest-02.jpg"
+        alt="Floor-to-ceiling glass above the city"
       />
     </>
   );

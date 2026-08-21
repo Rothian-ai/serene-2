@@ -275,7 +275,7 @@ export function Ledger({
 const panelTone = {
   ivory: "bg-ivory text-ink",
   ink: "bg-ink text-ivory",
-  navy: "bg-navy text-ivory", // navy is Amelia's alone
+  navy: "bg-navy text-ivory", // navy carries transparency & conversion
 } as const;
 
 /** animated scroll cue — pure CSS (.hero-cue), no JS, so it never traps paint */

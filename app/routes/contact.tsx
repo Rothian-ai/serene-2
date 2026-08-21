@@ -1,8 +1,10 @@
 import { Eyebrow, Ledger, Section } from "~/components/primitives";
+import { Hero } from "~/components/Hero";
+import { SplitHeading } from "~/components/SplitHeading";
 import { ContactForm } from "~/components/ContactForm";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
-export const handle = { headerTone: "light" as const };
+export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
@@ -15,10 +17,16 @@ export function meta() {
 
 export default function Contact() {
   return (
-    <Section className="pt-40">
-      <Eyebrow className="text-fog">Speak With an Advisor</Eyebrow>
-      <h1 className="type-display mt-6 max-w-[18ch]">Start with the objective.</h1>
-      <p className="type-body-lg mt-6 max-w-[58ch] text-ink/74">
+    <>
+    <Hero plate="dusk" image="/images/mamsha-gardens-03.jpg" height="min-h-[52svh]">
+      <Eyebrow className="text-silver">Speak With an Advisor</Eyebrow>
+      <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
+        Start with the objective.
+      </SplitHeading>
+    </Hero>
+
+    <Section>
+      <p className="type-body-lg max-w-[58ch] text-ink/74">
         Stage one is a conversation about what the purchase is actually for — capital growth,
         rental yield, Golden Visa eligibility, lifestyle use, exit horizon — and what it costs
         all-in. No project is named until that is clear. The advisor you speak to is salaried, so
@@ -36,14 +44,12 @@ export default function Contact() {
             <Ledger cells={[{ k: "Hours", v: SITE.hours }]} />
           </div>
           <p className="type-cap mt-6 max-w-[40ch] text-fog">
-            Prefer an immediate answer at any hour? Amelia holds the record and never sleeps.
-          </p>
-          <p className="type-cap mt-4 max-w-[40ch] text-fog">
             We will only call you if you ask us to on the form. There is no follow-up campaign and
             no sales floor to pass you to.
           </p>
         </aside>
       </div>
     </Section>
+    </>
   );
 }

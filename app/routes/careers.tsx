@@ -1,8 +1,11 @@
 import { Eyebrow, Section } from "~/components/primitives";
+import { Hero } from "~/components/Hero";
+import { SplitHeading } from "~/components/SplitHeading";
+import { ConversationBand } from "~/components/ConversationBand";
 import { SITE, meta as buildMeta } from "~/lib/site";
 import roles from "../../content/careers.json";
 
-export const handle = { headerTone: "light" as const };
+export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
@@ -19,10 +22,15 @@ const ROLES: Role[] = roles as Role[];
 export default function Careers() {
   return (
     <>
-      <Section className="pt-40">
-        <Eyebrow className="text-fog">Careers</Eyebrow>
-        <h1 className="type-display mt-6 max-w-[20ch]">Nobody here is paid to close.</h1>
-        <p className="type-body-lg mt-6 max-w-[56ch] text-ink/74">
+      <Hero plate="stone" image="/images/saadiyat-grove-residences-01.jpg" height="min-h-[58svh]">
+        <Eyebrow className="text-silver">Careers</Eyebrow>
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
+          Nobody here is paid to close.
+        </SplitHeading>
+      </Hero>
+
+      <Section>
+        <p className="type-body-lg max-w-[56ch] text-ink/74">
           The Dubai market recruits advisors on the promise of six figures a month and pays them
           nothing until they close. Average tenure has fallen to six months or less. We do the
           opposite: advisors are salaried, so the work is comparison, verification and long-term
@@ -63,6 +71,15 @@ export default function Careers() {
           )}
         </div>
       </Section>
+
+      <ConversationBand
+        eyebrow="Or Just Introduce Yourself"
+        title="If none of these fit, write anyway."
+        copy="We would rather hear from someone who wants to build long client relationships and does not see a role listed, than fill a role with someone who wants a commission ladder."
+        primary="Write to us"
+        image="/images/about-decide.jpg"
+        alt="A door standing open to warm light"
+      />
     </>
   );
 }

@@ -13,7 +13,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ComparisonTable } from "~/components/ComparisonTable";
 import { DirectRebuttal } from "~/components/DirectRebuttal";
-import { AmeliaBand } from "~/components/AmeliaBand";
+import { ConversationBand } from "~/components/ConversationBand";
 import { COMMITMENTS, PROBLEMS } from "~/lib/strategy";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
@@ -124,6 +124,18 @@ export default function Difference() {
             in a table rather than argued about.
           </p>
         </Reveal>
+        <Reveal className="mt-10 md:mt-12" variant="mask">
+          <Plate
+            kind="render"
+            image="/images/mercedes-benz-places-04.jpg"
+            alt="Two glass towers against a clouded sky"
+            className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/7]"
+            parallax
+          />
+          <p className="type-cap mt-3 text-fog">
+            Two routes to the same building. Only one of them puts someone beside you.
+          </p>
+        </Reveal>
         <div className="mt-11 md:mt-14">
           <ComparisonTable />
         </div>
@@ -205,9 +217,14 @@ export default function Difference() {
         </Reveal>
       </Section>
 
-      <AmeliaBand
-        title="Test the claim. Ask anything, and see what comes back."
-        refId="difference"
+      <ConversationBand
+        eyebrow="Test It"
+        title="Put the claim to an advisor and see what comes back."
+        copy="Ask the awkward version of the question — which projects pay you least, what you would tell me not to buy, who inspects the unit. A salaried advisor can answer all three."
+        secondary="The nine stages"
+        secondaryTo="/lifecycle"
+        image="/images/about-understand.jpg"
+        alt="An architectural section drawing, read in full"
       />
     </>
   );

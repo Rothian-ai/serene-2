@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { Eyebrow, Section } from "~/components/primitives";
+import { Hero } from "~/components/Hero";
+import { SplitHeading } from "~/components/SplitHeading";
+import { ConversationBand } from "~/components/ConversationBand";
 import { Accordion } from "~/components/Accordion";
 import faqs from "../../content/faqs.json";
 import { meta as buildMeta } from "~/lib/site";
 
-export const handle = { headerTone: "light" as const };
+export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
@@ -41,13 +44,18 @@ export default function Faqs() {
         }}
       />
 
-      <Section className="pt-40">
-        <Eyebrow className="text-fog">Questions</Eyebrow>
-        <h1 className="type-display mt-6">Asked, answered.</h1>
-        <p className="type-body-lg mt-6 max-w-[56ch] text-ink/72">
+      <Hero plate="glass" image="/images/the-cove-tower-three-02.jpg" height="min-h-[58svh]">
+        <Eyebrow className="text-silver">Questions</Eyebrow>
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[16ch]">
+          Asked, answered.
+        </SplitHeading>
+        <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/72">
           Including the questions a commission-only agent would rather you didn't ask.
         </p>
-        <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
+      </Hero>
+
+      <Section className="pt-14">
+        <div className="flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
           {CATEGORIES.map((c) => (
             <button
               key={c}
@@ -69,17 +77,23 @@ export default function Faqs() {
           <Accordion items={list} />
           <p className="mt-10 text-[15.5px] text-ink/70">
             A question we haven't answered?{" "}
-            <Link to="/amelia?ref=faqs" className="text-brass underline underline-offset-2">
-              Ask Amelia
-            </Link>{" "}
-            or{" "}
             <Link to="/contact" className="text-brass underline underline-offset-2">
-              write to us
+              Put it to an advisor
             </Link>
-            .
+            . You will get a written reply, and a call only if you ask for one.
           </p>
         </div>
       </Section>
+
+      <ConversationBand
+        eyebrow="Still Unsure"
+        title="The awkward questions are the useful ones."
+        copy="Which projects pay us least, what we would tell you not to buy, who inspects the unit before you release the final payment. A salaried advisor can answer all three without flinching."
+        secondary="How the model works"
+        secondaryTo="/difference"
+        image="/images/about-glass.jpg"
+        alt="A curtain-wall facade in close detail"
+      />
     </>
   );
 }

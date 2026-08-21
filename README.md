@@ -1,6 +1,12 @@
-# Serene Bay — serenebay.com
+# Serene — serene.com
 
-Production frontend for **Serene Bay**, an off-plan buyer advisory in Dubai and Abu Dhabi
+**Two names, on purpose.** `SITE.name` (`"Serene"`) is the title identity: the
+browser tab, `<title>`, `og:site_name`, the header wordmark and the logo's
+accessible label. `SITE.contentName` (`"Serene Bay"`) is how body copy, legal
+text, meta descriptions and the comparison table refer to the house. Never
+hard-code either — read them from `app/lib/site.ts`.
+
+Production frontend for **Serene**, an off-plan buyer advisory in Dubai and Abu Dhabi
 whose advisors are salaried rather than commissioned. A premium, cinematic, prerendered
 marketing site that has to do two jobs: make the structural argument for the model, and move
 visitors into a conversation — with an advisor, or with **Amelia** (the external AI platform).
@@ -137,11 +143,11 @@ Copy `.env.example` to `.env`:
 - [ ] Replace the Unsplash placeholder photography with client-licensed/commissioned imagery
       per the imagery direction (filenames in `public/images/` are stable swap slots).
 - [ ] Update `BASE` in `scripts/generate-sitemap.mjs` + `SITE.url` if the domain differs
-      (both currently point at the placeholder `serenebay.com`).
+      (both currently point at the placeholder `serene.com`).
 - [ ] Confirm the legal entity name in `SITE.legalName` and the office address in `SITE.office`.
 - [ ] Review `app/lib/strategy.ts`: the four market figures each carry a published source. If a
       figure is refreshed, update its `source`/`href` with it. **No figure on this site describes
-      Serene Bay's own performance** — that is deliberate, and should stay that way until there
+      Serene's own performance** — that is deliberate, and should stay that way until there
       are audited numbers to publish.
 - [ ] Confirm the vetted specialist panel behind lifecycle stages 3, 5, 6, 7 and 8 (snagging
       firms, mortgage advisors, interior designers, property managers, legal counsel) before the

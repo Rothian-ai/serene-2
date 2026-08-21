@@ -49,9 +49,6 @@ export function initAnalytics(): void {
 }
 
 type EventName =
-  | "amelia_engage"
-  | "amelia_ask"
-  | "amelia_dock"
   | "contact_submit"
   | "development_view"
   | "insight_read";

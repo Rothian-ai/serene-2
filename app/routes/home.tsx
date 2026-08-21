@@ -1,11 +1,14 @@
-import { HeroSequence } from "~/components/HeroSequence";
+import { HomeHero } from "~/components/HomeHero";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plate } from "~/components/primitives";
 import { InsightCard } from "~/components/cards";
-import { AmeliaAsk } from "~/components/AmeliaAsk";
 import { DirectRebuttal } from "~/components/DirectRebuttal";
 import { LifecycleRail } from "~/components/LifecycleRail";
+import { PaidBand } from "~/components/PaidBand";
+import { MarqueeStrip } from "~/components/MarqueeStrip";
+import { ImageMosaic } from "~/components/ImageMosaic";
+import type { MosaicFrame } from "~/components/ImageMosaic";
 import { insights } from "~/lib/content";
 import { BUYER_ORIGINS, COMMITMENTS, PROBLEMS } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
@@ -21,10 +24,41 @@ export function meta() {
 }
 
 /**
+ * The editorial image band. Offsets and drift rates differ per frame so the
+ * three separate slightly as the band passes — depth, not decoration.
+ */
+const MOSAIC: MosaicFrame[] = [
+  {
+    image: "/images/saadiyat-grove.jpg",
+    alt: "A curved courtyard with a single tree",
+    kind: "stone",
+    caption: "Before a project is named",
+    className: "col-span-2 aspect-[4/5] md:col-span-4 md:mt-16",
+    drift: 5,
+  },
+  {
+    image: "/images/the-cove-tower-three-01.jpg",
+    alt: "Waterfront residential towers above the marina",
+    kind: "render",
+    caption: "During the years nobody watches",
+    className: "col-span-2 aspect-[4/5] md:col-span-4 md:aspect-[3/4]",
+    drift: 2,
+  },
+  {
+    image: "/images/verde-terraces-01.jpg",
+    alt: "A tower facade with cascading planted balconies",
+    kind: "interior",
+    caption: "And long after the keys",
+    className: "col-span-2 aspect-[4/5] md:col-span-4 md:mt-24",
+    drift: 6,
+  },
+];
+
+/**
  * The homepage is the argument, in the order the strategy makes it:
- * proposition → what is broken → who it is broken for → how we are built
- * differently → the objection → the lifecycle → the market's own numbers →
- * the advisory → the journal → the close.
+ * proposition → the four claims as a strip → what is broken → who it is broken
+ * for → how we are built differently → the objection → the lifecycle → the
+ * market's own numbers → how we are paid → the journal → the close.
  *
  * There is no inventory here, and no developer register. The strategy names
  * neither: the partner network is still to be formalised, and a shortlist means
@@ -35,11 +69,13 @@ export default function Home() {
 
   return (
     <>
-      {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence.
-          Photography and motion unchanged; the argument is new. */}
-      <HeroSequence />
+      {/* ① The hero — one statement over the dusk plate */}
+      <HomeHero />
 
-      {/* ② The problem — why this market needed a different kind of house */}
+      {/* ② The four claims, drifting past — the shortest statement of the model */}
+      <MarqueeStrip />
+
+      {/* ③ The problem — why this market needed a different kind of house */}
       <div className="bg-frost">
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
@@ -70,7 +106,7 @@ export default function Home() {
         </Section>
       </div>
 
-      {/* ③ Who it is broken for — the overseas buyer, with the published mix */}
+      {/* ④ Who it is broken for — the overseas buyer, with the published mix */}
       <Section>
         <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-6">
@@ -128,7 +164,12 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ④ The difference — the four structural commitments, then the plate */}
+      {/* ⑤ The band — three frames, three moments in an ownership, staggered */}
+      <Section tight>
+        <ImageMosaic frames={MOSAIC} />
+      </Section>
+
+      {/* ⑥ The difference — the four structural commitments, then the plate */}
       <div className="bg-frost">
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
@@ -174,19 +215,19 @@ export default function Home() {
         </Section>
       </div>
 
-      {/* ⑤ The objection — going direct. The one argument put in writing. */}
+      {/* ⑦ The objection — going direct. The one argument put in writing. */}
       <DirectRebuttal />
 
-      {/* ⑥ The lifecycle — nine stages, six of them after reservation */}
+      {/* ⑧ The lifecycle — nine stages, six of them after reservation */}
       <LifecycleRail />
 
-      {/* ⑦ On the record — the market's published figures, sourced */}
+      {/* ⑨ On the record — the market's published figures, sourced */}
       <MetricsMonument />
 
-      {/* ⑧ Amelia — her one navy moment, the reason no one has to call you */}
-      <AmeliaAsk />
+      {/* ⑩ How we are paid — the commercial-transparency moment, on navy */}
+      <PaidBand />
 
-      {/* ⑨ Insights — the journal, image-led */}
+      {/* ⑪ Insights — the journal, image-led */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
           <Reveal exit>
@@ -206,7 +247,7 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
-      {/* ⑩ Final threshold — the close */}
+      {/* ⑫ Final threshold — the close */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>

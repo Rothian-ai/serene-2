@@ -29,7 +29,6 @@ export default {
       "/about",
       "/insights",
       ...slugs("content/insights").map((s) => `/insights/${s}`),
-      "/amelia",
       "/careers",
       "/faqs",
       "/contact",

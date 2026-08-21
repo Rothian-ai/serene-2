@@ -94,6 +94,9 @@ export interface Stage {
   copy: string;
   /** the independent specialists introduced at this stage, if any */
   specialists?: string;
+  /** the photograph the pinned stage column crossfades to (StickyStages) */
+  image: string;
+  alt: string;
 }
 
 export const STAGES: Stage[] = [
@@ -102,12 +105,16 @@ export const STAGES: Stage[] = [
     title: "Discovery and option narrowing",
     short: "Objective before inventory",
     copy: "Before any project is named: what the purchase is actually for — capital growth, rental yield, Golden Visa eligibility, lifestyle use, exit horizon — the true all-in budget including DLD fees, Oqood registration and service charges, and your real tolerance for developer tier and delivery timeline.",
+    image: "/images/about-ask.jpg",
+    alt: "A quiet lounge in warm evening light",
   },
   {
     n: "02",
     title: "Project and developer due diligence",
     short: "You see the working, not just the shortlist",
     copy: "Escrow verification, DLD registration, construction status and developer delivery record. We show you the due diligence itself, so you understand why a project made the shortlist and why others did not.",
+    image: "/images/about-understand.jpg",
+    alt: "An architectural section drawing, read in full",
   },
   {
     n: "03",
@@ -115,12 +122,16 @@ export const STAGES: Stage[] = [
     short: "The contract, in plain language",
     copy: "The payment plan, the delay and cancellation clauses, the resale and assignment restrictions — explained before signature, not after. Where you want it, we introduce independent UAE-qualified counsel rather than relying on the developer's own legal team to explain a contract the developer wrote.",
     specialists: "Independent UAE-qualified legal counsel",
+    image: "/images/mamsha-gardens-04.jpg",
+    alt: "A colonnade wall, read in close detail",
   },
   {
     n: "04",
     title: "Construction-phase monitoring",
     short: "Delay risk flagged, not disclosed late",
     copy: "We track actual progress against the DLD's public project tracker and our own developer relationships, and raise emerging delay risk with you rather than waiting for the developer to volunteer it. This is the stage a commission-only agent has already been paid to leave.",
+    image: "/images/bugatti-residences-04.jpg",
+    alt: "A concrete structure part-way through construction",
   },
   {
     n: "05",
@@ -128,6 +139,8 @@ export const STAGES: Stage[] = [
     short: "Inspected by someone who didn't build it",
     copy: "An independent third-party snagging inspection ahead of final sign-off — specialist inspectors, not the developer's own handover team — and support through defect rectification before final payment or mortgage drawdown is released.",
     specialists: "Independent snagging and inspection firms",
+    image: "/images/armani-beach-residences-05.jpg",
+    alt: "A finished bathroom, the kind of surface an inspection covers",
   },
   {
     n: "06",
@@ -135,6 +148,8 @@ export const STAGES: Stage[] = [
     short: "Rental-ready without managing contractors from abroad",
     copy: "For a unit being furnished for personal use or for letting, we introduce vetted interior design and turnkey furnishing specialists, so you are not coordinating trades across time zones.",
     specialists: "Interior design and turnkey furnishing specialists",
+    image: "/images/mamsha-gardens-02.jpg",
+    alt: "A warm living room in natural light",
   },
   {
     n: "07",
@@ -142,6 +157,8 @@ export const STAGES: Stage[] = [
     short: "A tenant found, not a number handed over",
     copy: "We find and place a qualified tenant and, where you want it, hand over to a trusted property management partner for rent collection, maintenance coordination and lease renewal.",
     specialists: "Property management partners",
+    image: "/images/verde-terraces-02.jpg",
+    alt: "A bright, plant-filled living interior",
   },
   {
     n: "08",
@@ -149,12 +166,16 @@ export const STAGES: Stage[] = [
     short: "Non-resident lending, navigated",
     copy: "Non-resident lending is materially different: typically 35–40% down payment and around 50% LTV for off-plan, with full income documentation. We introduce independent mortgage advisors experienced in exactly that, for the first purchase and for later refinancing, and help sequence further acquisitions against what you already hold.",
     specialists: "Independent non-resident mortgage advisors",
+    image: "/images/vela-crest-02.jpg",
+    alt: "Floor-to-ceiling glass above the city",
   },
   {
     n: "09",
     title: "Resale and exit",
     short: "The same relationship handles the exit",
     copy: "Whether an off-plan assignment before handover or a secondary sale after, we manage the process — Form F, the developer NOC, the Oqood transfer at a DLD trustee office — and find your next buyer. First enquiry to eventual exit, inside one relationship rather than scattered across strangers.",
+    image: "/images/armani-beach-residences-04.jpg",
+    alt: "A balcony over calm water at dusk",
   },
 ];
 

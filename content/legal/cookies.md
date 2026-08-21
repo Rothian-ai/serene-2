@@ -19,8 +19,8 @@ This site sets one category of cookies, analytics, and only after you accept the
 
 ## Changing your mind
 
-Clear this site's data in your browser and the notice will ask again. To withdraw analytics consent specifically, decline when re-asked or write to privacy@serenebay.com.
+Clear this site's data in your browser and the notice will ask again. To withdraw analytics consent specifically, decline when re-asked or write to privacy@serene.com.
 
 ## What we don't do
 
-No advertising cookies, no cross-site tracking, no fingerprinting, no third-party marketing pixels. Amelia, as an external platform, presents its own cookie terms when you enter it.
+No advertising cookies, no cross-site tracking, no fingerprinting, no third-party marketing pixels.

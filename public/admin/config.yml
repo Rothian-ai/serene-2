@@ -1,4 +1,4 @@
-# Decap CMS — Serene Bay content admin.
+# Decap CMS — Serene content admin.
 #
 # The beta site is informative: it carries no property inventory and no
 # developer partnerships, so there are two collections — the journal and the
@@ -15,7 +15,7 @@
 # commits to `branch`, which triggers a rebuild/redeploy.
 backend:
   name: github
-  repo: your-org/serene-bay # ← set to the real GitHub repo for remote editing
+  repo: your-org/serene # ← set to the real GitHub repo for remote editing
   branch: beta
 
 local_backend: true

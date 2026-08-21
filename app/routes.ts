@@ -8,7 +8,6 @@ export default [
   route("lifecycle", "routes/lifecycle.tsx"),
   route("insights", "routes/insights.tsx"),
   route("insights/:slug", "routes/insight.tsx"),
-  route("amelia", "routes/amelia.tsx"),
   route("careers", "routes/careers.tsx"),
   route("faqs", "routes/faqs.tsx"),
   route("contact", "routes/contact.tsx"),

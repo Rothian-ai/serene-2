@@ -11,7 +11,7 @@ import {
 } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
-import { AmeliaBand } from "~/components/AmeliaBand";
+import { ConversationBand } from "~/components/ConversationBand";
 import { COMMITMENTS } from "~/lib/strategy";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
@@ -251,7 +251,14 @@ export default function About() {
         </div>
       </Section>
 
-      <AmeliaBand title="The advisory is open. Bring a question." refId="about" />
+      <ConversationBand
+        title="Bring the question, not the shortlist."
+        copy="Tell an advisor what the purchase is for. Everything else — districts, developers, payment plans — follows from that answer rather than preceding it."
+        secondary="How the model works"
+        secondaryTo="/difference"
+        image="/images/mamsha-gardens-02.jpg"
+        alt="A warm living room in natural light"
+      />
     </>
   );
 }

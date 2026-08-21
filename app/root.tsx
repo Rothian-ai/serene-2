@@ -16,8 +16,6 @@ import Lenis from "lenis";
 import "./app.css";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
-// Ask Amelia floating dock — hidden for now (re-enable the <AmeliaDock /> mount below).
-// import { AmeliaDock } from "~/components/AmeliaDock";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
@@ -49,7 +47,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "RealEstateAgent",
-              name: SITE.name,
+              name: SITE.contentName,
+              alternateName: SITE.name,
               legalName: SITE.legalName,
               url: SITE.url,
               slogan: SITE.tagline,
@@ -168,7 +167,6 @@ export default function App() {
       <div ref={footerRef} className="fixed inset-x-0 bottom-0 z-0">
         <Footer />
       </div>
-      {/* <AmeliaDock /> — hidden for now */}
       <CookieConsent />
     </>
   );

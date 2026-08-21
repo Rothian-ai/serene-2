@@ -20,7 +20,6 @@ const COLS = [
     title: "House",
     links: [
       { to: "/about", label: "About" },
-      { to: "/amelia", label: "Amelia" },
       { to: "/careers", label: "Careers" },
       { to: "/contact", label: "Contact" },
     ],

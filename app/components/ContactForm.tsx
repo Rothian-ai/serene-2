@@ -123,7 +123,12 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="cf-stage" className={label}>Where you are in the process</label>
-          <select id="cf-stage" name="stage" className={field} defaultValue={STAGE_OPTIONS[0]}>
+          <select
+            id="cf-stage"
+            name="stage"
+            className={`${field} field-select`}
+            defaultValue={STAGE_OPTIONS[0]}
+          >
             {STAGE_OPTIONS.map((o) => (
               <option key={o} value={o}>
                 {o}
@@ -146,7 +151,7 @@ export function ContactForm() {
             name="callRequested"
             type="checkbox"
             value="yes"
-            className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[var(--gold)]"
+            className="field-check mt-0.5 shrink-0"
           />
           <span>
             <span className="type-subhead block">I would like a call.</span>

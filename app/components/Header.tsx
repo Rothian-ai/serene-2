@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SereneMark } from "~/components/SereneMark";
-import { AMELIA_URL } from "~/lib/site";
 
 /**
  * Primary navigation, ordered by the buyer journey the strategy describes:
@@ -19,9 +18,8 @@ const NAV = [
 ];
 
 const SECONDARY = [
-  { to: "/amelia", label: "Amelia" },
   { to: "/careers", label: "Careers" },
-  { to: "/contact", label: "Contact" },
+  { to: "/privacy", label: "Privacy" },
 ];
 
 /**
@@ -67,8 +65,11 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     ? "bg-transparent"
     : "bg-ivory/95 backdrop-blur-[2px] border-b border-ink/12";
   const text = overDark ? "text-ivory" : "text-ink";
-  const amelia = overDark
-    ? "border-silver/70 text-silver hover:border-silver"
+  // the bar's single action. Outlined over a dark hero, brass on the light bar —
+  // the platinum fill is reserved for in-page primaries so the header never
+  // out-shouts the section it sits above.
+  const action = overDark
+    ? "border-silver/70 text-silver hover:border-silver hover:bg-ivory/5"
     : "border-brass text-brass hover:border-ink hover:text-ink";
 
   return (
@@ -79,12 +80,11 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
         }`}
       >
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
-          <Link to="/" className="flex items-center gap-3" aria-label="Serene Bay, home">
-            {/* mark alone — the wordmark beside it is the live "SERENE BAY" span */}
+          <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
+            {/* mark alone — the wordmark beside it is the live "SERENE" span */}
             <SereneMark tone={overDark ? "platinum" : "graphite"} className="h-9 w-auto" />
-            <span className="whitespace-nowrap text-[15px] font-medium uppercase tracking-[0.2em]">
-              Serene&nbsp;Bay
-            </span>
+            {/* the wordmark carries the short title identity; prose says "Serene Bay" */}
+            <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
           </Link>
           {/* five primary links + one action: at lg the gaps tighten so the
               longer strategic labels still fit on a 1024px laptop */}
@@ -101,14 +101,12 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
-            <a
-              href={AMELIA_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${amelia}`}
+            <Link
+              to="/contact"
+              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
             >
-              Ask Amelia
-            </a>
+              Request a conversation
+            </Link>
           </nav>
           <button
             type="button"
@@ -162,22 +160,12 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 transition={{ delay: 0.45 }}
                 className="mt-10"
               >
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href={AMELIA_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="border border-silver/70 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-silver"
-                  >
-                    Ask Amelia
-                  </a>
-                  <Link
-                    to="/contact"
-                    className="btn-platinum px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
-                  >
-                    Speak with an advisor
-                  </Link>
-                </div>
+                <Link
+                  to="/contact"
+                  className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
+                >
+                  Request a conversation
+                </Link>
               </motion.div>
             </nav>
           </motion.div>

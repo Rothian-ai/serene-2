@@ -1,6 +1,6 @@
 # Adding content
 
-The beta site is informative: it explains the Serene Bay model and the market it
+The beta site is informative: it explains the Serene model and the market it
 exists to answer. It carries **no property inventory and no developer
 partnerships**, because the strategy names none — the partner network is still to
 be formalised (see `docs/serene-bay-value-chain-strategy.md`, §7).
@@ -64,7 +64,7 @@ Body in markdown. `##` headings structure the article.
 
 These are not style preferences — they are the reason the site is credible.
 
-- **No figures about Serene Bay.** No transaction volume, no returns, no years
+- **No figures about Serene.** No transaction volume, no returns, no years
   of trading, no client counts, no awards. It is a new house. Every number on
   this site is a published *market* figure with its source named and linked.
 - **Cite market claims.** If an article states a market fact, link the source at

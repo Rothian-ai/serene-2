@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Eyebrow, Plate, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { InsightCard } from "~/components/cards";
-import { AmeliaBand } from "~/components/AmeliaBand";
+import { ConversationBand } from "~/components/ConversationBand";
 import { formatDate, getInsight, insights, renderMarkdown } from "~/lib/content";
 import { track } from "~/lib/analytics";
 import { SITE, meta as buildMeta } from "~/lib/site";
@@ -75,10 +75,14 @@ export default function Insight({ params }: Route.ComponentProps) {
         </Section>
       )}
 
-      <AmeliaBand
-        title="Put the analysis to work on your own shortlist."
-        refId="insight"
-        context={a.slug}
+      <ConversationBand
+        eyebrow="Next"
+        title="Put the analysis to work on your own purchase."
+        copy="An article can only describe the general case. What it means for your objective, your budget and your timeline is a conversation — and the first one costs nothing."
+        secondary="More from the journal"
+        secondaryTo="/insights"
+        image="/images/ins-escrow.jpg"
+        alt="Curtain-wall glass, read as abstraction"
       />
     </>
   );
