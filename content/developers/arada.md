@@ -16,4 +16,4 @@ Arada is the youngest institution on our registry and the fastest to scale: Alja
 
 The case is execution. Arada delivers on schedule with unusual consistency for a young developer, and its move into branded beachfront places it in the market's most defended segment.
 
-Serene is registered with Arada for its Dubai beachfront portfolio. Handover histories and escrow filings for every Arada development we present are available through Amelia, unedited.
+Serene Bay is registered with Arada for its Dubai beachfront portfolio. Handover histories and escrow filings for every Arada development we present are available through Amelia, unedited.

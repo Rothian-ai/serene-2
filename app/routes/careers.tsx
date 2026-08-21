@@ -8,7 +8,7 @@ export function meta() {
   return buildMeta({
     title: "Careers",
     description:
-      "Work at Serene, a small advisory holding itself to an unusual standard: no cold calls, no pressure, information first.",
+      "Work at Serene Bay: salaried advisory roles in Dubai off-plan property, with no commission-only pay, no cold calling, and no six-figure-a-month promises.",
     path: "/careers",
   });
 }
@@ -21,11 +21,17 @@ export default function Careers() {
     <>
       <Section className="pt-40">
         <Eyebrow className="text-fog">Careers</Eyebrow>
-        <h1 className="type-display mt-6 max-w-[18ch]">Composure is a discipline.</h1>
-        <p className="type-body-lg mt-6 max-w-[54ch] text-ink/70">
-          We are a small house with an unusual rule: nobody here chases anybody. If you would
-          rather be right than loud, in research, in engineering, in advisory, we would like
-          to hear from you.
+        <h1 className="type-display mt-6 max-w-[20ch]">Nobody here is paid to close.</h1>
+        <p className="type-body-lg mt-6 max-w-[56ch] text-ink/74">
+          The Dubai market recruits advisors on the promise of six figures a month and pays them
+          nothing until they close. Average tenure has fallen to six months or less. We do the
+          opposite: advisors are salaried, so the work is comparison, verification and long-term
+          client relationships rather than a permanent hustle for survival.
+        </p>
+        <p className="mt-5 max-w-[56ch] text-[15.5px] leading-relaxed text-ink/65">
+          That is a deliberate departure from the market-standard 40–70% commission split, and it
+          attracts a specific kind of person. If you would rather be right than loud — in advisory,
+          in research, in engineering — we would like to hear from you.
         </p>
       </Section>
 

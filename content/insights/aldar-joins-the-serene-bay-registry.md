@@ -1,19 +1,19 @@
 ---
-title: Aldar joins the Serene registry
+title: Aldar joins the Serene Bay registry
 category: Developer Spotlights
 date: '2026-06-05'
 readingTime: 3 min
-excerpt: Serene is now registered with Aldar for its island residential portfolio. Saadiyat and Yas enter the registry, with full escrow and handover histories available through Amelia.
+excerpt: Serene Bay is now registered with Aldar for its island residential portfolio. Saadiyat and Yas enter the registry, with full escrow and handover histories available through Amelia.
 featured: 3
 image: /images/ins-aldar.jpg
 plate: dusk
 ---
 
-Serene is now formally registered with Aldar, Abu Dhabi's principal developer and the custodian of Saadiyat Island's cultural district and the Yas Island masterplan.
+Serene Bay is now formally registered with Aldar, Abu Dhabi's principal developer and the custodian of Saadiyat Island's cultural district and the Yas Island masterplan.
 
 ## What registration means
 
-Registration is not a referral arrangement. It means Serene transacts Aldar inventory directly under the developer's registered broker framework, with access to allocation, filed payment schedules, and the escrow documentation buyers should see before any commitment.
+Registration is not a referral arrangement. It means Serene Bay transacts Aldar inventory directly under the developer's registered broker framework, with access to allocation, filed payment schedules, and the escrow documentation buyers should see before any commitment.
 
 ## What enters the registry
 

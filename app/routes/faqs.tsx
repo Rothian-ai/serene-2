@@ -11,7 +11,7 @@ export function meta() {
   return buildMeta({
     title: "FAQs",
     description:
-      "Plain answers on buying off-plan in the UAE, working with Serene, Amelia, and the legal framework: escrow, RERA, and your protections.",
+      "Plain answers on buying off-plan in the UAE: who pays the commission, whether going direct is cheaper, what happens after handover, and how Serene Bay's salaried advisors are paid.",
     path: "/faqs",
   });
 }
@@ -44,6 +44,9 @@ export default function Faqs() {
       <Section className="pt-40">
         <Eyebrow className="text-fog">Questions</Eyebrow>
         <h1 className="type-display mt-6">Asked, answered.</h1>
+        <p className="type-body-lg mt-6 max-w-[56ch] text-ink/72">
+          Including the questions a commission-only agent would rather you didn't ask.
+        </p>
         <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
           {CATEGORIES.map((c) => (
             <button

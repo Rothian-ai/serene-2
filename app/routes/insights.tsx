@@ -10,7 +10,7 @@ export function meta() {
   return buildMeta({
     title: "Insights",
     description:
-      "Market analysis, investment guides, and developer spotlights for UAE off-plan real estate, written to inform, not to sell.",
+      "Market analysis, buyer guides and developer spotlights for UAE off-plan property — including what happens after handover. Written to inform, not to sell.",
     path: "/insights",
   });
 }
@@ -27,6 +27,10 @@ export default function Insights() {
       <Section className="pt-40">
         <Eyebrow className="text-fog">Insights</Eyebrow>
         <h1 className="type-display mt-6">The journal.</h1>
+        <p className="type-body-lg mt-6 max-w-[56ch] text-ink/72">
+          What we know, published whether or not it helps us close. Delay records, escrow
+          mechanics, snagging, assignment rules, non-resident lending.
+        </p>
         <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-ink/14 py-3.5">
           {CATEGORIES.map((c) => (
             <button

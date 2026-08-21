@@ -7,7 +7,7 @@ updated: July 2026
 
 ## The site
 
-serene.com is operated by Serene Real Estate LLC, a real estate advisory licensed under RERA, Dubai, UAE. Use of the site constitutes acceptance of these terms.
+serenebay.com is operated by Serene Bay Real Estate LLC, a real estate advisory licensed under RERA, Dubai, UAE. Use of the site constitutes acceptance of these terms.
 
 ## What the site is and isn't
 
@@ -15,7 +15,7 @@ The site presents off-plan developments, developer profiles, and market analysis
 
 ## Amelia
 
-Amelia is an external platform operated under its own terms, presented when you enter it. Serene's terms end at the threshold.
+Amelia is an external platform operated under its own terms, presented when you enter it. Serene Bay's terms end at the threshold.
 
 ## Accuracy
 
@@ -23,7 +23,7 @@ We work from developers' registered filings and correct errors when found. If a 
 
 ## Intellectual property
 
-The Serene name, mark, and site content are the property of Serene Real Estate LLC. Editorial content may be quoted with attribution; it may not be republished wholesale.
+The Serene Bay name, mark, and site content are the property of Serene Bay Real Estate LLC. Editorial content may be quoted with attribution; it may not be republished wholesale.
 
 ## Governing law
 

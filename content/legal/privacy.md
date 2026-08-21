@@ -7,7 +7,7 @@ updated: July 2026
 
 ## Who we are
 
-Serene Real Estate LLC ("Serene", "we") is a licensed real estate advisory registered in Dubai, United Arab Emirates. This policy explains what personal data we collect through serene.com, why, and the rights you hold over it, under the EU and UK GDPR for our European and British visitors, and the UAE Personal Data Protection Law (PDPL) locally.
+Serene Bay Real Estate LLC ("Serene Bay", "we") is a licensed real estate advisory registered in Dubai, United Arab Emirates. This policy explains what personal data we collect through serenebay.com, why, and the rights you hold over it, under the EU and UK GDPR for our European and British visitors, and the UAE Personal Data Protection Law (PDPL) locally.
 
 ## What we collect
 
@@ -27,7 +27,7 @@ Enquiry correspondence is kept for as long as needed to serve the enquiry and me
 
 ## Your rights
 
-You may request access to, correction of, or deletion of your personal data; object to processing; or withdraw consent at any time. Write to privacy@serene.com. EU and UK residents may also complain to their supervisory authority.
+You may request access to, correction of, or deletion of your personal data; object to processing; or withdraw consent at any time. Write to privacy@serenebay.com. EU and UK residents may also complain to their supervisory authority.
 
 ## Transfers
 

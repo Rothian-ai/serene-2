@@ -1,4 +1,5 @@
 import {
+  CTA,
   Eyebrow,
   Ledger,
   Plate,
@@ -12,6 +13,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developers } from "~/lib/content";
+import { COMMITMENTS } from "~/lib/strategy";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -20,31 +22,34 @@ export function meta() {
   return buildMeta({
     title: "About",
     description:
-      "Serene is a licensed, AI-native advisory for UAE off-plan real estate. Registered with the developers it represents, and committed in writing to never placing an unsolicited call.",
+      "Serene Bay is a licensed off-plan buyer advisory in Dubai and Abu Dhabi, built for the overseas investor: salaried advisors, cross-developer counsel, no cold calls, and a relationship that runs from first enquiry to eventual exit.",
     path: "/about",
   });
 }
 
-/** The Serene Way — each movement carries its own photograph. */
+/**
+ * Who we work for — the overseas, non-resident buyer the strategy is built
+ * around (§2.5). Each movement carries its own photograph, as before.
+ */
 const MOVEMENTS = [
   {
     n: "01",
-    title: "Ask",
-    copy: "Bring a question: a district, a payment plan, a doubt. Amelia answers with data, at whatever hour the question arrives.",
+    title: "You are not in the country",
+    copy: "Non-resident, investment-driven purchases account for the majority of Dubai transactions. Nearly every one of those buyers is managing a large asset in a construction and legal environment they cannot walk into on a Saturday.",
     image: "/images/about-ask.jpg",
     alt: "A quiet lounge in warm evening light",
   },
   {
     n: "02",
-    title: "Understand",
-    copy: "Transaction histories, escrow rules, service charges, handover records. The full picture, stated plainly, before any commitment.",
+    title: "You want comparison, not inventory",
+    copy: "A developer's sales team will only show you its own projects. An agent on commission will favour the ones that pay best. What a serious buyer actually wants is the shortlist that survives comparison — and the reasoning behind it.",
     image: "/images/about-understand.jpg",
     alt: "An architectural section drawing, read in full",
   },
   {
     n: "03",
-    title: "Decide",
-    copy: "In your own time. When you are ready to proceed, we act. Until then, silence. Ours, not yours.",
+    title: "You need someone there in year three",
+    copy: "When the build slips, when the unit needs inspecting before you release final payment, when a tenant is due or a fixed rate ends. This is the part of ownership that decides whether the investment worked.",
     image: "/images/about-decide.jpg",
     alt: "A door standing open to warm light",
   },
@@ -57,34 +62,40 @@ export default function About() {
       <Hero plate="glass" image="/images/about-glass.jpg" height="min-h-[64svh]">
         <Eyebrow className="text-silver">The House</Eyebrow>
         <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
-          Built on information, not persistence.
+          A brokerage built the other way round.
         </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[42ch] text-ivory/72">
-          A licensed advisory for off-plan property in Dubai and Abu Dhabi, with the one
-          conviction that serious buyers are persuaded by information, never pressure.
+        <p className="type-body-lg mt-6 max-w-[50ch] text-ivory/72">
+          Serene Bay is a licensed off-plan buyer advisory in Dubai and Abu Dhabi. Our advisors are
+          salaried, our shortlists cross developers, and the relationship does not end at the
+          signature.
         </p>
       </Hero>
 
-      {/* ② Stance — statement left, argument right, then the light held wide */}
+      {/* ② Why we exist — the white space, stated plainly */}
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal exit className="md:col-span-5">
             <Eyebrow className="text-fog">Why we exist</Eyebrow>
-            <SplitHeading as="h2" className="type-headline mt-6 max-w-[16ch]">
-              A sound decision deserves an unhurried process.
+            <SplitHeading as="h2" className="type-headline mt-6 max-w-[17ch]">
+              Someone in the room has to represent the buyer.
             </SplitHeading>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
             <p className="type-body-lg text-ink/80">
-              Buying off-plan in the Emirates is a sound decision too often wrapped in an unsound
-              experience: the calls, the pressure, the urgency that isn't yours. We removed all
-              of it. What remains is an advisory: licensed, registered, and staffed by an
-              intelligence that answers questions instead of chasing closings.
+              In an off-plan transaction the other side of the table is a professional, repeat-player
+              sales organisation. Its job is to sell its own inventory, and it does that job well.
+              What has been missing in Dubai is the counterpart: a house whose only job is the
+              buyer's side of the same conversation, and which is not paid more for saying yes.
             </p>
             <p className="mt-5 text-[15.5px] leading-relaxed text-ink/65">
-              Our buyers are in Mumbai and Shanghai, London and Sydney. They are used to private
-              banks and patient counsel. We built the property advisory they would expect.
+              The exclusive buyer's agent has existed in the United States since the mid-1980s for
+              exactly this reason. No equivalent — salaried advisors, no seller-side conflict, full
+              lifecycle service — operates at scale in Dubai's off-plan market. That gap is the
+              whole business.
             </p>
+            <div className="mt-8">
+              <QuietLink to="/difference">How the model works</QuietLink>
+            </div>
           </Reveal>
         </div>
 
@@ -101,12 +112,15 @@ export default function About() {
         </Reveal>
       </Section>
 
-      {/* ③ The Serene Way — three movements, each with its photograph */}
+      {/* ③ Who we work for — three movements, each with its photograph */}
       <Section className="pt-0">
         <Reveal exit>
-          <Eyebrow className="text-fog">The Serene Way</Eyebrow>
+          <Eyebrow className="text-fog">Who We Work For</Eyebrow>
+          <SplitHeading as="h2" className="type-headline mt-5 max-w-[20ch]">
+            The overseas buyer, specifically.
+          </SplitHeading>
         </Reveal>
-        <RevealGroup className="mt-9 grid gap-9 md:grid-cols-3 md:gap-7">
+        <RevealGroup className="mt-10 grid gap-9 md:grid-cols-3 md:gap-7">
           {MOVEMENTS.map((m) => (
             <RevealItem key={m.n}>
               <div className="relative aspect-[4/5] overflow-hidden">
@@ -132,8 +146,29 @@ export default function About() {
         </RevealGroup>
       </Section>
 
-      {/* ④ Licensing & registry — the open-corner frame monument */}
-      <Section className="pt-0">
+      {/* ④ How we are built — the four commitments, in short form */}
+      <div className="bg-frost">
+        <Section>
+          <Reveal exit>
+            <Eyebrow className="text-fog">How We Are Built</Eyebrow>
+          </Reveal>
+          <RevealGroup className="mt-9 grid gap-x-7 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
+            {COMMITMENTS.map((c) => (
+              <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
+                <span className="type-data text-fog">{c.k}</span>
+                <h3 className="type-title mt-2">{c.claim}</h3>
+                <p className="type-cap mt-3 text-brass">{c.title}</p>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <Reveal className="mt-10">
+            <QuietLink to="/difference">Each one, in full</QuietLink>
+          </Reveal>
+        </Section>
+      </div>
+
+      {/* ⑤ Licensing & registry — the open-corner frame monument */}
+      <Section>
         <Reveal>
           <div className="relative border border-ink/18 p-8 md:p-12">
             <Eyebrow className="text-fog">Licensed &amp; Registered</Eyebrow>
@@ -143,6 +178,7 @@ export default function About() {
                 { k: "Licence", v: SITE.rera },
                 { k: "Registered developers", v: String(developers.length) },
                 { k: "Markets", v: "Dubai · Abu Dhabi" },
+                { k: "Advisor pay", v: "Salaried" },
               ]}
             />
             <p className="mt-6 max-w-[62ch] text-[15.5px] leading-relaxed text-ink/70">
@@ -154,7 +190,7 @@ export default function About() {
         </Reveal>
       </Section>
 
-      {/* ⑤ The Commitment — the charter, on ink, meeting the page on a hard edge */}
+      {/* ⑥ The commitment — the charter, on ink, meeting the page on a hard edge */}
       <div className="bg-ink text-ivory">
         <Section>
           <div className="mx-auto max-w-[880px] text-center">
@@ -166,16 +202,21 @@ export default function About() {
             </SplitHeading>
             <Reveal delay={0.12}>
               <p className="type-body-lg mx-auto mt-8 max-w-[58ch] text-ivory/75">
-                No cold calls. No follow-up campaigns. No passing your number to a sales floor. If
-                you leave, you have left; if you return, we simply pick up where you stopped. This
-                is not a courtesy. It is the model, in writing.
+                No cold calls. No follow-up campaigns. No passing your number to a sales floor —
+                there is no sales floor. If you leave, you have left; if you return, we pick up
+                where you stopped. This is not a courtesy. It is the model, in writing, and it is
+                the direction UAE telemarketing rules have been moving for years.
               </p>
+              <div className="mt-11 flex flex-wrap justify-center gap-4">
+                <CTA to="/contact" kind="platinum">Speak with an advisor</CTA>
+                <CTA to="/lifecycle" kind="line">The nine stages</CTA>
+              </div>
             </Reveal>
           </div>
         </Section>
       </div>
 
-      {/* ⑥ The Standard — counsel left, the material of it right */}
+      {/* ⑦ The standard — counsel left, the material of it right */}
       <Section>
         <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-6">
@@ -187,10 +228,10 @@ export default function About() {
             </SplitHeading>
             <Reveal delay={0.1}>
               <p className="type-body-lg mt-7 max-w-[52ch] text-ink/78">
-                Private banking earned its trust by being available and never insistent, present
-                when called upon, invisible otherwise. We hold the acquisition of property to the
-                same standard: a house you can consult at any hour, and one that will never consult
-                you uninvited.
+                A good independent adviser is not paid by any single fund manager, and is trusted for
+                exactly that reason: available and never insistent, present when called upon,
+                invisible otherwise. We hold the acquisition of property to the same standard — a
+                house you can consult at any hour, and one that will never consult you uninvited.
               </p>
               <div className="mt-9">
                 <QuietLink to="/developments">See what we represent</QuietLink>

@@ -13,7 +13,7 @@ export function meta() {
   return buildMeta({
     title: "Developers",
     description:
-      "The Serene registry: the developers we are registered with, presented as institutions with track records, delivery history, and notable works.",
+      "The Serene Bay registry: the developers we are registered with, presented as institutions with track records, delivery history and notable works — the basis for cross-developer comparison.",
     path: "/developers",
   });
 }

@@ -1,4 +1,4 @@
-# Decap CMS — Serene content admin.
+# Decap CMS — Serene Bay content admin.
 #
 # LOCAL EDITING (the current workflow): `local_backend: true` plus a running
 # `npm run cms` (the decap-server proxy) lets the admin read/write the files in

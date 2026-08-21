@@ -1,8 +1,14 @@
-# Serene — serene.com
+# Serene Bay — serenebay.com
 
-Production frontend for Serene, the AI-native advisory for off-plan real estate in Dubai and
-Abu Dhabi. A premium, cinematic, fully prerendered marketing site whose one job is to move
-visitors into **Amelia** (the external AI platform).
+Production frontend for **Serene Bay**, an off-plan buyer advisory in Dubai and Abu Dhabi
+whose advisors are salaried rather than commissioned. A premium, cinematic, prerendered
+marketing site that has to do two jobs: make the structural argument for the model, and move
+visitors into a conversation — with an advisor, or with **Amelia** (the external AI platform).
+
+Strategy source of truth: `docs/serene-bay-value-chain-strategy.md` (the buyer value chain and
+market differentiation research). The positioning, the nine-stage lifecycle, the market
+comparison and the "going direct" rebuttal all live in code at `app/lib/strategy.ts` — edit
+that module, not the pages, when the strategy changes.
 
 **Stack:** React Router v7 (framework mode, fully prerendered) · Vite · TypeScript ·
 Tailwind v4 · GSAP + ScrollTrigger (scroll-driven / pinned / split-text) · Framer Motion
@@ -131,7 +137,16 @@ Copy `.env.example` to `.env`:
 - [ ] Have counsel review `/content/legal/*.md` (marked as drafts).
 - [ ] Replace the Unsplash placeholder photography with client-licensed/commissioned imagery
       per the imagery direction (filenames in `public/images/` are stable swap slots).
-- [ ] Update `BASE` in `scripts/generate-sitemap.mjs` + `SITE.url` if the domain differs.
+- [ ] Update `BASE` in `scripts/generate-sitemap.mjs` + `SITE.url` if the domain differs
+      (both currently point at the placeholder `serenebay.com`).
+- [ ] Confirm the legal entity name in `SITE.legalName` and the office address in `SITE.office`.
+- [ ] Review `app/lib/strategy.ts`: the four market figures each carry a published source. If a
+      figure is refreshed, update its `source`/`href` with it. **No figure on this site describes
+      Serene Bay's own performance** — that is deliberate, and should stay that way until there
+      are audited numbers to publish.
+- [ ] Confirm the vetted specialist panel behind lifecycle stages 3, 5, 6, 7 and 8 (snagging
+      firms, mortgage advisors, interior designers, property managers, legal counsel) before the
+      lifecycle page's "introduced, never required" claim goes live.
 
 ## Brand invariants (enforced in code — don't undo them)
 

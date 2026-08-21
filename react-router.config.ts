@@ -24,6 +24,8 @@ export default {
   async prerender() {
     return [
       "/",
+      "/difference",
+      "/lifecycle",
       "/about",
       "/developments",
       ...slugs("content/developments").map((s) => `/developments/${s}`),

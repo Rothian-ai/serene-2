@@ -18,9 +18,9 @@ import { track } from "~/lib/analytics";
 
 const EXAMPLES = [
   "What protects my deposit under UAE escrow law?",
-  "Compare service charges in Downtown and Creek Harbour.",
-  "Which handovers complete before 2028?",
-  "Model an 80/20 payment plan against expected yield.",
+  "Which developers have the better delivery record?",
+  "What does an independent snagging inspection actually check?",
+  "What deposit and LTV apply to a non-resident mortgage?",
 ];
 
 function toAmelia(question?: string): string {
@@ -57,10 +57,12 @@ export function AmeliaAsk() {
         <div className="mt-9 max-w-[860px]">
           <Reveal>
             <h2 className="type-headline max-w-[20ch]">Conversation, not cold calls.</h2>
-            <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/78">
-              Amelia is Serene's conversational advisor, awake at every hour, fluent in the
-              record: escrow rules, service charges, handover dates, yields. She replaced the
-              sales floor with answers, and she follows up with no one.
+            <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/78">
+              Amelia is Serene Bay's conversational advisor: awake at every hour, fluent in the
+              record — escrow rules, delivery history, service charges, handover dates, yields. She
+              is how a house with no sales floor still answers immediately, and she follows up with
+              no one. Later, she is also what raises the next stage of ownership with you before
+              you have to ask.
             </p>
           </Reveal>
 

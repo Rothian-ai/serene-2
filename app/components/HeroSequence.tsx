@@ -8,9 +8,10 @@ import { AMELIA_URL } from "~/lib/site";
 /**
  * The homepage cinematic hero — a pinned, scroll-driven narrative over actual
  * photography. Three centred chapters crossfade on a scrubbed ScrollTrigger:
- *   1. a minimal brand title-card (mark + tagline);
- *   2. the approach;
- *   3. Amelia — the one place a CTA appears.
+ *   1. a minimal brand title-card (mark + the salaried-advisor proposition);
+ *   2. the "going direct" rebuttal;
+ *   3. the lifecycle — the relationship past reservation.
+ * Each chapter carries the one action its argument earns.
  * GSAP owns ambient life (a slow breath + drifting light), the flash-free
  * entrance (mark → masked split tagline → sub), and the crossfade. A centred
  * vignette keeps text legible over the photography. Under prefers-reduced-motion
@@ -25,22 +26,34 @@ import { AMELIA_URL } from "~/lib/site";
  */
 const HERO_VIDEO = { webm: "", mp4: "" };
 
+/**
+ * The three chapters carry the strategy's opening argument in sequence:
+ * who we are structurally (§3), why that is different (§2.4 / §6), and how
+ * long the relationship runs (§4). The photography is unchanged.
+ */
 const CHAPTERS = [
   {
     eyebrow: "",
-    title: "UAE's First AI Native Real Estate Agency",
-    sub: "Serenity, elevated. Off-plan real estate and curated addresses across Dubai and Abu Dhabi.",
+    title: "The off-plan advisor that is paid to be right, not to close.",
+    sub: "Serene Bay advises buyers on off-plan property in Dubai and Abu Dhabi. Our advisors are salaried, so the shortlist is chosen on your objective — never on which developer pays us most.",
   },
   {
-    eyebrow: "The Approach",
-    title: "Advised with data, never persuasion.",
-    sub: "Districts, payment plans, escrow, handover records: the full picture, before any commitment.",
+    eyebrow: "Going direct",
+    title: "The developer pays our fee. Going direct saves you nothing.",
+    sub: "On off-plan sales in Dubai the commission is budgeted into the developer's own project economics. Skip the broker and the headline price does not move — the developer simply keeps it.",
   },
   {
-    eyebrow: "Amelia",
-    title: "Ask anything. Answered on the record.",
-    sub: "An AI advisory available at any hour, and incapable of a cold call.",
+    eyebrow: "The Lifecycle",
+    title: "We do not disappear at reservation.",
+    sub: "Construction monitoring, independent snagging, handover, tenanting, mortgage, resale. Nine stages, one relationship, from first enquiry to eventual exit.",
   },
+] as const;
+
+/** Where each chapter's action leads — discovery, understanding, then the lifecycle. */
+const CHAPTER_CTA = [
+  { label: "Ask Amelia", to: AMELIA_URL, external: true },
+  { label: "Why we are different", to: "/difference", external: false },
+  { label: "See the nine stages", to: "/lifecycle", external: false },
 ] as const;
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -74,11 +87,12 @@ function StaticHero() {
         <div aria-hidden className="absolute inset-0" style={{ background: VIGNETTE }} />
       </div>
       <div className="container-site relative z-[1] text-center">
-        <SereneMark title="Serene" className="mx-auto h-20 w-auto md:h-28" />
-        <h1 className="type-display mt-8">{CHAPTERS[0].title}</h1>
-        <p className="type-body-lg mx-auto mt-5 max-w-[44ch] text-ivory/80">{CHAPTERS[0].sub}</p>
-        <div className="mt-9 flex justify-center">
+        <SereneMark title="Serene Bay" className="mx-auto h-20 w-auto md:h-28" />
+        <h1 className="type-display mx-auto mt-8 max-w-[24ch]">{CHAPTERS[0].title}</h1>
+        <p className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">{CHAPTERS[0].sub}</p>
+        <div className="mt-9 flex flex-wrap justify-center gap-4">
           <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+          <CTA to="/difference" kind="line">Why we are different</CTA>
         </div>
       </div>
     </div>
@@ -231,23 +245,30 @@ export function HeroSequence() {
                 artwork; the wordmark would double the headline beneath it */}
             <SereneMark
               ref={markRef}
-              title="Serene"
+              title="Serene Bay"
               className="mx-auto h-20 w-auto md:h-28"
             />
-            <h1 ref={headlineRef} className="type-display mt-8 max-w-[20ch]">
+            <h1 ref={headlineRef} className="type-display mx-auto mt-8 max-w-[24ch]">
               {CHAPTERS[0].title}
             </h1>
-            <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">
+            <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">
               {CHAPTERS[0].sub}
             </p>
-            <div ref={ctaRef} className="mt-9 flex justify-center">
-              <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+            <div ref={ctaRef} className="mt-9 flex flex-wrap justify-center gap-4">
+              <CTA to={CHAPTER_CTA[0].to} external kind="platinum">
+                {CHAPTER_CTA[0].label}
+              </CTA>
+              <CTA to={CHAPTER_CTA[1].to} kind="line">
+                {CHAPTER_CTA[1].label}
+              </CTA>
             </div>
           </div>
         </div>
 
         {/* chapters 2 & 3 — hidden until the scrub brings them in */}
-        {CHAPTERS.slice(1).map((c, i) => (
+        {CHAPTERS.slice(1).map((c, i) => {
+          const cta = CHAPTER_CTA[i + 1];
+          return (
           <div
             key={c.eyebrow}
             ref={(el) => { chapterRefs.current[i + 1] = el; }}
@@ -256,14 +277,17 @@ export function HeroSequence() {
           >
             <div className="pointer-events-auto">
               <Eyebrow>{c.eyebrow}</Eyebrow>
-              <h2 className="type-display mx-auto max-w-[20ch]">{c.title}</h2>
-              <p className="type-body-lg mx-auto mt-5 max-w-[46ch] text-ivory/80">{c.sub}</p>
+              <h2 className="type-display mx-auto max-w-[24ch]">{c.title}</h2>
+              <p className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">{c.sub}</p>
               <div className="mt-9 flex justify-center">
-                <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
+                <CTA to={cta.to} kind="platinum">
+                  {cta.label}
+                </CTA>
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
 
         {/* scroll cue */}
         <div

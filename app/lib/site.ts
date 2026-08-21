@@ -1,15 +1,18 @@
 /** Single source of site-level constants and integration points. */
 
 export const SITE = {
-  name: "Serene",
-  legalName: "Serene Real Estate LLC",
+  name: "Serene Bay",
+  legalName: "Serene Bay Real Estate LLC",
   tagline: "Serenity, elevated.",
-  descriptor: "Real Estate & Curated Addresses",
-  url: "https://serene.com",
+  descriptor: "Off-Plan Buyer Advisory",
+  /** The strategic positioning line — §3 of the value-chain strategy, in one breath. */
+  positioning: "Salaried advisors. Cross-developer counsel. The whole ownership lifecycle.",
+  /** PLACEHOLDER — replace with the client's real domain before launch. */
+  url: "https://serenebay.com",
   /** PLACEHOLDER — replace with the client's real RERA licence number before launch. */
   rera: "RERA Licence № 41273",
-  email: "enquiries@serene.com",
-  careersEmail: "careers@serene.com",
+  email: "enquiries@serenebay.com",
+  careersEmail: "careers@serenebay.com",
   office: "Boulevard Plaza Tower One, Downtown Dubai",
   hours: "Sunday to Friday, 9:00 to 18:00 GST",
 } as const;
@@ -43,7 +46,9 @@ export function ameliaHref(ref: string, context?: string): string {
 }
 
 export function pageTitle(title?: string): string {
-  return title ? `${title} · Serene` : "Serene · Off-Plan Real Estate, Dubai & Abu Dhabi";
+  return title
+    ? `${title} · Serene Bay`
+    : "Serene Bay · Off-Plan Buyer Advisory, Dubai & Abu Dhabi";
 }
 
 export function meta(opts: { title?: string; description: string; path?: string }) {
@@ -54,7 +59,7 @@ export function meta(opts: { title?: string; description: string; path?: string 
     { property: "og:title", content: title },
     { property: "og:description", content: opts.description },
     { property: "og:type", content: "website" },
-    { property: "og:site_name", content: "Serene" },
+    { property: "og:site_name", content: SITE.name },
     ...(opts.path ? [{ tagName: "link", rel: "canonical", href: SITE.url + opts.path }] : []),
   ];
 }

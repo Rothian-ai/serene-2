@@ -1,6 +1,7 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { createAdminSession, isAdmin, verifyPassword } from "~/lib/auth.server";
+import { SITE } from "~/lib/site";
 
 export const handle = { headerTone: "light" as const };
 
@@ -26,7 +27,7 @@ export default function DashboardLogin() {
   return (
     <div className="flex min-h-[80svh] items-center justify-center bg-ivory px-6 pt-24">
       <div className="w-full max-w-[380px]">
-        <p className="type-eyebrow text-fog">Serene</p>
+        <p className="type-eyebrow text-fog">{SITE.name}</p>
         <h1 className="type-headline mt-3">Submissions</h1>
         <p className="type-cap mt-2 text-fog">Sign in to manage enquiries.</p>
         <Form method="post" className="mt-8">

@@ -16,4 +16,4 @@ Emaar built the buildings people draw when they draw Dubai. The Burj Khalifa, th
 
 For off-plan buyers, Emaar's significance is simple: it is the market's reference asset. Emaar launches set district pricing; Emaar handovers move rental indices. Buying Emaar off-plan is the closest this market comes to buying the index itself.
 
-Serene is registered with Emaar across its Dubai masterplans. Every Emaar development we present draws its payment schedule, escrow account, and handover history directly from the developer's registered filings.
+Serene Bay is registered with Emaar across its Dubai masterplans. Every Emaar development we present draws its payment schedule, escrow account, and handover history directly from the developer's registered filings.

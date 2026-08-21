@@ -53,8 +53,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
               legalName: SITE.legalName,
               url: SITE.url,
               slogan: SITE.tagline,
+              description: SITE.positioning,
               areaServed: ["Dubai", "Abu Dhabi"],
-              knowsAbout: ["Off-plan real estate", "UAE property investment"],
+              knowsAbout: [
+                "Off-plan real estate",
+                "UAE property investment",
+                "Buyer representation",
+                "Developer due diligence",
+                "Independent snagging inspection",
+                "Non-resident mortgages",
+                "Off-plan assignment and resale",
+              ],
             }),
           }}
         />

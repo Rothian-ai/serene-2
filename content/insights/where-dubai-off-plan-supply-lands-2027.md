@@ -25,4 +25,4 @@ The composition matters more than the total. Creek Harbour's deliveries arrive i
 
 Not the launch announcements. The milestone filings. A developer that files late in quarter one delivers late in quarter four; the correlation in the public record is strong enough to treat as a rule.
 
-Amelia holds the filing history for every development in the Serene registry. Ask her which 2027 handovers have hit every milestone to date; it is a shorter list than the brochures suggest, and a more useful one.
+Amelia holds the filing history for every development in the Serene Bay registry. Ask her which 2027 handovers have hit every milestone to date; it is a shorter list than the brochures suggest, and a more useful one.

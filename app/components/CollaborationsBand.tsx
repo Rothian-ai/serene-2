@@ -153,12 +153,13 @@ export function CollaborationsBand() {
     <section className="relative bg-ivory">
       <div className="container-site relative h-[780px] md:h-[900px]">
         <div ref={headRef} className="sticky top-0 z-[1] pt-24 will-change-[opacity,transform] md:pt-28">
-          <h2 className="mx-auto max-w-[22ch] text-center type-headline uppercase tracking-[0.06em]">
-            A new realm of curated collaborations
+          <h2 className="mx-auto max-w-[24ch] text-center type-headline uppercase tracking-[0.06em]">
+            Registered with each of them. Beholden to none
           </h2>
-          <p className="mx-auto mt-5 max-w-[58ch] text-center type-body-lg text-ink/64">
-            We represent only the institutions we are registered with. Each name below carries
-            the addresses in the register.
+          <p className="mx-auto mt-5 max-w-[60ch] text-center type-body-lg text-ink/64">
+            We transact only under formal registration with these institutions — and because our
+            advisors are salaried, we have no reason to favour one over another. Each name carries
+            the addresses it holds in the register.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-x-9 gap-y-8 border-b border-ink/12 pb-10 md:mt-12 md:gap-x-8 lg:gap-x-10">
             {developers.map((dev) => (

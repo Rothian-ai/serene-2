@@ -16,4 +16,4 @@ Nakheel built the shoreline Dubai is recognised by. Palm Jumeirah remains the mo
 
 The investment case is geography. Nakheel controls coastline that cannot be repeated, and releases it slowly; a Nakheel address is, in effect, a fixed supply position in a market that keeps growing around it.
 
-Serene is registered with Nakheel for its Palm Jumeirah residential releases. Handover histories and escrow filings for every Nakheel development we present are available through Amelia, unedited.
+Serene Bay is registered with Nakheel for its Palm Jumeirah residential releases. Handover histories and escrow filings for every Nakheel development we present are available through Amelia, unedited.

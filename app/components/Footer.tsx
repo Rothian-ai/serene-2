@@ -3,6 +3,14 @@ import { SITE } from "~/lib/site";
 
 const COLS = [
   {
+    title: "The Model",
+    links: [
+      { to: "/difference", label: "The Difference" },
+      { to: "/lifecycle", label: "The Lifecycle" },
+      { to: "/faqs", label: "FAQs" },
+    ],
+  },
+  {
     title: "Explore",
     links: [
       { to: "/developments", label: "Developments" },
@@ -11,17 +19,11 @@ const COLS = [
     ],
   },
   {
-    title: "Company",
+    title: "House",
     links: [
       { to: "/about", label: "About" },
-      { to: "/careers", label: "Careers" },
-      { to: "/faqs", label: "FAQs" },
-    ],
-  },
-  {
-    title: "Engage",
-    links: [
       { to: "/amelia", label: "Amelia" },
+      { to: "/careers", label: "Careers" },
       { to: "/contact", label: "Contact" },
     ],
   },
@@ -34,8 +36,11 @@ export function Footer() {
       <div className="container-site pb-10 pt-20">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
-            <img src="/logo/serene-mark.png" alt="Serene" className="h-14 w-auto" />
+            <img src="/logo/serene-mark.png" alt={SITE.name} className="h-14 w-auto" />
             <p className="type-cap mt-4 text-silver">{SITE.tagline}</p>
+            <p className="mt-3 max-w-[30ch] text-[13.5px] leading-relaxed text-ivory/60">
+              {SITE.positioning}
+            </p>
           </div>
           {COLS.map((col) => (
             <nav key={col.title} aria-label={col.title}>
@@ -65,7 +70,7 @@ export function Footer() {
             {" · "}
             <Link to="/terms" className="hover:text-ivory">Terms</Link>
           </span>
-          <span>© 2026 Serene</span>
+          <span>© 2026 {SITE.name}</span>
         </div>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import type { Prisma } from "@prisma/client";
 import { destroyAdminSession, requireAdmin } from "~/lib/auth.server";
 import { prisma } from "~/lib/db.server";
+import { SITE } from "~/lib/site";
 
 export const handle = { headerTone: "light" as const };
 
@@ -85,7 +86,7 @@ export default function Dashboard() {
       <div className="mx-auto max-w-[1440px] px-6 py-10 md:px-12">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/12 pb-5">
           <div>
-            <p className="type-eyebrow text-fog">Serene</p>
+            <p className="type-eyebrow text-fog">{SITE.name}</p>
             <h1 className="type-headline mt-2">Submissions</h1>
             <p className="type-cap mt-1 text-fog">
               {total} total · New {counts.NEW ?? 0} · In progress {counts.IN_PROGRESS ?? 0} · Closed{" "}

@@ -5,16 +5,23 @@ import { Menu, X } from "lucide-react";
 import { SereneMark } from "~/components/SereneMark";
 import { AMELIA_URL } from "~/lib/site";
 
+/**
+ * Primary navigation, ordered by the buyer journey the strategy describes:
+ * discovery → understanding the model → understanding the lifecycle → trust.
+ * Conversion sits in the bar's own action, not in the link list.
+ */
 const NAV = [
   { to: "/developments", label: "Developments" },
-  { to: "/developers", label: "Developers" },
+  { to: "/difference", label: "The Difference" },
+  { to: "/lifecycle", label: "Lifecycle" },
   { to: "/insights", label: "Insights" },
   { to: "/about", label: "About" },
 ];
 
 const SECONDARY = [
-  { to: "/careers", label: "Careers" },
+  { to: "/developers", label: "Developers" },
   { to: "/faqs", label: "FAQs" },
+  { to: "/careers", label: "Careers" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -60,6 +67,10 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
     };
   }, [barHidden]);
 
+  // a link is current when the path is it, or sits beneath it (/insights/x)
+  const active = (to: string) =>
+    location.pathname === to || location.pathname.startsWith(`${to}/`);
+
   const overDark = tone === "dark" && !scrolled && !open;
   const bar = overDark
     ? "bg-transparent"
@@ -77,32 +88,33 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
         }`}
       >
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
-          <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
-            {/* mark alone — the wordmark beside it is the live "SERENE" span */}
+          <Link to="/" className="flex items-center gap-3" aria-label="Serene Bay, home">
+            {/* mark alone — the wordmark beside it is the live "SERENE BAY" span */}
             <SereneMark tone={overDark ? "platinum" : "graphite"} className="h-9 w-auto" />
-            <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
+            <span className="whitespace-nowrap text-[15px] font-medium uppercase tracking-[0.2em]">
+              Serene&nbsp;Bay
+            </span>
           </Link>
-          <nav className="ml-auto hidden items-center gap-8 lg:flex" aria-label="Primary">
+          {/* five primary links + one action: at lg the gaps tighten so the
+              longer strategic labels still fit on a 1024px laptop */}
+          <nav className="ml-auto hidden items-center gap-5 lg:flex xl:gap-8" aria-label="Primary">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="text-[13.5px] font-medium opacity-85 transition-opacity hover:opacity-100"
+                className={`whitespace-nowrap text-[13.5px] font-medium transition-opacity ${
+                  active(item.to) ? "opacity-100" : "opacity-85 hover:opacity-100"
+                }`}
+                aria-current={active(item.to) ? "page" : undefined}
               >
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/contact"
-              className="text-[13.5px] font-medium opacity-85 transition-opacity hover:opacity-100"
-            >
-              Contact
-            </Link>
             <a
               href={AMELIA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={`border px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors ${amelia}`}
+              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${amelia}`}
             >
               Ask Amelia
             </a>
@@ -128,8 +140,10 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
+            {/* the drawer scrolls: five primary links plus two actions can
+                exceed a short phone viewport in landscape */}
             <nav
-              className="flex h-full flex-col justify-center gap-2 px-8 pt-16"
+              className="flex h-full flex-col justify-center gap-1 overflow-y-auto px-8 py-24"
               aria-label="Menu"
             >
               {NAV.map((item, i) => (
@@ -144,7 +158,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   </Link>
                 </motion.div>
               ))}
-              <div className="mt-8 flex gap-6">
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
                 {SECONDARY.map((item) => (
                   <Link key={item.to} to={item.to} className="type-cap text-silver">
                     {item.label}
@@ -157,14 +171,22 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 transition={{ delay: 0.45 }}
                 className="mt-10"
               >
-                <a
-                  href={AMELIA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-silver/70 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-silver"
-                >
-                  Ask Amelia
-                </a>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={AMELIA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-silver/70 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-silver"
+                  >
+                    Ask Amelia
+                  </a>
+                  <Link
+                    to="/contact"
+                    className="btn-platinum px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
+                  >
+                    Speak with an advisor
+                  </Link>
+                </div>
               </motion.div>
             </nav>
           </motion.div>

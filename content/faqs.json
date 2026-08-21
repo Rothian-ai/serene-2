@@ -1,43 +1,93 @@
 [
   {
+    "category": "How Serene Bay works",
+    "question": "How are Serene Bay's advisors paid?",
+    "answer": "A salary. Not commission per deal. That is the whole design: an advisor with no financial reason to prefer one developer, one project or one unit over another has only one incentive left, which is to be right for you. Serene Bay itself is paid a commission by the developer on completed off-plan transactions — the standard model in this market — but that payment never reaches the advisor as a per-deal incentive."
+  },
+  {
+    "category": "How Serene Bay works",
+    "question": "Does it cost me anything to work with Serene Bay?",
+    "answer": "No. On off-plan and primary sales in Dubai the developer pays the broker's commission out of its own project and marketing budget, not the buyer. You pay the same headline price and payment plan whether a broker is involved or not. It is only in the secondary and resale market that a buyer typically pays an agent's fee directly."
+  },
+  {
+    "category": "How Serene Bay works",
+    "question": "Will I be cold-called?",
+    "answer": "No. We call only if you ask us to — there is a box on the contact form and nothing happens unless you tick it. No follow-up campaigns, no passing your number to a sales floor, because there is no sales floor. The position also sits on the right side of the UAE's tightening telemarketing rules, which now include a do-not-call registry, restricted calling hours and a ban on repeat same-day calls after a rejection."
+  },
+  {
+    "category": "How Serene Bay works",
+    "question": "Do you take kickbacks, or pay them?",
+    "answer": "Neither. Returning a slice of commission to a buyer to win a deal is an openly discussed habit in Dubai brokerage; salaried advisors have no commission to hand back, so the practice has nothing to attach to. The rule holds past the sale too: every specialist we introduce — surveyor, mortgage advisor, interior designer, letting agent — is an independent option you may use or ignore, and never one we are paid to recommend."
+  },
+  {
+    "category": "How Serene Bay works",
+    "question": "What does 'registered developer' actually mean?",
+    "answer": "Serene Bay transacts only under formal broker registration with each developer: direct access to allocation, filed payment schedules and escrow documentation. If we are not registered with a developer, we do not present their inventory. RERA's existing Form A, B and I framework already provides for documented broker relationships and disclosed commission, and we use it as intended."
+  },
+  {
+    "category": "Buying direct",
+    "question": "Isn't it cheaper to buy directly from the developer?",
+    "answer": "No, and this is the most common misunderstanding in the market. For off-plan purchases the developer pays the commission out of its own budget either way. Go direct and the price does not drop; the developer simply keeps money it would otherwise have paid a broker. What you give up is representation in a negotiation against a professional, repeat-player sales organisation, comparison against projects that developer will never mention, and everything that happens after the signature."
+  },
+  {
+    "category": "Buying direct",
+    "question": "The developer offers its own after-sales support. Isn't that enough?",
+    "answer": "It is real, but it is support from the party that has already been paid, and it is scoped to the developer's own liability. It does not extend to finding you a tenant, arranging a non-resident mortgage, handling a resale, or independently inspecting work the developer itself is responsible for fixing. And its attention naturally shifts once handover is complete and the next launch needs selling."
+  },
+  {
+    "category": "Buying direct",
+    "question": "So are brokers worth using at all?",
+    "answer": "A broker who only generates a lead and hands you to the developer adds little — developers say as much in their own marketing, and they are not wrong. A broker who compares across developers, remembers which projects have slipped before, knows where resale friction shows up and stays involved after handover adds a great deal. The current commission structure rewards the first kind. Ours is built for the second."
+  },
+  {
+    "category": "After handover",
+    "question": "What happens after I reserve a unit?",
+    "answer": "Six of the nine stages we work through happen after that point. We track construction progress against the DLD project tracker and raise delay risk with you rather than waiting for the developer to disclose it; we arrange an independent snagging inspection before final sign-off; we support defect rectification before final payment or mortgage drawdown is released; and from there, fit-out, letting, mortgage and refinance, and eventually the resale."
+  },
+  {
+    "category": "After handover",
+    "question": "Why arrange an independent snagging inspection?",
+    "answer": "Because the party that built the unit is not a credible party to inspect its own work, and an overseas buyer cannot assess build quality from another country. Independent snagging is now standard practice in Dubai for anyone protecting a purchase properly. We coordinate a specialist third-party inspection before final sign-off, so defects are documented while the developer still has an obligation and you still have leverage."
+  },
+  {
+    "category": "After handover",
+    "question": "Can you help me sell before handover?",
+    "answer": "Yes. An off-plan assignment is a genuinely technical process — developer resale approval, a Form F memorandum of understanding, a developer No Objection Certificate that expires after 30 days, and an Oqood transfer at a DLD trustee office, with DLD transfer fees, Oqood admin, trustee fees and the NOC itself all payable. It is easy to get wrong from abroad. We manage the process and find your next buyer."
+  },
+  {
+    "category": "After handover",
+    "question": "Can you help with a mortgage as a non-resident?",
+    "answer": "We introduce independent mortgage advisors who specialise in non-resident lending, for the initial purchase and for later refinancing. Expect materially different requirements from a resident buyer: typically a 35–40% down payment, loan-to-value capped around 50% for off-plan, and full income and bank-statement documentation. We do not lend, and we are not paid to send you to any particular advisor."
+  },
+  {
     "category": "Buying off-plan",
     "question": "Is off-plan property in the UAE safe to buy from abroad?",
-    "answer": "The framework is designed for it. Your payments go to a RERA-regulated escrow account, not to the developer, and are released only against independently certified construction milestones. Title is registered with the Land Department in your name. The full sequence, with each protection marked, is set out in our buyer's guide, and Amelia can walk your specific case through it."
+    "answer": "The framework is designed for it. Your payments go to a RERA-regulated escrow account, not to the developer, and are released only against independently certified construction milestones. Title is registered with the Land Department in your name. What the framework does not do is watch the build on your behalf or inspect the finished unit — which is the gap our model is built to close."
   },
   {
     "category": "Buying off-plan",
     "question": "What deposit is required, and where does it go?",
-    "answer": "Typically 5 to 10 per cent at reservation, paid directly into the project's registered escrow account. Verify the account registration with RERA before paying anything. It takes minutes, and every development Serene presents publishes its escrow filing."
+    "answer": "Typically 5 to 10 per cent at reservation, paid directly into the project's registered escrow account. Verify the account registration with RERA before paying anything. It takes minutes, and every development Serene Bay presents publishes its escrow filing."
+  },
+  {
+    "category": "Buying off-plan",
+    "question": "How often do off-plan projects run late?",
+    "answer": "Often enough to plan for. Roughly 40–50% of Dubai off-plan projects see some delay, averaging around 8.5 months across the market in 2024–2026 — down from about 12 months in 2018–2020 — with smaller-tier developers regularly exceeding 10 to 18 months. Delivery record is therefore part of the due diligence we show you before a project reaches your shortlist, not a surprise afterwards."
   },
   {
     "category": "Buying off-plan",
     "question": "What happens if a project is delayed or cancelled?",
-    "answer": "Delays trigger the compensation clauses in your Sale and Purchase Agreement. Cancellation freezes the escrow account, and RERA's committee process returns escrowed funds to buyers. The mechanism was stress-tested in 2009 and 2020; it is why the market survived both."
+    "answer": "Delays trigger the compensation clauses in your Sale and Purchase Agreement — clauses we walk you through before you sign, not after. Cancellation freezes the escrow account, and RERA's committee process returns escrowed funds to buyers. The mechanism was stress-tested in 2009 and 2020; it is why the market survived both."
   },
   {
     "category": "Buying off-plan",
     "question": "Can foreign nationals own property outright?",
-    "answer": "Yes: freehold ownership for all nationalities in designated zones, which include every district Serene presents. Title deeds are registered with the Dubai Land Department or Abu Dhabi's ADRE equivalent."
-  },
-  {
-    "category": "Working with Serene",
-    "question": "How does Serene make money?",
-    "answer": "We are paid a commission by the developer on completed transactions: the standard model, stated plainly. It costs a buyer nothing to work with us, and our registration agreements do not vary by which development you choose."
-  },
-  {
-    "category": "Working with Serene",
-    "question": "Will I be contacted after I enquire?",
-    "answer": "Once, in reply to what you asked, and that is all. No follow-up campaigns, no calls you didn't request, no passing your details onward. The commitment is in writing on our About page, and it is the reason Serene exists."
-  },
-  {
-    "category": "Working with Serene",
-    "question": "What does 'registered developer' actually mean?",
-    "answer": "Serene transacts only under formal broker registration with each developer: direct access to allocation, filed payment schedules, and escrow documentation. If we are not registered with a developer, we do not present their inventory."
+    "answer": "Yes: freehold ownership for all nationalities in designated zones, which include every district Serene Bay presents. Title deeds are registered with the Dubai Land Department or Abu Dhabi's ADRE equivalent."
   },
   {
     "category": "Amelia",
     "question": "What is Amelia?",
-    "answer": "Amelia is Serene's AI advisory platform. She holds the data: transaction histories, escrow filings, service charges, handover records. She answers questions on demand, at any hour, and never initiates contact."
+    "answer": "Amelia is Serene Bay's advisory intelligence. She holds the record — transaction histories, escrow filings, delivery records, service charges, handover dates — and answers questions on demand, at any hour, without ever initiating contact. She is also what keeps the lifecycle from depending on your memory: as handover approaches or a fixed mortgage term ends, she raises the relevant next stage rather than waiting for you to come back."
   },
   {
     "category": "Amelia",
@@ -46,8 +96,8 @@
   },
   {
     "category": "Legal & compliance",
-    "question": "Is Serene licensed?",
-    "answer": "Serene Real Estate LLC operates under RERA licence № 41273, stated in the footer of every page. Verify it with RERA directly. We would, in your position."
+    "question": "Is Serene Bay licensed?",
+    "answer": "Serene Bay Real Estate LLC operates under RERA licence № 41273, stated in the footer of every page. Verify it with RERA directly. We would, in your position."
   },
   {
     "category": "Legal & compliance",

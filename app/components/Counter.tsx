@@ -15,16 +15,23 @@ export function Counter({
   prefix = "",
   suffix = "",
   duration = 1.9,
+  decimals = 0,
   className = "",
 }: {
   to: number;
   prefix?: string;
   suffix?: string;
   duration?: number;
+  /** fraction digits held throughout the count — figures like 8.5 need one */
+  decimals?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const format = (n: number) => `${prefix}${Math.round(n).toLocaleString("en-US")}${suffix}`;
+  const format = (n: number) =>
+    `${prefix}${n.toLocaleString("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}${suffix}`;
 
   useEffect(() => {
     const el = ref.current;
@@ -65,7 +72,7 @@ export function Counter({
       cancelAnimationFrame(raf);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [to, prefix, suffix, duration]);
+  }, [to, prefix, suffix, duration, decimals]);
 
   return (
     <span ref={ref} className={`tabular-nums ${className}`}>

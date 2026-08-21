@@ -16,4 +16,4 @@ Binghatti moved faster than any developer of its generation, then changed lanes 
 
 The case is momentum with names attached. Branded residences carry a documented resale premium in Dubai, and Binghatti now controls the deepest branded pipeline in the market.
 
-Serene is registered with Binghatti for its branded-residence portfolio. Handover histories and escrow filings for every Binghatti development we present are available through Amelia, unedited.
+Serene Bay is registered with Binghatti for its branded-residence portfolio. Handover histories and escrow filings for every Binghatti development we present are available through Amelia, unedited.

@@ -5,7 +5,7 @@ import { DevelopmentCard } from "~/components/cards";
 import { BrandMark } from "~/components/CollaborationsBand";
 import { AmeliaBand } from "~/components/AmeliaBand";
 import { developmentsByDeveloper, getDeveloper, renderMarkdown } from "~/lib/content";
-import { meta as buildMeta } from "~/lib/site";
+import { SITE, meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/developer";
 
 export const handle = { headerTone: "dark" as const };
@@ -15,7 +15,7 @@ export function meta({ params }: Route.MetaArgs) {
   if (!dev) return buildMeta({ title: "Developer", description: "Registered developer profile." });
   return buildMeta({
     title: dev.name,
-    description: `${dev.name}: registered Serene developer. Founded ${dev.founded}; ${dev.delivered} delivered. ${dev.tagline}`,
+    description: `${dev.name}: a developer ${SITE.name} is registered with. Founded ${dev.founded}; ${dev.delivered} delivered. ${dev.tagline}`,
     path: `/developers/${dev.slug}`,
   });
 }
@@ -89,7 +89,7 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
       {theirs.length > 0 && (
         <Section className="pt-0">
           <Reveal>
-            <Eyebrow className="text-fog">With Serene</Eyebrow>
+            <Eyebrow className="text-fog">With {SITE.name}</Eyebrow>
             <SplitHeading as="h2" className="type-headline mt-5 max-w-[24ch]">
               {theirs.length === 1
                 ? `One address in the register.`

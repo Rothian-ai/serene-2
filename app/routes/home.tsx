@@ -6,71 +6,85 @@ import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section, Plat
 import { DeveloperCard, InsightCard } from "~/components/cards";
 import { CollaborationsBand } from "~/components/CollaborationsBand";
 import { AmeliaAsk } from "~/components/AmeliaAsk";
+import { DirectRebuttal } from "~/components/DirectRebuttal";
+import { LifecycleRail } from "~/components/LifecycleRail";
 import { developers, developments, insights } from "~/lib/content";
-import { AMELIA_URL, meta as buildMeta } from "~/lib/site";
+import { COMMITMENTS, PROBLEMS } from "~/lib/strategy";
+import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
     description:
-      "Serene is an AI-native advisory for off-plan real estate in Dubai and Abu Dhabi. RERA-licensed, registered with the developers it represents, and incapable of a cold call.",
+      "Serene Bay is an off-plan buyer advisory in Dubai and Abu Dhabi with salaried, non-commissioned advisors. Cross-developer shortlists, independent snagging, and support through construction, letting, mortgage and resale.",
     path: "/",
   });
 }
 
+/**
+ * The homepage argument, in the order the strategy makes it:
+ * proposition → what is broken → how we are built differently → the objection
+ * → the lifecycle → what you can actually look at → who we are registered with
+ * → the market's own numbers → the advisory → the journal → the close.
+ */
 export default function Home() {
   const latest = insights.slice(0, 3);
 
   return (
     <>
-      {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence */}
+      {/* ① Cinematic hero — pinned, scroll-driven three-chapter sequence.
+          Photography and motion unchanged; the argument is new. */}
       <HeroSequence />
 
-      {/* ② Developers — the registry leads, set on a light silver (frost) ground.
-          The silver mark reinforces the platinum-led brand on a light surface. */}
+      {/* ② The problem — why this market needed a different kind of house */}
       <div className="bg-frost">
         <Section>
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
-            <Reveal>
-              <img src="/logo/serene-mark.png" alt="" className="mb-6 h-11 w-auto" />
-              <Eyebrow className="text-fog">The Registry</Eyebrow>
-              <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
-                The institutions behind every address.
+          <div className="grid gap-8 md:grid-cols-12 md:gap-7">
+            <Reveal className="md:col-span-5" exit>
+              <Eyebrow className="text-fog">The Problem</Eyebrow>
+              <SplitHeading as="h2" className="type-display mt-5 max-w-[15ch]">
+                Nothing in this market is paid to advise you.
               </SplitHeading>
             </Reveal>
-            <QuietLink to="/developers">All developers</QuietLink>
+            <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
+              <p className="type-body-lg text-ink/74">
+                Off-plan is not a corner of the Dubai market — it is the market. And almost every
+                person selling it earns nothing until you sign. That single fact shapes the advice
+                you get, what you are shown, and how quickly you are asked to decide.
+              </p>
+            </Reveal>
           </div>
-          <RevealGroup className="mt-10 grid grid-cols-2 gap-6 md:mt-14 md:grid-cols-4 md:gap-7">
-            {developers.slice(0, 4).map((d) => (
-              <RevealItem key={d.slug}>
-                <DeveloperCard developer={d} />
+
+          <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+            {PROBLEMS.map((p) => (
+              <RevealItem key={p.k} className="border-t border-ink/16 pt-5">
+                <span className="type-data text-fog">{p.k}</span>
+                <h3 className="type-title mt-2">{p.title}</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{p.copy}</p>
               </RevealItem>
             ))}
           </RevealGroup>
         </Section>
       </div>
 
-      {/* ③ Developments — the featured register, a pinned horizontal gallery */}
-      <HorizontalShowcase developments={developments.slice(0, 6)} />
-
-      {/* ④ The House — statement on top, a wide plate, then the principles */}
+      {/* ③ The difference — the four structural commitments, then the plate */}
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal className="md:col-span-5" exit>
-            <Eyebrow className="text-fog">The House</Eyebrow>
-            <SplitHeading as="h2" className="type-display mt-5 max-w-[12ch]">
-              A quieter way to acquire.
+            <Eyebrow className="text-fog">The Difference</Eyebrow>
+            <SplitHeading as="h2" className="type-display mt-5 max-w-[13ch]">
+              Built so the conflict cannot arise.
             </SplitHeading>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
             <p className="type-body-lg text-ink/74">
-              Serene is an advisory for off-plan property in Dubai and Abu Dhabi, licensed,
-              registered with the developers it represents, and built on one conviction: serious
-              buyers are persuaded by information, not persistence.
+              Serene Bay is not a faster or cheaper version of the broker model. It is a different
+              business, built on four commitments the rest of the market is not structurally able
+              to make.
             </p>
             <div className="mt-7">
-              <QuietLink to="/about">About Serene</QuietLink>
+              <QuietLink to="/difference">The difference in full</QuietLink>
             </div>
           </Reveal>
         </div>
@@ -86,49 +100,65 @@ export default function Home() {
           />
         </Reveal>
 
-        {/* the principles — three columns, hairline-ruled */}
-        <RevealGroup className="mt-10 grid gap-8 md:mt-14 md:grid-cols-3 md:gap-10">
-          {[
-            {
-              k: "Information first",
-              copy: "We publish what we know and answer what you ask. No cold calls, no follow-up campaigns. The decision, and its timing, stays yours.",
-            },
-            {
-              k: "On the record",
-              copy: "We transact only with the developers we are registered with: Emaar, Aldar, Sobha, and the institutions building the Emirates.",
-            },
-            {
-              k: "Answered on demand",
-              copy: "Amelia holds the record: escrow, service charges, handovers, yields. She answers the moment the question arrives, in detail.",
-            },
-          ].map((p) => (
-            <RevealItem key={p.k} className="border-t border-ink/14 pt-5">
-              <h3 className="type-title">{p.k}</h3>
-              <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{p.copy}</p>
+        {/* the four commitments — hairline-ruled, the claim set as the figure */}
+        <RevealGroup className="mt-10 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+          {COMMITMENTS.map((c) => (
+            <RevealItem key={c.k} className="border-t border-ink/14 pt-5">
+              <span className="type-data text-fog">{c.k}</span>
+              <h3 className="type-title mt-2">{c.claim}</h3>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{c.copy}</p>
             </RevealItem>
           ))}
         </RevealGroup>
       </Section>
 
-      {/* ⑤ By the Record — animated credibility monument */}
+      {/* ④ The objection — going direct. The one argument put in writing. */}
+      <DirectRebuttal />
+
+      {/* ⑤ The lifecycle — nine stages, six of them after reservation */}
+      <LifecycleRail />
+
+      {/* ⑥ Developments — the cross-developer register, a pinned horizontal gallery */}
+      <HorizontalShowcase developments={developments.slice(0, 6)} />
+
+      {/* ⑦ Developers — the registry, proof the shortlist spans institutions */}
+      <div className="bg-frost">
+        <Section>
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
+            <Reveal>
+              <img src="/logo/serene-mark.png" alt="" className="mb-6 h-11 w-auto" />
+              <Eyebrow className="text-fog">The Registry</Eyebrow>
+              <SplitHeading as="h2" className="type-display mt-5 max-w-[17ch]">
+                Many developers, on purpose.
+              </SplitHeading>
+              <p className="type-body-lg mt-6 max-w-[46ch] text-ink/72">
+                A developer's own sales team will only ever put its own inventory in front of you.
+                Because our advisors are salaried, a shortlist can cross developers on merit —
+                including projects that pay us less than the alternative.
+              </p>
+            </Reveal>
+            <QuietLink to="/developers">All developers</QuietLink>
+          </div>
+          <RevealGroup className="mt-10 grid grid-cols-2 gap-6 md:mt-14 md:grid-cols-4 md:gap-7">
+            {developers.slice(0, 4).map((d) => (
+              <RevealItem key={d.slug}>
+                <DeveloperCard developer={d} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </Section>
+      </div>
+
+      {/* ⑧ On the record — the market's published figures, sourced */}
       <MetricsMonument />
 
-      {/* ⑤ The registry — hidden for now: the collaborations band below already
-          carries the developer register. Restore by uncommenting.
-      <Section className="pt-0">
-        <Reveal exit>
-          <Eyebrow className="text-fog">The Registry</Eyebrow>
-        </Reveal>
-        ...
-      </Section> */}
-
-      {/* ⑥ Collaborations — the register, set large, then covered by its addresses */}
+      {/* ⑨ Collaborations — the register, set large, then covered by its addresses */}
       <CollaborationsBand />
 
-      {/* ⑦ Amelia — her one navy moment, now interactive */}
+      {/* ⑩ Amelia — her one navy moment, the reason no one has to call you */}
       <AmeliaAsk />
 
-      {/* ⑧ Insights — the journal, image-led */}
+      {/* ⑪ Insights — the journal, image-led */}
       <Section>
         <Reveal exit>
           <Eyebrow className="text-fog">Insights</Eyebrow>
@@ -145,23 +175,23 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ⑨ Final threshold — the close */}
+      {/* ⑫ Final threshold — the close */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
-            <Eyebrow className="justify-center text-silver">The Threshold</Eyebrow>
+            <Eyebrow className="justify-center text-silver">Begin</Eyebrow>
           </Reveal>
           <SplitHeading as="h2" className="type-display mt-6" mode="chars">
-            When you have questions, ask.
+            Start with the objective, not a listing.
           </SplitHeading>
           <Reveal delay={0.15}>
-            <p className="type-body-lg mx-auto mt-7 max-w-[46ch] text-ivory/70">
-              No queue, no call-back, no sales floor. Amelia answers the moment the
-              question arrives, and stays quiet until the next one does.
+            <p className="type-body-lg mx-auto mt-7 max-w-[52ch] text-ivory/70">
+              Tell an advisor what the purchase is for and we will work back to the shortlist.
+              No queue, no call-back you didn't ask for, no sales floor — because there isn't one.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={AMELIA_URL} external kind="platinum">Ask Amelia</CTA>
-              <CTA to="/contact" kind="line">Enquire</CTA>
+              <CTA to="/contact" kind="platinum">Speak with an advisor</CTA>
+              <CTA to="/lifecycle" kind="line">See what we do after handover</CTA>
             </div>
           </Reveal>
         </Section>

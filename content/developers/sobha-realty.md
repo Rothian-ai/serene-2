@@ -16,4 +16,4 @@ Sobha builds the way almost nobody builds anymore: with its own hands. Concrete,
 
 For a buyer, backward integration converts to something measurable: finish quality that survives snagging, and construction timelines that don't inherit a subcontractor's problems. Sobha's Hartland delivery record is the cleanest quality ledger in our registry.
 
-Serene is registered with Sobha Realty across the Hartland masterplans. Ask Amelia for the finish schedules. With this developer, they read like a bill of materials, because they are one.
+Serene Bay is registered with Sobha Realty across the Hartland masterplans. Ask Amelia for the finish schedules. With this developer, they read like a bill of materials, because they are one.

@@ -29,4 +29,4 @@ If a project stalls, the account is frozen, not lost. The DLD's cancellation pro
 
 First: **is the escrow account registered and funded?** The account number appears on the sales agreement, and its registration is verifiable with the DLD directly. Second: **what is the milestone schedule?** A schedule weighted heavily toward early milestones front-loads your exposure; a completion-weighted plan does the opposite.
 
-Every development Serene presents publishes both answers. Ask Amelia for the escrow filing of any project in the registry. It is the first document she will show you anyway.
+Every development Serene Bay presents publishes both answers. Ask Amelia for the escrow filing of any project in the registry. It is the first document she will show you anyway.

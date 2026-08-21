@@ -2,7 +2,7 @@ import { readdirSync, writeFileSync } from "node:fs";
 
 /** Regenerates public/sitemap.xml from the content collections. Runs before every build. */
 
-const BASE = "https://serene.com";
+const BASE = "https://serenebay.com";
 
 const slugs = (dir) => {
   try {
@@ -14,6 +14,8 @@ const slugs = (dir) => {
 
 const routes = [
   "/",
+  "/difference",
+  "/lifecycle",
   "/about",
   "/developments",
   ...slugs("content/developments").map((s) => `/developments/${s}`),

@@ -25,7 +25,7 @@ The Sale and Purchase Agreement follows within weeks. It binds the developer to 
 
 ## 4. The construction years
 
-Payments follow certified milestones: you pay when an independent engineer confirms progress, not when a calendar says so. Serene forwards each certification as it files. Nothing else happens in these years unless you ask it to.
+Payments follow certified milestones: you pay when an independent engineer confirms progress, not when a calendar says so. Serene Bay forwards each certification as it files. Nothing else happens in these years unless you ask it to.
 
 ## 5. Handover
 

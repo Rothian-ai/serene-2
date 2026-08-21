@@ -12,7 +12,7 @@ export const handle = { headerTone: "light" as const };
 
 export function meta({ params }: Route.MetaArgs) {
   const a = getInsight(params.slug);
-  if (!a) return buildMeta({ title: "Insight", description: "Serene insight." });
+  if (!a) return buildMeta({ title: "Insight", description: "Serene Bay insight." });
   return buildMeta({ title: a.title, description: a.excerpt, path: `/insights/${a.slug}` });
 }
 
@@ -35,7 +35,7 @@ export default function Insight({ params }: Route.ComponentProps) {
             "@type": "Article",
             headline: a.title,
             datePublished: a.date,
-            author: { "@type": "Organization", name: "Serene Research" },
+            author: { "@type": "Organization", name: `${SITE.name} Research` },
             publisher: { "@type": "Organization", name: SITE.name },
           }),
         }}

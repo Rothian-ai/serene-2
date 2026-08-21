@@ -13,7 +13,7 @@ export function meta() {
   return buildMeta({
     title: "Developments",
     description:
-      "Off-plan developments in Dubai and Abu Dhabi, presented with the facts investors scan first: developer, handover, payment plan, price.",
+      "Off-plan developments in Dubai and Abu Dhabi from several developers, presented with the facts investors scan first: developer, handover, payment plan, price — and the due diligence behind the shortlist.",
     path: "/developments",
   });
 }
@@ -29,13 +29,14 @@ export default function Developments() {
     <>
       <Hero plate="dusk" image="/images/saadiyat-grove.jpg" height="min-h-[64svh]">
         <Eyebrow className="text-silver">Developments</Eyebrow>
-        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[16ch]">
-          Off-plan, considered.
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
+          Several developers. One standard.
         </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[52ch] text-ivory/75">
-          A short register of developments in Dubai and Abu Dhabi, each anchored to a developer we
-          are registered with, each presented with the facts investors scan first: developer,
-          handover, payment plan, price.
+        <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/75">
+          A register that deliberately crosses developers, because a shortlist built inside one
+          developer's inventory is not a shortlist. Each entry is anchored to a developer we are
+          registered with and presented with the facts investors scan first: developer, handover,
+          payment plan, price.
         </p>
       </Hero>
 
@@ -65,8 +66,10 @@ export default function Developments() {
           <SplitHeading as="h2" className="type-headline max-w-[18ch]">
             The register, kept current.
           </SplitHeading>
-          <p className="type-body-lg mt-4 max-w-[52ch] text-ink/65">
-            Each development, presented plainly, and answerable in full the moment you ask.
+          <p className="type-body-lg mt-4 max-w-[56ch] text-ink/65">
+            A listing here is not a recommendation. The right shortlist depends on what the purchase
+            is for, and that conversation comes first — which is why nothing on this page is
+            ranked, boosted or promoted.
           </p>
         </Reveal>
         {list.length > 0 ? (

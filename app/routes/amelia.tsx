@@ -15,7 +15,7 @@ export function meta() {
   return buildMeta({
     title: "Amelia",
     description:
-      "Talk with Amelia, Serene's conversational AI advisor for UAE off-plan real estate. Around-the-clock, data-rich investment answers, and never a cold call.",
+      "Talk with Amelia, Serene Bay's conversational advisor for UAE off-plan property. Around-the-clock answers from the record, and never a cold call.",
     path: "/amelia",
   });
 }
@@ -26,7 +26,7 @@ export function meta() {
 const CHIPS = [
   "What protects my deposit under UAE escrow law?",
   "Which handovers complete before 2028?",
-  "Model an 80/20 payment plan against expected yield.",
+  "Does buying direct from the developer save me money?",
 ];
 
 function handoverAnswer(): string {
@@ -47,7 +47,7 @@ function scriptedAnswer(q: string): string | null {
   }
   if (q === CHIPS[1]) return handoverAnswer();
   if (q === CHIPS[2]) {
-    return "An 80/20 plan settles four-fifths of the price before handover, so the honest model turns on three numbers: entry price, the district's rent record, and service charges. On the platform I run that against live figures rather than a brochure's.";
+    return "No. On off-plan and primary sales in Dubai the developer pays the broker's commission out of its own project economics, not you — so the headline price does not change when you go direct. The developer simply keeps the commission budget. What you give up is representation, cross-developer comparison, and everything after the signature. It is only in the secondary market that a buyer typically pays the agent's fee directly.";
   }
   return null;
 }
@@ -60,11 +60,11 @@ const GENERIC_REPLY =
 type Msg = { id: number; from: "amelia" | "you"; body: string; handoff?: boolean };
 
 const OPENING: Msg[] = [
-  { id: 1, from: "amelia", body: "Welcome. I'm Amelia, Serene's advisory intelligence." },
+  { id: 1, from: "amelia", body: "Welcome. I'm Amelia, Serene Bay's advisory intelligence." },
   {
     id: 2,
     from: "amelia",
-    body: "I exist so that no one has to call you. Escrow rules, payment plans, service charges, handover records, yields: ask in your own words, at any hour, and I answer from the record.",
+    body: "I exist so that no one has to call you. Escrow rules, payment plans, delivery records, service charges, snagging, non-resident lending: ask in your own words, at any hour, and I answer from the record.",
   },
 ];
 
@@ -137,8 +137,8 @@ const PROMISES = [
     copy: "What you share stays within the conversation. Nothing is passed to a sales floor.",
   },
   {
-    k: "NO FOLLOW-UP, EVER",
-    copy: "Close the window and that is the end of it. We don't call. We don't campaign.",
+    k: "CALLS ON REQUEST ONLY",
+    copy: "Close the window and that is the end of it. We call when you ask us to, and not otherwise.",
   },
 ];
 
@@ -204,9 +204,11 @@ export default function Amelia() {
         <div className="mx-auto max-w-[800px]">
           <Eyebrow className="text-silver">Amelia</Eyebrow>
           <h1 className="type-display mt-6 max-w-[16ch]">The advisory, in conversation.</h1>
-          <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/78">
-            Amelia is Serene's conversational advisor, the reason no one here will ever cold-call
-            you. She holds the record and answers around the clock; the decision keeps your pace.
+          <p className="type-body-lg mt-6 max-w-[56ch] text-ivory/78">
+            Amelia is Serene Bay's conversational advisor, and the reason no one here needs to
+            cold-call you. She holds the record and answers around the clock; the decision, and
+            its timing, stay yours. When a stage of ownership comes due — a snagging inspection
+            before handover, a refinance as a fixed term ends — she is what raises it first.
           </p>
         </div>
       </Section>

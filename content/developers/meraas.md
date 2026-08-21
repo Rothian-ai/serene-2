@@ -16,4 +16,4 @@ Meraas designs districts the way other developers design buildings. City Walk, B
 
 The case for Meraas is texture. Its districts trade on how they feel to live in, not on tower-count, a rarity in this market, and the reason its resale premiums hold.
 
-Serene is registered with Meraas for its coastal residential portfolio. Handover histories and escrow filings for every Meraas development we present are available through Amelia, unedited.
+Serene Bay is registered with Meraas for its coastal residential portfolio. Handover histories and escrow filings for every Meraas development we present are available through Amelia, unedited.

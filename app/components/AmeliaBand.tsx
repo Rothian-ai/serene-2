@@ -13,7 +13,7 @@ export function AmeliaBand({
   cta = "Ask Amelia",
   refId,
   context,
-  caption = "Answers on demand. No call-backs, no lists.",
+  caption = "Answers on demand. Calls on request only, never otherwise.",
 }: {
   title: string;
   cta?: string;
@@ -73,6 +73,6 @@ export function QuestionSettle({ questions }: { questions: string[] }) {
 
 export const AMELIA_QUESTIONS = [
   "What protects my deposit under UAE escrow law?",
-  "Compare service charges in Downtown and Creek Harbour.",
-  "Which handovers complete before 2028?",
+  "Which developers have the better delivery record?",
+  "Who inspects the unit before I release the final payment?",
 ];
