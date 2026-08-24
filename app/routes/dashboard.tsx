@@ -2,7 +2,7 @@ import { Form, Link, useLoaderData, useSearchParams, useSubmit } from "react-rou
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import type { Prisma } from "@prisma/client";
 import { destroyAdminSession, requireAdmin } from "~/lib/auth.server";
-import { prisma } from "~/lib/db.server";
+import { dbConfigured, getPrisma } from "~/lib/db.server";
 import { SITE } from "~/lib/site";
 
 export const handle = { headerTone: "light" as const };
@@ -36,13 +36,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
       { context: { contains: q, mode: "insensitive" } },
     ];
 
+  // The database is optional — the contact form works on SMTP alone. Render an
+  // explained empty state rather than a 500 when there is nothing to read from.
+  if (!dbConfigured()) {
+    return { submissions: [], counts: {}, q, status, type, sort, dir, noDatabase: true };
+  }
+
+  const prisma = getPrisma();
   const [submissions, grouped] = await Promise.all([
     prisma.submission.findMany({ where, orderBy: { [sort]: dir }, take: 500 }),
     prisma.submission.groupBy({ by: ["status"], _count: { _all: true } }),
   ]);
   const counts = Object.fromEntries(grouped.map((g) => [g.status, g._count._all]));
 
-  return { submissions, counts, q, status, type, sort, dir };
+  return { submissions, counts, q, status, type, sort, dir, noDatabase: false };
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -53,8 +60,8 @@ export async function action({ request }: ActionFunctionArgs) {
   if (intent === "status") {
     const id = String(form.get("id"));
     const status = String(form.get("status"));
-    if ((STATUSES as readonly string[]).includes(status)) {
-      await prisma.submission.update({
+    if (dbConfigured() && (STATUSES as readonly string[]).includes(status)) {
+      await getPrisma().submission.update({
         where: { id },
         data: { status: status as (typeof STATUSES)[number] },
       });
@@ -66,7 +73,8 @@ export async function action({ request }: ActionFunctionArgs) {
 const titleCase = (s: string) => s.toLowerCase().replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
 export default function Dashboard() {
-  const { submissions, counts, q, status, type, sort, dir } = useLoaderData<typeof loader>();
+  const { submissions, counts, q, status, type, sort, dir, noDatabase } =
+    useLoaderData<typeof loader>();
   const [params] = useSearchParams();
   const submit = useSubmit();
 
@@ -165,7 +173,19 @@ export default function Dashboard() {
             <tbody>
               {submissions.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="py-16 text-center text-fog">No submissions match.</td>
+                  <td colSpan={8} className="px-4 py-16 text-center text-fog">
+                    {noDatabase ? (
+                      <span className="mx-auto block max-w-[60ch] text-left">
+                        <strong className="text-ink">No submissions database is configured.</strong>{" "}
+                        The contact form still works — enquiries are emailed to{" "}
+                        <code>MAIL_TO</code> over SMTP. To store them here as well, set{" "}
+                        <code>DATABASE_URL</code> and <code>DIRECT_URL</code>, then run{" "}
+                        <code>npx prisma db push</code>.
+                      </span>
+                    ) : (
+                      "No submissions match."
+                    )}
+                  </td>
                 </tr>
               )}
               {submissions.map((s) => (

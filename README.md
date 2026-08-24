@@ -130,7 +130,9 @@ calm (a slow dusk skyline), graded to the house look.
 
 Copy `.env.example` to `.env`:
 
-- `VITE_AMELIA_URL` — the external Amelia platform. All Amelia CTAs route through
+- `VITE_AMELIA_URL` — REMOVED. The Amelia surface was taken out of the beta; the
+  variable is no longer read by anything and can be deleted from .env / Vercel.
+- (historic) all Amelia CTAs used to route through
   `/amelia` (the gateway) and exit here with `ref`/`context` params for attribution.
 - `VITE_GA_ID` — GA4 id. Analytics loads **only after cookie consent**; declining loads nothing.
 - `VITE_CONTACT_ENDPOINT` — POST target for the contact form (e.g. Formspree).
@@ -139,7 +141,11 @@ Copy `.env.example` to `.env`:
 
 - [ ] Replace the placeholder RERA licence number in `app/lib/site.ts` (`SITE.rera`) — it
       appears in the footer, About, FAQs, and Developers pages automatically.
-- [ ] Set the production `VITE_AMELIA_URL`, `VITE_GA_ID`, `VITE_CONTACT_ENDPOINT`.
+- [ ] **Set the SMTP variables** (`SMTP_*`, `MAIL_FROM`, `MAIL_TO`) in Vercel — the
+      contact form does nothing without them. Verify with `npm run smtp:check`.
+      See [BACKEND.md](BACKEND.md).
+- [ ] Leave `VITE_CONTACT_ENDPOINT` **unset** unless replacing `/api/submit` with an
+      external service. Set `VITE_GA_ID` if analytics is wanted.
 - [ ] Have counsel review `/content/legal/*.md` (marked as drafts).
 - [ ] Replace the Unsplash placeholder photography with client-licensed/commissioned imagery
       per the imagery direction (filenames in `public/images/` are stable swap slots).

@@ -1,10 +1,25 @@
+import { useActionData } from "react-router";
+import type { ActionFunctionArgs } from "react-router";
 import { Eyebrow, Ledger, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ContactForm } from "~/components/ContactForm";
+import { processEnquiry } from "~/lib/enquiry.server";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
+
+/**
+ * The no-JavaScript path. `/contact` is prerendered, so between first paint and
+ * hydration the submit button is an ordinary one — and a visitor who submits in
+ * that window, or who has JavaScript blocked, posts the form natively to this
+ * route. Without this action that produced a framework error page and the
+ * enquiry was lost. Same pipeline as /api/submit.
+ */
+export async function action({ request }: ActionFunctionArgs) {
+  const { ok, error } = await processEnquiry(request);
+  return { ok, error };
+}
 
 export function meta() {
   return buildMeta({
@@ -16,6 +31,8 @@ export function meta() {
 }
 
 export default function Contact() {
+  // Present only when the form was submitted without JavaScript.
+  const fallback = useActionData<typeof action>();
   return (
     <>
     <Hero plate="dusk" image="/images/mamsha-gardens-03.jpg" height="min-h-[52svh]">
@@ -34,7 +51,7 @@ export default function Contact() {
       </p>
       <div className="mt-14 grid gap-14 md:grid-cols-12">
         <div className="md:col-span-7">
-          <ContactForm />
+          <ContactForm fallback={fallback} />
         </div>
         <aside className="md:col-span-4 md:col-start-9">
           <Eyebrow className="text-fog">Direct</Eyebrow>

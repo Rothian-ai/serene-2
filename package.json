@@ -6,7 +6,8 @@
     "dev": "react-router dev",
     "build": "prisma generate && node scripts/generate-sitemap.mjs && react-router build",
     "typecheck": "react-router typegen && tsc",
-    "cms": "npx --yes decap-server"
+    "cms": "npx --yes decap-server",
+    "smtp:check": "node scripts/check-smtp.mjs"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",

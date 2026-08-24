@@ -1,22 +1,31 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { track } from "~/lib/analytics";
+import { SITE } from "~/lib/site";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 /**
  * Underline-style inputs; phone deliberately optional — we never require it.
- * Set VITE_CONTACT_ENDPOINT (e.g. a Formspree/serverless URL) for production;
- * without it the form completes locally so the flow can be exercised in dev.
  *
  * Three strategy-led fields sit alongside the standard four: where the buyer is
- * based (most are non-resident), which stage of the lifecycle they are at, and
- * an explicit opt-in for a call. Nothing calls them unless that box is ticked —
- * the call-on-request model, made a mechanism rather than a promise. The extra
- * answers are folded into the existing `context` column, so the enquiry sink and
- * its schema are untouched.
+ * based (most are non-resident), which stage of the process they are at, and an
+ * explicit opt-in for a call. Nothing calls them unless that box is ticked — the
+ * call-on-request model, made a mechanism rather than a promise.
+ *
+ * Posts to `/api/submit`, which emails the house over SMTP and stores the row if
+ * a database is configured. `VITE_CONTACT_ENDPOINT` overrides the destination if
+ * an external form service is ever preferred.
  */
-const ENDPOINT = (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) ?? "/api/submit";
+/**
+ * Where the form posts. Note `||`, not `??`: an env var that exists but is
+ * EMPTY is a real deployment case (a blank value in Vercel, or a bare
+ * `VITE_CONTACT_ENDPOINT=` line in .env), and `??` would let that empty string
+ * win — posting the form to "", which resolves to the current page instead of
+ * the endpoint. Trim too, so stray whitespace cannot do the same.
+ */
+const ENDPOINT =
+  (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined)?.trim() || "/api/submit";
 
 const field =
   "w-full border-b border-ink/25 bg-transparent py-2.5 text-[15.5px] outline-none transition-colors focus:border-b-2 focus:border-gold";
@@ -31,9 +40,15 @@ const STAGE_OPTIONS = [
   "Looking to resell or exit",
 ];
 
-export function ContactForm() {
+export function ContactForm({
+  fallback,
+}: {
+  /** Result of a native (no-JavaScript) post to the /contact action, if any. */
+  fallback?: { ok: boolean; error?: string };
+} = {}) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(null);
 
   const validate = (form: HTMLFormElement) => {
     const data = new FormData(form);
@@ -52,36 +67,29 @@ export function ContactForm() {
     if (!validate(form)) return;
     setStatus("sending");
     try {
-      if (ENDPOINT) {
-        const data = new FormData(form);
-        // The three extra answers ride in `context` so the enquiry schema is
-        // unchanged; the call opt-in is recorded either way, so an advisor can
-        // see plainly that silence means "do not call".
-        const context = [
-          data.get("stage") ? `Stage: ${data.get("stage")}` : "",
-          String(data.get("basedIn") ?? "").trim() ? `Based in: ${data.get("basedIn")}` : "",
-          data.get("callRequested") ? "Call requested" : "No call requested",
-        ]
-          .filter(Boolean)
-          .join(" · ");
-        const payload = { ...Object.fromEntries(data), context };
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-      } else {
-        await new Promise((r) => setTimeout(r, 700));
+      // The endpoint composes the advisor-facing summary itself, so the client
+      // just sends the fields as entered.
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const body = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+      if (!res.ok || !body?.ok) {
+        // Show what the server actually said — "something went wrong" tells a
+        // visitor nothing and loses a real enquiry.
+        throw new Error(body?.error || "Something interrupted the send. Your message is intact.");
       }
       track("contact_submit");
       setStatus("success");
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something interrupted the send.");
       setStatus("error");
     }
   };
 
-  if (status === "success") {
+  // A native post already succeeded: show the same confirmation.
+  if (status === "success" || fallback?.ok) {
     return (
       <div className="border border-ink/18 p-8" role="status">
         <p className="type-title">Received.</p>
@@ -94,9 +102,16 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form method="post" onSubmit={onSubmit} noValidate className="relative">
       <input type="hidden" name="type" value="contact" />
       <input type="hidden" name="source" value="contact-page" />
+      {/* Honeypot. Positioned off-screen rather than display:none, which some
+          bots skip, and hidden from assistive tech and tab order. Anything that
+          fills this in is not a person. */}
+      <div aria-hidden className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+        <label htmlFor="cf-company">Company</label>
+        <input id="cf-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className={label}>Name</label>
@@ -180,9 +195,13 @@ export function ContactForm() {
         >
           {status === "sending" ? "Sending…" : "Send"}
         </button>
-        {status === "error" && (
-          <p className="type-cap text-brass" role="alert">
-            Something interrupted the send. Your message is intact. Try once more.
+        {(status === "error" || fallback?.error) && (
+          <p className="type-cap max-w-[42ch] text-brass" role="alert">
+            {error ?? fallback?.error} Try once more, or write to{" "}
+            <a href={`mailto:${SITE.email}`} className="underline underline-offset-2">
+              {SITE.email}
+            </a>
+            .
           </p>
         )}
       </div>
