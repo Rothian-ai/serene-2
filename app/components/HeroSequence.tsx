@@ -157,6 +157,11 @@ export function HeroSequence() {
           },
         },
       });
+      // Hold the timeline at its original length. The removed parallax tween
+      // ran `duration: 3` and was what set it; without a spacer the timeline
+      // ends at 2.5, which re-maps every crossfade onto the scroll and leaves
+      // chapter 3 fully visible only at the very last instant.
+      seq.to({}, { duration: 3 }, 0);
       // chapter 1 → 2
       seq
         .to(chapters[0], { autoAlpha: 0, yPercent: -12, duration: 0.5 }, 0.55)
