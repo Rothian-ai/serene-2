@@ -20,6 +20,11 @@ import { forwardRef, useId } from "react";
  *                    as noise
  *   tone="current"   inherits `currentColor`
  *
+ * The viewBox carries 6 units of padding around the artwork. The paths run edge
+ * to edge of their own bounding box, and the SVG clips at overflow:hidden — so
+ * without it the open frame's outer verticals (only ~0.7px at header size) sit
+ * on the clip boundary and get shaved away, making the mark look cropped.
+ *
  * Aspect is locked by the viewBox; set a height and let the width follow, so
  * the tower ratio can never stretch.
  */
@@ -66,7 +71,7 @@ export const SereneMark = forwardRef<
   return (
     <svg
       ref={ref}
-      viewBox="0 0 158.12 204.12"
+      viewBox="-6 -6 170.12 216.12"
       className={className}
       role={title ? "img" : "presentation"}
       aria-label={title}
