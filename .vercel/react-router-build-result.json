@@ -1,0 +1,407 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/about": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/off-plan": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/difference": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/lifecycle": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/insights": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/insight": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/careers": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/faqs": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/contact": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/legal-privacy": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/legal-cookies": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/legal-terms": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api.submit": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard.login": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/not-found": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {}
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "app/routes/home.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/about": {
+        "id": "routes/about",
+        "parentId": "root",
+        "file": "app/routes/about.tsx",
+        "path": "about",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/off-plan": {
+        "id": "routes/off-plan",
+        "parentId": "root",
+        "file": "app/routes/off-plan.tsx",
+        "path": "off-plan",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/difference": {
+        "id": "routes/difference",
+        "parentId": "root",
+        "file": "app/routes/difference.tsx",
+        "path": "difference",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/lifecycle": {
+        "id": "routes/lifecycle",
+        "parentId": "root",
+        "file": "app/routes/lifecycle.tsx",
+        "path": "lifecycle",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/insights": {
+        "id": "routes/insights",
+        "parentId": "root",
+        "file": "app/routes/insights.tsx",
+        "path": "insights",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/insight": {
+        "id": "routes/insight",
+        "parentId": "root",
+        "file": "app/routes/insight.tsx",
+        "path": "insights/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/careers": {
+        "id": "routes/careers",
+        "parentId": "root",
+        "file": "app/routes/careers.tsx",
+        "path": "careers",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/faqs": {
+        "id": "routes/faqs",
+        "parentId": "root",
+        "file": "app/routes/faqs.tsx",
+        "path": "faqs",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/contact": {
+        "id": "routes/contact",
+        "parentId": "root",
+        "file": "app/routes/contact.tsx",
+        "path": "contact",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/legal-privacy": {
+        "id": "routes/legal-privacy",
+        "parentId": "root",
+        "file": "app/routes/legal-privacy.tsx",
+        "path": "privacy",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/legal-cookies": {
+        "id": "routes/legal-cookies",
+        "parentId": "root",
+        "file": "app/routes/legal-cookies.tsx",
+        "path": "cookies",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/legal-terms": {
+        "id": "routes/legal-terms",
+        "parentId": "root",
+        "file": "app/routes/legal-terms.tsx",
+        "path": "terms",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/api.submit": {
+        "id": "routes/api.submit",
+        "parentId": "root",
+        "file": "app/routes/api.submit.tsx",
+        "path": "api/submit",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard": {
+        "id": "routes/dashboard",
+        "parentId": "root",
+        "file": "app/routes/dashboard.tsx",
+        "path": "dashboard",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard.login": {
+        "id": "routes/dashboard.login",
+        "parentId": "root",
+        "file": "app/routes/dashboard.login.tsx",
+        "path": "dashboard/login",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/not-found": {
+        "id": "routes/not-found",
+        "parentId": "root",
+        "file": "app/routes/not-found.tsx",
+        "path": "*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "C:/dev/serene-2/app",
+    "basename": "/",
+    "buildDirectory": "C:/dev/serene-2/build",
+    "future": {
+      "unstable_optimizeDeps": false,
+      "v8_passThroughRequests": false,
+      "v8_trailingSlashAwareDataRequests": false,
+      "unstable_previewServerPrerendering": false,
+      "v8_middleware": false,
+      "v8_splitRouteModules": false,
+      "v8_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "routes/home.tsx",
+        "index": true
+      },
+      "routes/about": {
+        "id": "routes/about",
+        "parentId": "root",
+        "file": "routes/about.tsx",
+        "path": "about"
+      },
+      "routes/off-plan": {
+        "id": "routes/off-plan",
+        "parentId": "root",
+        "file": "routes/off-plan.tsx",
+        "path": "off-plan"
+      },
+      "routes/difference": {
+        "id": "routes/difference",
+        "parentId": "root",
+        "file": "routes/difference.tsx",
+        "path": "difference"
+      },
+      "routes/lifecycle": {
+        "id": "routes/lifecycle",
+        "parentId": "root",
+        "file": "routes/lifecycle.tsx",
+        "path": "lifecycle"
+      },
+      "routes/insights": {
+        "id": "routes/insights",
+        "parentId": "root",
+        "file": "routes/insights.tsx",
+        "path": "insights"
+      },
+      "routes/insight": {
+        "id": "routes/insight",
+        "parentId": "root",
+        "file": "routes/insight.tsx",
+        "path": "insights/:slug"
+      },
+      "routes/careers": {
+        "id": "routes/careers",
+        "parentId": "root",
+        "file": "routes/careers.tsx",
+        "path": "careers"
+      },
+      "routes/faqs": {
+        "id": "routes/faqs",
+        "parentId": "root",
+        "file": "routes/faqs.tsx",
+        "path": "faqs"
+      },
+      "routes/contact": {
+        "id": "routes/contact",
+        "parentId": "root",
+        "file": "routes/contact.tsx",
+        "path": "contact"
+      },
+      "routes/legal-privacy": {
+        "id": "routes/legal-privacy",
+        "parentId": "root",
+        "file": "routes/legal-privacy.tsx",
+        "path": "privacy"
+      },
+      "routes/legal-cookies": {
+        "id": "routes/legal-cookies",
+        "parentId": "root",
+        "file": "routes/legal-cookies.tsx",
+        "path": "cookies"
+      },
+      "routes/legal-terms": {
+        "id": "routes/legal-terms",
+        "parentId": "root",
+        "file": "routes/legal-terms.tsx",
+        "path": "terms"
+      },
+      "routes/api.submit": {
+        "id": "routes/api.submit",
+        "parentId": "root",
+        "file": "routes/api.submit.tsx",
+        "path": "api/submit"
+      },
+      "routes/dashboard": {
+        "id": "routes/dashboard",
+        "parentId": "root",
+        "file": "routes/dashboard.tsx",
+        "path": "dashboard"
+      },
+      "routes/dashboard.login": {
+        "id": "routes/dashboard.login",
+        "parentId": "root",
+        "file": "routes/dashboard.login.tsx",
+        "path": "dashboard/login"
+      },
+      "routes/not-found": {
+        "id": "routes/not-found",
+        "parentId": "root",
+        "file": "routes/not-found.tsx",
+        "path": "*"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "subResourceIntegrity": false,
+    "allowedActionOrigins": false,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "file": "routes/home.tsx",
+            "index": true
+          },
+          {
+            "file": "routes/about.tsx",
+            "path": "about"
+          },
+          {
+            "file": "routes/off-plan.tsx",
+            "path": "off-plan"
+          },
+          {
+            "file": "routes/difference.tsx",
+            "path": "difference"
+          },
+          {
+            "file": "routes/lifecycle.tsx",
+            "path": "lifecycle"
+          },
+          {
+            "file": "routes/insights.tsx",
+            "path": "insights"
+          },
+          {
+            "file": "routes/insight.tsx",
+            "path": "insights/:slug"
+          },
+          {
+            "file": "routes/careers.tsx",
+            "path": "careers"
+          },
+          {
+            "file": "routes/faqs.tsx",
+            "path": "faqs"
+          },
+          {
+            "file": "routes/contact.tsx",
+            "path": "contact"
+          },
+          {
+            "file": "routes/legal-privacy.tsx",
+            "path": "privacy"
+          },
+          {
+            "file": "routes/legal-cookies.tsx",
+            "path": "cookies"
+          },
+          {
+            "file": "routes/legal-terms.tsx",
+            "path": "terms"
+          },
+          {
+            "file": "routes/api.submit.tsx",
+            "path": "api/submit"
+          },
+          {
+            "file": "routes/dashboard.tsx",
+            "path": "dashboard"
+          },
+          {
+            "file": "routes/dashboard.login.tsx",
+            "path": "dashboard/login"
+          },
+          {
+            "file": "routes/not-found.tsx",
+            "path": "*"
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
