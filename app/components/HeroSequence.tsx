@@ -157,8 +157,6 @@ export function HeroSequence() {
           },
         },
       });
-      // subtle parallax lift across the whole descent
-      seq.to(bgWrapRef.current, { yPercent: -8, ease: "none", duration: 3 }, 0);
       // chapter 1 → 2
       seq
         .to(chapters[0], { autoAlpha: 0, yPercent: -12, duration: 0.5 }, 0.55)
@@ -203,7 +201,9 @@ export function HeroSequence() {
   return (
     <section ref={rootRef} className="relative h-[320vh] bg-ink">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-ink text-ivory">
-        {/* crossfading grounds + ambient light (parallax + breath on wrap) */}
+        {/* crossfading grounds + ambient light (a slow breath on the wrap — no
+            parallax lift: translating this viewport-sized layer would slide it
+            off the ground beneath and reveal the ink surface at the bottom) */}
         <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
           {bgNodes.map((node, i) => (
             <div
