@@ -8,6 +8,9 @@ export default [
   // The two strategy pillars: how the model differs, and how long it runs.
   route("difference", "routes/difference.tsx"),
   route("lifecycle", "routes/lifecycle.tsx"),
+  // Listings, served live from Amelia's catalogue (never prerendered).
+  route("properties", "routes/properties.tsx"),
+  route("properties/:slug", "routes/properties.$slug.tsx"),
   route("insights", "routes/insights.tsx"),
   route("insights/:slug", "routes/insight.tsx"),
   route("careers", "routes/careers.tsx"),

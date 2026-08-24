@@ -1,0 +1,145 @@
+import { Link, useLoaderData, useSearchParams } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
+import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import { SplitHeading } from "~/components/SplitHeading";
+import { PropertyCard } from "~/components/property";
+import { AmeliaError, fetchProjects, isAmeliaConfigured } from "~/lib/amelia.server";
+import { meta as buildMeta } from "~/lib/site";
+
+export const handle = { headerTone: "light" as const };
+
+export function meta() {
+  return buildMeta({
+    title: "Properties",
+    description:
+      "The register of off-plan developments Serene presents in Dubai and Abu Dhabi — pricing, handover, payment plans and permit details, published from the record.",
+    path: "/properties",
+  });
+}
+
+/**
+ * CDN caching is how this route stays fast without being prerendered: the
+ * catalogue changes, so the HTML must not be frozen at build time. The
+ * equivalent of the integration guide's Next `revalidate: 300`.
+ */
+export function headers() {
+  return { "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=600" };
+}
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  // No key configured (a fresh clone, or a preview without env) must render an
+  // explained page, never a 500.
+  if (!isAmeliaConfigured()) {
+    return { state: "unconfigured" as const, projects: [], nextCursor: null, error: null };
+  }
+  const p = new URL(request.url).searchParams;
+  try {
+    const { data, nextCursor } = await fetchProjects(
+      {
+        limit: 48,
+        cursor: p.get("cursor"),
+        area: p.get("area"),
+        propertyType: p.get("type"),
+        status: p.get("status"),
+      },
+      request.signal,
+    );
+    return { state: "ok" as const, projects: data, nextCursor, error: null };
+  } catch (err) {
+    // A listing outage is not a broken site: keep the page, explain the gap.
+    const error =
+      err instanceof AmeliaError ? err.message : "The listing service is unavailable.";
+    return { state: "error" as const, projects: [], nextCursor: null, error };
+  }
+}
+
+export default function Properties() {
+  const { state, projects, nextCursor, error } = useLoaderData<typeof loader>();
+  const [params] = useSearchParams();
+
+  const next = new URLSearchParams(params);
+  if (nextCursor) next.set("cursor", nextCursor);
+  const filtered = ["area", "type", "status"].some((k) => params.get(k));
+
+  return (
+    <>
+      <Section className="pt-40">
+        <Reveal exit>
+          <Eyebrow className="text-fog">The Register</Eyebrow>
+        </Reveal>
+        <SplitHeading as="h1" className="type-display mt-6 max-w-[20ch]">
+          Every address, on the record.
+        </SplitHeading>
+        <Reveal delay={0.1}>
+          <p className="type-body-lg mt-6 max-w-[54ch] text-ink/70">
+            Pricing, handover, payment terms and permit details as the developers file them.
+            Nothing is presented without a valid Trakheesi permit, so what you read here is what
+            is lawful to sell.
+          </p>
+        </Reveal>
+      </Section>
+
+      <Section className="pt-0">
+        {state === "unconfigured" && (
+          <div className="border border-ink/18 p-8">
+            <p className="type-title">The register is being connected.</p>
+            <p className="mt-3 max-w-[52ch] text-[15.5px] text-ink/75">
+              Listings are served from Amelia's catalogue. Once the credentials are in place this
+              page fills itself — no content needs to be copied across by hand.
+            </p>
+          </div>
+        )}
+
+        {state === "error" && (
+          <div className="border border-ink/18 p-8" role="status">
+            <p className="type-title">The register is briefly unavailable.</p>
+            <p className="mt-3 max-w-[52ch] text-[15.5px] text-ink/75">{error}</p>
+            <p className="type-cap mt-4 text-fog">
+              Nothing is lost — try again shortly, or{" "}
+              <Link to="/contact" className="text-brass underline underline-offset-2">
+                ask an advisor
+              </Link>
+              .
+            </p>
+          </div>
+        )}
+
+        {state === "ok" && projects.length === 0 && (
+          <div className="border border-ink/18 p-8">
+            <p className="type-title">Nothing matches that yet.</p>
+            {filtered && (
+              <p className="mt-3 text-[15.5px] text-ink/75">
+                <Link to="/properties" className="text-brass underline underline-offset-2">
+                  Clear the filters
+                </Link>{" "}
+                to see the whole register.
+              </p>
+            )}
+          </div>
+        )}
+
+        {projects.length > 0 && (
+          <>
+            <RevealGroup className="grid gap-10 md:grid-cols-2 md:gap-x-7 lg:grid-cols-3">
+              {projects.map((p) => (
+                <RevealItem key={p.id}>
+                  <PropertyCard project={p} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+            {nextCursor && (
+              <div className="mt-14 flex justify-center">
+                <Link
+                  to={`/properties?${next}`}
+                  className="border border-ink/35 px-8 py-[15px] text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:border-ink"
+                >
+                  More addresses
+                </Link>
+              </div>
+            )}
+          </>
+        )}
+      </Section>
+    </>
+  );
+}

@@ -10,6 +10,7 @@ import { SereneMark } from "~/components/SereneMark";
  * Conversion sits in the bar's own action, not in the link list.
  */
 const NAV = [
+  { to: "/properties", label: "Properties" },
   { to: "/off-plan", label: "Off-Plan" },
   { to: "/difference", label: "The Difference" },
   { to: "/lifecycle", label: "The Lifecycle" },
