@@ -37,19 +37,28 @@ export async function loader({ request }: LoaderFunctionArgs) {
     ];
 
   // The database is optional — the contact form works on SMTP alone. Render an
-  // explained empty state rather than a 500 when there is nothing to read from.
-  if (!dbConfigured()) {
-    return { submissions: [], counts: {}, q, status, type, sort, dir, noDatabase: true };
+  // explained empty state rather than a 500 when it is absent OR unreachable.
+  // Both matter: DATABASE_URL can be set on the host while Prisma still fails
+  // to load or connect, and a broken dashboard must not be a broken site.
+  const empty = {
+    submissions: [] as Prisma.SubmissionGetPayload<{}>[],
+    counts: {} as Record<string, number>,
+    q, status, type, sort, dir, noDatabase: true,
+  };
+  if (!dbConfigured()) return empty;
+
+  try {
+    const prisma = await getPrisma();
+    const [submissions, grouped] = await Promise.all([
+      prisma.submission.findMany({ where, orderBy: { [sort]: dir }, take: 500 }),
+      prisma.submission.groupBy({ by: ["status"], _count: { _all: true } }),
+    ]);
+    const counts = Object.fromEntries(grouped.map((g) => [g.status, g._count._all]));
+    return { submissions, counts, q, status, type, sort, dir, noDatabase: false };
+  } catch (err) {
+    console.error("[dashboard] database unavailable, showing empty state:", err);
+    return empty;
   }
-
-  const prisma = getPrisma();
-  const [submissions, grouped] = await Promise.all([
-    prisma.submission.findMany({ where, orderBy: { [sort]: dir }, take: 500 }),
-    prisma.submission.groupBy({ by: ["status"], _count: { _all: true } }),
-  ]);
-  const counts = Object.fromEntries(grouped.map((g) => [g.status, g._count._all]));
-
-  return { submissions, counts, q, status, type, sort, dir, noDatabase: false };
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -61,10 +70,15 @@ export async function action({ request }: ActionFunctionArgs) {
     const id = String(form.get("id"));
     const status = String(form.get("status"));
     if (dbConfigured() && (STATUSES as readonly string[]).includes(status)) {
-      await getPrisma().submission.update({
-        where: { id },
-        data: { status: status as (typeof STATUSES)[number] },
-      });
+      try {
+        const prisma = await getPrisma();
+        await prisma.submission.update({
+          where: { id },
+          data: { status: status as (typeof STATUSES)[number] },
+        });
+      } catch (err) {
+        console.error("[dashboard] status update failed:", err);
+      }
     }
   }
   return null;

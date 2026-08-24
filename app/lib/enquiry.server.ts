@@ -63,7 +63,8 @@ async function persist(p: EnquiryPayload, context: string): Promise<string | nul
   try {
     // Imported lazily so a deploy with no database never even loads Prisma.
     const { getPrisma } = await import("~/lib/db.server");
-    const row = await getPrisma().submission.create({
+    const prisma = await getPrisma();
+    const row = await prisma.submission.create({
       data: {
         type:
           p.type === "careers"

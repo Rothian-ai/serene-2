@@ -1,33 +1,55 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import type { PrismaClient } from "@prisma/client";
 
 /**
- * Prisma client singleton, constructed lazily.
+ * Prisma access, loaded entirely on demand.
  *
- * Prisma 7 connects via a driver adapter — here node-postgres pointed at the
- * POOLED Neon connection (`DATABASE_URL`); migrations use the direct URL via
- * prisma.config.ts. A global cache avoids exhausting connections under dev HMR
- * and serverless instance reuse.
+ * WHY THE IMPORTS ARE DYNAMIC — this is load-bearing, please do not "tidy" it
+ * back into top-level imports.
  *
- * The client is built on first use rather than at import, because the database
- * is optional: the contact form works on SMTP alone, and a deploy with no
- * `DATABASE_URL` must be able to import this module (and render /dashboard's
- * empty state) without constructing an adapter for a connection that does not
- * exist.
+ * React Router bundles every server route into a single Vercel function. Any
+ * module-scope code that throws while that bundle is being imported takes the
+ * whole site's server side down with it — not just the route that needed it.
+ * That is exactly what happened in production: every server route returned
+ * FUNCTION_INVOCATION_FAILED, including `/dashboard/login` and a three-line
+ * JSON loader that never touch the database, because `@prisma/client` was
+ * imported at the top of this file and failed to resolve inside the function.
+ *
+ * So: `@prisma/client` and `@prisma/adapter-pg` are imported inside
+ * `getPrisma()` only. The type-only import above is erased at compile time and
+ * emits no runtime require. `dbConfigured()` is a plain environment check with
+ * no dependencies at all, so callers can branch on it without loading anything.
+ *
+ * The consequence is that a missing or broken Prisma install degrades to "no
+ * submissions database" — the contact form still emails, `/dashboard` still
+ * renders its empty state — instead of a site-wide 500.
  */
+
 const globalForPrisma = globalThis as unknown as { __prisma?: PrismaClient };
 
-/** True when a database connection string is present. */
+/** True when a database connection string is present. Loads nothing. */
 export const dbConfigured = (): boolean => Boolean(process.env.DATABASE_URL);
 
-export function getPrisma(): PrismaClient {
+/**
+ * The Prisma client, constructed on first use. Async because the driver and
+ * adapter are imported lazily; callers must await it.
+ *
+ * Throws if there is no `DATABASE_URL`, or if Prisma cannot be loaded. Both are
+ * caught by the callers, which treat persistence as best-effort.
+ */
+export async function getPrisma(): Promise<PrismaClient> {
   if (!dbConfigured()) {
     throw new Error("DATABASE_URL is not set — no submissions database is configured.");
   }
-  // Cached on globalThis so dev HMR and serverless instance reuse share one
-  // client instead of opening a new pool on every reload or invocation.
-  globalForPrisma.__prisma ??= new PrismaClient({
-    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
-  });
+  if (!globalForPrisma.__prisma) {
+    const [{ PrismaClient }, { PrismaPg }] = await Promise.all([
+      import("@prisma/client"),
+      import("@prisma/adapter-pg"),
+    ]);
+    // Cached on globalThis so dev HMR and serverless instance reuse share one
+    // client instead of opening a new pool on every reload or invocation.
+    globalForPrisma.__prisma = new PrismaClient({
+      adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+    });
+  }
   return globalForPrisma.__prisma;
 }
