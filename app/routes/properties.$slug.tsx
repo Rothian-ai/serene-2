@@ -87,7 +87,7 @@ function Block({
 }
 
 const amenityName = (a: NonNullable<ProjectDetail["amenities"]>[number]) =>
-  typeof a === "string" ? a : (a?.name ?? null);
+  typeof a === "string" ? a : (a?.name ?? a?.label ?? null);
 
 export default function Property() {
   const { project: p } = useLoaderData<typeof loader>();
@@ -115,10 +115,18 @@ export default function Property() {
 
   const amenities = (p.amenities ?? []).map(amenityName).filter(Boolean) as string[];
   const nearby = p.location?.nearbyPlaces ?? [];
-  const gallery = (p.media ?? []).filter((m) => m.url && /image/i.test(m.kind ?? "image"));
+  // The detail record has no featuredImageUrl (only the card does), so the hero
+  // and gallery both come out of `media`. Anything that is not explicitly a
+  // plan, video or tour is treated as a photograph.
+  const isPhoto = (m: { kind?: string | null }) =>
+    !/floor|master|video|tour/i.test(m.kind ?? "");
+  const gallery = (p.media ?? []).filter((m) => m.url && isPhoto(m));
   const images = gallery.length ? gallery.map((m) => m.url) : (p.images ?? []);
+  const heroImage = p.featuredImageUrl ?? images[0] ?? undefined;
   const brochures = (p.documents ?? []).filter((d) => d.url);
-  const units = (p.units ?? []).filter((u) => u && (u.name || u.bedrooms != null));
+  const units = (p.units ?? []).filter(
+    (u) => u && (u.unitNumber || u.name || u.bedrooms != null),
+  );
   const plans = (p.paymentPlans ?? []).filter((pl) => (pl.milestones ?? []).length || pl.name);
   const permit = p.trust?.permit ?? p.permit ?? null;
   // Media arrives typed: images are proxied and hotlinkable, while video and
@@ -144,7 +152,7 @@ export default function Property() {
         <div className="absolute inset-0">
           <Plate
             kind="render"
-            image={p.featuredImageUrl ?? undefined}
+            image={heroImage}
             alt={p.name}
             eager
             className="h-full w-full"
@@ -195,7 +203,12 @@ export default function Property() {
       {p.description && (
         <Block
           eyebrow="The Address"
-          title={p.positioning?.brandedResidence || undefined}
+          title={
+            p.positioning?.signaturePositioning ||
+            p.positioning?.brandedResidenceBrand ||
+            p.positioning?.brandedResidence ||
+            undefined
+          }
           className="pt-0"
         >
           <div className="prose-serene whitespace-pre-line">{p.description}</div>
@@ -214,21 +227,32 @@ export default function Property() {
               {
                 k: "Gross yield",
                 v:
-                  typeof p.investment?.grossYieldPct === "number"
-                    ? `${p.investment.grossYieldPct}%`
+                  typeof (p.investment?.expectedGrossYieldPct ??
+                    p.investment?.grossYieldPct) === "number"
+                    ? `${p.investment?.expectedGrossYieldPct ?? p.investment?.grossYieldPct}%`
                     : null,
               },
-              { k: "Expected rent", v: money(p.investment?.expectedRentAnnual, currency) },
+              {
+                k: "Expected rent",
+                v: money(
+                  p.investment?.expectedAnnualRentAed ?? p.investment?.expectedRentAnnual,
+                  currency,
+                ),
+              },
               { k: "Service charge", v: perSqft(p.serviceChargePerSqft, currency) },
               {
                 k: "Golden visa",
-                v: p.investment?.visaEligible
-                  ? `Eligible${
-                      money(p.investment.visaThreshold, currency)
-                        ? ` from ${money(p.investment.visaThreshold, currency)}`
-                        : ""
-                    }`
-                  : null,
+                v: (() => {
+                  // The live field is a descriptive string; the older boolean is
+                  // still honoured so both shapes render.
+                  const r = p.investment?.residencyVisaEligibility;
+                  if (typeof r === "string" && r.trim()) return humanise(r);
+                  if (r === true || p.investment?.visaEligible) {
+                    const t = money(p.investment?.visaThreshold, currency);
+                    return t ? `Eligible from ${t}` : "Eligible";
+                  }
+                  return null;
+                })(),
               },
             ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
           />
@@ -301,11 +325,11 @@ export default function Property() {
                       key={u.id ?? i}
                       className={`border-b border-ink/10 ${taken ? "text-ink/40" : ""}`}
                     >
-                      <td className="py-3 pr-6">{u.name ?? "—"}</td>
+                      <td className="py-3 pr-6">{u.unitNumber ?? u.name ?? "—"}</td>
                       <td className="py-3 pr-6">{u.bedrooms === 0 ? "Studio" : (u.bedrooms ?? "—")}</td>
                       <td className="py-3 pr-6 tabular-nums">
-                        {typeof u.areaSqft === "number"
-                          ? `${u.areaSqft.toLocaleString("en-GB")} sqft`
+                        {typeof (u.sizeSqft ?? u.areaSqft) === "number"
+                          ? `${(u.sizeSqft ?? u.areaSqft)!.toLocaleString("en-GB")} sqft`
                           : "—"}
                       </td>
                       <td className="py-3 pr-6 tabular-nums">{money(u.price, currency) ?? "—"}</td>
@@ -458,10 +482,18 @@ export default function Property() {
               <div key={i} className="hairline-t flex flex-wrap items-baseline justify-between gap-x-6 py-3">
                 <dt className="text-[15px] text-ink/78">
                   {x.label}
-                  {x.note ? <span className="type-cap ml-2 text-fog">{x.note}</span> : null}
+                  {(x.frequency || x.isOptional || x.note) && (
+                    <span className="type-cap ml-2 text-fog">
+                      {[humanise(x.frequency), x.isOptional ? "optional" : null, x.note]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </span>
+                  )}
                 </dt>
                 <dd className="type-data shrink-0 text-brass">
-                  {money(x.amount, currency) ?? (typeof x.amount === "number" ? x.amount + "%" : "—")}
+                  {typeof x.pctOfPrice === "number"
+                    ? `${x.pctOfPrice}%`
+                    : (money(x.amount, currency) ?? "—")}
                 </dd>
               </div>
             ))}
@@ -510,20 +542,41 @@ export default function Property() {
                 {p.developer.description}
               </p>
             )}
+            <Ledger
+              dark
+              className="mt-7"
+              cells={[
+                { k: "Established", v: p.developer.establishedYear },
+                { k: "Delivered", v: p.developer.projectsDelivered },
+                { k: "Headquarters", v: p.developer.headquarters },
+                {
+                  k: "On time",
+                  v:
+                    typeof p.developer.onTimeDeliveryPct === "number"
+                      ? `${p.developer.onTimeDeliveryPct}%`
+                      : null,
+                },
+              ]
+                .filter((c) => Boolean(c.v))
+                .map((c) => ({ k: c.k, v: String(c.v) }))}
+            />
           </Section>
         </div>
       )}
 
       {/* ——— location ——— */}
-      {(p.location?.address || nearby.length > 0) && (
-        <Block eyebrow="The Location" title={p.location?.address ?? undefined}>
+      {(p.location?.addressLine || p.location?.address || nearby.length > 0) && (
+        <Block
+          eyebrow="The Location"
+          title={p.location?.addressLine ?? p.location?.address ?? undefined}
+        >
           {nearby.length > 0 && (
             <dl className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
               {nearby.map((n, i) => (
                 <div key={i} className="hairline-t flex items-baseline gap-4 py-3">
                   <dt className="type-data w-[5.5rem] shrink-0 text-brass">
-                    {typeof n.minutes === "number"
-                      ? `${n.minutes} min`
+                    {typeof (n.travelTimeMin ?? n.minutes) === "number"
+                      ? `${n.travelTimeMin ?? n.minutes} min`
                       : typeof n.distanceKm === "number"
                         ? `${n.distanceKm} km`
                         : "—"}
@@ -563,8 +616,11 @@ export default function Property() {
             <Ledger
               cells={[
                 { k: "Trakheesi permit", v: permit?.number },
-                { k: "RERA registration", v: p.trust?.reraRegistration },
-                { k: "Escrow bank", v: p.trust?.escrowBank },
+                {
+                  k: "RERA registration",
+                  v: p.trust?.rera ?? p.trust?.reraNumber ?? p.trust?.reraRegistration,
+                },
+                { k: "Escrow bank", v: p.trust?.escrow ?? p.trust?.escrowBank },
                 { k: "Escrow trustee", v: p.trust?.escrowTrustee },
               ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
             />
@@ -607,7 +663,8 @@ export default function Property() {
             </CTA>
           </div>
           <p className="type-cap mt-5 text-silver">
-            Verified signup: email and WhatsApp codes, then the property opens in your portal.
+            Verified signup: confirm your email — and your WhatsApp number where that is
+            enabled — then the property opens in your portal.
             No cold calls — an advisor replies only when you ask.
           </p>
           <p className="type-cap mt-2 text-silver/70">

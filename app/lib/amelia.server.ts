@@ -55,6 +55,11 @@ export interface Developer {
   logoUrl?: string | null;
   logoOnDark?: boolean | null;
   description?: string | null;
+  establishedYear?: number | null;
+  projectsDelivered?: number | null;
+  headquarters?: string | null;
+  onTimeDeliveryPct?: number | null;
+  website?: string | null;
 }
 export interface Permit {
   number?: string | null;
@@ -92,6 +97,10 @@ export interface MediaItem {
 }
 export interface Unit {
   id?: string;
+  unitNumber?: string | null;
+  unitType?: string | null;
+  sizeSqft?: number | null;
+  bathrooms?: number | null;
   name?: string | null;
   bedrooms?: number | null;
   areaSqft?: number | null;
@@ -118,7 +127,13 @@ export interface PaymentPlan {
 export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   description?: string | null;
   serviceChargePerSqft?: number | null;
+  /** Field names confirmed against a live record; the older aliases are kept
+   *  as fallbacks so either shape renders. */
   investment?: {
+    expectedGrossYieldPct?: number | null;
+    expectedAnnualRentAed?: number | null;
+    residencyVisaEligibility?: string | boolean | null;
+    investorEligibility?: string | null;
     grossYieldPct?: number | null;
     expectedRentAnnual?: number | null;
     visaEligible?: boolean | null;
@@ -126,20 +141,40 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   } | null;
   positioning?: {
     luxuryTier?: string | null;
+    isBrandedResidence?: boolean | null;
+    brandedResidenceBrand?: string | null;
+    signaturePositioning?: string | null;
+    viewClassifications?: string[] | null;
     brandedResidence?: string | null;
     views?: string[] | null;
   } | null;
-  amenities?: Array<{ name?: string | null; category?: string | null } | string> | null;
+  amenities?: Array<{ name?: string | null; label?: string | null; category?: string | null } | string> | null;
   location?: {
     latitude: number | null;
     longitude: number | null;
+    addressLine?: string | null;
+    neighborhood?: string | null;
+    mapUrl?: string | null;
     address?: string | null;
-    nearbyPlaces?: Array<{ name?: string | null; distanceKm?: number | null; minutes?: number | null }> | null;
+    nearbyPlaces?: Array<{
+      name?: string | null;
+      distanceKm?: number | null;
+      travelTimeMin?: number | null;
+      transportMode?: string | null;
+      minutes?: number | null;
+    }> | null;
   } | null;
   media?: MediaItem[] | null;
   documents?: Array<{ title?: string | null; url?: string | null }> | null;
   paymentPlans?: PaymentPlan[] | null;
-  fees?: Array<{ label?: string | null; amount?: number | null; note?: string | null }> | null;
+  fees?: Array<{
+    label?: string | null;
+    amount?: number | null;
+    pctOfPrice?: number | null;
+    frequency?: string | null;
+    isOptional?: boolean | null;
+    note?: string | null;
+  }> | null;
   units?: Unit[] | null;
   unitCounts?: { available?: number | null; reserved?: number | null; sold?: number | null } | null;
   towers?: Array<{
@@ -162,6 +197,9 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   }> | null;
   partners?: Array<{ name?: string | null; role?: string | null; logoUrl?: string | null }> | null;
   trust?: {
+    rera?: string | null;
+    reraNumber?: string | null;
+    escrow?: string | null;
     reraRegistration?: string | null;
     escrowBank?: string | null;
     escrowTrustee?: string | null;
