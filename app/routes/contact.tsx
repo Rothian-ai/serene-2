@@ -5,6 +5,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ContactForm } from "~/components/ContactForm";
 import { processEnquiry } from "~/lib/enquiry.server";
+import { ENQUIRY } from "~/lib/strategy";
 import { SITE, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -25,7 +26,7 @@ export function meta() {
   return buildMeta({
     title: "Speak With an Advisor",
     description:
-      "Speak with a salaried Serene Bay advisor about an off-plan purchase in Dubai or Abu Dhabi. One reply within a business day, and a call only if you ask for one.",
+      "We will not call you unless you ask us to. Tell us what you are trying to achieve and an advisor replies in your preferred channel, in your hours, with no obligation and no follow-up sequence.",
     path: "/contact",
   });
 }
@@ -36,19 +37,22 @@ export default function Contact() {
   return (
     <>
     <Hero plate="dusk" image="/images/mamsha-gardens-03.jpg" height="min-h-[52svh]">
-      <Eyebrow className="text-silver">Speak With an Advisor</Eyebrow>
-      <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
-        Start with the objective.
+      <Eyebrow className="text-silver">{ENQUIRY.eyebrow}</Eyebrow>
+      <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
+        {ENQUIRY.headline}
       </SplitHeading>
     </Hero>
 
     <Section>
-      <p className="type-body-lg max-w-[58ch] text-ink/74">
-        Stage one is a conversation about what the purchase is actually for — capital growth,
-        rental yield, Golden Visa eligibility, lifestyle use, exit horizon — and what it costs
-        all-in. No project is named until that is clear. The advisor you speak to is salaried, so
-        nothing in this exchange is worth more to them than being right.
-      </p>
+      <p className="type-body-lg max-w-[58ch] text-ink/74">{ENQUIRY.body}</p>
+      <ul className="mt-8 flex flex-col gap-2.5">
+        {ENQUIRY.assurances.map((a) => (
+          <li key={a} className="flex items-start gap-3.5 text-[15.5px] leading-relaxed text-ink/74">
+            <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rotate-45 bg-silver" />
+            {a}
+          </li>
+        ))}
+      </ul>
       <div className="mt-14 grid gap-14 md:grid-cols-12">
         <div className="md:col-span-7">
           <ContactForm fallback={fallback} />
@@ -60,10 +64,7 @@ export default function Contact() {
             <Ledger cells={[{ k: "Office", v: SITE.office }]} />
             <Ledger cells={[{ k: "Hours", v: SITE.hours }]} />
           </div>
-          <p className="type-cap mt-6 max-w-[40ch] text-fog">
-            We will only call you if you ask us to on the form. There is no follow-up campaign and
-            no sales floor to pass you to.
-          </p>
+          <p className="type-cap mt-6 max-w-[40ch] text-fog">{ENQUIRY.footnote}</p>
         </aside>
       </div>
     </Section>

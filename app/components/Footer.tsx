@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { SITE } from "~/lib/site";
+import { SITE_SOURCES } from "~/lib/strategy";
 
 const COLS = [
   {
@@ -57,7 +58,11 @@ export function Footer() {
             </nav>
           ))}
         </div>
-        <div className="mt-11 flex flex-wrap gap-x-6 gap-y-2 border-t border-ivory/16 pt-4 text-[12px] font-semibold tracking-[0.04em] text-silver">
+        {/* the document's own sourcing note, so every figure on the site is covered */}
+        <p className="mt-11 max-w-[92ch] border-t border-ivory/16 pt-4 text-[12px] leading-relaxed text-ivory/50">
+          {SITE_SOURCES}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 border-t border-ivory/16 pt-4 text-[12px] font-semibold tracking-[0.04em] text-silver">
           <span>{SITE.legalName}</span>
           <span>{SITE.rera}</span>
           <span>Dubai, UAE</span>

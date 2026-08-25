@@ -46,34 +46,34 @@ export const JOURNEY: JourneyStep[] = [
     n: "01",
     title: "Identify and shortlist",
     when: "Before anything is signed",
-    copy: "Objective first: capital growth, rental yield, Golden Visa eligibility, a home to use, or an exit at a set horizon. Then the honest budget — headline price plus registration fees, and service charges once you own it. Only then do developer, district and project make sense as questions. Compare delivery record, not brochures.",
+    copy: "Objective first: capital growth, rental yield, Golden Visa eligibility, a home to use, or an exit at a set horizon. Then the honest budget, headline price plus registration fees, and service charges once you own it. Only then do developer, district and project make sense as questions. Compare delivery record, not brochures.",
   },
   {
     n: "02",
     title: "Reservation",
     when: "Day one",
-    copy: "A reservation form or expression of interest, plus a booking deposit — commonly 5–10% of the price, and part of your total down payment rather than an extra. Verify before you pay that the project is registered and that the money is going to the project's escrow account, not to the developer's own account.",
+    copy: "A reservation form or expression of interest, plus a booking deposit, commonly 5–10% of the price, and part of your total down payment rather than an extra. Verify before you pay that the project is registered and that the money is going to the project's escrow account, not to the developer's own account.",
     artefact: "Reservation form · booking deposit 5–10%",
   },
   {
     n: "03",
     title: "The Sales and Purchase Agreement",
     when: "Typically 2–4 weeks later",
-    copy: "The contract that governs everything. Read four things in particular: the payment schedule and whether it is milestone-linked or calendar-linked; the delay and compensation clauses; the cancellation terms; and the resale or assignment restrictions, which decide whether you can exit before completion. This is the moment for independent legal review — before signature, not after.",
+    copy: "The contract that governs everything. Read four things in particular: the payment schedule and whether it is milestone-linked or calendar-linked; the delay and compensation clauses; the cancellation terms; and the resale or assignment restrictions, which decide whether you can exit before completion. This is the moment for independent legal review, before signature, not after.",
     artefact: "SPA",
   },
   {
     n: "04",
     title: "Registration",
     when: "At or shortly after signing",
-    copy: "In Dubai the 4% Dubai Land Department fee is paid at registration, and the developer registers your purchase in the Oqood system — this records your interest in the unit while it is still being built. In Abu Dhabi the transaction is registered with ADREC, which issues an initial registration certificate. Keep the certificate; it is the proof that your interest exists.",
+    copy: "In Dubai the 4% Dubai Land Department fee is paid at registration, and the developer registers your purchase in the Oqood system, this records your interest in the unit while it is still being built. In Abu Dhabi the transaction is registered with ADREC, which issues an initial registration certificate. Keep the certificate; it is the proof that your interest exists.",
     artefact: "Oqood certificate (Dubai) · initial registration certificate (Abu Dhabi)",
   },
   {
     n: "05",
     title: "The construction years",
     when: "Two to four years, usually",
-    copy: "Instalments fall due against the schedule in your SPA. On a milestone-linked plan, money leaves escrow only when certified progress is reached. This is the long, quiet stretch — and the one where an overseas buyer most often has nobody checking progress on their behalf. Delivery slips are normal enough to plan for, so track the project rather than waiting to be told.",
+    copy: "Instalments fall due against the schedule in your SPA. On a milestone-linked plan, money leaves escrow only when certified progress is reached. This is the long, quiet stretch, and the one where an overseas buyer most often has nobody checking progress on their behalf. Delivery slips are normal enough to plan for, so track the project rather than waiting to be told.",
   },
   {
     n: "06",
@@ -86,14 +86,14 @@ export const JOURNEY: JourneyStep[] = [
     n: "07",
     title: "Handover",
     when: "Completion",
-    copy: "Final payment, keys, and the title deed issued in your name. Service charges begin from here, billed annually per square foot and set by the regulator — they are a real running cost and belong in the yield calculation from the start, not as a surprise in year one.",
+    copy: "Final payment, keys, and the title deed issued in your name. Service charges begin from here, billed annually per square foot and set by the regulator, they are a real running cost and belong in the yield calculation from the start, not as a surprise in year one.",
     artefact: "Title deed",
   },
   {
     n: "08",
     title: "And then the part nobody describes",
     when: "The years after",
-    copy: "Furnishing or fit-out if the unit is going to be lived in or let. Finding and placing a tenant, and someone to manage the lease. Arranging or refinancing a mortgage — materially different terms for non-residents. For most overseas owners this is where the investment is actually won or lost, and where the market goes quiet.",
+    copy: "Furnishing or fit-out if the unit is going to be lived in or let. Finding and placing a tenant, and someone to manage the lease. Arranging or refinancing a mortgage, materially different terms for non-residents. For most overseas owners this is where the investment is actually won or lost, and where the market goes quiet.",
   },
   {
     n: "09",
@@ -111,7 +111,7 @@ export const JOURNEY: JourneyStep[] = [
 export const PLAN_BASIS = [
   {
     k: "Construction-linked",
-    copy: "Instalments fall due when certified building milestones are reached — foundation, structure, MEP, finishing. If the build slows, your payments slow with it. This is the structure that keeps your money and the developer's progress tied together.",
+    copy: "Instalments fall due when certified building milestones are reached, foundation, structure, MEP, finishing. If the build slows, your payments slow with it. This is the structure that keeps your money and the developer's progress tied together.",
     verdict: "Preferable, and worth asking for by name.",
   },
   {
@@ -146,12 +146,12 @@ export const PLANS: Plan[] = [
   {
     split: "20 / 60 / 20",
     name: "Booking, build, handover",
-    copy: "20% at booking, 60% through construction stages, 20% on handover — the same idea as 80/20, stated with the deposit broken out.",
+    copy: "20% at booking, 60% through construction stages, 20% on handover, the same idea as 80/20, stated with the deposit broken out.",
   },
   {
     split: "Post-handover",
     name: "Paying after the keys",
-    copy: "Typically 30–50% of the price is deferred past completion, spread over two to five years. It eases cash flow and can let rental income contribute — but it is still debt to the developer, and the terms deserve the same scrutiny as a mortgage.",
+    copy: "Typically 30–50% of the price is deferred past completion, spread over two to five years. It eases cash flow and can let rental income contribute, but it is still debt to the developer, and the terms deserve the same scrutiny as a mortgage.",
   },
   {
     split: "1% monthly",
@@ -195,11 +195,11 @@ export const EMIRATES: EmirateRow[] = [
     note: "The deepest and most heavily documented off-plan market in the country, and the one this site's research covers in most detail.",
     sources: [
       {
-        label: "DLD fees and Oqood — Projectory",
+        label: "DLD fees and Oqood · Projectory",
         href: "https://projectory.ae/insights/understanding-dld-fees-for-off-plan-property-in-dubai/",
       },
       {
-        label: "UAE escrow law — Knightsbridge",
+        label: "UAE escrow law · Knightsbridge",
         href: "https://knightsbridge.ae/how-the-uae-escrow-law-protects-off-plan-property-buyers/",
       },
     ],
@@ -213,10 +213,10 @@ export const EMIRATES: EmirateRow[] = [
       "Off-plan framework under Law No. 3 of 2015, with project-specific ADREC-regulated escrow accounts and milestone-verified releases.",
     registration:
       "Registered with ADREC after the SPA, which issues an initial registration certificate. Confirm the current fee directly with ADREC.",
-    note: "A smaller, more institutionally concentrated market than Dubai, with its own regulator and its own paperwork — not a Dubai process with a different postcode.",
+    note: "A smaller, more institutionally concentrated market than Dubai, with its own regulator and its own paperwork, not a Dubai process with a different postcode.",
     sources: [
       {
-        label: "Buying off-plan in Abu Dhabi — MPI",
+        label: "Buying off-plan in Abu Dhabi · MPI",
         href: "https://www.mpinv.ae/guide/off-plan-property-abu-dhabi",
       },
       {
@@ -231,16 +231,16 @@ export const EMIRATES: EmirateRow[] = [
     foreignOwnership:
       "Generally not freehold for non-GCC nationals. Long leasehold and usufruct rights of up to 100 years are the usual routes, and a brochure saying “freehold” is not the same as what the registry will record.",
     offPlanProtection:
-      "Registration with SRERD is required. Off-plan escrow arrangements are less uniformly documented publicly than in Dubai — ask for the project's escrow details in writing.",
+      "Registration with SRERD is required. Off-plan escrow arrangements are less uniformly documented publicly than in Dubai, ask for the project's escrow details in writing.",
     registration: "Through SRERD. Confirm the registrable right and the fee before committing.",
     note: "The single most important question here is what right you will actually hold, and for how long. Get it confirmed by the registry, not by a sales office.",
     sources: [
       {
-        label: "Foreign ownership in Sharjah — Property Finder",
+        label: "Foreign ownership in Sharjah · Property Finder",
         href: "https://www.propertyfinder.ae/blog/property-ownership-foreigners-sharjah/",
       },
       {
-        label: "100-year usufruct rights — Lexology",
+        label: "100-year usufruct rights · Lexology",
         href: "https://www.lexology.com/library/detail.aspx?g=3e67e86d-e3f1-4518-89df-634214315fa9",
       },
     ],
@@ -249,7 +249,7 @@ export const EMIRATES: EmirateRow[] = [
     emirate: "Ras Al Khaimah",
     regulator: "RAK land department, with RERA-RAK regulating the sector",
     foreignOwnership:
-      "Freehold available to all nationalities in designated investment zones — Al Marjan Island, Al Hamra Village and Mina Al Arab among them.",
+      "Freehold available to all nationalities in designated investment zones, Al Marjan Island, Al Hamra Village and Mina Al Arab among them.",
     offPlanProtection:
       "Developers must satisfy project registration, approvals and escrow requirements before selling off-plan.",
     registration: "Through the RAK land department. Confirm current fees locally.",
@@ -260,7 +260,7 @@ export const EMIRATES: EmirateRow[] = [
         href: "https://wow-rak.com/ras-al-khaimah-real-estate-guide/",
       },
       {
-        label: "RAK laws and secure transactions — TrustIn",
+        label: "RAK laws and secure transactions · TrustIn",
         href: "https://www.trustin.ae/blogs/ras-al-khaimah-real-estate-market-trends-laws-secure-transactions",
       },
     ],
@@ -278,7 +278,7 @@ export const OTHER_EMIRATES =
 export const COSTS = [
   {
     k: "Registration fee",
-    v: "4% of the price in Dubai, paid at registration. Other Emirates differ — confirm with the regulator.",
+    v: "4% of the price in Dubai, paid at registration. Other Emirates differ, confirm with the regulator.",
   },
   {
     k: "Off-plan registration",
@@ -294,7 +294,7 @@ export const COSTS = [
   },
   {
     k: "Broker commission",
-    v: "On off-plan, paid by the developer out of its own project budget — not added to your price.",
+    v: "On off-plan, paid by the developer out of its own project budget, not added to your price.",
   },
   {
     k: "Exit costs",
@@ -317,11 +317,11 @@ export const RISKS = [
   },
   {
     k: "Your exit was decided at signature",
-    copy: "Assignment restrictions written into the SPA — often a minimum percentage paid before resale is permitted — govern whether you can sell before completion at all. Read that clause before you sign, not when you want to leave.",
+    copy: "Assignment restrictions written into the SPA, often a minimum percentage paid before resale is permitted, govern whether you can sell before completion at all. Read that clause before you sign, not when you want to leave.",
   },
   {
     k: "Nobody is obliged to keep you informed",
-    copy: "Once the commission on your purchase is paid, no one in the standard market structure is paid to keep watching your project. Progress is a matter of record and can be tracked — but only if somebody is tracking it.",
+    copy: "Once the commission on your purchase is paid, no one in the standard market structure is paid to keep watching your project. Progress is a matter of record and can be tracked, but only if somebody is tracking it.",
   },
 ];
 
@@ -334,12 +334,12 @@ export const OFFPLAN_FAQS = [
   {
     question: "What does “off-plan” actually mean?",
     answer:
-      "Buying a property before it is finished — sometimes before construction has started. You are not buying a building; you are buying a contractual right to a specific unit, registered with the land department, which becomes a title deed at completion. Off-plan is not a niche in the UAE: it is the majority of the residential market.",
+      "Buying a property before it is finished, sometimes before construction has started. You are not buying a building; you are buying a contractual right to a specific unit, registered with the land department, which becomes a title deed at completion. Off-plan is not a niche in the UAE: it is the majority of the residential market.",
   },
   {
     question: "Is it safe to buy something that does not exist yet?",
     answer:
-      "The regulatory framework is built for it. Your payments go into a project escrow account rather than to the developer directly, and are released against certified construction progress. Projects and developers must be registered before units can be sold. What the framework does not do is watch the build for you, inspect the finished unit, or read the contract on your behalf — those gaps are yours to close, with help.",
+      "The regulatory framework is built for it. Your payments go into a project escrow account rather than to the developer directly, and are released against certified construction progress. Projects and developers must be registered before units can be sold. What the framework does not do is watch the build for you, inspect the finished unit, or read the contract on your behalf, those gaps are yours to close, with help.",
   },
   {
     question: "How much do I need to start?",
@@ -349,12 +349,12 @@ export const OFFPLAN_FAQS = [
   {
     question: "What is the difference between a construction-linked and a time-linked payment plan?",
     answer:
-      "A construction-linked plan releases your instalments when certified building milestones are reached, so payment and progress stay tied together. A time-linked plan falls due on fixed calendar dates regardless of what has been built — which can leave you substantially paid up on a project that has barely moved. Ask which one you are signing, in writing.",
+      "A construction-linked plan releases your instalments when certified building milestones are reached, so payment and progress stay tied together. A time-linked plan falls due on fixed calendar dates regardless of what has been built, which can leave you substantially paid up on a project that has barely moved. Ask which one you are signing, in writing.",
   },
   {
     question: "What is a post-handover payment plan, and is it a good idea?",
     answer:
-      "It defers part of the price — commonly 30–50% — past completion, over roughly two to five years, so rental income can contribute to the instalments. It genuinely helps cash flow. It is also, in substance, finance provided by the developer, so compare the total cost and the terms against a mortgage rather than treating it as free.",
+      "It defers part of the price, commonly 30–50%, past completion, over roughly two to five years, so rental income can contribute to the instalments. It genuinely helps cash flow. It is also, in substance, finance provided by the developer, so compare the total cost and the terms against a mortgage rather than treating it as free.",
   },
   {
     question: "Can I buy off-plan if I do not live in the UAE?",
@@ -374,7 +374,7 @@ export const OFFPLAN_FAQS = [
   {
     question: "Can I sell before the building is finished?",
     answer:
-      "Often, but not automatically. It is called an assignment, and it usually requires developer approval — frequently conditional on a minimum percentage of the price having been paid — plus a Form F memorandum of understanding, a developer no-objection certificate that expires after 30 days, and an Oqood transfer at a trustee office. The restrictions in your SPA decide what is possible.",
+      "Often, but not automatically. It is called an assignment, and it usually requires developer approval, frequently conditional on a minimum percentage of the price having been paid, plus a Form F memorandum of understanding, a developer no-objection certificate that expires after 30 days, and an Oqood transfer at a trustee office. The restrictions in your SPA decide what is possible.",
   },
   {
     question: "Do I pay the broker?",
@@ -384,47 +384,47 @@ export const OFFPLAN_FAQS = [
   {
     question: "Does buying property get me residency?",
     answer:
-      "Property investment at and above AED 2 million is one of the routes to long-term Golden Visa eligibility. Treat it as a consequence of a sound purchase rather than a reason to make an unsound one, and get the current criteria confirmed — visa rules change more often than property law.",
+      "Property investment at and above AED 2 million is one of the routes to long-term Golden Visa eligibility. Treat it as a consequence of a sound purchase rather than a reason to make an unsound one, and get the current criteria confirmed, visa rules change more often than property law.",
   },
   {
     question: "What should I ask a developer that I probably would not think to ask?",
     answer:
-      "Four things. Show me the escrow account registration for this project. What is your delivery record on the last three completions — actual handover dates against the dates advertised? Is this plan milestone-linked or calendar-linked? And what does the SPA permit if I want to assign before completion?",
+      "Four things. Show me the escrow account registration for this project. What is your delivery record on the last three completions, actual handover dates against the dates advertised? Is this plan milestone-linked or calendar-linked? And what does the SPA permit if I want to assign before completion?",
   },
 ];
 
 /** Everything cited on the page, gathered for the closing note. */
 export const OFFPLAN_SOURCES: Source[] = [
   {
-    label: "Dubai off-plan process and DLD fees — Projectory",
+    label: "Dubai off-plan process and DLD fees · Projectory",
     href: "https://projectory.ae/insights/understanding-dld-fees-for-off-plan-property-in-dubai/",
   },
   {
-    label: "Oqood registration — EGSH",
+    label: "Oqood registration · EGSH",
     href: "https://egsh.ae/insights/off-plan-property-purchase-in-dubai",
   },
   {
-    label: "How UAE escrow law protects off-plan buyers — Knightsbridge",
+    label: "How UAE escrow law protects off-plan buyers · Knightsbridge",
     href: "https://knightsbridge.ae/how-the-uae-escrow-law-protects-off-plan-property-buyers/",
   },
   {
-    label: "Off-plan payment plans explained — Dealr",
+    label: "Off-plan payment plans explained · Dealr",
     href: "https://dealr.ae/guides/how-off-plan-payment-plans-work-dubai",
   },
   {
-    label: "Handover delays and developer track records — Real Estate Club Dubai",
+    label: "Handover delays and developer track records · Real Estate Club Dubai",
     href: "https://realestateclubdubai.com/blog/buying-guide/off-plan-handover-delays-in-dubai-developer-track-records-what-buyers-can-do",
   },
   {
-    label: "Off-plan resale, NOC and Oqood transfer — Place Overseas",
+    label: "Off-plan resale, NOC and Oqood transfer · Place Overseas",
     href: "https://placeoverseas.com/blog/dubai-off-plan-resale-oqood-transfer-and-noc-guide",
   },
   {
-    label: "Non-resident mortgages in Dubai — Kotook",
+    label: "Non-resident mortgages in Dubai · Kotook",
     href: "https://kotook.ae/blog/dubai-mortgage-for-non-residents",
   },
   {
-    label: "Who pays real estate commission in Dubai — Bayut",
+    label: "Who pays real estate commission in Dubai · Bayut",
     href: "https://www.bayut.com/agentportal/demystifying-real-estate-commissions-in-dubai-who-pays-and-how-much/",
   },
 ];

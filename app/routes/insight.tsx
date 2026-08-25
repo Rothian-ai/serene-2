@@ -78,7 +78,7 @@ export default function Insight({ params }: Route.ComponentProps) {
       <ConversationBand
         eyebrow="Next"
         title="Put the analysis to work on your own purchase."
-        copy="An article can only describe the general case. What it means for your objective, your budget and your timeline is a conversation — and the first one costs nothing."
+        copy="An article can only describe the general case. What it means for your objective, your budget and your timeline is a conversation, and the first one costs nothing."
         secondary="More from the journal"
         secondaryTo="/insights"
         image="/images/ins-escrow.jpg"

@@ -191,7 +191,7 @@ export default function Dashboard() {
                     {noDatabase ? (
                       <span className="mx-auto block max-w-[60ch] text-left">
                         <strong className="text-ink">No submissions database is configured.</strong>{" "}
-                        The contact form still works — enquiries are emailed to{" "}
+                        The contact form still works. Enquiries are emailed to{" "}
                         <code>MAIL_TO</code> over SMTP. To store them here as well, set{" "}
                         <code>DATABASE_URL</code> and <code>DIRECT_URL</code>, then run{" "}
                         <code>npx prisma db push</code>.
@@ -212,9 +212,9 @@ export default function Dashboard() {
                   <td className="py-3 pr-4 whitespace-nowrap">
                     <a href={`mailto:${s.email}`} className="text-brass hover:underline">{s.email}</a>
                   </td>
-                  <td className="py-3 pr-4 whitespace-nowrap text-fog">{s.phone ?? "—"}</td>
-                  <td className="max-w-[320px] py-3 pr-4 text-ink/75">{s.message ?? "—"}</td>
-                  <td className="py-3 pr-4 whitespace-nowrap text-fog">{s.context ?? s.source ?? "—"}</td>
+                  <td className="py-3 pr-4 whitespace-nowrap text-fog">{s.phone ?? "·"}</td>
+                  <td className="max-w-[320px] py-3 pr-4 text-ink/75">{s.message ?? "·"}</td>
+                  <td className="py-3 pr-4 whitespace-nowrap text-fog">{s.context ?? s.source ?? "·"}</td>
                   <td className="py-3 pr-4">
                     <Form method="post" onChange={(e) => submit(e.currentTarget)}>
                       <input type="hidden" name="intent" value="status" />

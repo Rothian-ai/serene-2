@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Link } from "react-router";
-import { CTA, Plate } from "~/components/primitives";
+import { CTA, Eyebrow, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
 
@@ -21,8 +21,9 @@ import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
  */
 
 const COPY = {
-  title: "The off-plan advisor that is paid to be right, not to close.",
-  sub: "Serene Bay advises buyers on off-plan property in Dubai and Abu Dhabi. Our advisors are salaried, so the shortlist is chosen on your objective, never on which developer pays us most.",
+  eyebrow: "The Serene difference",
+  title: "Advice you can trace back to your interest.",
+  sub: "Our advisors are salaried. They earn nothing extra for choosing one developer, one project or one unit over another. What they are paid to do is be right for you, before the reservation, and for the years after it.",
 } as const;
 
 /** The ground: the Downtown dusk plate, with its modern-format ladder. */
@@ -41,7 +42,7 @@ function Actions() {
   return (
     <>
       <CTA to="/contact" kind="platinum">
-        Request a conversation
+        Ask us anything
       </CTA>
       <CTA to="/lifecycle" kind="line">
         See the nine stages
@@ -152,7 +153,8 @@ export function HomeHero() {
       <div className="container-site relative z-[1] text-center">
         {/* mark alone (sanctioned lockup 2) — the wordmark would double the headline */}
         <SereneMark ref={markRef} title="Serene" className="mx-auto h-20 w-auto md:h-28" />
-        <h1 ref={headlineRef} className="type-display mx-auto mt-8 max-w-[24ch]">
+        <Eyebrow className="mt-8 justify-center text-silver">{COPY.eyebrow}</Eyebrow>
+        <h1 ref={headlineRef} className="type-display mx-auto mt-4 max-w-[22ch]">
           {COPY.title}
         </h1>
         <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">

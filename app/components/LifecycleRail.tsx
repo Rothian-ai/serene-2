@@ -1,6 +1,6 @@
 import { Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
-import { STAGES } from "~/lib/strategy";
+import { CHAIN_INTRO, STAGES } from "~/lib/strategy";
 
 /**
  * The nine-stage buyer lifecycle (strategy §4), in the house's data grammar:
@@ -19,17 +19,13 @@ export function LifecycleRail() {
     <Section>
       <div className="grid gap-8 md:grid-cols-12 md:gap-7">
         <Reveal className="md:col-span-5" exit>
-          <Eyebrow className="text-fog">The Lifecycle</Eyebrow>
-          <SplitHeading as="h2" className="type-display mt-5 max-w-[14ch]">
-            Nine stages. One relationship.
+          <Eyebrow className="text-fog">{CHAIN_INTRO.eyebrow}</Eyebrow>
+          <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
+            {CHAIN_INTRO.headline}
           </SplitHeading>
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
-          <p className="type-body-lg text-ink/74">
-            A commission-only agent is paid once, at reservation, and has every financial reason to
-            move to the next lead. Six of these nine stages happen after that point. They are the
-            reason Serene Bay exists.
-          </p>
+          <p className="type-body-lg text-ink/74">{CHAIN_INTRO.body}</p>
           <div className="mt-7">
             <QuietLink to="/lifecycle">The lifecycle in full</QuietLink>
           </div>
@@ -43,7 +39,7 @@ export function LifecycleRail() {
               <span className="type-data text-fog">{s.n}</span>
               <h3 className="type-title">{s.title}</h3>
             </div>
-            <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{s.short}</p>
+            <p className="type-cap mt-3 text-brass">{s.label}</p>
             {s.n === HANDOFF_AFTER && (
               <p className="type-cap mt-4 flex items-center gap-2 text-brass">
                 <span aria-hidden className="h-px w-6 bg-brass" />
@@ -75,20 +71,26 @@ export function LifecycleSpine() {
                 {s.n}
               </div>
               <h2 className="type-title mt-3 max-w-[20ch]">{s.title}</h2>
-              <p className="type-cap mt-2 text-brass">{s.short}</p>
+              <p className="type-cap mt-2 text-brass">{s.label}</p>
             </div>
             <div className="md:col-span-7 md:col-start-6">
               <p className="type-body-lg text-ink/76">{s.copy}</p>
-              {s.specialists && (
-                <p className="type-cap mt-5 flex flex-wrap items-center gap-2 text-fog">
-                  <span
-                    aria-hidden
-                    className="seal-platinum h-6 w-6 shrink-0 text-[11px] font-semibold leading-none"
-                  >
-                    ✓
-                  </span>
-                  Introduced, never required: {s.specialists}
-                </p>
+              <p className="mt-5 max-w-[58ch] border-l border-ink/20 pl-5 text-[14.5px] leading-relaxed text-ink/58">
+                <span className="type-eyebrow mr-2 text-fog">What the market does instead</span>
+                {s.contrast}
+              </p>
+              {s.partners.length > 0 && (
+                <div className="mt-5">
+                  <p className="type-eyebrow text-fog">Specialists introduced</p>
+                  <ul className="mt-2 flex flex-col gap-1.5">
+                    {s.partners.map((p) => (
+                      <li key={p} className="type-cap flex items-start gap-2.5 text-ink/68">
+                        <span aria-hidden className="mt-1.5 h-1 w-1 shrink-0 rotate-45 bg-silver" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
           </div>

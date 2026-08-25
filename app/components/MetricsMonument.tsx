@@ -1,7 +1,6 @@
-import { Counter } from "~/components/Counter";
 import { SplitHeading } from "~/components/SplitHeading";
 import { Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
-import { MARKET_FACTS } from "~/lib/strategy";
+import { MARKET_CASE, MARKET_FACTS, MARKET_SOURCES } from "~/lib/strategy";
 import { SITE } from "~/lib/site";
 
 /**
@@ -19,17 +18,13 @@ export function MetricsMonument() {
       {/* header — title left, the reason for the figures right */}
       <div className="grid gap-8 md:grid-cols-12 md:gap-7">
         <Reveal className="md:col-span-5">
-          <Eyebrow className="text-fog">On the Record</Eyebrow>
-          <SplitHeading as="h2" className="type-headline mt-5 max-w-[15ch]">
-            The market that made this necessary.
+          <Eyebrow className="text-fog">The market we are answering</Eyebrow>
+          <SplitHeading as="h2" className="type-headline mt-5 max-w-[18ch]">
+            {MARKET_CASE.headline}
           </SplitHeading>
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-5 md:col-start-8 md:pt-2">
-          <p className="type-body-lg max-w-[46ch] text-ink/72">
-            We are a new house, so we publish no figures about ourselves. These are the market's
-            own, with the source named. Read them and the reason for a salaried advisory becomes
-            arithmetic rather than argument.
-          </p>
+          <p className="type-body-lg max-w-[46ch] text-ink/72">{MARKET_CASE.pull}</p>
           <p className="type-cap mt-5 flex items-center gap-2.5 text-fog">
             <span
               aria-hidden
@@ -46,17 +41,13 @@ export function MetricsMonument() {
       <RevealGroup className="mt-12 grid grid-cols-2 gap-x-7 gap-y-12 md:mt-16 md:grid-cols-4">
         {MARKET_FACTS.map((m) => (
           <RevealItem key={m.label} className="flex flex-col border-t border-ink/14 pt-6">
+            {/* several of these are ranges, so they are set, not counted to */}
             <div
               className={`font-extralight leading-none tracking-[-0.02em] tabular-nums text-[clamp(2.1rem,3.4vw,3.4rem)] ${
                 m.accent ? "text-brass" : "text-ink"
               }`}
             >
-              <Counter
-                to={m.to}
-                prefix={m.prefix}
-                suffix={m.suffix}
-                decimals={Number.isInteger(m.to) ? 0 : 1}
-              />
+              {m.display}
             </div>
             <p className="type-cap mt-4 text-ink/70">{m.label}</p>
             <a
@@ -71,8 +62,11 @@ export function MetricsMonument() {
         ))}
       </RevealGroup>
 
-      <Reveal className="mt-10">
-        <QuietLink to="/difference">Why the model follows from this</QuietLink>
+      <Reveal className="mt-9">
+        <p className="type-cap max-w-[86ch] text-fog">{MARKET_SOURCES}</p>
+        <div className="mt-7">
+          <QuietLink to="/difference">Why the model follows from this</QuietLink>
+        </div>
       </Reveal>
     </Section>
   );

@@ -15,7 +15,7 @@ The site presents off-plan developments, developer profiles, and market analysis
 
 ## Independent specialists
 
-Where we introduce you to an independent specialist — a surveyor, mortgage advisor, interior designer, letting agent or UAE-qualified legal counsel — that firm is engaged by you, on its own terms. The introduction is optional, we are paid nothing for making it, and Serene Bay's terms end at that threshold.
+Where we introduce you to an independent specialist, a surveyor, mortgage advisor, interior designer, letting agent or UAE-qualified legal counsel, that firm is engaged by you, on its own terms. The introduction is optional, we are paid nothing for making it, and Serene Bay's terms end at that threshold.
 
 ## Accuracy
 

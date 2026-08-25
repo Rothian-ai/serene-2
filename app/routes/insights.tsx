@@ -10,7 +10,7 @@ export function meta() {
   return buildMeta({
     title: "Insights",
     description:
-      "Market analysis, buyer guides and developer spotlights for UAE off-plan property — including what happens after handover. Written to inform, not to sell.",
+      "Market analysis, buyer guides and developer spotlights for UAE off-plan property, including what happens after handover. Written to inform, not to sell.",
     path: "/insights",
   });
 }

@@ -12,8 +12,9 @@ export const SITE = {
   legalName: "Serene Bay Real Estate LLC",
   tagline: "Serenity, elevated.",
   descriptor: "Off-Plan Buyer Advisory",
-  /** The strategic positioning line — §3 of the value-chain strategy, in one breath. */
-  positioning: "Salaried advisors. Cross-developer counsel. The whole ownership lifecycle.",
+  /** The house line, as the copy of record states it. */
+  positioning:
+    "Off-plan advisory across Dubai and Abu Dhabi. Salaried advisors, cross-developer comparison, and a relationship that outlasts the handover.",
   /** PLACEHOLDER — replace with the client's real domain before launch. */
   url: "https://serene.com",
   /** PLACEHOLDER — replace with the client's real RERA licence number before launch. */

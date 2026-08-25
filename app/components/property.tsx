@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Ledger, Plate } from "~/components/primitives";
 import type { ProjectCard } from "~/lib/amelia.server";
-import { EMPTY, bedrooms, humanise, permitLabel, priceRange } from "~/lib/amelia";
+import { bedrooms, humanise, permitLabel, priceRange } from "~/lib/amelia";
 
 /**
  * Listing card — the journal card's grammar applied to inventory: image, a

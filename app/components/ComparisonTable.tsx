@@ -1,5 +1,5 @@
 import { Reveal } from "~/components/primitives";
-import { COMPARISON } from "~/lib/strategy";
+import { COMPARISON, COMPARISON_INTRO } from "~/lib/strategy";
 
 /**
  * Strategy §5 — Serene Bay against the two alternatives a buyer actually
@@ -103,6 +103,8 @@ export function ComparisonTable() {
         ))}
         <div className="hairline-t" />
       </div>
+
+      <p className="type-cap mt-8 max-w-[92ch] text-fog">{COMPARISON_INTRO.sources}</p>
     </>
   );
 }

@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { CTA, Eyebrow, Plate, Reveal } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
+import { ENQUIRY } from "~/lib/strategy";
 
 /**
  * The closing band on every inner page, and the site's single conversion
@@ -77,9 +78,7 @@ export function ConversationBand({
                 </CTA>
               )}
             </div>
-            <p className="type-cap mt-5 text-ivory/55">
-              We reply in writing. A call happens only if you ask for one.
-            </p>
+            <p className="type-cap mt-5 text-ivory/55">{ENQUIRY.footnote}</p>
           </Reveal>
         </div>
       </div>

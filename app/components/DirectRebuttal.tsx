@@ -16,7 +16,7 @@ export function DirectRebuttal({ cta = true }: { cta?: boolean }) {
       <Section>
         <div className="grid gap-9 md:grid-cols-12 md:gap-7">
           <Reveal className="md:col-span-5" exit>
-            <Eyebrow className="text-silver">The Objection</Eyebrow>
+            <Eyebrow className="text-silver">{DIRECT_REBUTTAL.eyebrow}</Eyebrow>
             <p className="type-title mt-5 max-w-[18ch] font-light text-ivory/70">
               “{DIRECT_REBUTTAL.question}”
             </p>

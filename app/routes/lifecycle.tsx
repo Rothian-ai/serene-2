@@ -4,15 +4,13 @@ import {
   Plate,
   QuietLink,
   Reveal,
-  RevealGroup,
-  RevealItem,
   Section,
 } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { StickyStages } from "~/components/StickyStages";
 import { ConversationBand } from "~/components/ConversationBand";
-import { STAGES } from "~/lib/strategy";
+import { CHAIN_INTRO, STAGES } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -21,7 +19,7 @@ export function meta() {
   return buildMeta({
     title: "Lifecycle",
     description:
-      "The nine stages Serene Bay works through with an off-plan buyer: discovery, due diligence, SPA support, construction monitoring, independent snagging, fit-out, letting, mortgage and refinance, and eventual resale.",
+      "Nine stages. The last one is years after the signature. A commission-only agent is paid at stage three and gone by stage four; six of these nine happen after that point.",
     path: "/lifecycle",
   });
 }
@@ -29,32 +27,16 @@ export function meta() {
 /** Where the market stops and where Serene Bay carries on (strategy §4). */
 const AFTER_RESERVATION = STAGES.length - 3;
 
-/** The two structural principles woven through every stage (strategy §4, close). */
-const PRINCIPLES = [
-  {
-    k: "Introduced, never required",
-    copy: "Every specialist — surveyor, mortgage advisor, interior designer, letting agent — is presented as an independent option you are free to use or ignore. Not a mandatory referral, and never a commissioned one, so the no-kickback rule holds at every handoff rather than only at the point of sale.",
-  },
-  {
-    k: "The next stage comes to you",
-    copy: "Every introduction is logged against your record, so the next relevant stage is raised with you rather than left to your memory — a snagging inspection as handover approaches, a refinance conversation as a fixed term ends.",
-  },
-];
-
 export default function Lifecycle() {
   return (
     <>
       {/* ① Hero — the whole proposition in one line */}
       <Hero plate="dusk" image="/images/about-decide.jpg" height="min-h-[64svh]">
         <Eyebrow className="text-silver">The Lifecycle</Eyebrow>
-        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
-          Handover is the midpoint, not the end.
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
+          {CHAIN_INTRO.headline}
         </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">
-          Nine stages, from the first conversation about what the purchase is for to the day you
-          eventually sell. Six of them happen after the point a commission-only agent has been paid
-          and moved on.
-        </p>
+        <p className="type-body-lg mt-6 max-w-[56ch] text-ivory/72">{CHAIN_INTRO.body}</p>
       </Hero>
 
       {/* ② The shape of it — where the market stops */}
@@ -71,7 +53,7 @@ export default function Lifecycle() {
               Most of our buyers are managing a six- or seven-figure asset from thousands of
               kilometres away, in a legal and construction environment they do not live inside and
               cannot easily inspect. The purchase is the short, well-served part. Everything after
-              it — a build that slips, a unit that needs inspecting, a tenant, a mortgage, an exit —
+              it, a build that slips, a unit that needs inspecting, a tenant, a mortgage, an exit,
               is where the current market simply stops answering.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
@@ -121,17 +103,12 @@ export default function Lifecycle() {
       <div className="bg-frost">
         <Section>
           <Reveal exit>
-            <Eyebrow className="text-fog">Two Rules Throughout</Eyebrow>
+            <Eyebrow className="text-fog">Every introduction</Eyebrow>
+            <p className="type-title mt-5 max-w-[34ch] font-light text-ink/80">
+              {CHAIN_INTRO.note}
+            </p>
           </Reveal>
-          <RevealGroup className="mt-9 grid gap-9 md:grid-cols-2 md:gap-7">
-            {PRINCIPLES.map((p) => (
-              <RevealItem key={p.k} className="border-t border-ink/16 pt-5">
-                <h3 className="type-title">{p.k}</h3>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/70">{p.copy}</p>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-          <Reveal className="mt-10">
+          <Reveal className="mt-9">
             <QuietLink to="/difference">Why we are able to work this way</QuietLink>
           </Reveal>
         </Section>
@@ -147,13 +124,12 @@ export default function Lifecycle() {
             Start at stage one.
           </SplitHeading>
           <Reveal delay={0.15}>
-            <p className="type-body-lg mx-auto mt-7 max-w-[50ch] text-ivory/70">
-              Before any project is named: what the purchase is for, what it can actually cost
-              all-in, and what timeline you can live with. That conversation is the whole first
-              stage, and it costs nothing.
+            <p className="type-body-lg mx-auto mt-7 max-w-[52ch] text-ivory/70">
+              Before any project is named we establish your actual objective, your true all-in
+              budget, and your tolerance for developer tier and delivery risk.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to="/contact" kind="platinum">Speak with an advisor</CTA>
+              <CTA to="/contact" kind="platinum">Ask us anything</CTA>
               <CTA to="/faqs" kind="line">Read the questions first</CTA>
             </div>
           </Reveal>

@@ -38,8 +38,8 @@ export default function Careers() {
         </p>
         <p className="mt-5 max-w-[56ch] text-[15.5px] leading-relaxed text-ink/65">
           That is a deliberate departure from the market-standard 40–70% commission split, and it
-          attracts a specific kind of person. If you would rather be right than loud — in advisory,
-          in research, in engineering — we would like to hear from you.
+          attracts a specific kind of person. If you would rather be right than loud, in advisory,
+          in research or in engineering, we would like to hear from you.
         </p>
       </Section>
 

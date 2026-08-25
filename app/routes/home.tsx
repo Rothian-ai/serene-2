@@ -10,7 +10,14 @@ import { MarqueeStrip } from "~/components/MarqueeStrip";
 import { ImageMosaic } from "~/components/ImageMosaic";
 import type { MosaicFrame } from "~/components/ImageMosaic";
 import { insights } from "~/lib/content";
-import { BUYER_ORIGINS, COMMITMENTS, PROBLEMS } from "~/lib/strategy";
+import {
+  BUYER_ORIGINS,
+  COMMITMENTS,
+  COMMITMENTS_INTRO,
+  OVERSEAS_INTRO,
+  PROBLEMS,
+  PROBLEMS_INTRO,
+} from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -18,7 +25,7 @@ export const handle = { headerTone: "dark" as const };
 export function meta() {
   return buildMeta({
     description:
-      "Serene Bay is an off-plan buyer advisory in Dubai and Abu Dhabi with salaried, non-commissioned advisors. Cross-developer counsel, independent snagging, and support through construction, letting, mortgage and resale.",
+      "Our advisors are salaried. They earn nothing extra for choosing one developer, one project or one unit over another. Off-plan advisory across Dubai and Abu Dhabi, with a relationship that outlasts the handover.",
     path: "/",
   });
 }
@@ -75,31 +82,27 @@ export default function Home() {
       {/* ② The four claims, drifting past — the shortest statement of the model */}
       <MarqueeStrip />
 
-      {/* ③ The problem — why this market needed a different kind of house */}
+      {/* ③ Four commitments — the structural facts, not promises */}
       <div className="bg-frost">
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
             <Reveal className="md:col-span-5" exit>
-              <Eyebrow className="text-fog">The Problem</Eyebrow>
-              <SplitHeading as="h2" className="type-display mt-5 max-w-[15ch]">
-                Nothing in this market is paid to advise you.
+              <Eyebrow className="text-fog">{COMMITMENTS_INTRO.eyebrow}</Eyebrow>
+              <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
+                {COMMITMENTS_INTRO.headline}
               </SplitHeading>
             </Reveal>
             <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
-              <p className="type-body-lg text-ink/74">
-                Off-plan is not a corner of the Dubai market — it is the market. And almost every
-                person selling it earns nothing until you sign. That single fact shapes the advice
-                you get, what you are shown, and how quickly you are asked to decide.
-              </p>
+              <p className="type-body-lg text-ink/74">{COMMITMENTS_INTRO.body}</p>
             </Reveal>
           </div>
 
           <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
-            {PROBLEMS.map((p) => (
-              <RevealItem key={p.k} className="border-t border-ink/16 pt-5">
-                <span className="type-data text-fog">{p.k}</span>
-                <h3 className="type-title mt-2">{p.title}</h3>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{p.copy}</p>
+            {COMMITMENTS.map((c) => (
+              <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
+                <span className="type-data text-fog">{c.k}</span>
+                <h3 className="type-title mt-2">{c.claim}</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{c.copy}</p>
               </RevealItem>
             ))}
           </RevealGroup>
@@ -111,18 +114,13 @@ export default function Home() {
         <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-6">
             <Reveal exit>
-              <Eyebrow className="text-fog">Who This Is For</Eyebrow>
+              <Eyebrow className="text-fog">{OVERSEAS_INTRO.eyebrow}</Eyebrow>
             </Reveal>
             <SplitHeading as="h2" className="type-headline mt-6 max-w-[19ch]">
-              A large asset, four thousand kilometres away.
+              {OVERSEAS_INTRO.headline}
             </SplitHeading>
             <Reveal delay={0.1}>
-              <p className="type-body-lg mt-7 max-w-[52ch] text-ink/78">
-                Non-resident, investment-driven purchasing accounts for the majority of Dubai
-                transactions, and foreign investors hold over 40% of residential ownership. Almost
-                every one of those buyers is managing a six- or seven-figure asset inside a legal
-                and construction environment they do not live in and cannot easily inspect.
-              </p>
+              <p className="type-body-lg mt-7 max-w-[52ch] text-ink/78">{OVERSEAS_INTRO.body}</p>
               <div className="mt-8 flex flex-wrap gap-x-9 gap-y-5">
                 {BUYER_ORIGINS.map((o) => (
                   <div key={o.country}>
@@ -133,8 +131,8 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <p className="type-cap mt-5 max-w-[46ch] text-fog">
-                Share of foreign buyers by nationality.{" "}
+              <p className="type-cap mt-5 max-w-[52ch] text-fog">
+                {OVERSEAS_INTRO.originsNote}{" "}
                 <a
                   href="https://veersant.com/blog/dubai-property-buyers-by-nationality-2025/"
                   target="_blank"
@@ -169,24 +167,23 @@ export default function Home() {
         <ImageMosaic frames={MOSAIC} />
       </Section>
 
-      {/* ⑥ The difference — the four structural commitments, then the plate */}
+      {/* ⑥ Four things nobody is doing for you, each answered by a stage */}
       <div className="bg-frost">
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
             <Reveal className="md:col-span-5" exit>
-              <Eyebrow className="text-fog">The Difference</Eyebrow>
-              <SplitHeading as="h2" className="type-display mt-5 max-w-[13ch]">
-                Built so the conflict cannot arise.
+              <Eyebrow className="text-fog">{PROBLEMS_INTRO.eyebrow}</Eyebrow>
+              <SplitHeading as="h2" className="type-display mt-5 max-w-[17ch]">
+                {PROBLEMS_INTRO.headline}
               </SplitHeading>
             </Reveal>
             <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
               <p className="type-body-lg text-ink/74">
-                Serene Bay is not a faster or cheaper version of the broker model. It is a
-                different business, built on four commitments the rest of the market is not
-                structurally able to make.
+                Each of the four below is answered by a named stage of the value chain, not by a
+                promise about how hard we try.
               </p>
               <div className="mt-7">
-                <QuietLink to="/difference">The difference in full</QuietLink>
+                <QuietLink to="/lifecycle">See the nine stages</QuietLink>
               </div>
             </Reveal>
           </div>
@@ -202,13 +199,16 @@ export default function Home() {
             />
           </Reveal>
 
-          {/* the four commitments — hairline-ruled, the claim set as the figure */}
+          {/* the four gaps, each with the stage of the chain that answers it */}
           <RevealGroup className="mt-10 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
-            {COMMITMENTS.map((c) => (
-              <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
-                <span className="type-data text-fog">{c.k}</span>
-                <h3 className="type-title mt-2">{c.claim}</h3>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{c.copy}</p>
+            {PROBLEMS.map((p) => (
+              <RevealItem key={p.k} className="border-t border-ink/16 pt-5">
+                <div className="font-extralight leading-none tabular-nums text-[clamp(1.5rem,2.2vw,2rem)] text-ink">
+                  {p.stat}
+                </div>
+                <h3 className="type-title mt-3">{p.title}</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{p.copy}</p>
+                <p className="type-cap mt-4 text-brass">{p.link}</p>
               </RevealItem>
             ))}
           </RevealGroup>
@@ -254,16 +254,16 @@ export default function Home() {
             <Eyebrow className="justify-center text-silver">Begin</Eyebrow>
           </Reveal>
           <SplitHeading as="h2" className="type-display mt-6" mode="chars">
-            Start with the objective, not a listing.
+            We will not call you unless you ask us to.
           </SplitHeading>
           <Reveal delay={0.15}>
             <p className="type-body-lg mx-auto mt-7 max-w-[52ch] text-ivory/70">
-              Tell an advisor what the purchase is for and we work back from there. No queue, no
-              call-back you didn't ask for, no sales floor — because there isn't one.
+              Tell us what you are trying to achieve. An advisor replies in your preferred
+              channel, in your hours, with no obligation and no follow-up sequence.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to="/contact" kind="platinum">Speak with an advisor</CTA>
-              <CTA to="/lifecycle" kind="line">See what we do after handover</CTA>
+              <CTA to="/contact" kind="platinum">Request a conversation</CTA>
+              <CTA to="/lifecycle" kind="line">See the nine stages</CTA>
             </div>
           </Reveal>
         </Section>

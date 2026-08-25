@@ -15,7 +15,7 @@ Serene Bay Real Estate LLC ("Serene Bay", "we") is a licensed real estate adviso
 
 **What analytics collects.** With your consent, and only with it, Google Analytics 4 records anonymised usage data (pages read, approximate region, device class). IP addresses are anonymised. If you decline the cookie notice, no analytics loads at all.
 
-**Third-party platforms.** Where we introduce you to an independent specialist — a surveyor, mortgage advisor, letting agent or legal counsel — anything you share with them is governed by their own privacy terms, not ours. We pass on only what you ask us to pass on.
+**Third-party platforms.** Where we introduce you to an independent specialist, a surveyor, mortgage advisor, letting agent or legal counsel, anything you share with them is governed by their own privacy terms, not ours. We pass on only what you ask us to pass on.
 
 ## Why we process it
 

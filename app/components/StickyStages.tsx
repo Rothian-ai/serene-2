@@ -154,18 +154,25 @@ export function StickyStages() {
                   <span className="type-data text-fog">{s.n}</span>
                   <h2 className="type-title">{s.title}</h2>
                 </div>
-                <p className="type-cap mt-2 text-brass">{s.short}</p>
+                <p className="type-cap mt-2 text-brass">{s.label}</p>
                 <p className="type-body-lg mt-5 max-w-[52ch] text-ink/76">{s.copy}</p>
-                {s.specialists && (
-                  <p className="type-cap mt-5 flex flex-wrap items-center gap-2 text-fog">
-                    <span
-                      aria-hidden
-                      className="seal-platinum h-6 w-6 shrink-0 text-[11px] font-semibold leading-none"
-                    >
-                      ✓
-                    </span>
-                    Introduced, never required: {s.specialists}
-                  </p>
+                {/* what the market does instead — the contrast is the argument */}
+                <p className="mt-5 max-w-[52ch] border-l border-ink/20 pl-5 text-[14.5px] leading-relaxed text-ink/58">
+                  <span className="type-eyebrow mr-2 text-fog">What the market does instead</span>
+                  {s.contrast}
+                </p>
+                {s.partners.length > 0 && (
+                  <div className="mt-5">
+                    <p className="type-eyebrow text-fog">Specialists introduced</p>
+                    <ul className="mt-2 flex flex-col gap-1.5">
+                      {s.partners.map((p) => (
+                        <li key={p} className="flex items-start gap-2.5 type-cap text-ink/68">
+                          <span aria-hidden className="mt-1.5 h-1 w-1 shrink-0 rotate-45 bg-silver" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {s.n === HANDOFF_AFTER && (
                   <div className="mt-9 flex items-center gap-4 border-t border-brass/40 pt-5">

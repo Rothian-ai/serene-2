@@ -13,7 +13,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { Accordion } from "~/components/Accordion";
 import { ConversationBand } from "~/components/ConversationBand";
-import { ValueProposition } from "~/components/ValueProposition";
+import { TwoRoutes } from "~/components/TwoRoutes";
 import { ImageMosaic } from "~/components/ImageMosaic";
 import type { MosaicFrame } from "~/components/ImageMosaic";
 import {
@@ -28,6 +28,7 @@ import {
   PLAN_CHECKS,
   RISKS,
 } from "~/lib/offplan";
+import { CALCULATOR, DIRECT_REBUTTAL } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -114,7 +115,7 @@ export default function OffPlan() {
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
             <p className="type-body-lg text-ink/80">
-              Off-plan means buying before completion — often before construction has begun. What
+              Off-plan means buying before completion, often before construction has begun. What
               changes hands at the start is not a property but a contractual right to a specific
               unit, registered with the Emirate's land department, which converts to a title deed
               when the building is finished.
@@ -123,8 +124,8 @@ export default function OffPlan() {
               That is the trade. You get entry pricing, a staged payment schedule instead of a lump
               sum, and choice of unit while the building is still on paper. In return you carry
               delivery risk, and a gap of two to four years in which the thing you own cannot be
-              inspected, let or lived in. The framework around it — escrow accounts, project
-              registration, milestone-linked releases — exists to make that trade survivable. It
+              inspected, let or lived in. The framework around it, escrow accounts, project
+              registration and milestone-linked releases, exists to make that trade survivable. It
               does not make it automatic.
             </p>
           </Reveal>
@@ -269,17 +270,13 @@ export default function OffPlan() {
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
             <Reveal exit className="md:col-span-5">
-              <Eyebrow className="text-fog">All-In Cost</Eyebrow>
-              <SplitHeading as="h2" className="type-headline mt-6 max-w-[16ch]">
-                The number the price list does not show.
+              <Eyebrow className="text-fog">{CALCULATOR.eyebrow}</Eyebrow>
+              <SplitHeading as="h2" className="type-headline mt-6 max-w-[18ch]">
+                {CALCULATOR.headline}
               </SplitHeading>
             </Reveal>
             <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
-              <p className="type-body-lg text-ink/78">
-                Government and registration costs are fixed and knowable, so they belong in the
-                budget at step one rather than arriving at signature. These are the lines to add to
-                any headline price.
-              </p>
+              <p className="type-body-lg text-ink/78">{CALCULATOR.body}</p>
             </Reveal>
           </div>
           <RevealGroup className="mt-11 grid gap-x-7 gap-y-8 md:mt-14 md:grid-cols-2">
@@ -290,10 +287,7 @@ export default function OffPlan() {
             ))}
           </RevealGroup>
           <Reveal>
-            <p className="type-cap mt-8 max-w-[70ch] text-fog">
-              Indicative, and not a quotation. Fee schedules change and vary by Emirate — confirm
-              current figures with the relevant land department before you commit to a budget.
-            </p>
+            <p className="type-cap mt-8 max-w-[80ch] text-fog">{CALCULATOR.note}</p>
           </Reveal>
         </Section>
       </div>
@@ -409,11 +403,17 @@ export default function OffPlan() {
           />
         </Reveal>
       </Section>
-      <ValueProposition
-        eyebrow="Where We Come In"
-        title="None of this needs doing alone."
-        intro="Everything above is the market, described neutrally — it is true whoever you buy through. What differs is whether anyone in the transaction is paid to be on your side of it. Our advisors are salaried, which is what makes the rest of this possible."
-      />
+      {/* ⓘ Going direct — the objection the document answers head-on */}
+      <Section>
+        <Reveal exit>
+          <Eyebrow className="text-fog">{DIRECT_REBUTTAL.eyebrow}</Eyebrow>
+          <SplitHeading as="h2" className="type-display mt-5 max-w-[22ch]">
+            {DIRECT_REBUTTAL.headline}
+          </SplitHeading>
+          <p className="type-body-lg mt-6 max-w-[58ch] text-ink/74">{DIRECT_REBUTTAL.body}</p>
+        </Reveal>
+      </Section>
+      <TwoRoutes />
 
       {/* ⑨ FAQ */}
       <div className="bg-frost">
@@ -484,7 +484,7 @@ export default function OffPlan() {
       <ConversationBand
         eyebrow="First Purchase"
         title="A first off-plan purchase should be a slow conversation."
-        copy="Bring the questions this page raised. Nothing gets named, priced or recommended until the objective is clear — and an advisor with a salary rather than a commission can afford to take that time."
+        copy="Bring the questions this page raised. Nothing gets named, priced or recommended until the objective is clear, and an advisor with a salary rather than a commission can afford to take that time."
         secondary="Why we are different"
         secondaryTo="/difference"
         image="/images/about-ask.jpg"
