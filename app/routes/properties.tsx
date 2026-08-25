@@ -1,5 +1,5 @@
-import { Form, Link, useLoaderData, useSearchParams } from "react-router";
-import type { LoaderFunctionArgs } from "react-router";
+import { data, Form, Link, useLoaderData, useSearchParams } from "react-router";
+import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
 import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { PropertyCard } from "~/components/property";
@@ -18,23 +18,33 @@ export function meta() {
 }
 
 /**
- * CDN caching is how this route stays fast without being prerendered: the
- * catalogue changes, so the HTML must not be frozen at build time. The
- * equivalent of the integration guide's Next `revalidate: 300`.
+ * Two cache lifetimes, chosen by the loader.
+ *
+ * A good response is worth holding at the edge for five minutes (this stack's
+ * equivalent of the guide's Next `revalidate: 300`). A failure is not: caching
+ * it would pin one upstream timeout in front of every visitor for the full five
+ * minutes, long after the catalogue recovered. Failures get seconds instead, so
+ * the next request re-tries almost immediately.
  */
-export function headers() {
-  return { "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=600" };
+const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=600";
+const BRIEF = "public, max-age=0, s-maxage=15";
+
+export function headers({ loaderHeaders }: HeadersArgs) {
+  return { "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH };
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // No key configured (a fresh clone, or a preview without env) must render an
   // explained page, never a 500.
   if (!isAmeliaConfigured()) {
-    return { state: "unconfigured" as const, projects: [], nextCursor: null, error: null };
+    return data(
+      { state: "unconfigured" as const, projects: [], nextCursor: null, error: null },
+      { headers: { "Cache-Control": BRIEF } },
+    );
   }
   const p = new URL(request.url).searchParams;
   try {
-    const { data, nextCursor } = await fetchProjects(
+    const projects = await fetchProjects(
       {
         limit: 48,
         cursor: p.get("cursor"),
@@ -46,12 +56,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
       },
       request.signal,
     );
-    return { state: "ok" as const, projects: data, nextCursor, error: null };
+    const nextCursor = projects.nextCursor;
+    return data(
+      { state: "ok" as const, projects: projects.data, nextCursor, error: null },
+      { headers: { "Cache-Control": FRESH } },
+    );
   } catch (err) {
     // A listing outage is not a broken site: keep the page, explain the gap.
     const error =
       err instanceof AmeliaError ? err.message : "The listing service is unavailable.";
-    return { state: "error" as const, projects: [], nextCursor: null, error };
+    return data(
+      { state: "error" as const, projects: [], nextCursor: null, error },
+      { headers: { "Cache-Control": BRIEF } },
+    );
   }
 }
 

@@ -21,6 +21,16 @@ export function isAmeliaConfigured(): boolean {
   return Boolean(process.env.AMELIA_API_KEY?.trim());
 }
 
+/**
+ * How long to wait on the catalogue before giving up.
+ *
+ * The first uncached query for a whole org can take a good few seconds, and
+ * the original 10s proved too tight in production: the transport is ~0.3s, so
+ * a timeout here means the upstream is still working, not that it is broken.
+ * Override with AMELIA_TIMEOUT_MS if the catalogue grows.
+ */
+const TIMEOUT_MS = Number(process.env.AMELIA_TIMEOUT_MS) || 25_000;
+
 function base(): string {
   return (process.env.AMELIA_API_BASE?.trim() || DEFAULT_BASE).replace(/\/+$/, "");
 }
@@ -167,9 +177,10 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
 
   // Fail fast: a hanging upstream must not hold a serverless function open.
   const ctl = new AbortController();
-  const timer = setTimeout(() => ctl.abort(), 10_000);
+  const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   signal?.addEventListener("abort", () => ctl.abort(), { once: true });
 
+  const started = Date.now();
   let res: Response;
   try {
     res = await fetch(`${base()}${path}`, {
@@ -177,9 +188,17 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
       signal: ctl.signal,
     });
   } catch (err) {
-    throw new AmeliaError(504, err instanceof Error && err.name === "AbortError"
-      ? "The listing service did not respond in time."
-      : "The listing service is unreachable.");
+    const aborted = err instanceof Error && err.name === "AbortError";
+    console.error(
+      `[amelia] GET ${path} failed after ${Date.now() - started}ms:`,
+      aborted ? `aborted at ${TIMEOUT_MS}ms` : err,
+    );
+    throw new AmeliaError(
+      504,
+      aborted
+        ? "The listing service did not respond in time."
+        : "The listing service is unreachable.",
+    );
   } finally {
     clearTimeout(timer);
   }
@@ -192,7 +211,10 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
   if (res.status === 429) {
     throw new AmeliaError(429, `Rate limited. Retry after ${res.headers.get("Retry-After") ?? "60"}s.`);
   }
-  if (!res.ok) throw new AmeliaError(res.status, `Listing API returned ${res.status}.`);
+  if (!res.ok) {
+    console.error(`[amelia] GET ${path} -> ${res.status} in ${Date.now() - started}ms`);
+    throw new AmeliaError(res.status, `Listing API returned ${res.status}.`);
+  }
   return (await res.json()) as T;
 }
 
@@ -264,7 +286,7 @@ export async function captureLead(lead: LeadPayload, signal?: AbortSignal): Prom
   if (!key) throw new AmeliaError(0, "AMELIA_ORG_KEY is not set");
 
   const ctl = new AbortController();
-  const timer = setTimeout(() => ctl.abort(), 10_000);
+  const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   signal?.addEventListener("abort", () => ctl.abort(), { once: true });
 
   let res: Response;
