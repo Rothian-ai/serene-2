@@ -51,7 +51,8 @@ export function initAnalytics(): void {
 type EventName =
   | "contact_submit"
   | "development_view"
-  | "insight_read";
+  | "insight_read"
+  | "register_interest";
 
 export function track(event: EventName, params?: Record<string, string>): void {
   window.gtag?.("event", event, params);

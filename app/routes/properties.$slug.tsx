@@ -2,11 +2,13 @@ import { Link, useLoaderData } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import { CTA, Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
+import { RegisterInterest } from "~/components/RegisterInterest";
 import { AmeliaError, fetchProject, isAmeliaConfigured } from "~/lib/amelia.server";
 import type { ProjectDetail } from "~/lib/amelia.server";
 import {
   bedrooms,
   brochureHref,
+  buyerPropertyHref,
   buyerSignupHref,
   humanise,
   money,
@@ -119,6 +121,21 @@ export default function Property() {
   const units = (p.units ?? []).filter((u) => u && (u.name || u.bedrooms != null));
   const plans = (p.paymentPlans ?? []).filter((pl) => (pl.milestones ?? []).length || pl.name);
   const permit = p.trust?.permit ?? p.permit ?? null;
+  // Media arrives typed: images are proxied and hotlinkable, while video and
+  // 3D tours are external embed URLs (Matterport, YouTube) to iframe directly.
+  const media = p.media ?? [];
+  const floorPlans = media.filter((m) => m.url && /floor/i.test(m.kind ?? ""));
+  const masterplans = media.filter((m) => m.url && /master/i.test(m.kind ?? ""));
+  const embeds = media.filter(
+    (m) =>
+      m.url &&
+      /video|tour|matterport|youtube/i.test((m.kind ?? "") + " " + (m.provider ?? "")),
+  );
+  const towers = (p.towers ?? []).filter((t) => t.name || (t.pricingBands ?? []).length);
+  const communities = (p.communities ?? []).filter((c) => c.name);
+  const construction = (p.constructionMilestones ?? []).filter((m) => m.label || m.date);
+  const partners = (p.partners ?? []).filter((x) => x.name);
+  const fees = (p.fees ?? []).filter((x) => x.label);
 
   return (
     <>
@@ -325,6 +342,163 @@ export default function Property() {
         </Block>
       )}
 
+      {/* ——— towers, with their per-floor pricing bands ——— */}
+      {towers.length > 0 && (
+        <Block eyebrow="The Towers" className="pt-0">
+          <div className="grid gap-10 md:grid-cols-2 md:gap-7">
+            {towers.map((t, i) => (
+              <div key={i} className="border-t border-ink/14 pt-5">
+                <h3 className="type-title">{t.name ?? "Tower " + (i + 1)}</h3>
+                <p className="type-cap mt-1 text-fog">
+                  {[
+                    t.floors ? t.floors + " floors" : null,
+                    t.unitCount ? t.unitCount + " units" : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+                {(t.pricingBands ?? []).length > 0 && (
+                  <dl className="mt-4">
+                    {(t.pricingBands ?? []).map((b, j) => (
+                      <div key={j} className="hairline-t flex items-baseline justify-between gap-6 py-2.5">
+                        <dt className="text-[15px] text-ink/75">
+                          {b.floorFrom != null && b.floorTo != null
+                            ? "Floors " + b.floorFrom + "–" + b.floorTo
+                            : "Pricing band"}
+                        </dt>
+                        <dd className="type-data shrink-0 text-brass">
+                          {priceRange(b.minPrice, b.maxPrice, currency) ?? "—"}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {/* ——— floor plans & masterplans ——— */}
+      {(floorPlans.length > 0 || masterplans.length > 0) && (
+        <Block eyebrow="The Plans" className="pt-0">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[...masterplans, ...floorPlans].slice(0, 9).map((m, i) => (
+              <a
+                key={m.url + i}
+                href={m.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden border border-ink/12 bg-white">
+                  <img
+                    src={m.url}
+                    alt={m.caption ?? "Plan"}
+                    loading="lazy"
+                    className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="type-cap mt-2 text-fog">{m.caption ?? humanise(m.kind) ?? "Plan"}</p>
+              </a>
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {/* ——— video & 3D tours: external embeds, not proxied ——— */}
+      {embeds.length > 0 && (
+        <Block eyebrow="The Walkthrough" className="pt-0">
+          <div className="grid gap-6 lg:grid-cols-2">
+            {embeds.slice(0, 4).map((m, i) => (
+              <figure key={m.url + i}>
+                <div className="relative aspect-video overflow-hidden bg-ink">
+                  <iframe
+                    src={m.url}
+                    title={m.caption ?? (humanise(m.provider) ?? "Virtual") + " tour"}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; xr-spatial-tracking; fullscreen"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full border-0"
+                  />
+                </div>
+                {(m.caption || m.provider) && (
+                  <figcaption className="type-cap mt-2 text-fog">
+                    {m.caption ?? humanise(m.provider)}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {/* ——— construction progress ——— */}
+      {construction.length > 0 && (
+        <Block eyebrow="Construction" title="Where the build has reached." className="pt-0">
+          <dl>
+            {construction.map((m, i) => (
+              <div key={i} className="hairline-t flex flex-wrap items-baseline gap-x-6 gap-y-1 py-3">
+                <dt className="type-data w-[8rem] shrink-0 text-brass">{m.date ?? "—"}</dt>
+                <dd className="flex-1 text-[15px] text-ink/78">{m.label}</dd>
+                {typeof m.completedPct === "number" && (
+                  <dd className="type-cap text-fog">{m.completedPct}%</dd>
+                )}
+              </div>
+            ))}
+          </dl>
+        </Block>
+      )}
+
+      {/* ——— fees ——— */}
+      {fees.length > 0 && (
+        <Block eyebrow="The Costs" className="pt-0">
+          <dl>
+            {fees.map((x, i) => (
+              <div key={i} className="hairline-t flex flex-wrap items-baseline justify-between gap-x-6 py-3">
+                <dt className="text-[15px] text-ink/78">
+                  {x.label}
+                  {x.note ? <span className="type-cap ml-2 text-fog">{x.note}</span> : null}
+                </dt>
+                <dd className="type-data shrink-0 text-brass">
+                  {money(x.amount, currency) ?? (typeof x.amount === "number" ? x.amount + "%" : "—")}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Block>
+      )}
+
+      {/* ——— communities ——— */}
+      {communities.length > 0 && (
+        <Block eyebrow="The Community" className="pt-0">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {communities.map((c, i) => (
+              <div key={i} className="border-t border-ink/14 pt-5">
+                <h3 className="type-title text-[1.15rem]">{c.name}</h3>
+                {c.description && (
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink/68">{c.description}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {/* ——— partners ——— */}
+      {partners.length > 0 && (
+        <Block eyebrow="Partners" className="pt-0">
+          <ul className="flex flex-wrap gap-x-10 gap-y-4">
+            {partners.map((x, i) => (
+              <li key={i} className="flex items-baseline gap-3">
+                <span className="text-[15px] text-ink/80">{x.name}</span>
+                {x.role && <span className="type-cap text-fog">{humanise(x.role)}</span>}
+              </li>
+            ))}
+          </ul>
+        </Block>
+      )}
+
       {/* ——— developer ——— */}
       {p.developer?.name && (
         <div className="bg-ink text-ivory">
@@ -433,8 +607,30 @@ export default function Property() {
             </CTA>
           </div>
           <p className="type-cap mt-5 text-silver">
-            Verified signup. No cold calls: an advisor replies only when you ask.
+            Verified signup: email and WhatsApp codes, then the property opens in your portal.
+            No cold calls — an advisor replies only when you ask.
           </p>
+          <p className="type-cap mt-2 text-silver/70">
+            Already have an account?{" "}
+            <a
+              href={buyerPropertyHref(p.slug)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-ivory"
+            >
+              Open it in the portal ↗
+            </a>
+          </p>
+
+          {/* the lighter path: no account, an advisor comes to you */}
+          <div className="mx-auto mt-14 max-w-[760px] border-t border-ivory/20 pt-12 text-left">
+            <h3 className="type-subhead text-center text-ivory">
+              Or register interest without an account.
+            </h3>
+            <div className="mt-8">
+              <RegisterInterest projectSlug={p.slug} projectName={p.name} />
+            </div>
+          </div>
         </Section>
       </div>
     </>

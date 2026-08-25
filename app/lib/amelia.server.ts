@@ -132,6 +132,25 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   fees?: Array<{ label?: string | null; amount?: number | null; note?: string | null }> | null;
   units?: Unit[] | null;
   unitCounts?: { available?: number | null; reserved?: number | null; sold?: number | null } | null;
+  towers?: Array<{
+    name?: string | null;
+    floors?: number | null;
+    unitCount?: number | null;
+    pricingBands?: Array<{
+      floorFrom?: number | null;
+      floorTo?: number | null;
+      minPrice?: number | null;
+      maxPrice?: number | null;
+    }> | null;
+  }> | null;
+  communities?: Array<{ name?: string | null; description?: string | null }> | null;
+  constructionMilestones?: Array<{
+    label?: string | null;
+    date?: string | null;
+    completedPct?: number | null;
+    status?: string | null;
+  }> | null;
+  partners?: Array<{ name?: string | null; role?: string | null; logoUrl?: string | null }> | null;
   trust?: {
     reraRegistration?: string | null;
     escrowBank?: string | null;
@@ -217,4 +236,60 @@ export async function fetchProject(
     if (err instanceof AmeliaError && err.status === 404) return null;
     throw err;
   }
+}
+
+/* ——— the register-interest funnel (no account created) ——— */
+
+export interface LeadPayload {
+  name: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  projectSlug?: string;
+}
+
+/** The org id the leads endpoint keys on. Public, but read server-side so the
+ *  form posts through our own route rather than cross-origin. */
+export function orgKey(): string | null {
+  return process.env.AMELIA_ORG_KEY?.trim() || null;
+}
+
+/**
+ * POST a lead to Amelia. Repeat submissions for the same email update the
+ * interested property rather than duplicating the lead, so this is safe to
+ * call again — no client-side de-duplication needed.
+ */
+export async function captureLead(lead: LeadPayload, signal?: AbortSignal): Promise<void> {
+  const key = orgKey();
+  if (!key) throw new AmeliaError(0, "AMELIA_ORG_KEY is not set");
+
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 10_000);
+  signal?.addEventListener("abort", () => ctl.abort(), { once: true });
+
+  let res: Response;
+  try {
+    res = await fetch(`${base()}/api/leads/capture`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        orgKey: key,
+        name: lead.name,
+        email: lead.email,
+        phone: lead.phone,
+        message: lead.message,
+        source: "serenebay_website",
+        projectSlug: lead.projectSlug,
+        utmSource: "serenebay.ae",
+        utmMedium: "website",
+      }),
+      signal: ctl.signal,
+    });
+  } catch (err) {
+    throw new AmeliaError(504, "Could not reach the advisory. Please try again.");
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!res.ok) throw new AmeliaError(res.status, `Lead capture returned ${res.status}.`);
 }

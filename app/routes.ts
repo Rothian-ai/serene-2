@@ -22,6 +22,7 @@ export default [
 
   // Backend (Vercel/SSR): enquiry sink + admin submissions dashboard.
   route("api/submit", "routes/api.submit.tsx"),
+  route("api/register-interest", "routes/api.register-interest.tsx"),
   route("dashboard", "routes/dashboard.tsx"),
   route("dashboard/login", "routes/dashboard.login.tsx"),
 

@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useSearchParams } from "react-router";
+import { Form, Link, useLoaderData, useSearchParams } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
@@ -41,6 +41,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
         area: p.get("area"),
         propertyType: p.get("type"),
         status: p.get("status"),
+        minPrice: p.get("minPrice") ? Number(p.get("minPrice")) : null,
+        maxPrice: p.get("maxPrice") ? Number(p.get("maxPrice")) : null,
       },
       request.signal,
     );
@@ -59,7 +61,7 @@ export default function Properties() {
 
   const next = new URLSearchParams(params);
   if (nextCursor) next.set("cursor", nextCursor);
-  const filtered = ["area", "type", "status"].some((k) => params.get(k));
+  const filtered = ["area", "type", "status", "minPrice", "maxPrice"].some((k) => params.get(k));
 
   return (
     <>
@@ -79,6 +81,44 @@ export default function Properties() {
         </Reveal>
       </Section>
 
+      {state === "ok" && (
+        <Section className="pt-0">
+          {/* A GET form: filters live in the URL, so any result set can be
+              linked, bookmarked and re-rendered on the server. */}
+          <Form method="get" className="flex flex-wrap items-end gap-4 border-y border-ink/12 py-5">
+            <div className="flex flex-col">
+              <label htmlFor="f-area" className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-fog">Area</label>
+              <input id="f-area" type="search" name="area" defaultValue={params.get("area") ?? ""}
+                placeholder="Dubai Marina…"
+                className="w-[190px] border border-ink/20 bg-white px-3 py-2 text-[14px] outline-none focus:border-gold" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="f-type" className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-fog">Type</label>
+              <input id="f-type" type="search" name="type" defaultValue={params.get("type") ?? ""}
+                placeholder="Apartment…"
+                className="w-[160px] border border-ink/20 bg-white px-3 py-2 text-[14px] outline-none focus:border-gold" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="f-min" className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-fog">Price from (AED)</label>
+              <input id="f-min" type="number" inputMode="numeric" min="0" step="100000" name="minPrice"
+                defaultValue={params.get("minPrice") ?? ""} placeholder="1000000"
+                className="w-[150px] border border-ink/20 bg-white px-3 py-2 text-[14px] outline-none focus:border-gold" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="f-max" className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-fog">Price to (AED)</label>
+              <input id="f-max" type="number" inputMode="numeric" min="0" step="100000" name="maxPrice"
+                defaultValue={params.get("maxPrice") ?? ""} placeholder="5000000"
+                className="w-[150px] border border-ink/20 bg-white px-3 py-2 text-[14px] outline-none focus:border-gold" />
+            </div>
+            <button className="cursor-pointer bg-ink px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.1em] text-ivory">
+              Filter
+            </button>
+            {filtered && (
+              <Link to="/properties" className="type-cap self-center text-brass underline underline-offset-2">Clear</Link>
+            )}
+          </Form>
+        </Section>
+      )}
       <Section className="pt-0">
         {state === "unconfigured" && (
           <div className="border border-ink/18 p-8">
