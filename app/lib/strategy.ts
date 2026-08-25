@@ -10,8 +10,8 @@
  * Two deliberate departures from the source, both house style:
  *   · em dashes are rewritten as commas, colons or full stops (the words are
  *     unchanged); en dashes stay in numeric ranges, as they always have
- *   · short labels are kept on the commitments and stages, because the rail
- *     and tab components need something to print
+ *   · the stages keep the document's own tab label, because the rail and the
+ *     pinned stage strip need something short to print
  *
  * NOTE ON FIGURES: the only numbers on this site are published *market* figures
  * with their source attached. Serene Bay is a new house; it makes no claims
@@ -81,8 +81,6 @@ export const MARKET_SOURCES =
 
 export interface Commitment {
   k: string;
-  /** short label for the compact grids; the claim is the headline */
-  title: string;
   claim: string;
   copy: string;
 }
@@ -96,25 +94,21 @@ export const COMMITMENTS_INTRO = {
 export const COMMITMENTS: Commitment[] = [
   {
     k: "01",
-    title: "Salaried advisors",
     claim: "Our advisors are not paid on commission.",
     copy: "No financial reason to prefer one developer, one project or one unit over another, the same way a good independent financial adviser is not paid by any single fund manager.",
   },
   {
     k: "02",
-    title: "Call on request only",
     claim: "We do not cold-call.",
     copy: "We respond when you want to talk, on your schedule. That is how a serious investor should be treated, and it is a direct rejection of the pressure-selling culture that defines the market.",
   },
   {
     k: "03",
-    title: "The relationship continues",
     claim: "We do not disappear at reservation.",
     copy: "The relationship continues through construction monitoring, independent snagging, handover, tenanting, mortgage and refinance, and years later, resale.",
   },
   {
     k: "04",
-    title: "The truth about going direct",
     claim: "We tell you the truth about going direct.",
     copy: "It does not save you money on an off-plan purchase. The developer pays commission out of its own budget either way. Going direct only removes the one party representing you.",
   },

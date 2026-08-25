@@ -98,8 +98,7 @@ export default function Difference() {
                 <div className="hairline-t grid gap-4 py-9 md:grid-cols-12 md:gap-7 md:py-11">
                   <div className="md:col-span-4">
                     <span className="type-data text-fog">{c.k}</span>
-                    <h3 className="type-title mt-2 max-w-[16ch]">{c.claim}</h3>
-                    <p className="type-cap mt-2 text-brass">{c.title}</p>
+                    <h3 className="type-title mt-2 max-w-[20ch]">{c.claim}</h3>
                   </div>
                   <p className="type-body-lg md:col-span-7 md:col-start-6 text-ink/76">{c.copy}</p>
                 </div>

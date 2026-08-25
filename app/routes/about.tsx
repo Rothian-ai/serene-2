@@ -122,7 +122,6 @@ export default function About() {
               <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
                 <span className="type-data text-fog">{c.k}</span>
                 <h3 className="type-title mt-2">{c.claim}</h3>
-                <p className="type-cap mt-3 text-brass">{c.title}</p>
               </RevealItem>
             ))}
           </RevealGroup>
