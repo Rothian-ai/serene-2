@@ -22,6 +22,10 @@ export function buyerSignupHref(slug: string): string {
   return `${PUBLIC_BASE}/buyer/signup?project=${encodeURIComponent(slug)}&${UTM}`;
 }
 
+/** Stands in for a value the record does not carry, in table cells where a
+ *  blank would read as a broken row. A centred dot, never a dash. */
+export const EMPTY = "·";
+
 /** Direct portal deep link — signed-in buyers land here; others are routed
  *  through login/signup and arrive afterwards. */
 export function buyerPropertyHref(slug: string): string {
@@ -61,8 +65,10 @@ export function priceRange(
 }
 
 /** "UnderConstruction" → "Under construction". The API uses PascalCase enums. */
-export function humanise(value: string | null | undefined): string | null {
-  if (!value) return null;
+export function humanise(value: unknown): string | null {
+  // the record nests in places the guide reads as flat, so a caller can hand
+  // this an object; anything but a non-empty string has no label to make
+  if (typeof value !== "string" || !value.trim()) return null;
   return value
     .replace(/[_-]+/g, " ")
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
@@ -86,4 +92,21 @@ export function perSqft(value: number | null | undefined, currency = "AED"): str
 /** The permit line is a compliance requirement, not decoration. */
 export function permitLabel(number: string | null | undefined): string | null {
   return number ? `Trakheesi permit ${number}` : null;
+}
+
+/**
+ * Coerce a catalogue value to something safe to render, or null.
+ *
+ * The record nests more deeply than the guide's prose suggests — `trust.rera`,
+ * for instance, is an object, not a string. Passing one of those to a Ledger
+ * cell renders an object as a React child, which throws and takes the whole
+ * page to a 500. Truthiness is not enough of a check, because every object is
+ * truthy: the value has to be a primitive to be displayable.
+ */
+export function text(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "string") return value.trim() || null;
+  if (typeof value === "number") return Number.isFinite(value) ? String(value) : null;
+  // objects, arrays and booleans are not display values here
+  return null;
 }

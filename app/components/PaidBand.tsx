@@ -27,7 +27,7 @@ const CARDS = [
   {
     eyebrow: "The consequence",
     title: "Nothing to hand back",
-    copy: "Kickbacks happen when agents compete by returning slices of their own commission. Our advisors have no commission to slice, so the behaviour is not discouraged here — it is unavailable.",
+    copy: "Kickbacks happen when agents compete by returning slices of their own commission. Our advisors have no commission to slice, so the behaviour is not discouraged here. It is unavailable.",
   },
 ];
 
@@ -44,7 +44,7 @@ export function PaidBand() {
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
             <p className="type-body-lg text-ivory/78">
-              You pay us nothing on an off-plan purchase — the developer does, exactly as it would
+              You pay us nothing on an off-plan purchase. The developer does, exactly as it would
               any broker. What is different is what happens to that money once it reaches us.
             </p>
             <div className="mt-9 flex flex-wrap gap-x-12 gap-y-6">

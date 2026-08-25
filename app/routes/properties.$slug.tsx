@@ -6,6 +6,7 @@ import { RegisterInterest } from "~/components/RegisterInterest";
 import { AmeliaError, fetchProject, isAmeliaConfigured } from "~/lib/amelia.server";
 import type { ProjectDetail } from "~/lib/amelia.server";
 import {
+  EMPTY,
   bedrooms,
   brochureHref,
   buyerPropertyHref,
@@ -14,6 +15,7 @@ import {
   money,
   perSqft,
   priceRange,
+  text,
 } from "~/lib/amelia";
 import { meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/properties.$slug";
@@ -39,7 +41,9 @@ export function meta({ data }: Route.MetaArgs) {
  * of the integration guide's Next `revalidate: 300`.
  */
 export function headers() {
-  return { "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=600" };
+  return {
+    "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400",
+  };
 }
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -107,7 +111,9 @@ export default function Property() {
       k: "Available",
       v:
         typeof p.availableUnitCount === "number"
-          ? `${p.availableUnitCount} of ${p.totalUnits ?? "—"}`
+          ? typeof p.totalUnits === "number"
+            ? `${p.availableUnitCount} of ${p.totalUnits}`
+            : `${p.availableUnitCount}`
           : null,
     },
     { k: "Built", v: typeof p.completionPct === "number" ? `${p.completionPct}% complete` : null },
@@ -129,6 +135,31 @@ export default function Property() {
   );
   const plans = (p.paymentPlans ?? []).filter((pl) => (pl.milestones ?? []).length || pl.name);
   const permit = p.trust?.permit ?? p.permit ?? null;
+  // `trust.rera` and `trust.escrow` are records, not strings — take the
+  // printable leaf from each rather than the object itself.
+  const rera = p.trust?.rera;
+  const reraNumber =
+    text(typeof rera === "object" && rera ? (rera as Record<string, unknown>).reraNumber : rera) ??
+    text(p.trust?.reraNumber) ??
+    text(p.trust?.reraRegistration);
+  const reraStatus = text(
+    typeof rera === "object" && rera ? (rera as Record<string, unknown>).status : null,
+  );
+  const escrow = p.trust?.escrow;
+  const escrowName =
+    text(
+      typeof escrow === "object" && escrow
+        ? ((escrow as Record<string, unknown>).bank ??
+           (escrow as Record<string, unknown>).name ??
+           (escrow as Record<string, unknown>).bankName)
+        : escrow,
+    ) ?? text(p.trust?.escrowBank);
+  const escrowTrustee =
+    text(
+      typeof escrow === "object" && escrow
+        ? (escrow as Record<string, unknown>).trustee
+        : null,
+    ) ?? text(p.trust?.escrowTrustee);
   // Media arrives typed: images are proxied and hotlinkable, while video and
   // 3D tours are external embed URLs (Matterport, YouTube) to iframe directly.
   const media = p.media ?? [];
@@ -173,16 +204,16 @@ export default function Property() {
             </Link>
             {locality ? ` · ${locality}` : ""}
           </Eyebrow>
-          <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
+          <SplitHeading as="h1" mode="chars" className="type-display mt-6 max-w-[18ch]">
             {p.name}
           </SplitHeading>
           {band && (
-            <p className="type-body-lg mt-6 text-ivory/85">
+            <p className="type-body-lg mt-7 text-ivory/85">
               From {band}
               {p.developer?.name ? ` · ${p.developer.name}` : ""}
             </p>
           )}
-          <div className="mt-9 flex flex-wrap gap-4">
+          <div className="mt-12 flex flex-wrap gap-4 md:mt-14">
             <CTA to={signup} external kind="platinum">
               Ask Amelia
             </CTA>
@@ -278,7 +309,7 @@ export default function Property() {
                       >
                         <dt className="text-[15px] text-ink/75">{m.label ?? "Instalment"}</dt>
                         <dd className="type-data shrink-0 text-brass">
-                          {typeof m.percentage === "number" ? `${m.percentage}%` : (m.dueOn ?? "—")}
+                          {typeof m.percentage === "number" ? `${m.percentage}%` : (m.dueOn ?? EMPTY)}
                         </dd>
                       </div>
                     ))}
@@ -325,14 +356,14 @@ export default function Property() {
                       key={u.id ?? i}
                       className={`border-b border-ink/10 ${taken ? "text-ink/40" : ""}`}
                     >
-                      <td className="py-3 pr-6">{u.unitNumber ?? u.name ?? "—"}</td>
-                      <td className="py-3 pr-6">{u.bedrooms === 0 ? "Studio" : (u.bedrooms ?? "—")}</td>
+                      <td className="py-3 pr-6">{u.unitNumber ?? u.name ?? EMPTY}</td>
+                      <td className="py-3 pr-6">{u.bedrooms === 0 ? "Studio" : (u.bedrooms ?? EMPTY)}</td>
                       <td className="py-3 pr-6 tabular-nums">
                         {typeof (u.sizeSqft ?? u.areaSqft) === "number"
                           ? `${(u.sizeSqft ?? u.areaSqft)!.toLocaleString("en-GB")} sqft`
-                          : "—"}
+                          : EMPTY}
                       </td>
-                      <td className="py-3 pr-6 tabular-nums">{money(u.price, currency) ?? "—"}</td>
+                      <td className="py-3 pr-6 tabular-nums">{money(u.price, currency) ?? EMPTY}</td>
                       <td className="py-3">{humanise(u.status) ?? "Available"}</td>
                     </tr>
                   );
@@ -391,7 +422,7 @@ export default function Property() {
                             : "Pricing band"}
                         </dt>
                         <dd className="type-data shrink-0 text-brass">
-                          {priceRange(b.minPrice, b.maxPrice, currency) ?? "—"}
+                          {priceRange(b.minPrice, b.maxPrice, currency) ?? EMPTY}
                         </dd>
                       </div>
                     ))}
@@ -463,7 +494,7 @@ export default function Property() {
           <dl>
             {construction.map((m, i) => (
               <div key={i} className="hairline-t flex flex-wrap items-baseline gap-x-6 gap-y-1 py-3">
-                <dt className="type-data w-[8rem] shrink-0 text-brass">{m.date ?? "—"}</dt>
+                <dt className="type-data w-[8rem] shrink-0 text-brass">{m.date ?? EMPTY}</dt>
                 <dd className="flex-1 text-[15px] text-ink/78">{m.label}</dd>
                 {typeof m.completedPct === "number" && (
                   <dd className="type-cap text-fog">{m.completedPct}%</dd>
@@ -493,7 +524,7 @@ export default function Property() {
                 <dd className="type-data shrink-0 text-brass">
                   {typeof x.pctOfPrice === "number"
                     ? `${x.pctOfPrice}%`
-                    : (money(x.amount, currency) ?? "—")}
+                    : (money(x.amount, currency) ?? EMPTY)}
                 </dd>
               </div>
             ))}
@@ -546,9 +577,9 @@ export default function Property() {
               dark
               className="mt-7"
               cells={[
-                { k: "Established", v: p.developer.establishedYear },
-                { k: "Delivered", v: p.developer.projectsDelivered },
-                { k: "Headquarters", v: p.developer.headquarters },
+                { k: "Established", v: text(p.developer.establishedYear) },
+                { k: "Delivered", v: text(p.developer.projectsDelivered) },
+                { k: "Headquarters", v: text(p.developer.headquarters) },
                 {
                   k: "On time",
                   v:
@@ -556,9 +587,7 @@ export default function Property() {
                       ? `${p.developer.onTimeDeliveryPct}%`
                       : null,
                 },
-              ]
-                .filter((c) => Boolean(c.v))
-                .map((c) => ({ k: c.k, v: String(c.v) }))}
+              ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
             />
           </Section>
         </div>
@@ -579,7 +608,7 @@ export default function Property() {
                       ? `${n.travelTimeMin ?? n.minutes} min`
                       : typeof n.distanceKm === "number"
                         ? `${n.distanceKm} km`
-                        : "—"}
+                        : EMPTY}
                   </dt>
                   <dd className="text-[15px] text-ink/78">{n.name}</dd>
                 </div>
@@ -610,18 +639,15 @@ export default function Property() {
       )}
 
       {/* ——— trust: the compliance record, stated plainly ——— */}
-      {(permit?.number || p.trust?.reraRegistration || p.trust?.escrowBank) && (
+      {(text(permit?.number) || reraNumber || reraStatus || escrowName) && (
         <Block eyebrow="On the Record" title="Permit, escrow and registration.">
           <div className="grid gap-10 md:grid-cols-[1fr_auto] md:gap-16">
             <Ledger
               cells={[
-                { k: "Trakheesi permit", v: permit?.number },
-                {
-                  k: "RERA registration",
-                  v: p.trust?.rera ?? p.trust?.reraNumber ?? p.trust?.reraRegistration,
-                },
-                { k: "Escrow bank", v: p.trust?.escrow ?? p.trust?.escrowBank },
-                { k: "Escrow trustee", v: p.trust?.escrowTrustee },
+                { k: "Trakheesi permit", v: text(permit?.number) },
+                { k: "RERA registration", v: reraNumber ?? reraStatus },
+                { k: "Escrow bank", v: escrowName },
+                { k: "Escrow trustee", v: escrowTrustee },
               ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
             />
             {permit?.qrImageUrl && (
@@ -663,9 +689,9 @@ export default function Property() {
             </CTA>
           </div>
           <p className="type-cap mt-5 text-silver">
-            Verified signup: confirm your email — and your WhatsApp number where that is
-            enabled — then the property opens in your portal.
-            No cold calls — an advisor replies only when you ask.
+            Verified signup: confirm your email, and your WhatsApp number where that is
+            enabled, then the property opens in your portal.
+            No cold calls: an advisor replies only when you ask.
           </p>
           <p className="type-cap mt-2 text-silver/70">
             Already have an account?{" "}

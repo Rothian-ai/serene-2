@@ -19,6 +19,7 @@ import { Footer } from "~/components/Footer";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
+import { RouteProgress } from "~/components/RouteProgress";
 import { initAnalytics } from "~/lib/analytics";
 import { gsap, ScrollTrigger } from "~/lib/gsap";
 import { SITE } from "~/lib/site";
@@ -149,6 +150,7 @@ export default function App() {
       </a>
       <LoadingSequence />
       <ScrollProgress />
+      <RouteProgress />
       <Header tone={tone} />
       {/* opaque content slab — rides above the pinned footer, then slides off it */}
       <div className="relative z-10 bg-ivory" style={{ marginBottom: footerH || undefined }}>

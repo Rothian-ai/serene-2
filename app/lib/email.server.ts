@@ -97,13 +97,13 @@ function buildBody(p: EnquiryPayload) {
   const rows: Array<[string, string]> = [
     ["Name", p.name],
     ["Email", p.email],
-    ["Phone", p.phone?.trim() || "—"],
-    ["Based in", p.basedIn?.trim() || "—"],
-    ["Stage", p.stage?.trim() || "—"],
+    ["Phone", p.phone?.trim() || "Not given"],
+    ["Based in", p.basedIn?.trim() || "Not given"],
+    ["Stage", p.stage?.trim() || "Not given"],
     // The single most operationally important line: the no-cold-call promise is
     // only kept if whoever reads this can see the answer at a glance.
-    ["Call requested", p.callRequested ? "YES — they asked to be called" : "No — reply in writing only"],
-    ["Source", p.source?.trim() || "—"],
+    ["Call requested", p.callRequested ? "YES, they asked to be called" : "No, reply in writing only"],
+    ["Source", p.source?.trim() || "Not given"],
   ];
 
   const text = [
@@ -151,7 +151,7 @@ export async function sendEnquiryNotification(p: EnquiryPayload): Promise<void> 
     from: e.from ?? e.user!,
     to: e.to ?? e.user!,
     replyTo: `${p.name} <${p.email}>`,
-    subject: `${p.callRequested ? "[CALL REQUESTED] " : ""}New ${TYPE_LABEL[p.type]} — ${p.name}`,
+    subject: `${p.callRequested ? "[CALL REQUESTED] " : ""}New ${TYPE_LABEL[p.type]}: ${p.name}`,
     text,
     html,
   });
@@ -188,7 +188,7 @@ export async function sendAcknowledgement(p: EnquiryPayload): Promise<void> {
     from: e.from ?? e.user!,
     to: p.email,
     ...(e.to ? { replyTo: e.to } : {}),
-    subject: "We have your enquiry — Serene Bay",
+    subject: "We have your enquiry · Serene Bay",
     text: body,
   });
 }

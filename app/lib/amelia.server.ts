@@ -207,6 +207,40 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   } | null;
 }
 
+/* ——— house style, applied to what the catalogue sends ——— */
+
+/**
+ * Serene's copy carries no em or en dashes, and catalogue text is published
+ * straight onto the page. Editors upstream do use them, so the character is
+ * translated once here, at the boundary, rather than at every call site: a
+ * dash between digits is a range, and anything else becomes a comma.
+ * URLs are left alone.
+ */
+function normaliseDashes(value: string): string {
+  if (!/[–—]/.test(value)) return value;
+  if (/^(https?:|data:|\/)/i.test(value)) return value;
+  return value
+    // a dash from a number into another number is a range ("Q4 2026 to Q1 2027")
+    .replace(/(\d)\s*[–—]\s*(?=[A-Za-z]{0,3}\d)/g, "$1 to ")
+    .replace(/\s*[–—]\s*/g, ", ")
+    .replace(/\s+,/g, ",")
+    .replace(/,\s*,/g, ",")
+    .trim();
+}
+
+/** Walk the parsed record and apply house style to every string leaf. */
+function houseStyle<T>(node: T, depth = 0): T {
+  if (depth > 12) return node;
+  if (typeof node === "string") return normaliseDashes(node) as unknown as T;
+  if (Array.isArray(node)) return node.map((v) => houseStyle(v, depth + 1)) as unknown as T;
+  if (node && typeof node === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(node)) out[k] = houseStyle(v, depth + 1);
+    return out as T;
+  }
+  return node;
+}
+
 /* ——— transport ——— */
 
 async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
@@ -253,7 +287,7 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
     console.error(`[amelia] GET ${path} -> ${res.status} in ${Date.now() - started}ms`);
     throw new AmeliaError(res.status, `Listing API returned ${res.status}.`);
   }
-  return (await res.json()) as T;
+  return houseStyle((await res.json()) as T);
 }
 
 export interface ProjectQuery {

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Ledger, Plate } from "~/components/primitives";
 import type { ProjectCard } from "~/lib/amelia.server";
-import { bedrooms, humanise, permitLabel, priceRange } from "~/lib/amelia";
+import { EMPTY, bedrooms, humanise, permitLabel, priceRange } from "~/lib/amelia";
 
 /**
  * Listing card — the journal card's grammar applied to inventory: image, a
@@ -19,7 +19,9 @@ export function PropertyCard({ project }: { project: ProjectCard }) {
       k: "Available",
       v:
         typeof project.availableUnitCount === "number"
-          ? `${project.availableUnitCount} of ${project.totalUnits ?? "—"}`
+          ? typeof project.totalUnits === "number"
+            ? `${project.availableUnitCount} of ${project.totalUnits}`
+            : `${project.availableUnitCount}`
           : null,
     },
   ].filter((c): c is { k: string; v: string } => Boolean(c.v));

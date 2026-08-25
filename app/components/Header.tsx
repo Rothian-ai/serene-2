@@ -95,6 +95,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
               <Link
                 key={item.to}
                 to={item.to}
+                  prefetch="intent"
                 className={`whitespace-nowrap text-[13.5px] font-medium transition-opacity ${
                   active(item.to) ? "opacity-100" : "opacity-85 hover:opacity-100"
                 }`}
@@ -144,7 +145,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <Link to={item.to} className="type-headline block py-2">
+                  <Link to={item.to} prefetch="intent" className="type-headline block py-2">
                     {item.label}
                   </Link>
                 </motion.div>

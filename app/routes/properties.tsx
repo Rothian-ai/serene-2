@@ -12,7 +12,7 @@ export function meta() {
   return buildMeta({
     title: "Properties",
     description:
-      "The register of off-plan developments Serene presents in Dubai and Abu Dhabi — pricing, handover, payment plans and permit details, published from the record.",
+      "The register of off-plan developments Serene presents in Dubai and Abu Dhabi: pricing, handover, payment plans and permit details, published from the record.",
     path: "/properties",
   });
 }
@@ -26,7 +26,7 @@ export function meta() {
  * minutes, long after the catalogue recovered. Failures get seconds instead, so
  * the next request re-tries almost immediately.
  */
-const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=600";
+const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
 const BRIEF = "public, max-age=0, s-maxage=15";
 
 export function headers({ loaderHeaders }: HeadersArgs) {
@@ -142,7 +142,7 @@ export default function Properties() {
             <p className="type-title">The register is being connected.</p>
             <p className="mt-3 max-w-[52ch] text-[15.5px] text-ink/75">
               Listings are served from Amelia's catalogue. Once the credentials are in place this
-              page fills itself — no content needs to be copied across by hand.
+              page fills itself, with no content copied across by hand.
             </p>
           </div>
         )}
@@ -152,7 +152,7 @@ export default function Properties() {
             <p className="type-title">The register is briefly unavailable.</p>
             <p className="mt-3 max-w-[52ch] text-[15.5px] text-ink/75">{error}</p>
             <p className="type-cap mt-4 text-fog">
-              Nothing is lost — try again shortly, or{" "}
+              Nothing is lost. Try again shortly, or{" "}
               <Link to="/contact" className="text-brass underline underline-offset-2">
                 ask an advisor
               </Link>

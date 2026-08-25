@@ -22,7 +22,7 @@ import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
 
 const COPY = {
   title: "The off-plan advisor that is paid to be right, not to close.",
-  sub: "Serene Bay advises buyers on off-plan property in Dubai and Abu Dhabi. Our advisors are salaried, so the shortlist is chosen on your objective — never on which developer pays us most.",
+  sub: "Serene Bay advises buyers on off-plan property in Dubai and Abu Dhabi. Our advisors are salaried, so the shortlist is chosen on your objective, never on which developer pays us most.",
 } as const;
 
 /** The ground: the Downtown dusk plate, with its modern-format ladder. */
