@@ -9,6 +9,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ComparisonTable } from "~/components/ComparisonTable";
 import { PaidBand } from "~/components/PaidBand";
+import { TwoRoutes } from "~/components/TwoRoutes";
 import { ConversationBand } from "~/components/ConversationBand";
 import {
   COMPARISON_INTRO,
@@ -29,10 +30,14 @@ export function meta() {
 }
 
 /**
- * The Difference carries two of the document's pages: "Compare" and "How we
- * are paid". The four commitments and the market case live on the homepage
- * now, and the going-direct rebuttal on /off-plan, so nothing here repeats
- * a section a reader has already passed.
+ * The Difference carries three of the document's pages: "Compare", "Going
+ * direct" and "How we are paid". Going direct belongs with the comparison
+ * rather than on /off-plan, where it sat until now: the table's middle column
+ * is the direct route, so the case against it and the comparison of it were on
+ * two different pages. The order reads broad, then narrow, then us — all three
+ * options in a table, the one real objection taken apart, then how we are paid.
+ *
+ * The four commitments and the market case live on the homepage.
  */
 export default function Difference() {
   return (
@@ -52,10 +57,13 @@ export default function Difference() {
         <ComparisonTable />
       </Section>
 
-      {/* ② How we are paid — the money, stated without euphemism */}
+      {/* ② Going direct — the table's middle column, taken apart */}
+      <TwoRoutes />
+
+      {/* ③ How we are paid — the money, stated without euphemism */}
       <PaidBand />
 
-      {/* ③ Documented, not asserted — the paperwork that already exists */}
+      {/* ④ Documented, not asserted — the paperwork that already exists */}
       <Section>
         <Reveal exit>
           <Eyebrow className="text-fog">{COMPLIANCE_INTRO.eyebrow}</Eyebrow>

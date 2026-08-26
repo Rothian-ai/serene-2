@@ -13,7 +13,6 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { Accordion } from "~/components/Accordion";
 import { ConversationBand } from "~/components/ConversationBand";
-import { TwoRoutes } from "~/components/TwoRoutes";
 import { ImageMosaic } from "~/components/ImageMosaic";
 import type { MosaicFrame } from "~/components/ImageMosaic";
 import {
@@ -86,7 +85,12 @@ const MOSAIC: MosaicFrame[] = [
  *   /lifecycle  — the nine stages, now carrying the timings and paperwork too.
  *   /difference — why we are able to work that way at all.
  *
- * Three things have come off this page for repeating something said elsewhere.
+ * Going direct used to sit here too. It is an argument, not a description, and
+ * this page's remit is the second of those; more to the point /difference
+ * compares against the direct route in a column of its own table, so the case
+ * and the comparison were on separate pages. It moved there.
+ *
+ * Three other things have come off for repeating something said elsewhere.
  * A "known risks" band that was the document's four gaps reworded. Eight of
  * twelve FAQ questions that the sections above them already answered. And "From
  * shortlist to exit", nine steps over the same ground as /lifecycle's nine
@@ -318,10 +322,7 @@ export default function OffPlan() {
         </Reveal>
       </Section>
 
-      {/* ⑥ Going direct — the objection, and the two routes to one price */}
-      <TwoRoutes />
-
-      {/* ⑦ FAQ — only what the sections above do not already answer */}
+      {/* ⑥ FAQ — only what the sections above do not already answer */}
       <div className="bg-frost">
         <Section>
           <script
@@ -356,7 +357,7 @@ export default function OffPlan() {
         </Section>
       </div>
 
-      {/* ⑧ Sources — the page's whole evidence base, in one place */}
+      {/* ⑦ Sources — the page's whole evidence base, in one place */}
       <Section>
         <Reveal>
           <Eyebrow className="text-fog">Sources</Eyebrow>
