@@ -650,10 +650,30 @@ export default function Property() {
                 { k: "Escrow trustee", v: escrowTrustee },
               ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
             />
+            {/* A permit QR has to survive being pointed at by a phone, which
+                sets its size: a Trakheesi validation URL is long enough to
+                encode at around version 7 to 10, so 45 to 57 modules across.
+                The old 112px gave those 2.0 to 2.5px a module, under what a
+                camera decodes reliably; 192px gives 3.4 to 4.3.
+
+                `pixelated` because the source may be smaller than we draw it,
+                and smoothing an upscaled QR blurs exactly the module edges a
+                scanner is looking for. The white plate guarantees the quiet
+                zone whether or not the supplied image includes one. */}
             {permit?.qrImageUrl && (
               <div className="shrink-0">
-                <img src={permit.qrImageUrl} alt="DLD verification QR code" className="h-28 w-28" />
-                <p className="type-cap mt-2 text-fog">Scan to verify with DLD</p>
+                {/* the quiet zone is the wrapper's padding, not the image's:
+                    padding on the image itself comes out of the code area, and
+                    the code area is what a scanner has to resolve */}
+                <div className="inline-block bg-white p-3">
+                  <img
+                    src={permit.qrImageUrl}
+                    alt="Scan to verify this permit with the Dubai Land Department"
+                    className="block h-44 w-44 md:h-56 md:w-56"
+                    style={{ imageRendering: "pixelated" }}
+                  />
+                </div>
+                <p className="type-cap mt-2.5 text-fog">Scan to verify with DLD</p>
               </div>
             )}
           </div>
