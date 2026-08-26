@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
@@ -6,78 +7,85 @@ import { developers } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 
 /**
- * The register, inside the house's framed panel.
+ * The register, as a drifting band on the frost ground.
  *
- * Three constraints shaped this. It cannot be another top-rule grid, because
- * the homepage already runs four of those in sequence. It cannot be a band on
- * ink: the page opens and closes on ink, so a third dark stretch between them
- * reads as a stripe rather than a section, and ink here carries the arguments.
- * And it has to survive the register growing.
+ * A tonal step rather than a dark one: ink is spoken for on this page by the
+ * hero and the close, and a third dark stretch between them read as a stripe.
+ * Frost gives the band its edges without borrowing that weight, and without
+ * adding another hairline to a page that has four grids of them.
  *
- * That last one ruled out the drifting band this replaces. A marquee's duration
- * is fixed for one full translate, so seven marks drift and thirty blur past at
- * four times the speed — it degrades precisely as the register fills up. A
- * frame with a reflowing grid gains a row instead, which is the behaviour you
- * want from a list that is meant to get longer.
+ * The one real fault of the earlier band is fixed rather than re-skinned. A
+ * marquee's duration covers one full translate, so a fixed 48s means the strip
+ * runs faster with every mark added — seven drift, thirty blur. The duration is
+ * now derived from the count, so the pace per mark holds however long the
+ * register gets.
  *
- * The frame is the site's existing monument device (the licensing ledger, the
- * payment-plan checklist, the two routes), so it breaks the hairline run
- * without introducing a new one.
+ * Only the first half is reachable: the duplicate exists to make the loop
+ * seamless, so it is hidden from assistive technology and out of the tab order,
+ * or every developer would be announced and tabbed to twice. Under
+ * prefers-reduced-motion the animation stops, the band becomes an ordinary
+ * scrollable row, and the duplicate is hidden — a repeat is only seamlessness
+ * while it is moving.
  */
 
-/**
- * How many marks the homepage carries before it defers to /developers. Seven
- * fit today, so nothing is hidden; the count in the link keeps it honest once
- * they do not.
- */
-const ON_HOMEPAGE = 12;
+/** Seconds per mark. Seven at this rate is the 48s the text strip used to run. */
+const SECONDS_PER_MARK = 7;
+
+function Half({ duplicate = false }: { duplicate?: boolean }) {
+  return (
+    <div
+      className={`flex shrink-0 items-center${duplicate ? " marquee-dup" : ""}`}
+      aria-hidden={duplicate || undefined}
+    >
+      {developers.map((d) => (
+        <span key={d.slug} className="flex items-center">
+          <Link
+            to={`/developers/${d.slug}`}
+            className="group flex items-center px-9 py-1 md:px-14"
+            tabIndex={duplicate ? -1 : undefined}
+            aria-label={duplicate ? undefined : `${d.name}, the full record`}
+          >
+            <BrandMark slug={d.slug} name={d.name} />
+          </Link>
+          <span aria-hidden className="h-1 w-1 shrink-0 rotate-45 bg-gold/70" />
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export function DeveloperRegister() {
-  const shown = developers.slice(0, ON_HOMEPAGE);
-  const hidden = developers.length - shown.length;
+  const duration = { "--marquee-duration": `${developers.length * SECONDS_PER_MARK}s` };
 
   return (
-    <Section>
-      <div className="grid gap-8 md:grid-cols-12 md:gap-7">
-        <Reveal className="md:col-span-5" exit>
-          <Eyebrow className="text-fog">{REGISTER_INTRO.eyebrow}</Eyebrow>
-          <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
-            {REGISTER_INTRO.headline}
-          </SplitHeading>
-        </Reveal>
-        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
-          <p className="type-body-lg text-ink/74">{REGISTER_INTRO.body}</p>
-        </Reveal>
-      </div>
-
-      <Reveal className="mt-11 md:mt-14">
-        <div className="border border-ink/18 p-8 md:p-12">
-          {/* the column count climbs with the viewport, and the grid gains rows
-              as the register does — no cell ever needs filling */}
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-11 sm:grid-cols-3 lg:grid-cols-4">
-            {shown.map((d) => (
-              <li key={d.slug}>
-                <Link
-                  to={`/developers/${d.slug}`}
-                  className="group flex flex-col items-center gap-3.5 text-center"
-                  aria-label={`${d.name}, the full record`}
-                >
-                  <BrandMark slug={d.slug} name={d.name} />
-                  <span className="type-cap text-fog transition-colors duration-300 group-hover:text-brass">
-                    {d.name}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+    <>
+      <Section className="pb-0">
+        <div className="grid gap-8 md:grid-cols-12 md:gap-7">
+          <Reveal className="md:col-span-5" exit>
+            <Eyebrow className="text-fog">{REGISTER_INTRO.eyebrow}</Eyebrow>
+            <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
+              {REGISTER_INTRO.headline}
+            </SplitHeading>
+          </Reveal>
+          <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
+            <p className="type-body-lg text-ink/74">{REGISTER_INTRO.body}</p>
+            <div className="mt-7">
+              <QuietLink to="/developers">The full register</QuietLink>
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </Section>
 
-      <Reveal className="mt-9">
-        <QuietLink to="/developers">
-          {hidden > 0 ? `All ${developers.length} developers` : "The full register"}
-        </QuietLink>
-      </Reveal>
-    </Section>
+      {/* the ground sits outside the masked box, so it stays solid while the
+          marks dissolve at both edges */}
+      <div className="mt-14 bg-frost md:mt-20">
+        <div className="marquee marquee-fade overflow-hidden py-10" tabIndex={0}>
+          <div className="marquee-track flex" style={duration as CSSProperties}>
+            <Half />
+            <Half duplicate />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

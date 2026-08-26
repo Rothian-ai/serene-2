@@ -583,16 +583,36 @@ body {
   will-change: transform;
 }
 
-/* marquee — a slow, continuous drift of a text strip (MarqueeStrip).
-   The track holds two identical halves; translating by -50% loops seamlessly.
-   Pauses on hover/focus; neutralised to a static row under reduced motion. */
+/* marquee — a slow, continuous drift. The track holds two identical halves;
+   translating by -50% loops seamlessly. Pauses on hover/focus; neutralised to a
+   static row under reduced motion.
+
+   The duration is a variable, not a constant, because it has to be. One full
+   translate covers the whole track, so a fixed duration means the strip runs
+   faster every time an item is added to it — seven marks drift, thirty blur. A
+   caller that can grow sets --marquee-duration from its own count and the pace
+   per item stays put. 48s is the seven-item pace, kept as the default. */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee 48s linear infinite;
+  animation: marquee var(--marquee-duration, 48s) linear infinite;
   width: max-content;
+}
+/* Edge fade, so marks dissolve at the viewport rather than clipping against it.
+   It sits on the overflow box, never on the track: the track translates, and a
+   mask travels with the box it is set on. The ground therefore belongs to a
+   wrapper outside this element, so it stays solid while the content fades. */
+.marquee-fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
 }
 .marquee:hover .marquee-track,
 .marquee:focus-within .marquee-track {
