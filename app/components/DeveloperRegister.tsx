@@ -7,12 +7,15 @@ import { developers } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 
 /**
- * The register, as a drifting band on the frost ground.
+ * The register: a heading, a drifting band of lockups, and the way through to
+ * the full page, all on one frost ground.
  *
  * A tonal step rather than a dark one: ink is spoken for on this page by the
  * hero and the close, and a third dark stretch between them read as a stripe.
- * Frost gives the band its edges without borrowing that weight, and without
- * adding another hairline to a page that has four grids of them.
+ * Frost gives the section its edge without borrowing that weight, and without
+ * adding another hairline to a page that has four grids of them. The
+ * commitments above moved to ivory when this took the frost, because two frost
+ * blocks in a row merge into one expanse and neither gets an edge.
  *
  * The one real fault of the earlier band is fixed rather than re-skinned. A
  * marquee's duration covers one full translate, so a fixed 48s means the strip
@@ -58,7 +61,18 @@ export function DeveloperRegister() {
   const duration = { "--marquee-duration": `${developers.length * SECONDS_PER_MARK}s` };
 
   return (
-    <>
+    /* One ground holds the heading and the band together.
+       Four things had been prising them apart. The closing link sat up in the
+       heading, so the section signed off before the band even arrived. There
+       were 56 to 80px of gap. The ground changed at the band's top edge, which
+       is this site's own signal for "a new section starts here". And a
+       container-width heading above an edge-to-edge band reads as two objects
+       rather than one.
+       So the frost now wraps both, the gap is a third of what it was, and the
+       link moved below the band to close the thing it belongs to. The band
+       stays full-bleed, which is what a marquee wants — but full-bleed inside a
+       shared ground reads as part of a section instead of after it. */
+    <div className="bg-frost">
       <Section className="pb-0">
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal className="md:col-span-5" exit>
@@ -69,23 +83,22 @@ export function DeveloperRegister() {
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
             <p className="type-body-lg text-ink/74">{REGISTER_INTRO.body}</p>
-            <div className="mt-7">
-              <QuietLink to="/developers">The full register</QuietLink>
-            </div>
           </Reveal>
         </div>
       </Section>
 
-      {/* the ground sits outside the masked box, so it stays solid while the
-          marks dissolve at both edges */}
-      <div className="mt-14 bg-frost md:mt-20">
-        <div className="marquee marquee-fade overflow-hidden py-10" tabIndex={0}>
-          <div className="marquee-track flex" style={duration as CSSProperties}>
-            <Half />
-            <Half duplicate />
-          </div>
+      <div className="marquee marquee-fade mt-9 overflow-hidden py-3 md:mt-11" tabIndex={0}>
+        <div className="marquee-track flex" style={duration as CSSProperties}>
+          <Half />
+          <Half duplicate />
         </div>
       </div>
-    </>
+
+      <Section className="pt-0">
+        <Reveal className="mt-9">
+          <QuietLink to="/developers">The full register</QuietLink>
+        </Reveal>
+      </Section>
+    </div>
   );
 }

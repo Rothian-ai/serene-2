@@ -36,32 +36,32 @@ export default function Home() {
       {/* ① The hero — one statement over the dusk plate */}
       <HomeHero />
 
-      {/* ② Four commitments — the structural facts, not promises */}
-      <div className="bg-frost">
-        <Section>
-          <div className="grid gap-8 md:grid-cols-12 md:gap-7">
-            <Reveal className="md:col-span-5" exit>
-              <Eyebrow className="text-fog">{COMMITMENTS_INTRO.eyebrow}</Eyebrow>
-              <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
-                {COMMITMENTS_INTRO.headline}
-              </SplitHeading>
-            </Reveal>
-            <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
-              <p className="type-body-lg text-ink/74">{COMMITMENTS_INTRO.body}</p>
-            </Reveal>
-          </div>
+      {/* ② Four commitments — the structural facts, not promises.
+          On ivory, because the register below it took the frost — two frost
+          blocks in a row merge into one expanse and neither gets an edge. */}
+      <Section>
+        <div className="grid gap-8 md:grid-cols-12 md:gap-7">
+          <Reveal className="md:col-span-5" exit>
+            <Eyebrow className="text-fog">{COMMITMENTS_INTRO.eyebrow}</Eyebrow>
+            <SplitHeading as="h2" className="type-display mt-5 max-w-[16ch]">
+              {COMMITMENTS_INTRO.headline}
+            </SplitHeading>
+          </Reveal>
+          <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-3">
+            <p className="type-body-lg text-ink/74">{COMMITMENTS_INTRO.body}</p>
+          </Reveal>
+        </div>
 
-          <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
-            {COMMITMENTS.map((c) => (
-              <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
-                <span className="type-data text-fog">{c.k}</span>
-                <h3 className="type-title mt-2">{c.claim}</h3>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{c.copy}</p>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Section>
-      </div>
+        <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+          {COMMITMENTS.map((c) => (
+            <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
+              <span className="type-data text-fog">{c.k}</span>
+              <h3 className="type-title mt-2">{c.claim}</h3>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-ink/68">{c.copy}</p>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
 
       {/* ③ The register — the lockups alone, each linking to its own record */}
       <DeveloperRegister />
