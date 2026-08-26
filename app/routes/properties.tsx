@@ -161,16 +161,38 @@ export default function Properties() {
           </div>
         )}
 
+        {/* Two different nothings, and they were saying the same sentence.
+            "Nothing matches that yet" is only true if the visitor asked for
+            something; on a bare visit it blames them for a catalogue that has
+            nothing published in it. */}
         {state === "ok" && projects.length === 0 && (
           <div className="border border-ink/18 p-8">
-            <p className="type-title">Nothing matches that yet.</p>
-            {filtered && (
-              <p className="mt-3 text-[15.5px] text-ink/75">
-                <Link to="/properties" className="text-brass underline underline-offset-2">
-                  Clear the filters
-                </Link>{" "}
-                to see the whole register.
-              </p>
+            {filtered ? (
+              <>
+                <p className="type-title">Nothing matches that yet.</p>
+                <p className="mt-3 text-[15.5px] text-ink/75">
+                  <Link to="/properties" className="text-brass underline underline-offset-2">
+                    Clear the filters
+                  </Link>{" "}
+                  to see the whole register.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="type-title">No addresses are published yet.</p>
+                <p className="mt-3 max-w-[54ch] text-[15.5px] text-ink/75">
+                  The register is served live from Amelia's catalogue, so this page fills itself the
+                  moment a permitted project is published. Nothing is listed here without a valid
+                  Trakheesi permit.
+                </p>
+                <p className="mt-5 text-[15.5px] text-ink/75">
+                  An advisor can tell you what is coming before it appears.{" "}
+                  <Link to="/contact" className="text-brass underline underline-offset-2">
+                    Ask one
+                  </Link>
+                  .
+                </p>
+              </>
             )}
           </div>
         )}

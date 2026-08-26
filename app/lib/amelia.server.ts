@@ -310,7 +310,21 @@ export async function fetchProjects(
     const v = q[k];
     if (v !== undefined && v !== null && String(v).trim() !== "") p.set(k, String(v));
   }
-  return get(`/api/v1/projects?${p}`, signal);
+  const res = await get<{ data: ProjectCard[]; nextCursor: string | null }>(
+    `/api/v1/projects?${p}`,
+    signal,
+  );
+  // A 200 carrying an empty catalogue is indistinguishable, from the page, from
+  // a request we got wrong. Say which in the logs so the next person asking
+  // "why is the register empty" can read the answer instead of deducing it.
+  if (!res?.data?.length) {
+    console.warn(
+      `[amelia] GET /api/v1/projects?${p} returned 200 with ${
+        Array.isArray(res?.data) ? "0 projects" : `no data array (keys: ${Object.keys(res ?? {})})`
+      }`,
+    );
+  }
+  return res;
 }
 
 /** `null` when the slug is unknown, belongs to another org, or is an unpublished
