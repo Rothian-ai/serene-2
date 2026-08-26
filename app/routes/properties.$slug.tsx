@@ -100,6 +100,13 @@ export default function Property() {
   const signup = buyerSignupHref(p.slug);
   const band = priceRange(p.minPrice, p.maxPrice, currency);
 
+  /** the one marketing line the record carries, if any */
+  const positioning =
+    p.positioning?.signaturePositioning ||
+    p.positioning?.brandedResidenceBrand ||
+    p.positioning?.brandedResidence ||
+    undefined;
+
   const facts = [
     { k: "Type", v: humanise(p.propertyType) },
     { k: "Status", v: humanise(p.status) },
@@ -160,6 +167,8 @@ export default function Property() {
         ? (escrow as Record<string, unknown>).trustee
         : null,
     ) ?? text(p.trust?.escrowTrustee);
+  /** the compliance line the rail carries, so the permit is visible throughout */
+  const permitLine = text(permit?.number) ? `Trakheesi permit ${text(permit?.number)}` : null;
   // Media arrives typed: images are proxied and hotlinkable, while video and
   // 3D tours are external embed URLs (Matterport, YouTube) to iframe directly.
   const media = p.media ?? [];
@@ -224,33 +233,88 @@ export default function Property() {
         </div>
       </div>
 
-      {/* ——— the facts, before the prose ——— */}
-      {facts.length > 0 && (
-        <Section>
-          <Ledger cells={facts} />
-        </Section>
-      )}
+      {/* ——— the offer: prose at a readable measure, the record beside it ———
 
-      {p.description && (
-        <Block
-          eyebrow="The Address"
-          title={
-            p.positioning?.signaturePositioning ||
-            p.positioning?.brandedResidenceBrand ||
-            p.positioning?.brandedResidence ||
-            undefined
-          }
-          className="pt-0"
-        >
-          <div className="prose-serene whitespace-pre-line">{p.description}</div>
-        </Block>
+           This used to be a bare Ledger floating in its own full-width band,
+           then a description stretched the whole container. Both were wrong:
+           seven unlabelled facts in a horizontal row is a strip of data with no
+           subject, and prose at container width is 120 characters a line.
+
+           So the facts become a rail, set vertically where a narrow column
+           suits them, carrying the price, the record, the permit and the way to
+           ask about it in one place.
+
+           It sticks, but only within this section: that is what sticky does,
+           and the travel is whatever the description leaves over. With a full
+           fact set the rail is around 550px, so a short record gives it a couple
+           of hundred pixels of hold and a wordy one gives it most of the
+           section. That is the right way round — it earns its keep exactly when
+           there is enough to read to lose your place in. ——— */}
+      {(p.description || facts.length > 0) && (
+        <Section>
+          <div className="grid gap-12 md:grid-cols-12 md:gap-7">
+            <div className="md:col-span-7">
+              {positioning && (
+                <>
+                  <Reveal exit>
+                    <Eyebrow className="text-fog">The Address</Eyebrow>
+                  </Reveal>
+                  <h2 className="type-headline mt-5 max-w-[26ch]">{positioning}</h2>
+                </>
+              )}
+              {p.description && (
+                <div className={`prose-serene whitespace-pre-line ${positioning ? "mt-8" : ""}`}>
+                  {p.description}
+                </div>
+              )}
+            </div>
+
+            {facts.length > 0 && (
+              <aside className="md:col-span-4 md:col-start-9">
+                <div className="md:sticky md:top-28">
+                  <Reveal>
+                    <div className="border-t border-ink/18 pt-6">
+                      {band && (
+                        <>
+                          <p className="type-eyebrow text-fog">From</p>
+                          <p className="mt-1.5 font-extralight leading-none tabular-nums text-[clamp(1.6rem,2.4vw,2.1rem)]">
+                            {band}
+                          </p>
+                        </>
+                      )}
+                      <dl className="mt-7 flex flex-col">
+                        {facts
+                          .filter((c) => c.k !== "From")
+                          .map((c) => (
+                            <div
+                              key={c.k}
+                              className="flex items-baseline justify-between gap-6 border-t border-ink/10 py-3 first:border-t-0 first:pt-0"
+                            >
+                              <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-fog">
+                                {c.k}
+                              </dt>
+                              <dd className="type-data text-right">{c.v}</dd>
+                            </div>
+                          ))}
+                      </dl>
+                      <CTA to={signup} external kind="platinum" className="mt-8 w-full">
+                        Ask Amelia
+                      </CTA>
+                      {permitLine && <p className="type-cap mt-4 text-fog">{permitLine}</p>}
+                    </div>
+                  </Reveal>
+                </div>
+              </aside>
+            )}
+          </div>
+        </Section>
       )}
 
       {/* ——— investment: the numbers a buyer actually weighs ——— */}
       {(p.investment || p.serviceChargePerSqft) && (
         <Block
-          eyebrow="The Numbers"
-          title="What it returns, and what it costs to hold."
+          eyebrow="The Money"
+          title="What it returns, what it holds, and how the payments fall."
           className="pt-0"
         >
           <Ledger
@@ -292,7 +356,7 @@ export default function Property() {
 
       {/* ——— payment plans ——— */}
       {plans.length > 0 && (
-        <Block eyebrow="The Terms" title="How the payments fall." className="pt-0">
+        <Block title="How the payments fall." className="pt-0">
           <div className="grid gap-10 md:grid-cols-2 md:gap-7">
             {plans.map((plan, i) => (
               <div key={i} className="border-t border-ink/14 pt-5">
@@ -321,9 +385,36 @@ export default function Property() {
         </Block>
       )}
 
+      {/* ——— fees ——— */}
+      {fees.length > 0 && (
+        <Block title="What it costs on top." className="pt-0">
+          <dl>
+            {fees.map((x, i) => (
+              <div key={i} className="hairline-t flex flex-wrap items-baseline justify-between gap-x-6 py-3">
+                <dt className="text-[15px] text-ink/78">
+                  {x.label}
+                  {(x.frequency || x.isOptional || x.note) && (
+                    <span className="type-cap ml-2 text-fog">
+                      {[humanise(x.frequency), x.isOptional ? "optional" : null, x.note]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </span>
+                  )}
+                </dt>
+                <dd className="type-data shrink-0 text-brass">
+                  {typeof x.pctOfPrice === "number"
+                    ? `${x.pctOfPrice}%`
+                    : (money(x.amount, currency) ?? EMPTY)}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Block>
+      )}
+
       {/* ——— amenities ——— */}
       {amenities.length > 0 && (
-        <Block eyebrow="Amenities" className="pt-0">
+        <Block eyebrow="The Property" title="What is on the site." className="pt-0">
           <ul className="grid grid-cols-2 gap-x-7 gap-y-3 md:grid-cols-3 lg:grid-cols-4">
             {amenities.map((a) => (
               <li key={a} className="hairline-t py-3 text-[15px] text-ink/78">
@@ -336,7 +427,7 @@ export default function Property() {
 
       {/* ——— availability ——— */}
       {units.length > 0 && (
-        <Block eyebrow="Availability" title="The units on the floor plates." className="pt-0">
+        <Block title="The units on the floor plates." className="pt-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] border-collapse text-[15px]">
               <thead>
@@ -381,7 +472,7 @@ export default function Property() {
 
       {/* ——— gallery ——— */}
       {images.length > 0 && (
-        <Block eyebrow="The Frames" className="pt-0">
+        <Block title="The frames." className="pt-0">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {images.slice(0, 9).map((src, i) => (
               <div key={`${src}-${i}`} className="relative aspect-[4/3] overflow-hidden">
@@ -399,7 +490,7 @@ export default function Property() {
 
       {/* ——— towers, with their per-floor pricing bands ——— */}
       {towers.length > 0 && (
-        <Block eyebrow="The Towers" className="pt-0">
+        <Block title="The towers, and their price bands." className="pt-0">
           <div className="grid gap-10 md:grid-cols-2 md:gap-7">
             {towers.map((t, i) => (
               <div key={i} className="border-t border-ink/14 pt-5">
@@ -436,7 +527,7 @@ export default function Property() {
 
       {/* ——— floor plans & masterplans ——— */}
       {(floorPlans.length > 0 || masterplans.length > 0) && (
-        <Block eyebrow="The Plans" className="pt-0">
+        <Block title="The plans." className="pt-0">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[...masterplans, ...floorPlans].slice(0, 9).map((m, i) => (
               <a
@@ -463,7 +554,7 @@ export default function Property() {
 
       {/* ——— video & 3D tours: external embeds, not proxied ——— */}
       {embeds.length > 0 && (
-        <Block eyebrow="The Walkthrough" className="pt-0">
+        <Block title="The walkthrough." className="pt-0">
           <div className="grid gap-6 lg:grid-cols-2">
             {embeds.slice(0, 4).map((m, i) => (
               <figure key={m.url + i}>
@@ -490,7 +581,7 @@ export default function Property() {
 
       {/* ——— construction progress ——— */}
       {construction.length > 0 && (
-        <Block eyebrow="Construction" title="Where the build has reached." className="pt-0">
+        <Block title="Where the build has reached." className="pt-0">
           <dl>
             {construction.map((m, i) => (
               <div key={i} className="hairline-t flex flex-wrap items-baseline gap-x-6 gap-y-1 py-3">
@@ -502,63 +593,6 @@ export default function Property() {
               </div>
             ))}
           </dl>
-        </Block>
-      )}
-
-      {/* ——— fees ——— */}
-      {fees.length > 0 && (
-        <Block eyebrow="The Costs" className="pt-0">
-          <dl>
-            {fees.map((x, i) => (
-              <div key={i} className="hairline-t flex flex-wrap items-baseline justify-between gap-x-6 py-3">
-                <dt className="text-[15px] text-ink/78">
-                  {x.label}
-                  {(x.frequency || x.isOptional || x.note) && (
-                    <span className="type-cap ml-2 text-fog">
-                      {[humanise(x.frequency), x.isOptional ? "optional" : null, x.note]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </span>
-                  )}
-                </dt>
-                <dd className="type-data shrink-0 text-brass">
-                  {typeof x.pctOfPrice === "number"
-                    ? `${x.pctOfPrice}%`
-                    : (money(x.amount, currency) ?? EMPTY)}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Block>
-      )}
-
-      {/* ——— communities ——— */}
-      {communities.length > 0 && (
-        <Block eyebrow="The Community" className="pt-0">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {communities.map((c, i) => (
-              <div key={i} className="border-t border-ink/14 pt-5">
-                <h3 className="type-title text-[1.15rem]">{c.name}</h3>
-                {c.description && (
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink/68">{c.description}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </Block>
-      )}
-
-      {/* ——— partners ——— */}
-      {partners.length > 0 && (
-        <Block eyebrow="Partners" className="pt-0">
-          <ul className="flex flex-wrap gap-x-10 gap-y-4">
-            {partners.map((x, i) => (
-              <li key={i} className="flex items-baseline gap-3">
-                <span className="text-[15px] text-ink/80">{x.name}</span>
-                {x.role && <span className="type-cap text-fog">{humanise(x.role)}</span>}
-              </li>
-            ))}
-          </ul>
         </Block>
       )}
 
@@ -593,10 +627,24 @@ export default function Property() {
         </div>
       )}
 
+      {/* ——— partners ——— */}
+      {partners.length > 0 && (
+        <Block title="Who else is involved." className="pt-0">
+          <ul className="flex flex-wrap gap-x-10 gap-y-4">
+            {partners.map((x, i) => (
+              <li key={i} className="flex items-baseline gap-3">
+                <span className="text-[15px] text-ink/80">{x.name}</span>
+                {x.role && <span className="type-cap text-fog">{humanise(x.role)}</span>}
+              </li>
+            ))}
+          </ul>
+        </Block>
+      )}
+
       {/* ——— location ——— */}
       {(p.location?.addressLine || p.location?.address || nearby.length > 0) && (
         <Block
-          eyebrow="The Location"
+          eyebrow="The Place"
           title={p.location?.addressLine ?? p.location?.address ?? undefined}
         >
           {nearby.length > 0 && (
@@ -615,6 +663,22 @@ export default function Property() {
               ))}
             </dl>
           )}
+        </Block>
+      )}
+
+      {/* ——— communities ——— */}
+      {communities.length > 0 && (
+        <Block title="The community around it." className="pt-0">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {communities.map((c, i) => (
+              <div key={i} className="border-t border-ink/14 pt-5">
+                <h3 className="type-title text-[1.15rem]">{c.name}</h3>
+                {c.description && (
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink/68">{c.description}</p>
+                )}
+              </div>
+            ))}
+          </div>
         </Block>
       )}
 
