@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, Ledger, Plate, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
