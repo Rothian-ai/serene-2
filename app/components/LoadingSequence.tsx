@@ -62,7 +62,7 @@ export function LoadingSequence() {
       }`}
     >
       {/* the lockup already carries the wordmark — the mark stands alone, dead-centre */}
-      <img src="/logo/serene-mark.png" alt="" className="loader-mark h-28 w-auto" />
+      <img src="/logo/serene-mark-white.png" alt="" className="loader-mark h-28 w-auto" />
     </div>
   );
 }

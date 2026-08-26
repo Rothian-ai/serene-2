@@ -152,7 +152,7 @@ export function HomeHero() {
 
       <div className="container-site relative z-[1] text-center">
         {/* mark alone (sanctioned lockup 2) — the wordmark would double the headline */}
-        <SereneMark ref={markRef} title="Serene" className="mx-auto h-20 w-auto md:h-28" />
+        <SereneMark ref={markRef} tone="white" title="Serene" className="mx-auto h-20 w-auto md:h-28" />
         <Eyebrow className="mt-8 justify-center text-silver">{COPY.eyebrow}</Eyebrow>
         <h1 ref={headlineRef} className="type-display mx-auto mt-4 max-w-[22ch]">
           {COPY.title}
@@ -160,7 +160,7 @@ export function HomeHero() {
         <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">
           {COPY.sub}
         </p>
-        <div ref={ctaRef}>
+        <div ref={ctaRef} className="mt-11 md:mt-14">
           <div className="flex flex-wrap justify-center gap-4">
             <Actions />
           </div>

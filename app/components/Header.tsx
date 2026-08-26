@@ -84,7 +84,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
           <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
             {/* mark alone — the wordmark beside it is the live "SERENE" span */}
-            <SereneMark tone={overDark ? "platinum" : "graphite"} className="h-9 w-auto" />
+            <SereneMark tone={overDark ? "white" : "graphite"} className="h-9 w-auto" />
             {/* the wordmark carries the short title identity; prose says "Serene Bay" */}
             <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
           </Link>

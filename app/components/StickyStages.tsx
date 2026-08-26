@@ -178,7 +178,7 @@ export function StickyStages() {
                   <div className="mt-9 flex items-center gap-4 border-t border-brass/40 pt-5">
                     <span className="type-eyebrow text-brass">Reservation</span>
                     <span className="type-cap text-ink/60">
-                      Paid here. Most of the market stops here too.
+                      Paid at stage three. Gone by stage four.
                     </span>
                   </div>
                 )}

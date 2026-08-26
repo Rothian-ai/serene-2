@@ -1,8 +1,6 @@
 import {
   CTA,
   Eyebrow,
-  Ledger,
-  Plate,
   QuietLink,
   Reveal,
   RevealGroup,
@@ -14,7 +12,6 @@ import { SplitHeading } from "~/components/SplitHeading";
 import { ConversationBand } from "~/components/ConversationBand";
 import {
   BUYER_ORIGINS,
-  COMMITMENTS,
   OVERSEAS_INTRO,
   PROBLEMS,
   PROBLEMS_INTRO,
@@ -45,7 +42,7 @@ export default function About() {
         <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">{SITE.positioning}</p>
       </Hero>
 
-      {/* ② Why we exist — the white space, stated plainly */}
+      {/* ② Who we work for — the buyer, and where they are buying from */}
       <Section>
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
           <Reveal exit className="md:col-span-5">
@@ -73,17 +70,6 @@ export default function About() {
           </Reveal>
         </div>
 
-        {/* the argument, in material — one wide, quiet plate */}
-        <Reveal className="mt-10 md:mt-14">
-          <Plate
-            kind="stone"
-            image="/images/about-light.jpg"
-            alt="An atrium in plaster and daylight"
-            className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/7]"
-            parallax
-          />
-          <p className="type-cap mt-3 text-fog">Room to think: the whole premise, in one frame.</p>
-        </Reveal>
       </Section>
 
       {/* ③ Four things nobody is doing for you, each answered by a stage */}
@@ -111,51 +97,7 @@ export default function About() {
         </Reveal>
       </Section>
 
-      {/* ④ How we are built — the four commitments, in short form */}
-      <div className="bg-frost">
-        <Section>
-          <Reveal exit>
-            <Eyebrow className="text-fog">How We Are Built</Eyebrow>
-          </Reveal>
-          <RevealGroup className="mt-9 grid gap-x-7 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
-            {COMMITMENTS.map((c) => (
-              <RevealItem key={c.k} className="border-t border-ink/16 pt-5">
-                <span className="type-data text-fog">{c.k}</span>
-                <h3 className="type-title mt-2">{c.claim}</h3>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-          <Reveal className="mt-10">
-            <QuietLink to="/difference">Each one, in full</QuietLink>
-          </Reveal>
-        </Section>
-      </div>
-
-      {/* ⑤ Licensing & registry — the open-corner frame monument */}
-      <Section>
-        <Reveal>
-          <div className="relative border border-ink/18 p-8 md:p-12">
-            <Eyebrow className="text-fog">Licensed &amp; Registered</Eyebrow>
-            <Ledger
-              className="mt-6"
-              cells={[
-                { k: "Licence", v: SITE.rera },
-                { k: "Advisor pay", v: "Salaried" },
-                { k: "Markets", v: "Dubai · Abu Dhabi" },
-                { k: "Represents", v: "Buyers only" },
-              ]}
-            />
-            <p className="mt-6 max-w-[62ch] text-[15.5px] leading-relaxed text-ink/70">
-              We transact only under formal broker registration with each developer, and every
-              purchase moves through RERA-regulated escrow. We take no seller-side listings, so
-              the dual-agency conflict a buyer would otherwise carry does not exist here. Verify
-              the licence; we would in your position.
-            </p>
-          </div>
-        </Reveal>
-      </Section>
-
-      {/* ⑥ The commitment — the charter, on ink, meeting the page on a hard edge */}
+      {/* ④ On your schedule — the charter, on ink */}
       <div className="bg-ink text-ivory">
         <Section>
           <div className="mx-auto max-w-[880px] text-center">
@@ -177,40 +119,6 @@ export default function About() {
           </div>
         </Section>
       </div>
-
-      {/* ⑦ The standard — counsel left, the material of it right */}
-      <Section>
-        <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
-          <div className="md:col-span-6">
-            <Reveal exit>
-              <Eyebrow className="text-fog">The Standard</Eyebrow>
-            </Reveal>
-            <SplitHeading as="h2" className="type-headline mt-6 max-w-[20ch]">
-              Counsel that waits for the question.
-            </SplitHeading>
-            <Reveal delay={0.1}>
-              <p className="type-body-lg mt-7 max-w-[52ch] text-ink/78">
-                No financial reason to prefer one developer, one project or one unit over another,
-                the same way a good independent financial adviser is not paid by any single fund
-                manager.
-              </p>
-              <div className="mt-9">
-                <QuietLink to="/faqs">The questions we get asked</QuietLink>
-              </div>
-            </Reveal>
-          </div>
-          <Reveal delay={0.15} className="md:col-span-5 md:col-start-8">
-            <Plate
-              kind="interior"
-              image="/images/saadiyat-grove-residences-02.jpg"
-              alt="A calm interior in natural light"
-              className="aspect-[4/5]"
-              parallax
-            />
-            <p className="type-cap mt-3 text-fog">Present when called upon, invisible otherwise.</p>
-          </Reveal>
-        </div>
-      </Section>
 
       <ConversationBand
         eyebrow="Request a conversation"

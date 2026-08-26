@@ -1,18 +1,23 @@
-import { Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { CHAIN_INTRO, STAGES } from "~/lib/strategy";
 
 /**
- * The nine-stage buyer lifecycle (strategy §4), in the house's data grammar:
- * hairline-ruled cells, the stage number set as a figure, no cards and no
- * gradients. The `compact` variant is the homepage summary — nine short cells
- * and a link on; the full variant is the /lifecycle page's spine.
+ * The nine-stage buyer value chain, as a rail rather than a grid.
  *
- * Reservation sits between stages 3 and 4, which is exactly where the rest of
- * the market stops. The rail marks that line rather than describing it.
+ * Nine equal cells of prose is the wrong shape for this: it reads as a list of
+ * services when the argument is about *where the market leaves*. So the rail
+ * sets the nine as marks on one continuous rule and colours the break — the
+ * first three muted, the six after the handoff in brass. The document's own
+ * sentence carries the reason ("paid at stage three and gone by stage four"),
+ * so the picture states it and the intro explains it, neither repeating itself.
+ *
+ * Three across on a phone, five at sm, all nine at lg; the rule runs through
+ * every cell at every width, so the sequence never breaks visually.
  */
 
-const HANDOFF_AFTER = "03";
+/** Stages after the point a commission-only agent has been paid. */
+const AFTER_HANDOFF = 3;
 
 export function LifecycleRail() {
   return (
@@ -32,23 +37,47 @@ export function LifecycleRail() {
         </Reveal>
       </div>
 
-      <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 sm:grid-cols-2 md:mt-14 lg:grid-cols-3">
-        {STAGES.map((s) => (
-          <RevealItem key={s.n} className="border-t border-ink/14 pt-5">
-            <div className="flex items-baseline gap-3">
-              <span className="type-data text-fog">{s.n}</span>
-              <h3 className="type-title">{s.title}</h3>
-            </div>
-            <p className="type-cap mt-3 text-brass">{s.label}</p>
-            {s.n === HANDOFF_AFTER && (
-              <p className="type-cap mt-4 flex items-center gap-2 text-brass">
-                <span aria-hidden className="h-px w-6 bg-brass" />
-                Most agents stop here
-              </p>
-            )}
-          </RevealItem>
-        ))}
-      </RevealGroup>
+      <Reveal className="mt-12 md:mt-16">
+        <ol className="grid grid-cols-3 gap-x-5 gap-y-10 sm:grid-cols-5 lg:grid-cols-9 lg:gap-x-4">
+          {STAGES.map((s) => {
+            const ours = Number(s.n) > AFTER_HANDOFF;
+            return (
+              <li key={s.n}>
+                {/* the rule, then the mark sitting on it */}
+                <div className={`h-px w-full ${ours ? "bg-brass/55" : "bg-ink/18"}`} />
+                <span
+                  aria-hidden
+                  className={`-mt-[4px] block h-[7px] w-[7px] rotate-45 ${
+                    ours ? "bg-brass" : "bg-ink/30"
+                  }`}
+                />
+                <div className={`type-data mt-5 ${ours ? "text-brass" : "text-fog"}`}>{s.n}</div>
+                <p
+                  className={`mt-1.5 text-[13.5px] leading-snug ${
+                    ours ? "text-ink" : "text-ink/55"
+                  }`}
+                >
+                  {s.label}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+      </Reveal>
+
+      {/* the legend, in the document's own words */}
+      <Reveal className="mt-10">
+        <div className="flex flex-wrap gap-x-10 gap-y-3">
+          <p className="type-cap flex items-center gap-2.5 text-ink/55">
+            <span aria-hidden className="h-[7px] w-[7px] rotate-45 bg-ink/30" />
+            01–03 Paid at stage three
+          </p>
+          <p className="type-cap flex items-center gap-2.5 text-ink/80">
+            <span aria-hidden className="h-[7px] w-[7px] rotate-45 bg-brass" />
+            04–09 Gone by stage four
+          </p>
+        </div>
+      </Reveal>
     </Section>
   );
 }

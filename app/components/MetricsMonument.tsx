@@ -23,9 +23,18 @@ export function MetricsMonument() {
             {MARKET_CASE.headline}
           </SplitHeading>
         </Reveal>
-        <Reveal delay={0.1} className="md:col-span-5 md:col-start-8 md:pt-2">
-          <p className="type-body-lg max-w-[46ch] text-ink/72">{MARKET_CASE.pull}</p>
-          <p className="type-cap mt-5 flex items-center gap-2.5 text-fog">
+        {/* the narrative in full: this is the only place it appears now */}
+        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
+          {MARKET_CASE.body.map((para) => (
+            <p key={para} className="type-body-lg mt-5 text-ink/76 first:mt-0">
+              {para}
+            </p>
+          ))}
+          <p className="type-title mt-7 max-w-[34ch] border-l border-brass pl-5 font-light text-ink/80">
+            {MARKET_CASE.pull}
+          </p>
+          <p className="mt-5 text-[15.5px] leading-relaxed text-ink/65">{MARKET_CASE.close}</p>
+          <p className="type-cap mt-7 flex items-center gap-2.5 text-fog">
             <span
               aria-hidden
               className="seal-platinum h-7 w-7 shrink-0 text-[13px] font-semibold leading-none"

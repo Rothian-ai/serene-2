@@ -1,7 +1,6 @@
 import {
   CTA,
   Eyebrow,
-  Plate,
   QuietLink,
   Reveal,
   Section,
@@ -10,7 +9,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { StickyStages } from "~/components/StickyStages";
 import { ConversationBand } from "~/components/ConversationBand";
-import { CHAIN_INTRO, STAGES } from "~/lib/strategy";
+import { CHAIN_INTRO} from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -24,9 +23,6 @@ export function meta() {
   });
 }
 
-/** Where the market stops and where Serene Bay carries on (strategy §4). */
-const AFTER_RESERVATION = STAGES.length - 3;
-
 export default function Lifecycle() {
   return (
     <>
@@ -39,42 +35,7 @@ export default function Lifecycle() {
         <p className="type-body-lg mt-6 max-w-[56ch] text-ivory/72">{CHAIN_INTRO.body}</p>
       </Hero>
 
-      {/* ② The shape of it — where the market stops */}
-      <Section>
-        <div className="grid gap-8 md:grid-cols-12 md:gap-7">
-          <Reveal exit className="md:col-span-5">
-            <Eyebrow className="text-fog">Why It Runs This Long</Eyebrow>
-            <SplitHeading as="h2" className="type-headline mt-6 max-w-[16ch]">
-              The hardest part is not the purchase.
-            </SplitHeading>
-          </Reveal>
-          <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-2">
-            <p className="type-body-lg text-ink/80">
-              Most of our buyers are managing a six- or seven-figure asset from thousands of
-              kilometres away, in a legal and construction environment they do not live inside and
-              cannot easily inspect. The purchase is the short, well-served part. Everything after
-              it, a build that slips, a unit that needs inspecting, a tenant, a mortgage, an exit,
-              is where the current market simply stops answering.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
-              <div>
-                <div className="font-extralight leading-none tabular-nums text-[clamp(2rem,3vw,2.75rem)] text-ink">
-                  {STAGES.length}
-                </div>
-                <p className="type-cap mt-2 text-fog">stages in total</p>
-              </div>
-              <div>
-                <div className="font-extralight leading-none tabular-nums text-[clamp(2rem,3vw,2.75rem)] text-brass">
-                  {AFTER_RESERVATION}
-                </div>
-                <p className="type-cap mt-2 text-fog">of them after reservation</p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* ③ The spine — all nine stages in full */}
+      {/* ② The spine — all nine stages in full */}
       <Section className="pt-0">
         <Reveal exit>
           <Eyebrow className="text-fog">Stage by Stage</Eyebrow>
@@ -82,22 +43,6 @@ export default function Lifecycle() {
         <div className="mt-9">
           <StickyStages />
         </div>
-      </Section>
-
-      {/* ④ A plate to breathe, then the two governing principles */}
-      <Section className="pt-0">
-        <Reveal>
-          <Plate
-            kind="stone"
-            image="/images/about-light.jpg"
-            alt="An atrium in plaster and daylight"
-            className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/7]"
-            parallax
-          />
-          <p className="type-cap mt-3 text-fog">
-            The long middle: the years most of this market never sees.
-          </p>
-        </Reveal>
       </Section>
 
       <div className="bg-frost">
@@ -114,7 +59,7 @@ export default function Lifecycle() {
         </Section>
       </div>
 
-      {/* ⑤ The close */}
+      {/* ③ The close */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
@@ -137,9 +82,9 @@ export default function Lifecycle() {
       </div>
 
       <ConversationBand
-        eyebrow="Stage One"
-        title="Questions about a later stage are welcome years early."
-        copy="Most buyers ask about snagging in month thirty. Asking in month one is how the answer changes what you buy in the first place."
+        eyebrow="Request a conversation"
+        title="We will not call you unless you ask us to."
+        copy="Tell us what you are trying to achieve. An advisor replies in your preferred channel, in your hours, with no obligation and no follow-up sequence."
         secondary="Why we work this way"
         secondaryTo="/difference"
         image="/images/vela-crest-02.jpg"
