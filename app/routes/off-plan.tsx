@@ -26,7 +26,6 @@ import {
   PLANS,
   PLAN_BASIS,
   PLAN_CHECKS,
-  RISKS,
 } from "~/lib/offplan";
 import { CALCULATOR, DIRECT_REBUTTAL } from "~/lib/strategy";
 import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
@@ -87,6 +86,12 @@ const MOSAIC: MosaicFrame[] = [
  *   /off-plan   — what the market does. The process, neutrally described.
  *   /lifecycle  — what we do at each of those points, and who we introduce.
  *   /difference — why we are able to work that way at all.
+ *
+ * A "known risks" band used to sit before the going-direct case. It said the
+ * same four things the document's own four gaps say on /about — delivery slips,
+ * the builder inspecting its own work, an exit decided at signature — so it is
+ * gone. The FAQ was trimmed on the same test: eight of its twelve questions
+ * were answered by the sections above them.
  */
 export default function OffPlan() {
   return (
@@ -361,49 +366,7 @@ export default function OffPlan() {
         </Reveal>
       </Section>
 
-      {/* ⑦ The risks, named */}
-      <div className="bg-ink text-ivory">
-        <Section>
-          <Reveal exit>
-            <Eyebrow className="text-silver">Known Risks</Eyebrow>
-            <SplitHeading as="h2" className="type-display mt-5 max-w-[18ch]">
-              Four things worth knowing before you sign.
-            </SplitHeading>
-          </Reveal>
-          <RevealGroup className="mt-11 grid gap-x-7 gap-y-9 md:mt-14 md:grid-cols-2">
-            {RISKS.map((r) => (
-              <RevealItem key={r.k} className="border-t border-ivory/18 pt-5">
-                <h3 className="type-title">{r.k}</h3>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-ivory/74">{r.copy}</p>
-                {r.source && (
-                  <a
-                    href={r.source.href}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="mt-4 inline-block text-[11px] font-semibold uppercase tracking-[0.1em] text-silver underline decoration-ivory/30 underline-offset-4 transition-colors hover:text-ivory"
-                  >
-                    {r.source.label} ↗
-                  </a>
-                )}
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Section>
-      </div>
-
-      {/* ⑧ Where we come in — the value proposition */}
-      <Section className="pb-0">
-        <Reveal variant="mask">
-          <Plate
-            kind="dusk"
-            image="/images/armani-beach-residences-04.jpg"
-            alt="A balcony over calm water at dusk"
-            className="aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/8]"
-            parallax
-          />
-        </Reveal>
-      </Section>
-      {/* ⓘ Going direct — the objection the document answers head-on */}
+      {/* ⑦ Going direct — the objection, and the two routes to one price */}
       <Section>
         <Reveal exit>
           <Eyebrow className="text-fog">{DIRECT_REBUTTAL.eyebrow}</Eyebrow>
@@ -415,7 +378,7 @@ export default function OffPlan() {
       </Section>
       <TwoRoutes />
 
-      {/* ⑨ FAQ */}
+      {/* ⑧ FAQ — only what the sections above do not already answer */}
       <div className="bg-frost">
         <Section>
           <script
@@ -450,7 +413,7 @@ export default function OffPlan() {
         </Section>
       </div>
 
-      {/* ⑩ Sources — the page's whole evidence base, in one place */}
+      {/* ⑨ Sources — the page's whole evidence base, in one place */}
       <Section>
         <Reveal>
           <Eyebrow className="text-fog">Sources</Eyebrow>

@@ -302,91 +302,31 @@ export const COSTS = [
   },
 ];
 
-export const RISKS = [
-  {
-    k: "Delivery slips are normal",
-    copy: "Roughly 40–50% of Dubai off-plan projects experience some delay, averaging around 8.5 months across the market, with smaller-tier developers regularly exceeding 10 to 18 months. Plan for the possibility rather than assuming the brochure date.",
-    source: {
-      label: "Real Estate Club Dubai",
-      href: "https://realestateclubdubai.com/blog/buying-guide/off-plan-handover-delays-in-dubai-developer-track-records-what-buyers-can-do",
-    },
-  },
-  {
-    k: "The builder is not the inspector",
-    copy: "An independent snagging industry exists precisely because a developer cannot credibly inspect its own work, and an overseas buyer cannot assess build quality remotely. Arrange the inspection before you release the final payment.",
-  },
-  {
-    k: "Your exit was decided at signature",
-    copy: "Assignment restrictions written into the SPA, often a minimum percentage paid before resale is permitted, govern whether you can sell before completion at all. Read that clause before you sign, not when you want to leave.",
-  },
-  {
-    k: "Nobody is obliged to keep you informed",
-    copy: "Once the commission on your purchase is paid, no one in the standard market structure is paid to keep watching your project. Progress is a matter of record and can be tracked, but only if somebody is tracking it.",
-  },
-];
-
 /* ————————————————————————————————————————————————
-   FAQ — market questions, not questions about us. The ones about how Serene
-   works live in content/faqs.json and on /faqs.
+   FAQ — only the market questions the page above does not already answer.
+   It held twelve; eight of them restated a section on the same page (what
+   off-plan is, the plan structures, the Emirates, going direct) or an entry on
+   /faqs, so they are gone. Questions about how Serene works live in
+   content/faqs.json and on /faqs.
 ———————————————————————————————————————————————— */
 
 export const OFFPLAN_FAQS = [
-  {
-    question: "What does “off-plan” actually mean?",
-    answer:
-      "Buying a property before it is finished, sometimes before construction has started. You are not buying a building; you are buying a contractual right to a specific unit, registered with the land department, which becomes a title deed at completion. Off-plan is not a niche in the UAE: it is the majority of the residential market.",
-  },
-  {
-    question: "Is it safe to buy something that does not exist yet?",
-    answer:
-      "The regulatory framework is built for it. Your payments go into a project escrow account rather than to the developer directly, and are released against certified construction progress. Projects and developers must be registered before units can be sold. What the framework does not do is watch the build for you, inspect the finished unit, or read the contract on your behalf, those gaps are yours to close, with help.",
-  },
-  {
-    question: "How much do I need to start?",
-    answer:
-      "A booking deposit of commonly 5–10% of the price, which forms part of your down payment rather than sitting on top of it. Then instalments under the plan in your SPA. Budget separately for the registration fee, and for service charges once you take handover.",
-  },
-  {
-    question: "What is the difference between a construction-linked and a time-linked payment plan?",
-    answer:
-      "A construction-linked plan releases your instalments when certified building milestones are reached, so payment and progress stay tied together. A time-linked plan falls due on fixed calendar dates regardless of what has been built, which can leave you substantially paid up on a project that has barely moved. Ask which one you are signing, in writing.",
-  },
-  {
-    question: "What is a post-handover payment plan, and is it a good idea?",
-    answer:
-      "It defers part of the price, commonly 30–50%, past completion, over roughly two to five years, so rental income can contribute to the instalments. It genuinely helps cash flow. It is also, in substance, finance provided by the developer, so compare the total cost and the terms against a mortgage rather than treating it as free.",
-  },
-  {
+{
     question: "Can I buy off-plan if I do not live in the UAE?",
     answer:
       "Yes, and most buyers do not live there. Foreign, non-resident purchasing accounts for the majority of transactions. It changes what you should plan for rather than whether you can buy: you will not be able to inspect the site or the finished unit yourself, and mortgage terms for non-residents are materially different from resident terms.",
   },
-  {
-    question: "Are the rules the same in every Emirate?",
-    answer:
-      "No, and this is where newcomers most often get caught out. Each Emirate has its own regulator, its own registration process and its own rules on what a foreign buyer may hold. Dubai offers freehold to all nationalities in designated areas; Abu Dhabi has designated investment zones under ADREC; Sharjah generally offers long leasehold or usufruct rights rather than freehold to non-GCC nationals. Confirm the exact right for the exact property before you commit.",
-  },
-  {
-    question: "What happens if the project is delayed?",
-    answer:
-      "Your SPA's delay and compensation clauses govern it, which is why they are worth reading before signature. Delays are common enough to plan for: roughly 40–50% of Dubai off-plan projects see some slippage, averaging around 8.5 months. If a project is cancelled outright, the escrow account is frozen and the regulator's committee process addresses the return of escrowed funds.",
-  },
-  {
+{
     question: "Can I sell before the building is finished?",
     answer:
       "Often, but not automatically. It is called an assignment, and it usually requires developer approval, frequently conditional on a minimum percentage of the price having been paid, plus a Form F memorandum of understanding, a developer no-objection certificate that expires after 30 days, and an Oqood transfer at a trustee office. The restrictions in your SPA decide what is possible.",
   },
-  {
-    question: "Do I pay the broker?",
-    answer:
-      "Not on an off-plan purchase. The developer pays the broker's commission out of its own project budget, so the headline price is the same whether or not you use one. It is only in the secondary resale market that a buyer typically pays an agent's fee directly.",
-  },
-  {
+{
     question: "Does buying property get me residency?",
     answer:
       "Property investment at and above AED 2 million is one of the routes to long-term Golden Visa eligibility. Treat it as a consequence of a sound purchase rather than a reason to make an unsound one, and get the current criteria confirmed, visa rules change more often than property law.",
   },
-  {
+{
     question: "What should I ask a developer that I probably would not think to ask?",
     answer:
       "Four things. Show me the escrow account registration for this project. What is your delivery record on the last three completions, actual handover dates against the dates advertised? Is this plan milestone-linked or calendar-linked? And what does the SPA permit if I want to assign before completion?",
