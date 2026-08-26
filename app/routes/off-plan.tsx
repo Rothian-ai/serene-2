@@ -162,8 +162,8 @@ export default function OffPlan() {
               From shortlist to exit, in order.
             </SplitHeading>
             <p className="type-body-lg mt-6 max-w-[58ch] text-ink/72">
-              Nine steps. The first three are the part every agent in the market will help you with.
-              The six after them are the part that decides whether the purchase worked.
+              What happens, in what order, with the paperwork named and the usual timings. This
+              is the process itself, and it runs the same way whoever you buy through.
             </p>
           </Reveal>
 

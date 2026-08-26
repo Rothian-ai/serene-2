@@ -28,7 +28,13 @@ export interface Source {
 }
 
 /* ————————————————————————————————————————————————
-   The journey — what actually happens, in order, with the paperwork named.
+   The journey — what actually happens, in order, with the paperwork named and
+   the usual timings. Deliberately mechanical: this is the process, true
+   whoever you buy through. What Serene does at each of these points, and the
+   specialists it introduces, is the nine-stage value chain on /lifecycle, and
+   the two must not start sounding alike — an earlier draft of these steps
+   carried advice as well as mechanics, which made two different nine-item
+   lists read as one repeated list.
    This is the market's process. What *we* do at each point is /lifecycle.
 ———————————————————————————————————————————————— */
 
@@ -46,60 +52,60 @@ export const JOURNEY: JourneyStep[] = [
     n: "01",
     title: "Identify and shortlist",
     when: "Before anything is signed",
-    copy: "Objective first: capital growth, rental yield, Golden Visa eligibility, a home to use, or an exit at a set horizon. Then the honest budget, headline price plus registration fees, and service charges once you own it. Only then do developer, district and project make sense as questions. Compare delivery record, not brochures.",
+    copy: "Nothing is signed. What gets decided is the objective, the all-in budget including registration fees and the service charges that follow ownership, and which developers survive a look at their delivery record.",
   },
   {
     n: "02",
     title: "Reservation",
     when: "Day one",
-    copy: "A reservation form or expression of interest, plus a booking deposit, commonly 5–10% of the price, and part of your total down payment rather than an extra. Verify before you pay that the project is registered and that the money is going to the project's escrow account, not to the developer's own account.",
+    copy: "A reservation form and a booking deposit, commonly 5–10% of the price and part of the down payment rather than an addition to it. The deposit belongs in the project's escrow account, not the developer's own.",
     artefact: "Reservation form · booking deposit 5–10%",
   },
   {
     n: "03",
     title: "The Sales and Purchase Agreement",
     when: "Typically 2–4 weeks later",
-    copy: "The contract that governs everything. Read four things in particular: the payment schedule and whether it is milestone-linked or calendar-linked; the delay and compensation clauses; the cancellation terms; and the resale or assignment restrictions, which decide whether you can exit before completion. This is the moment for independent legal review, before signature, not after.",
+    copy: "The contract that governs everything after it. Four clauses decide the rest: whether the payment schedule is milestone-linked or calendar-linked, the delay and compensation terms, the cancellation terms, and the assignment restrictions that fix whether you can sell before completion.",
     artefact: "SPA",
   },
   {
     n: "04",
     title: "Registration",
     when: "At or shortly after signing",
-    copy: "In Dubai the 4% Dubai Land Department fee is paid at registration, and the developer registers your purchase in the Oqood system, this records your interest in the unit while it is still being built. In Abu Dhabi the transaction is registered with ADREC, which issues an initial registration certificate. Keep the certificate; it is the proof that your interest exists.",
+    copy: "In Dubai the 4% Dubai Land Department fee falls due and the developer records the purchase in the Oqood system, which registers your interest in a unit that does not exist yet. In Abu Dhabi it is registered with ADREC, which issues an initial registration certificate.",
     artefact: "Oqood certificate (Dubai) · initial registration certificate (Abu Dhabi)",
   },
   {
     n: "05",
     title: "The construction years",
     when: "Two to four years, usually",
-    copy: "Instalments fall due against the schedule in your SPA. On a milestone-linked plan, money leaves escrow only when certified progress is reached. This is the long, quiet stretch, and the one where an overseas buyer most often has nobody checking progress on their behalf. Delivery slips are normal enough to plan for, so track the project rather than waiting to be told.",
+    copy: "Instalments fall due against the schedule in the SPA. On a milestone-linked plan money leaves escrow only when certified construction progress is reached. Delivery slips are common enough to budget time for.",
   },
   {
     n: "06",
     title: "Snagging, before you sign off",
     when: "Weeks before handover",
-    copy: "An independent inspection of the finished unit against the specification you bought, producing a documented defect list. Sequence is everything: defects recorded before the final payment or mortgage drawdown is released are defects you still have leverage over. The developer's own handover team is not an independent inspector of its own work.",
+    copy: "An inspection of the finished unit against the specification that was sold, producing a documented defect list. The sequence matters: defects recorded before the final payment or mortgage drawdown is released are still the developer's to fix.",
     artefact: "Snagging report · defect rectification",
   },
   {
     n: "07",
     title: "Handover",
     when: "Completion",
-    copy: "Final payment, keys, and the title deed issued in your name. Service charges begin from here, billed annually per square foot and set by the regulator, they are a real running cost and belong in the yield calculation from the start, not as a surprise in year one.",
+    copy: "Final payment, keys, and the title deed issued in your name. Service charges start here, billed annually per square foot at a rate the regulator sets.",
     artefact: "Title deed",
   },
   {
     n: "08",
     title: "And then the part nobody describes",
     when: "The years after",
-    copy: "Furnishing or fit-out if the unit is going to be lived in or let. Finding and placing a tenant, and someone to manage the lease. Arranging or refinancing a mortgage, materially different terms for non-residents. For most overseas owners this is where the investment is actually won or lost, and where the market goes quiet.",
+    copy: "Fit-out or furnishing, a tenant to find and place, someone to manage the lease, and a mortgage to arrange or refinance on terms that differ for non-residents.",
   },
   {
     n: "09",
     title: "The exit",
     when: "When you choose",
-    copy: "Before completion, selling means an assignment: developer approval, a Form F memorandum of understanding, a developer no-objection certificate that expires after 30 days, and an Oqood transfer at a land department trustee office. After completion it is a standard resale. Either way the restrictions written into your SPA at step three decide what is possible.",
+    copy: "Before completion, selling is an assignment: developer approval, a Form F memorandum of understanding, a no-objection certificate that expires after 30 days, and an Oqood transfer at a trustee office. After completion it is an ordinary resale. Either way the SPA clauses from step three set the limits.",
     artefact: "Form F · developer NOC · Oqood transfer",
   },
 ];
