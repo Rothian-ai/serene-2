@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import { Eyebrow, Section } from "~/components/primitives";
+import { AdvisorLink, Eyebrow, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ConversationBand } from "~/components/ConversationBand";
@@ -77,9 +76,9 @@ export default function Faqs() {
           <Accordion items={list} />
           <p className="mt-10 text-[15.5px] text-ink/70">
             A question we haven't answered?{" "}
-            <Link to="/contact" className="text-brass underline underline-offset-2">
+            <AdvisorLink context="a question the FAQs did not answer">
               Put it to an advisor
-            </Link>
+            </AdvisorLink>
             . You will get a written reply, and a call only if you ask for one.
           </p>
         </div>

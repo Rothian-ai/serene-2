@@ -22,13 +22,24 @@ export async function action({ request }: ActionFunctionArgs) {
   return { ok, error };
 }
 
+/**
+ * Hidden for now, not deleted. Every conversation CTA on the site is a WhatsApp
+ * thread, so nothing links here — but the route stays registered because it is
+ * the only path that writes an enquiry to the database and fires the SMTP
+ * notification, and because conversationHref falls back to it if the WhatsApp
+ * number is ever emptied. Off the sitemap, out of the prerender list, and
+ * noindex, so it is unreachable rather than merely unlinked.
+ */
 export function meta() {
-  return buildMeta({
-    title: "Speak With an Advisor",
+  return [
+    ...buildMeta({
+      title: "Speak With an Advisor",
     description:
       "We will not call you unless you ask us to. Tell us what you are trying to achieve and an advisor replies in your preferred channel, in your hours, with no obligation and no follow-up sequence.",
-    path: "/contact",
-  });
+      path: "/contact",
+    }),
+    { name: "robots", content: "noindex, nofollow" },
+  ];
 }
 
 export default function Contact() {

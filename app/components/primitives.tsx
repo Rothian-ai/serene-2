@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router";
+import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 import { useRef } from "react";
 import type { ReactNode } from "react";
 import { fadeRise, revealVariants, stagger, viewportOnce } from "~/lib/motion";
@@ -81,6 +82,37 @@ const seamMap = {
 
 export function Seam({ variant }: { variant: keyof typeof seamMap }) {
   return <div aria-hidden className={`h-16 w-full bg-gradient-to-b ${seamMap[variant]} md:h-24`} />;
+}
+
+/* ——— AdvisorLink: an inline "ask someone" link.
+       A conversation is a WhatsApp thread now, which is an external anchor, not
+       a route Link — so the element itself has to change, not just the href.
+       Three routes offer an advisor mid-sentence and all three need that
+       branch, so it lives here rather than three times over. ——— */
+
+export function AdvisorLink({
+  children,
+  context,
+  className = "text-brass underline underline-offset-2",
+}: {
+  children: ReactNode;
+  /** folded into the opening message, so the advisor knows the page */
+  context?: string;
+  className?: string;
+}) {
+  const href = conversationHref(context);
+  if (HAS_WHATSAPP) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link to={href} className={className}>
+      {children}
+    </Link>
+  );
 }
 
 /* ——— Eyebrow: tracked label. Colour from parent (brass on ivory, gold on dark). ——— */

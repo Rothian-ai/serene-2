@@ -1,6 +1,6 @@
 import { data, Form, Link, useLoaderData, useSearchParams } from "react-router";
 import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
-import { Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import { AdvisorLink, Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { PropertyCard } from "~/components/property";
 import { AmeliaError, fetchProjects, isAmeliaConfigured } from "~/lib/amelia.server";
@@ -153,9 +153,9 @@ export default function Properties() {
             <p className="mt-3 max-w-[52ch] text-[15.5px] text-ink/75">{error}</p>
             <p className="type-cap mt-4 text-fog">
               Nothing is lost. Try again shortly, or{" "}
-              <Link to="/contact" className="text-brass underline underline-offset-2">
+              <AdvisorLink context="the register, which is not loading">
                 ask an advisor
-              </Link>
+              </AdvisorLink>
               .
             </p>
           </div>
@@ -187,9 +187,7 @@ export default function Properties() {
                 </p>
                 <p className="mt-5 text-[15.5px] text-ink/75">
                   An advisor can tell you what is coming before it appears.{" "}
-                  <Link to="/contact" className="text-brass underline underline-offset-2">
-                    Ask one
-                  </Link>
+                  <AdvisorLink context="what is coming to the register">Ask one</AdvisorLink>
                   .
                 </p>
               </>
