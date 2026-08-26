@@ -4,9 +4,10 @@ import { SplitHeading } from "~/components/SplitHeading";
 import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { InsightCard } from "~/components/cards";
 import { LifecycleRail } from "~/components/LifecycleRail";
+import { DeveloperRegister } from "~/components/DeveloperRegister";
 import { insights } from "~/lib/content";
 import { COMMITMENTS, COMMITMENTS_INTRO } from "~/lib/strategy";
-import { meta as buildMeta } from "~/lib/site";
+import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -62,13 +63,16 @@ export default function Home() {
         </Section>
       </div>
 
-      {/* ③ The value chain — nine marks on one rule, the handoff coloured */}
+      {/* ③ The register — the lockups alone, each linking to its own record */}
+      <DeveloperRegister />
+
+      {/* ④ The value chain — nine marks on one rule, the handoff coloured */}
       <LifecycleRail />
 
-      {/* ④ The market we are answering — the figures, then why they matter */}
+      {/* ⑤ The market we are answering — the figures, then why they matter */}
       <MetricsMonument />
 
-      {/* ⑤ Insights — the journal, image-led */}
+      {/* ⑥ Insights — the journal, image-led */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
           <Reveal exit>
@@ -85,7 +89,7 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
-      {/* ⑥ Request a conversation — the close */}
+      {/* ⑦ Request a conversation — the close */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
@@ -100,8 +104,10 @@ export default function Home() {
               channel, in your hours, with no obligation and no follow-up sequence.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to="/contact" kind="platinum">Request a conversation</CTA>
-              <CTA to="/lifecycle" kind="line">See the nine stages</CTA>
+              <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
+                Request a conversation
+              </CTA>
+              <CTA to="/difference" kind="line">How We're Different</CTA>
             </div>
           </Reveal>
         </Section>

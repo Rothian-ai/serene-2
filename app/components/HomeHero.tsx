@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { CTA, Eyebrow, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
+import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 /**
  * The homepage hero — one frame, not a sequence.
@@ -41,11 +42,11 @@ const VIGNETTE =
 function Actions() {
   return (
     <>
-      <CTA to="/contact" kind="platinum">
+      <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
         Ask us anything
       </CTA>
-      <CTA to="/lifecycle" kind="line">
-        See the nine stages
+      <CTA to="/difference" kind="line">
+        How We're Different
       </CTA>
     </>
   );

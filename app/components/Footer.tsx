@@ -7,6 +7,7 @@ const COLS = [
     title: "Understand",
     links: [
       { to: "/off-plan", label: "Off-Plan, Explained" },
+      { to: "/developers", label: "Developers" },
       { to: "/difference", label: "The Difference" },
       { to: "/lifecycle", label: "The Lifecycle" },
     ],

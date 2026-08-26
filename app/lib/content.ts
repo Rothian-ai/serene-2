@@ -4,11 +4,11 @@ import { load as loadYaml } from "js-yaml";
 /**
  * Content collections.
  *
- * The beta site is informative: it explains the Serene Bay model and the market
- * it exists to answer. It carries no property inventory and no developer
- * partnerships, because the strategy names none — the partner network is still
- * to be formalised. So there are two collections: `insights` (the journal) and
- * `legal`. Each entry is a markdown file in /content with YAML frontmatter, and
+ * The beta site carries no property inventory of its own: addresses come from
+ * Amelia's catalogue at request time. What it does hold as files is editorial:
+ * `insights` (the journal), `developers` (the register of houses we are
+ * registered with) and `legal`. Each entry is a markdown file in /content with
+ * YAML frontmatter, and
  * adding content means adding a file — by hand, or through the Decap CMS admin
  * at /admin (see ADD-CONTENT.md). No component ever hard-codes an entity.
  */
@@ -66,6 +66,24 @@ export interface Insight {
   body: string;
 }
 
+/**
+ * A developer in the register. The record is the institution, not a sales
+ * sheet: when it was founded, what it has actually handed over, and the works
+ * a buyer will recognise. `notable` may be empty; every other field is set.
+ */
+export interface Developer {
+  slug: string;
+  name: string;
+  founded: string;
+  hq: string;
+  delivered: string;
+  notable: string[];
+  tagline: string;
+  image?: string;
+  plate: PlateKind;
+  body: string;
+}
+
 function load<T>(
   files: Record<string, string>,
   map: (slug: string, data: Frontmatter, body: string) => T,
@@ -78,6 +96,12 @@ function load<T>(
 }
 
 const insightFiles = import.meta.glob("../../content/insights/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const developerFiles = import.meta.glob("../../content/developers/*.md", {
   query: "?raw",
   import: "default",
   eager: true,
@@ -101,6 +125,21 @@ export const insights: Insight[] = load(insightFiles, (slug, d, body) => ({
   featured: num(d.featured),
   body,
 })).sort((a, b) => (b.date > a.date ? 1 : -1));
+
+export const developers: Developer[] = load(developerFiles, (slug, d, body) => ({
+  slug,
+  name: str(d.name, slug),
+  founded: str(d.founded),
+  hq: str(d.hq),
+  delivered: str(d.delivered),
+  notable: Array.isArray(d.notable) ? d.notable.map((n) => str(n)) : [],
+  tagline: str(d.tagline),
+  image: str(d.image) || undefined,
+  plate: (str(d.plate, "render") as PlateKind),
+  body,
+})).sort((a, b) => a.name.localeCompare(b.name));
+
+export const getDeveloper = (slug: string) => developers.find((d) => d.slug === slug);
 
 export const legal: Record<string, { title: string; updated: string; body: string }> =
   Object.fromEntries(

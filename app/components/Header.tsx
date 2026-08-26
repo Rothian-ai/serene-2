@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SereneMark } from "~/components/SereneMark";
+import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 /**
  * Primary navigation, ordered by the buyer journey the strategy describes:
@@ -11,6 +12,7 @@ import { SereneMark } from "~/components/SereneMark";
  */
 const NAV = [
   { to: "/properties", label: "Properties" },
+  { to: "/developers", label: "Developers" },
   { to: "/off-plan", label: "Off-Plan" },
   { to: "/difference", label: "The Difference" },
   { to: "/lifecycle", label: "The Lifecycle" },
@@ -23,6 +25,27 @@ const SECONDARY = [
   { to: "/careers", label: "Careers" },
   { to: "/privacy", label: "Privacy" },
 ];
+
+/**
+ * The bar's single action. It is an ordinary route link to the contact form
+ * until a WhatsApp number is configured, at which point it becomes an external
+ * thread instead — so the markup has to branch, not just the href.
+ */
+function ConversationAction({ className }: { className: string }) {
+  const label = "Request a conversation";
+  if (HAS_WHATSAPP) {
+    return (
+      <a href={conversationHref()} target="_blank" rel="noopener noreferrer" className={className}>
+        {label}
+      </a>
+    );
+  }
+  return (
+    <Link to="/contact" className={className}>
+      {label}
+    </Link>
+  );
+}
 
 /**
  * tone "dark": transparent over a dark hero (white mark) until scroll.
@@ -104,12 +127,9 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/contact"
+            <ConversationAction
               className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
-            >
-              Request a conversation
-            </Link>
+            />
           </nav>
           <button
             type="button"
@@ -163,12 +183,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 transition={{ delay: 0.45 }}
                 className="mt-10"
               >
-                <Link
-                  to="/contact"
-                  className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
-                >
-                  Request a conversation
-                </Link>
+                <ConversationAction className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]" />
               </motion.div>
             </nav>
           </motion.div>

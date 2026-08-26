@@ -29,7 +29,7 @@ import {
   RISKS,
 } from "~/lib/offplan";
 import { CALCULATOR, DIRECT_REBUTTAL } from "~/lib/strategy";
-import { meta as buildMeta } from "~/lib/site";
+import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -475,8 +475,10 @@ export default function OffPlan() {
             ))}
           </ul>
           <div className="mt-11 flex flex-wrap gap-4">
-            <CTA to="/contact" kind="solid">Request a conversation</CTA>
-            <CTA to="/lifecycle" kind="line-ink">See the nine stages</CTA>
+            <CTA to={conversationHref("an off-plan purchase")} kind="solid" external={HAS_WHATSAPP}>
+              Request a conversation
+            </CTA>
+            <CTA to="/difference" kind="line-ink">How We're Different</CTA>
           </div>
         </Reveal>
       </Section>

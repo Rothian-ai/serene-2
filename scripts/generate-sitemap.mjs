@@ -18,6 +18,8 @@ const routes = [
   "/difference",
   "/lifecycle",
   "/about",
+  "/developers",
+  ...slugs("content/developers").map((s) => `/developers/${s}`),
   "/insights",
   ...slugs("content/insights").map((s) => `/insights/${s}`),
   "/careers",

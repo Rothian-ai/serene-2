@@ -37,6 +37,38 @@ export const SITE = {
  * Recover with: git log --diff-filter=D -- app/routes/amelia.tsx
  */
 
+/* ——— Where "Request a conversation" goes ———
+ *
+ * Amelia runs a WhatsApp Business account: it is the channel behind the buyer
+ * signup's `amelia_auth_code` verification. What the Partner API does NOT
+ * publish is a click-to-chat number, so the destination cannot be derived from
+ * the catalogue and has to be configured.
+ *
+ * Set VITE_AMELIA_WHATSAPP to that number in full international form (digits
+ * only, e.g. 9715XXXXXXXX) and every conversation CTA becomes a WhatsApp
+ * thread, pre-filled and attributed. Leave it unset and they stay on the
+ * contact form, which is what still writes to the database and sends the SMTP
+ * notification — so this is a real trade, not a free upgrade.
+ */
+const WHATSAPP_NUMBER = (import.meta.env.VITE_AMELIA_WHATSAPP as string | undefined)
+  ?.replace(/[^\d]/g, "")
+  .trim();
+
+/** True once a usable number is configured; a stray "+" or spaces are fine. */
+export const HAS_WHATSAPP = Boolean(WHATSAPP_NUMBER && WHATSAPP_NUMBER.length >= 8);
+
+/**
+ * The destination for a conversation CTA. `context` is folded into the opening
+ * message so an advisor sees which page it came from without asking.
+ */
+export function conversationHref(context?: string): string {
+  if (!HAS_WHATSAPP) return "/contact";
+  const opening = context
+    ? `Hello Serene, I would like to talk about ${context}.`
+    : "Hello Serene, I would like to speak with an advisor.";
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(opening)}`;
+}
+
 export function pageTitle(title?: string): string {
   return title
     ? `${title} · Serene`

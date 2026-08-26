@@ -3,6 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { CTA, Eyebrow, Plate, Reveal } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ENQUIRY } from "~/lib/strategy";
+import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 /**
  * The closing band on every inner page, and the site's single conversion
@@ -25,6 +26,7 @@ export function ConversationBand({
   secondaryTo,
   image = "/images/about-ask.jpg",
   alt = "A quiet lounge in warm evening light",
+  context,
 }: {
   eyebrow?: string;
   title: string;
@@ -34,6 +36,8 @@ export function ConversationBand({
   secondaryTo?: string;
   image?: string;
   alt?: string;
+  /** folded into the WhatsApp opening line, so an advisor knows the page */
+  context?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -69,7 +73,7 @@ export function ConversationBand({
           <Reveal delay={0.12}>
             <p className="type-body-lg mt-6 text-ivory/78">{copy}</p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <CTA to="/contact" kind="platinum">
+              <CTA to={conversationHref(context)} kind="platinum" external={HAS_WHATSAPP}>
                 {primary}
               </CTA>
               {secondary && secondaryTo && (

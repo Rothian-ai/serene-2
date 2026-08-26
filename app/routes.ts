@@ -11,6 +11,9 @@ export default [
   // Listings, served live from Amelia's catalogue (never prerendered).
   route("properties", "routes/properties.tsx"),
   route("properties/:slug", "routes/properties.$slug.tsx"),
+  // The register: the developers we are registered with, and each one's record.
+  route("developers", "routes/developers.tsx"),
+  route("developers/:slug", "routes/developers.$slug.tsx"),
   route("insights", "routes/insights.tsx"),
   route("insights/:slug", "routes/insight.tsx"),
   route("careers", "routes/careers.tsx"),
