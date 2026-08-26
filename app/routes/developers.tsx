@@ -79,7 +79,7 @@ export default function Developers() {
       <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[64svh]">
         <Eyebrow className="text-silver">{REGISTER_INTRO.eyebrow}</Eyebrow>
         <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
-          The developers we are registered with.
+          {REGISTER_INTRO.headline}
         </SplitHeading>
         <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">{REGISTER_INTRO.full}</p>
       </Hero>

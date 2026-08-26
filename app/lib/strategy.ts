@@ -396,7 +396,15 @@ export const COMPARISON: ComparisonRow[] = [
  */
 export const REGISTER_INTRO = {
   eyebrow: "The register",
-  headline: "Cross-developer, selected on suitability.",
+  /**
+   * Names the thing, which is all a heading over a wall of logos has to do.
+   * "Cross-developer, selected on suitability" was tried here and does not
+   * work as a heading: in the document it is a table cell answering "Projects
+   * you are shown", so on its own it has no subject and opens on an adjective.
+   * It reads correctly as a descriptor under a heading, which is where `full`
+   * now puts it.
+   */
+  headline: "The developers we are registered with.",
   body: "Every project we put in front of you has already been through escrow verification, DLD registration checks, construction-status tracking and a review of the developer's delivery track record.",
   full: "Cross-developer, selected on suitability, with the due diligence disclosed.",
 } as const;
