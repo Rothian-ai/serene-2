@@ -6,6 +6,7 @@ import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
 import { developers } from "~/lib/content";
 import type { Developer } from "~/lib/content";
+import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -14,7 +15,7 @@ export function meta() {
   return buildMeta({
     title: "Developers",
     description:
-      "The developers Serene is registered with, presented as institutions: when they were founded, what they have delivered, and the works you already know.",
+      "Cross-developer, selected on suitability, with the due diligence disclosed. The developers Serene is registered with, each with its founding, its delivery record and its notable works.",
     path: "/developers",
   });
 }
@@ -76,14 +77,11 @@ export default function Developers() {
   return (
     <>
       <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[64svh]">
-        <Eyebrow className="text-silver">The Register</Eyebrow>
-        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[18ch]">
-          The houses we are registered with.
+        <Eyebrow className="text-silver">{REGISTER_INTRO.eyebrow}</Eyebrow>
+        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
+          The developers we are registered with.
         </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">
-          Cross-developer, selected on suitability. Each of these is an institution with a delivery
-          record you can check, which is the only part of a developer that matters before handover.
-        </p>
+        <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">{REGISTER_INTRO.full}</p>
       </Hero>
 
       <Section>

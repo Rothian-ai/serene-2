@@ -380,6 +380,28 @@ export const COMPARISON: ComparisonRow[] = [
 ];
 
 /* ————————————————————————————————————————————————
+   The register
+———————————————————————————————————————————————— */
+
+/**
+ * The developers page is not one of the document's six, but none of its
+ * language is new: `headline` and `full` are the comparison table's own line
+ * for how a Serene shortlist is built, and `body` is stage two's account of
+ * what a project has already been through before anyone is shown it.
+ *
+ * Held to the voice rules deliberately. An earlier draft opened on what a
+ * developer's sales team and a commission-only agent do instead, which argues
+ * sideways rather than stating plainly what we are: composed and elevated both
+ * rule that out, whatever its merits as an argument.
+ */
+export const REGISTER_INTRO = {
+  eyebrow: "The register",
+  headline: "Cross-developer, selected on suitability.",
+  body: "Every project we put in front of you has already been through escrow verification, DLD registration checks, construction-status tracking and a review of the developer's delivery track record.",
+  full: "Cross-developer, selected on suitability, with the due diligence disclosed.",
+} as const;
+
+/* ————————————————————————————————————————————————
    For overseas buyers
 ———————————————————————————————————————————————— */
 
