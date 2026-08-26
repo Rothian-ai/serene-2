@@ -19,7 +19,6 @@ import type { MosaicFrame } from "~/components/ImageMosaic";
 import {
   COSTS,
   EMIRATES,
-  JOURNEY,
   OFFPLAN_FAQS,
   OFFPLAN_SOURCES,
   OTHER_EMIRATES,
@@ -27,7 +26,7 @@ import {
   PLAN_BASIS,
   PLAN_CHECKS,
 } from "~/lib/offplan";
-import { CALCULATOR, DIRECT_REBUTTAL } from "~/lib/strategy";
+import { CALCULATOR} from "~/lib/strategy";
 import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -83,15 +82,16 @@ const MOSAIC: MosaicFrame[] = [
  * which is Dubai-only (see the sourcing note in app/lib/offplan.ts).
  *
  * Deliberate division of labour with the neighbouring pages:
- *   /off-plan   — what the market does. The process, neutrally described.
- *   /lifecycle  — what we do at each of those points, and who we introduce.
+ *   /off-plan   — the mechanics: payment plans, all-in cost, the Emirates.
+ *   /lifecycle  — the nine stages, now carrying the timings and paperwork too.
  *   /difference — why we are able to work that way at all.
  *
- * A "known risks" band used to sit before the going-direct case. It said the
- * same four things the document's own four gaps say on /about — delivery slips,
- * the builder inspecting its own work, an exit decided at signature — so it is
- * gone. The FAQ was trimmed on the same test: eight of its twelve questions
- * were answered by the sections above them.
+ * Three things have come off this page for repeating something said elsewhere.
+ * A "known risks" band that was the document's four gaps reworded. Eight of
+ * twelve FAQ questions that the sections above them already answered. And "From
+ * shortlist to exit", nine steps over the same ground as /lifecycle's nine
+ * stages — its timings and paperwork moved onto those stages, which is where a
+ * reader wanting the sequence now goes.
  */
 export default function OffPlan() {
   return (
@@ -153,55 +153,7 @@ export default function OffPlan() {
         </Reveal>
       </Section>
 
-      {/* ③ The journey — the market's process, step by step */}
-      <div className="bg-frost">
-        <Section>
-          <Reveal exit>
-            <Eyebrow className="text-fog">The Process</Eyebrow>
-            <SplitHeading as="h2" className="type-display mt-5 max-w-[20ch]">
-              From shortlist to exit, in order.
-            </SplitHeading>
-            <p className="type-body-lg mt-6 max-w-[58ch] text-ink/72">
-              What happens, in what order, with the paperwork named and the usual timings. This
-              is the process itself, and it runs the same way whoever you buy through.
-            </p>
-          </Reveal>
-
-          <div className="mt-11 hairline-b md:mt-14">
-            {JOURNEY.map((s) => (
-              <Reveal key={s.n}>
-                <div className="hairline-t grid gap-4 py-9 md:grid-cols-12 md:gap-7 md:py-11">
-                  <div className="md:col-span-4">
-                    <div
-                      aria-hidden
-                      className="font-extralight leading-none tabular-nums text-[clamp(2rem,3vw,2.75rem)] text-ink/25"
-                    >
-                      {s.n}
-                    </div>
-                    <h3 className="type-title mt-3 max-w-[20ch]">{s.title}</h3>
-                    <p className="type-cap mt-2 text-brass">{s.when}</p>
-                  </div>
-                  <div className="md:col-span-7 md:col-start-6">
-                    <p className="type-body-lg text-ink/76">{s.copy}</p>
-                    {s.artefact && (
-                      <p className="type-cap mt-4 text-fog">
-                        <span className="type-eyebrow mr-2 text-fog">Paperwork</span>
-                        {s.artefact}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-10">
-            <QuietLink to="/lifecycle">What we do at each of these steps</QuietLink>
-          </Reveal>
-        </Section>
-      </div>
-
-      {/* ④ Payment plans */}
+      {/* ③ Payment plans */}
       <Section>
         <Reveal exit>
           <Eyebrow className="text-fog">Payment Plans</Eyebrow>
@@ -270,7 +222,7 @@ export default function OffPlan() {
         </Reveal>
       </Section>
 
-      {/* ⑤ The costs beyond the price */}
+      {/* ④ The costs beyond the price */}
       <div className="bg-frost">
         <Section>
           <div className="grid gap-8 md:grid-cols-12 md:gap-7">
@@ -302,7 +254,7 @@ export default function OffPlan() {
         <ImageMosaic frames={MOSAIC} />
       </Section>
 
-      {/* ⑥ Emirate by Emirate */}
+      {/* ⑤ Emirate by Emirate */}
       <Section>
         <Reveal exit>
           <Eyebrow className="text-fog">By Emirate</Eyebrow>
@@ -366,19 +318,10 @@ export default function OffPlan() {
         </Reveal>
       </Section>
 
-      {/* ⑦ Going direct — the objection, and the two routes to one price */}
-      <Section>
-        <Reveal exit>
-          <Eyebrow className="text-fog">{DIRECT_REBUTTAL.eyebrow}</Eyebrow>
-          <SplitHeading as="h2" className="type-display mt-5 max-w-[22ch]">
-            {DIRECT_REBUTTAL.headline}
-          </SplitHeading>
-          <p className="type-body-lg mt-6 max-w-[58ch] text-ink/74">{DIRECT_REBUTTAL.body}</p>
-        </Reveal>
-      </Section>
+      {/* ⑥ Going direct — the objection, and the two routes to one price */}
       <TwoRoutes />
 
-      {/* ⑧ FAQ — only what the sections above do not already answer */}
+      {/* ⑦ FAQ — only what the sections above do not already answer */}
       <div className="bg-frost">
         <Section>
           <script
@@ -413,7 +356,7 @@ export default function OffPlan() {
         </Section>
       </div>
 
-      {/* ⑨ Sources — the page's whole evidence base, in one place */}
+      {/* ⑧ Sources — the page's whole evidence base, in one place */}
       <Section>
         <Reveal>
           <Eyebrow className="text-fog">Sources</Eyebrow>

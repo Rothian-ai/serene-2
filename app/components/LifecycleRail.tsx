@@ -108,6 +108,22 @@ export function LifecycleSpine() {
                 <span className="type-eyebrow mr-2 text-fog">What the market does instead</span>
                 {s.contrast}
               </p>
+              {(s.when || s.artefact) && (
+                <dl className="mt-5 flex flex-col gap-2">
+                  {s.when && (
+                    <div className="flex flex-wrap gap-x-3">
+                      <dt className="type-eyebrow text-fog">When</dt>
+                      <dd className="type-cap text-ink/70">{s.when}</dd>
+                    </div>
+                  )}
+                  {s.artefact && (
+                    <div className="flex flex-wrap gap-x-3">
+                      <dt className="type-eyebrow text-fog">Paperwork</dt>
+                      <dd className="type-cap text-ink/70">{s.artefact}</dd>
+                    </div>
+                  )}
+                </dl>
+              )}
               {s.partners.length > 0 && (
                 <div className="mt-5">
                   <p className="type-eyebrow text-fog">Specialists introduced</p>

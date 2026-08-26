@@ -128,6 +128,16 @@ export interface Stage {
   contrast: string;
   /** the independent specialists introduced here, never on a referral fee */
   partners: string[];
+  /**
+   * When it happens, and what it produces. These came off /off-plan, whose
+   * "From shortlist to exit" section walked the same nine steps this does. The
+   * sequence was the duplication; the timings and the named paperwork were the
+   * only things it held that these stages did not, so they moved here and the
+   * section went. Absent where the journey had no equivalent step, rather than
+   * invented to fill the field.
+   */
+  when?: string;
+  artefact?: string;
   /** the photograph the pinned stage column crossfades to (StickyStages) */
   image: string;
   alt: string;
@@ -152,6 +162,7 @@ export const STAGES: Stage[] = [
       "Independent mortgage advisor, if serviceability shapes the budget",
       "Tax counsel in your home jurisdiction, where residency matters",
     ],
+    when: "Before anything is signed",
     image: "/images/about-ask.jpg",
     alt: "A quiet lounge in warm evening light",
   },
@@ -177,6 +188,9 @@ export const STAGES: Stage[] = [
     contrast:
       "This is where a commission-only agent gets paid. It is also, for most of the market, where the relationship quietly ends.",
     partners: ["Independent UAE-qualified property counsel for SPA review"],
+    when: "Day one, then typically 2 to 4 weeks later",
+    artefact:
+      "Reservation form · booking deposit 5–10% · SPA · Oqood certificate (Dubai) or initial registration certificate (Abu Dhabi)",
     image: "/images/mamsha-gardens-04.jpg",
     alt: "A colonnade wall, read in close detail",
   },
@@ -188,6 +202,7 @@ export const STAGES: Stage[] = [
     contrast:
       "An overseas buyer with nobody monitoring construction typically learns a project has slipped when the developer decides to tell them.",
     partners: ["Independent construction progress surveyors, where a site visit is warranted"],
+    when: "Two to four years, usually",
     image: "/images/bugatti-residences-04.jpg",
     alt: "A concrete structure part-way through construction",
   },
@@ -202,6 +217,8 @@ export const STAGES: Stage[] = [
       "Licensed independent snagging and inspection firms",
       "MEP specialists where systems testing is needed",
     ],
+    when: "Weeks before handover, then completion",
+    artefact: "Snagging report · defect rectification · title deed",
     image: "/images/armani-beach-residences-05.jpg",
     alt: "A finished bathroom, the kind of surface an inspection covers",
   },
@@ -216,6 +233,7 @@ export const STAGES: Stage[] = [
       "Turnkey furnishing and fit-out contractors",
       "Interior designers with Dubai rental-market experience",
     ],
+    when: "The years after",
     image: "/images/mamsha-gardens-02.jpg",
     alt: "A warm living room in natural light",
   },
@@ -230,6 +248,7 @@ export const STAGES: Stage[] = [
       "Letting agents with district-level tenant demand data",
       "RERA-registered property management firms",
     ],
+    when: "The years after",
     image: "/images/verde-terraces-02.jpg",
     alt: "A bright, plant-filled living interior",
   },
@@ -258,6 +277,8 @@ export const STAGES: Stage[] = [
       "DLD trustee offices for Oqood transfer",
       "Conveyancing support for Form F and NOC timing",
     ],
+    when: "When you choose",
+    artefact: "Form F · developer NOC · Oqood transfer at a trustee office",
     image: "/images/armani-beach-residences-04.jpg",
     alt: "A balcony over calm water at dusk",
   },
@@ -539,14 +560,7 @@ export const COMPLIANCE = [
   },
 ] as const;
 
-export const PRECEDENT = {
-  eyebrow: "Precedent",
-  headline: "This model has existed since the 1980s. Just not here.",
-  body: [
-    "The exclusive buyer's agent, representing buyers only, never taking seller listings, structurally barred from dual agency, has been a respected niche in the United States for forty years, created to solve precisely the conflict of interest we are targeting.",
-    "No equivalent operates at scale in Dubai's off-plan market. That is not a crowded position we are squeezing into. It is empty.",
-  ],
-} as const;
+
 
 /* ————————————————————————————————————————————————
    Request a conversation

@@ -1,7 +1,5 @@
 import {
   Eyebrow,
-  Plate,
-  QuietLink,
   Reveal,
   RevealGroup,
   RevealItem,
@@ -16,7 +14,6 @@ import {
   COMPARISON_INTRO,
   COMPLIANCE,
   COMPLIANCE_INTRO,
-  PRECEDENT,
 } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
@@ -75,48 +72,6 @@ export default function Difference() {
           ))}
         </RevealGroup>
       </Section>
-
-      {/* ④ Precedent — the model is forty years old, just not here */}
-      <div className="bg-frost">
-        <Section>
-          <div className="grid items-center gap-10 md:grid-cols-12 md:gap-7">
-            <div className="md:col-span-6">
-              <Reveal exit>
-                <Eyebrow className="text-fog">{PRECEDENT.eyebrow}</Eyebrow>
-              </Reveal>
-              <SplitHeading as="h2" className="type-headline mt-6 max-w-[20ch]">
-                {PRECEDENT.headline}
-              </SplitHeading>
-              <Reveal delay={0.1}>
-                {PRECEDENT.body.map((para, i) => (
-                  <p
-                    key={para}
-                    className={
-                      i === 0
-                        ? "type-body-lg mt-7 max-w-[54ch] text-ink/78"
-                        : "mt-5 max-w-[54ch] text-[15.5px] leading-relaxed text-ink/65"
-                    }
-                  >
-                    {para}
-                  </p>
-                ))}
-                <div className="mt-9">
-                  <QuietLink to="/lifecycle">Where those specialists come in</QuietLink>
-                </div>
-              </Reveal>
-            </div>
-            <Reveal delay={0.15} className="md:col-span-5 md:col-start-8">
-              <Plate
-                kind="interior"
-                image="/images/saadiyat-grove-residences-02.jpg"
-                alt="A calm interior in natural light"
-                className="aspect-[4/5]"
-                parallax
-              />
-            </Reveal>
-          </div>
-        </Section>
-      </div>
 
       <ConversationBand
         eyebrow="Request a conversation"

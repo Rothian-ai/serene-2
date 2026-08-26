@@ -1,5 +1,6 @@
 import { Eyebrow, Ledger, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
+import { DIRECT_REBUTTAL } from "~/lib/strategy";
 import { ROUTES } from "~/lib/strategy";
 
 /**
@@ -8,15 +9,22 @@ import { ROUTES } from "~/lib/strategy";
  * The device is the repetition: three of the four rows are identical in both
  * columns, so the one that differs is the whole argument. Route B is the raised
  * ground, as the Serene column is in the comparison table.
+ *
+ * It carries the going-direct headline too. This used to be two stacked
+ * sections — "Buying direct does not make it cheaper" and then "Two routes. One
+ * price." — which is one argument introduced twice before the reader reaches
+ * the thing being argued about. ROUTES.headline is unused as a result; the
+ * columns say it themselves.
  */
 export function TwoRoutes() {
   return (
     <Section>
       <Reveal exit>
-        <Eyebrow className="text-fog">Where the commission actually comes from</Eyebrow>
-        <SplitHeading as="h2" className="type-headline mt-5 max-w-[24ch]">
-          {ROUTES.headline}
+        <Eyebrow className="text-fog">{DIRECT_REBUTTAL.eyebrow}</Eyebrow>
+        <SplitHeading as="h2" className="type-display mt-5 max-w-[22ch]">
+          {DIRECT_REBUTTAL.headline}
         </SplitHeading>
+        <p className="type-body-lg mt-6 max-w-[58ch] text-ink/74">{DIRECT_REBUTTAL.body}</p>
       </Reveal>
 
       <div className="mt-11 grid gap-8 md:mt-14 md:grid-cols-2 md:gap-7">
