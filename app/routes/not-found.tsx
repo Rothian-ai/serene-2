@@ -1,7 +1,7 @@
 import { CTA, Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { insights } from "~/lib/content";
 import { InsightRow } from "~/components/cards";
-import { meta as buildMeta } from "~/lib/site";
+import { meta as buildMeta, HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -31,7 +31,9 @@ export default function NotFound() {
           </h1>
           <div className="mt-11 flex flex-wrap justify-center gap-4">
             <CTA to="/" kind="platinum">Return home</CTA>
-            <CTA to="/contact" kind="line">Speak with an advisor</CTA>
+            <CTA to={conversationHref()} kind="line" external={HAS_WHATSAPP}>
+              Speak with an advisor
+            </CTA>
           </div>
         </Section>
       </div>

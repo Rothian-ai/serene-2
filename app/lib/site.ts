@@ -44,15 +44,28 @@ export const SITE = {
  * publish is a click-to-chat number, so the destination cannot be derived from
  * the catalogue and has to be configured.
  *
- * Set VITE_AMELIA_WHATSAPP to that number in full international form (digits
- * only, e.g. 9715XXXXXXXX) and every conversation CTA becomes a WhatsApp
- * thread, pre-filled and attributed. Leave it unset and they stay on the
- * contact form, which is what still writes to the database and sends the SMTP
- * notification — so this is a real trade, not a free upgrade.
+ * Every conversation CTA is a WhatsApp thread, pre-filled with the page it came
+ * from. VITE_AMELIA_WHATSAPP overrides the number below.
+ *
+ * Worth stating plainly, because it is a trade and not a free upgrade: the
+ * contact form is what writes to the database and fires the SMTP notification,
+ * so enquiries that arrive over WhatsApp do not appear in /dashboard. The form
+ * is still live at /contact, reachable from the footer and from the prose links
+ * that offer an advisor, so nothing is unreachable — but the buttons no longer
+ * lead there.
  */
-const WHATSAPP_NUMBER = (import.meta.env.VITE_AMELIA_WHATSAPP as string | undefined)
-  ?.replace(/[^\d]/g, "")
-  .trim();
+/**
+ * Amelia's WhatsApp Business number, in full international form. Set as the
+ * default rather than read only from the environment, so the CTAs work on a
+ * fresh clone and on production without anyone editing Vercel. The env var
+ * still wins, which is how it gets changed or emptied later.
+ */
+const WHATSAPP_FALLBACK = "971585862377";
+
+const WHATSAPP_NUMBER =
+  ((import.meta.env.VITE_AMELIA_WHATSAPP as string | undefined) ?? WHATSAPP_FALLBACK)
+    .replace(/[^\d]/g, "")
+    .trim() || WHATSAPP_FALLBACK;
 
 /** True once a usable number is configured; a stray "+" or spaces are fine. */
 export const HAS_WHATSAPP = Boolean(WHATSAPP_NUMBER && WHATSAPP_NUMBER.length >= 8);
