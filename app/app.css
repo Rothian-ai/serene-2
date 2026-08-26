@@ -605,6 +605,12 @@ body {
   .marquee {
     overflow-x: auto;
   }
+  /* The second half only exists to make the loop seamless. With the animation
+     off the band is an ordinary scrollable row, so the duplicate would just
+     repeat every item to anyone who scrolls it. */
+  .marquee-dup {
+    display: none;
+  }
 }
 
 /* reduced motion — the whole motion system collapses to fades */

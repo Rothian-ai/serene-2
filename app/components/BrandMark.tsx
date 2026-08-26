@@ -20,19 +20,29 @@ const BRAND_LOGOS: Record<string, { src: string; w: string }> = {
   arada: { src: "/images/brands/dev-arada.svg", w: "w-[108px] md:w-[135px]" },
 };
 
+/** The mask paints the mark, so the ground decides which fill it takes. */
+const TONES = {
+  ink: { mark: "bg-ink/80 group-hover:bg-brass", text: "text-ink/80" },
+  ivory: { mark: "bg-ivory/75 group-hover:bg-ivory", text: "text-ivory/80" },
+} as const;
+
 export function BrandMark({
   slug,
   name,
+  tone = "ink",
   className = "",
 }: {
   slug: string;
   name: string;
+  /** "ink" on light grounds, "ivory" on the dark band */
+  tone?: keyof typeof TONES;
   className?: string;
 }) {
   const logo = BRAND_LOGOS[slug];
+  const t = TONES[tone];
   if (!logo) {
     return (
-      <span className="font-light leading-none text-[clamp(1.4rem,2.6vw,2rem)] text-ink/80">
+      <span className={`font-light leading-none text-[clamp(1.4rem,2.6vw,2rem)] ${t.text}`}>
         {name}
       </span>
     );
@@ -41,7 +51,7 @@ export function BrandMark({
     <span
       role="img"
       aria-label={name}
-      className={`block h-9 md:h-11 ${logo.w} bg-ink/80 transition-colors duration-300 group-hover:bg-brass ${className}`}
+      className={`block h-9 md:h-11 ${logo.w} ${t.mark} transition-colors duration-300 ${className}`}
       style={{
         WebkitMaskImage: `url("${logo.src}")`,
         maskImage: `url("${logo.src}")`,
