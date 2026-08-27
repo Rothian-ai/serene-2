@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
-import { BrandMark } from "~/components/BrandMark";
+import { BrandMark, hasBrandLogo } from "~/components/BrandMark";
 import { developers } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 
@@ -47,14 +47,19 @@ export function DeveloperRegister() {
               fixed-height box so a wordmark and a logo occupy the same space. */}
           <ul className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {developers.map((d) => {
+              // With no logo on file the mark is already the name, so the
+              // caption would repeat it. Only logos get a name beneath them.
+              const logo = hasBrandLogo(d.slug);
               const inner = (
                 <>
                   <span className="flex h-11 items-center">
                     <BrandMark slug={d.slug} name={d.name} compact />
                   </span>
-                  <span className="type-cap mt-3 block text-fog transition-colors duration-300 group-hover:text-brass">
-                    {d.name}
-                  </span>
+                  {logo && (
+                    <span className="type-cap mt-3 block text-fog transition-colors duration-300 group-hover:text-brass">
+                      {d.name}
+                    </span>
+                  )}
                 </>
               );
               // only the researched records have a page worth opening

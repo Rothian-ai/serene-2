@@ -26,6 +26,13 @@ const TONES = {
   ivory: { mark: "bg-ivory/75 group-hover:bg-ivory", text: "text-ivory/80" },
 } as const;
 
+/**
+ * Whether a slug has real artwork on file. Callers that print the name as a
+ * caption need this: without a logo the mark IS the name, so rendering both
+ * gives "AHS PropertiesAHS Properties".
+ */
+export const hasBrandLogo = (slug: string) => Boolean(BRAND_LOGOS[slug]);
+
 export function BrandMark({
   slug,
   name,

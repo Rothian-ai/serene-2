@@ -108,10 +108,10 @@ export default function Developers() {
             <ul className="mt-9 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {listedDevelopers.map((d) => (
                 <li key={d.slug} className="border-t border-ink/16 pt-5">
+                  {/* these have no logo on file, so the mark is the name */}
                   <span className="flex h-11 items-center">
                     <BrandMark slug={d.slug} name={d.name} compact />
                   </span>
-                  <span className="type-cap mt-3 block text-fog">{d.name}</span>
                 </li>
               ))}
             </ul>
