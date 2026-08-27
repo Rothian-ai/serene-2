@@ -4,7 +4,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
-import { developers, listedDevelopers, profiledDevelopers } from "~/lib/content";
+import { listedDevelopers, profiledDevelopers } from "~/lib/content";
 import type { Developer } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
