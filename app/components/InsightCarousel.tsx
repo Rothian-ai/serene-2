@@ -11,7 +11,9 @@ import type { Insight } from "~/lib/content";
  * native, needs no JS to function, and degrades to an ordinary scrollable row
  * if the script never runs. The buttons exist because a mouse user on a desktop
  * has no swipe, and they scroll by exactly one card so the snap always lands
- * cleanly.
+ * cleanly. They appear from sm rather than md, because the scrollbar is hidden
+ * (see .rail) and below sm the gesture is a swipe — between the two a pointer
+ * would otherwise have no way to move the rail and no sign that it moves.
  *
  * Full-bleed on purpose. The rail starts at the container's left edge but runs
  * off the right, so the cut-off card is the affordance — a rail that ends
@@ -71,7 +73,7 @@ export function InsightCarousel({ insights }: { insights: Insight[] }) {
             <QuietLink to="/insights">All Insights</QuietLink>
             {/* aria-hidden: the rail is scrollable and every card is a link, so
                 these are a pointer convenience, not the only way through */}
-            <div aria-hidden className="hidden gap-2 md:flex">
+            <div aria-hidden className="hidden gap-2 sm:flex">
               <button type="button" className={arrow} onClick={() => step(-1)} disabled={atStart} tabIndex={-1}>
                 ←
               </button>
@@ -86,7 +88,7 @@ export function InsightCarousel({ insights }: { insights: Insight[] }) {
       {/* the rail: padded to the container on the left, running off on the right */}
       <ul
         ref={railRef}
-        className="rail mt-11 flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-hidden pb-3"
+        className="rail mt-11 flex snap-x snap-mandatory gap-7 overflow-x-auto overflow-y-hidden"
       >
         {insights.map((i) => (
           <li

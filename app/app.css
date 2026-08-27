@@ -597,8 +597,17 @@ body {
   --rail-gutter: max(1.5rem, calc((100% - 1440px) / 2 + 1.5rem));
   padding-inline-start: var(--rail-gutter);
   scroll-padding-inline-start: var(--rail-gutter);
-  scrollbar-width: thin;
-  scrollbar-color: rgb(10 21 38 / 0.25) transparent;
+  /* No scrollbar. It was styled thin and always-on, which under a row of
+     editorial cards reads as a utility widget rather than part of the design —
+     and on Windows it never hides, unlike the overlay bars macOS and iOS use.
+     Scrolling itself is untouched: the wheel, trackpad, touch and the arrows
+     all still work, and tabbing to a card scrolls it into view, so nothing is
+     reachable only by dragging the bar that is gone. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
 }
 @media (min-width: 768px) {
   .rail {
@@ -615,18 +624,6 @@ body {
     --rail-gutter: max(5rem, calc((100% - 1760px) / 2 + 5rem));
   }
 }
-/* a scrollbar you can see but never notice — it is the only hint, other than
-   the cut-off card, that the rail moves */
-.rail::-webkit-scrollbar {
-  height: 3px;
-}
-.rail::-webkit-scrollbar-track {
-  background: rgb(10 21 38 / 0.07);
-}
-.rail::-webkit-scrollbar-thumb {
-  background: rgb(10 21 38 / 0.28);
-}
-
 /* marquee — a slow, continuous drift. The track holds two identical halves;
    translating by -50% loops seamlessly. Pauses on hover/focus; neutralised to a
    static row under reduced motion.
