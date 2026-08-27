@@ -11,23 +11,35 @@ export const handle = { headerTone: "dark" as const };
 
 export function meta({ params }: Route.MetaArgs) {
   const dev = getDeveloper(params.slug);
-  if (!dev) return buildMeta({ title: "Developer", description: "A registered developer." });
+  if (!dev?.profiled) {
+    return buildMeta({ title: "Developer", description: "A registered developer." });
+  }
   return buildMeta({
     title: dev.name,
-    description: `${dev.name}: founded ${dev.founded}, ${dev.delivered} delivered, headquartered in ${dev.hq}. ${dev.tagline}`,
+    description: [
+      dev.name,
+      dev.founded ? `founded ${dev.founded}` : null,
+      dev.delivered ? `${dev.delivered} delivered` : null,
+      dev.hq ? `headquartered in ${dev.hq}` : null,
+    ]
+      .filter(Boolean)
+      .join(", ") + (dev.tagline ? `. ${dev.tagline}` : "."),
     path: `/developers/${dev.slug}`,
   });
 }
 
 export default function DeveloperProfile({ params }: Route.ComponentProps) {
   const dev = getDeveloper(params.slug);
-  if (!dev) throw new Response("Not Found", { status: 404 });
+  // A name-only entry has no page: it is named on /developers, kept out of the
+  // sitemap and the prerender list, and 404s here rather than serving a profile
+  // with nothing in it to anyone who guesses the URL.
+  if (!dev || !dev.profiled) throw new Response("Not Found", { status: 404 });
 
   const record = [
     { k: "Founded", v: dev.founded },
     { k: "Headquarters", v: dev.hq },
     { k: "Delivered", v: dev.delivered },
-  ];
+  ].filter((f): f is { k: string; v: string } => Boolean(f.v));
 
   return (
     <>
@@ -36,7 +48,9 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
         <SplitHeading as="h1" mode="chars" className="type-display mt-5">
           {dev.name}
         </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{dev.tagline}</p>
+        {dev.tagline && (
+          <p className="type-body-lg mt-6 max-w-[46ch] text-ivory/80">{dev.tagline}</p>
+        )}
       </Hero>
 
       {/* The record set beside the prose, so neither is left alone in whitespace */}

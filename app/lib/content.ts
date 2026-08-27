@@ -67,21 +67,28 @@ export interface Insight {
 }
 
 /**
- * A developer in the register. The record is the institution, not a sales
- * sheet: when it was founded, what it has actually handed over, and the works
- * a buyer will recognise. `notable` may be empty; every other field is set.
+ * A developer in the register.
+ *
+ * Only `name` is guaranteed. The register grew from seven researched profiles to
+ * twenty-eight, and the twenty-one added later carry a name and nothing else:
+ * founding years, delivery counts, headquarters and notable works are facts
+ * about real companies, and an empty field is honest where a guessed one is
+ * not. So every other field is optional, and `profiled` is the flag pages use
+ * to decide whether there is a record worth opening.
  */
 export interface Developer {
   slug: string;
   name: string;
-  founded: string;
-  hq: string;
-  delivered: string;
+  founded?: string;
+  hq?: string;
+  delivered?: string;
   notable: string[];
-  tagline: string;
+  tagline?: string;
   image?: string;
   plate: PlateKind;
   body: string;
+  /** true once the record carries more than a name */
+  profiled: boolean;
 }
 
 function load<T>(
@@ -126,18 +133,29 @@ export const insights: Insight[] = load(insightFiles, (slug, d, body) => ({
   body,
 })).sort((a, b) => (b.date > a.date ? 1 : -1));
 
-export const developers: Developer[] = load(developerFiles, (slug, d, body) => ({
-  slug,
-  name: str(d.name, slug),
-  founded: str(d.founded),
-  hq: str(d.hq),
-  delivered: str(d.delivered),
-  notable: Array.isArray(d.notable) ? d.notable.map((n) => str(n)) : [],
-  tagline: str(d.tagline),
-  image: str(d.image) || undefined,
-  plate: (str(d.plate, "render") as PlateKind),
-  body,
-})).sort((a, b) => a.name.localeCompare(b.name));
+export const developers: Developer[] = load(developerFiles, (slug, d, body) => {
+  const founded = str(d.founded) || undefined;
+  const hq = str(d.hq) || undefined;
+  const delivered = str(d.delivered) || undefined;
+  const tagline = str(d.tagline) || undefined;
+  return {
+    slug,
+    name: str(d.name, slug),
+    founded,
+    hq,
+    delivered,
+    notable: Array.isArray(d.notable) ? d.notable.map((n) => str(n)) : [],
+    tagline,
+    image: str(d.image) || undefined,
+    plate: (str(d.plate, "render") as PlateKind),
+    body,
+    profiled: Boolean(founded || hq || delivered || tagline || body.trim()),
+  };
+}).sort((a, b) => a.name.localeCompare(b.name));
+
+/** The register split by whether there is a page worth linking to. */
+export const profiledDevelopers = developers.filter((d) => d.profiled);
+export const listedDevelopers = developers.filter((d) => !d.profiled);
 
 export const getDeveloper = (slug: string) => developers.find((d) => d.slug === slug);
 

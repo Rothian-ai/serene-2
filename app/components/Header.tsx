@@ -30,9 +30,13 @@ const SECONDARY = [
  * The bar's single action. It is an ordinary route link to the contact form
  * until a WhatsApp number is configured, at which point it becomes an external
  * thread instead — so the markup has to branch, not just the href.
+ *
+ * Shorter than the label the page CTAs use. "Ask Amelia, our AI Sales Agent"
+ * measures 244px against a 1009px bar already carrying seven nav links at
+ * 1024px, and overflows it; this fits.
  */
 function ConversationAction({ className }: { className: string }) {
-  const label = "Request a conversation";
+  const label = "Ask our AI Agent";
   if (HAS_WHATSAPP) {
     return (
       <a href={conversationHref()} target="_blank" rel="noopener noreferrer" className={className}>

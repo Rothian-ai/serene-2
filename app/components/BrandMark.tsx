@@ -30,19 +30,32 @@ export function BrandMark({
   slug,
   name,
   tone = "ink",
+  compact = false,
   className = "",
 }: {
   slug: string;
   name: string;
   /** "ink" on light grounds, "ivory" on the dark band */
   tone?: keyof typeof TONES;
+  /** grid cells: cap the mark's height so a wordmark and a logo agree */
+  compact?: boolean;
   className?: string;
 }) {
   const logo = BRAND_LOGOS[slug];
   const t = TONES[tone];
+  /* Most of the register has no logo file yet, so the fallback is the common
+     case rather than the exception and has to hold its own beside real artwork.
+     In a grid it is set to the mark's own height and left-aligned with it, so a
+     row mixing the two reads as one row. */
   if (!logo) {
     return (
-      <span className={`font-light leading-none text-[clamp(1.4rem,2.6vw,2rem)] ${t.text}`}>
+      <span
+        className={
+          compact
+            ? `font-light leading-none text-[1.05rem] tracking-[0.01em] sm:text-[1.15rem] ${t.text}`
+            : `font-light leading-none text-[clamp(1.4rem,2.6vw,2rem)] ${t.text}`
+        }
+      >
         {name}
       </span>
     );
@@ -51,7 +64,7 @@ export function BrandMark({
     <span
       role="img"
       aria-label={name}
-      className={`block h-9 md:h-11 ${logo.w} ${t.mark} transition-colors duration-300 ${className}`}
+      className={`block ${compact ? "h-8 md:h-9" : "h-9 md:h-11"} ${logo.w} ${t.mark} transition-colors duration-300 ${className}`}
       style={{
         WebkitMaskImage: `url("${logo.src}")`,
         maskImage: `url("${logo.src}")`,

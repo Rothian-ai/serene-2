@@ -29,7 +29,13 @@ export function SplitHeading({
     ref,
     () => {
       const split = new SplitText(ref.current, {
-        type: mode === "chars" ? "lines,chars" : "lines",
+        // "words" is not optional here even though nothing animates at that
+        // level. Splitting straight from lines to chars leaves every character
+        // its own inline box with no word boundary between them, so the browser
+        // may break anywhere: load at 760px, narrow to 360 as a rotating phone
+        // does, and "unless" reflows as "u" / "nless". The words layer is the
+        // unbreakable unit that prevents it.
+        type: mode === "chars" ? "lines,words,chars" : "lines",
         mask: "lines",
         linesClass: "split-line",
       });

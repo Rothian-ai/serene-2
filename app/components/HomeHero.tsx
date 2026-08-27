@@ -99,7 +99,9 @@ export function HomeHero() {
 
       // ——— entrance: mark → masked split headline → sub → actions ———
       const split = new SplitText(headlineRef.current, {
-        type: "lines,chars",
+        // words as well as chars: without that layer a character can wrap away
+        // from its own word when the viewport narrows after the split runs
+        type: "lines,words,chars",
         mask: "lines",
         linesClass: "split-line",
       });

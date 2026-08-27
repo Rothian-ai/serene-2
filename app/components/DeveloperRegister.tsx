@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
@@ -7,71 +6,25 @@ import { developers } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 
 /**
- * The register: a heading, a drifting band of lockups, and the way through to
- * the full page, all on one frost ground.
+ * The register, as a grid of marks on the frost ground.
  *
- * A tonal step rather than a dark one: ink is spoken for on this page by the
- * hero and the close, and a third dark stretch between them read as a stripe.
- * Frost gives the section its edge without borrowing that weight, and without
- * adding another hairline to a page that has four grids of them. The
- * commitments above moved to ivory when this took the frost, because two frost
- * blocks in a row merge into one expanse and neither gets an edge.
+ * It was a drifting marquee, which suited seven and does not suit twenty-eight.
+ * A marquee's duration has to scale with its length or it speeds up as you add
+ * to it, so twenty-eight marks means a 196-second loop: any one developer is on
+ * screen for a few seconds in every three and a half minutes, and a visitor who
+ * scrolls past in five seconds sees two of them. That is fine for decoration and
+ * useless for a claim about how many houses we are registered with — a claim
+ * that only lands if you can see the set at once.
  *
- * The one real fault of the earlier band is fixed rather than re-skinned. A
- * marquee's duration covers one full translate, so a fixed 48s means the strip
- * runs faster with every mark added — seven drift, thirty blur. The duration is
- * now derived from the count, so the pace per mark holds however long the
- * register gets.
+ * So: a grid, which shows all of them, gains rows rather than pace as the
+ * register grows, and gives every mark the same weight.
  *
- * Only the first half is reachable: the duplicate exists to make the loop
- * seamless, so it is hidden from assistive technology and out of the tab order,
- * or every developer would be announced and tabbed to twice. Under
- * prefers-reduced-motion the animation stops, the band becomes an ordinary
- * scrollable row, and the duplicate is hidden — a repeat is only seamlessness
- * while it is moving.
+ * Names carry the ones without a logo file. BrandMark falls back to the name in
+ * the house light weight, which is why the grid can fill out before the artwork
+ * arrives — and why the fallback has to look deliberate rather than missing.
  */
-
-/** Seconds per mark. Seven at this rate is the 48s the text strip used to run. */
-const SECONDS_PER_MARK = 7;
-
-function Half({ duplicate = false }: { duplicate?: boolean }) {
-  return (
-    <div
-      className={`flex shrink-0 items-center${duplicate ? " marquee-dup" : ""}`}
-      aria-hidden={duplicate || undefined}
-    >
-      {developers.map((d) => (
-        <span key={d.slug} className="flex items-center">
-          <Link
-            to={`/developers/${d.slug}`}
-            className="group flex items-center px-9 py-1 md:px-14"
-            tabIndex={duplicate ? -1 : undefined}
-            aria-label={duplicate ? undefined : `${d.name}, the full record`}
-          >
-            <BrandMark slug={d.slug} name={d.name} />
-          </Link>
-          <span aria-hidden className="h-1 w-1 shrink-0 rotate-45 bg-gold/70" />
-        </span>
-      ))}
-    </div>
-  );
-}
-
 export function DeveloperRegister() {
-  const duration = { "--marquee-duration": `${developers.length * SECONDS_PER_MARK}s` };
-
   return (
-    /* One ground holds the heading and the band together.
-       Four things had been prising them apart. The closing link sat up in the
-       heading, so the section signed off before the band even arrived. There
-       were 56 to 80px of gap. The ground changed at the band's top edge, which
-       is this site's own signal for "a new section starts here". And a
-       container-width heading above an edge-to-edge band reads as two objects
-       rather than one.
-       So the frost now wraps both, the gap is a third of what it was, and the
-       link moved below the band to close the thing it belongs to. The band
-       stays full-bleed, which is what a marquee wants — but full-bleed inside a
-       shared ground reads as part of a section instead of after it. */
     <div className="bg-frost">
       <Section className="pb-0">
         <div className="grid gap-8 md:grid-cols-12 md:gap-7">
@@ -87,16 +40,45 @@ export function DeveloperRegister() {
         </div>
       </Section>
 
-      <div className="marquee marquee-fade mt-9 overflow-hidden py-3 md:mt-11" tabIndex={0}>
-        <div className="marquee-track flex" style={duration as CSSProperties}>
-          <Half />
-          <Half duplicate />
-        </div>
-      </div>
-
       <Section className="pt-0">
-        <Reveal className="mt-9">
-          <QuietLink to="/developers">The full register</QuietLink>
+        <Reveal className="mt-11 md:mt-14">
+          {/* Column count climbs with the viewport and the rows follow the
+              register, so nothing needs a filler cell. Each mark sits in a
+              fixed-height box so a wordmark and a logo occupy the same space. */}
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {developers.map((d) => {
+              const inner = (
+                <>
+                  <span className="flex h-11 items-center">
+                    <BrandMark slug={d.slug} name={d.name} compact />
+                  </span>
+                  <span className="type-cap mt-3 block text-fog transition-colors duration-300 group-hover:text-brass">
+                    {d.name}
+                  </span>
+                </>
+              );
+              // only the researched records have a page worth opening
+              return (
+                <li key={d.slug} className="border-t border-ink/16 pt-5">
+                  {d.profiled ? (
+                    <Link
+                      to={`/developers/${d.slug}`}
+                      className="group block"
+                      aria-label={`${d.name}, the full record`}
+                    >
+                      {inner}
+                    </Link>
+                  ) : (
+                    <div className="group">{inner}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Reveal>
+
+        <Reveal className="mt-10">
+          <QuietLink to="/developers">All {developers.length} developers</QuietLink>
         </Reveal>
       </Section>
     </div>

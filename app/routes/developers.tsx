@@ -1,10 +1,10 @@
 import { Link } from "react-router";
-import { Eyebrow, Ledger, Plate, Section } from "~/components/primitives";
+import { Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
-import { developers } from "~/lib/content";
+import { developers, listedDevelopers, profiledDevelopers } from "~/lib/content";
 import type { Developer } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
@@ -50,14 +50,16 @@ function RegistryEntry({ developer, flip }: { developer: Developer; flip: boolea
         <h2 className="type-headline mt-6 transition-colors duration-300 group-hover:text-brass">
           {developer.name}
         </h2>
-        <p className="type-body-lg mt-3 max-w-[46ch] text-ink/70">{developer.tagline}</p>
+        {developer.tagline && (
+          <p className="type-body-lg mt-3 max-w-[46ch] text-ink/70">{developer.tagline}</p>
+        )}
         <Ledger
           className="mt-7"
           cells={[
             { k: "Founded", v: developer.founded },
             { k: "Delivered", v: developer.delivered },
             { k: "HQ", v: developer.hq },
-          ]}
+          ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
         />
         {developer.notable.length > 0 && (
           <p className="type-cap mt-5 text-fog">Notable: {developer.notable.join(" · ")}</p>
@@ -84,13 +86,38 @@ export default function Developers() {
         <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">{REGISTER_INTRO.full}</p>
       </Hero>
 
+      {/* The researched records, as spreads */}
       <Section>
         <div className="hairline-b">
-          {developers.map((d, i) => (
+          {profiledDevelopers.map((d, i) => (
             <RegistryEntry key={d.slug} developer={d} flip={i % 2 === 1} />
           ))}
         </div>
       </Section>
+
+      {/* And the rest by name. Twenty-one of these arrived as a list of names,
+          and a spread apiece would mean twenty-one pages of blank ledgers and a
+          page some 16,000px long. They belong in the register either way, so
+          they are named here and take a profile when there is one to write. */}
+      {listedDevelopers.length > 0 && (
+        <div className="bg-frost">
+          <Section>
+            <Reveal exit>
+              <Eyebrow className="text-fog">Also registered with</Eyebrow>
+            </Reveal>
+            <ul className="mt-9 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {listedDevelopers.map((d) => (
+                <li key={d.slug} className="border-t border-ink/16 pt-5">
+                  <span className="flex h-11 items-center">
+                    <BrandMark slug={d.slug} name={d.name} compact />
+                  </span>
+                  <span className="type-cap mt-3 block text-fog">{d.name}</span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        </div>
+      )}
 
       <ConversationBand
         eyebrow="Request a conversation"
