@@ -99,7 +99,7 @@ export const COMMITMENTS_INTRO = {
 export const COMMITMENTS: Commitment[] = [
   {
     k: "01",
-    claim: "We do not employ commission only sales agents.",
+    claim: "We do not employ commission-only sales agents.",
     copy: "No financial reason to prefer one developer, one project or one unit over another, the same way a good independent financial adviser is not paid by any single fund manager.",
   },
   {
