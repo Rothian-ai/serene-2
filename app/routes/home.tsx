@@ -29,8 +29,6 @@ export function meta() {
  * each of them twice was the redundancy; a homepage that signposts is not.
  */
 export default function Home() {
-  const latest = insights.slice(0, 3);
-
   return (
     <>
       {/* ① The hero — one statement over the dusk plate */}
