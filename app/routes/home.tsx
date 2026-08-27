@@ -1,8 +1,8 @@
 import { HomeHero } from "~/components/HomeHero";
 import { MetricsMonument } from "~/components/MetricsMonument";
 import { SplitHeading } from "~/components/SplitHeading";
-import { CTA, Eyebrow, QuietLink, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
-import { InsightCard } from "~/components/cards";
+import { CTA, Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
+import { InsightCarousel } from "~/components/InsightCarousel";
 import { LifecycleRail } from "~/components/LifecycleRail";
 import { DeveloperRegister } from "~/components/DeveloperRegister";
 import { insights } from "~/lib/content";
@@ -72,28 +72,14 @@ export default function Home() {
       {/* ⑤ The market we are answering — the figures, then why they matter */}
       <MetricsMonument />
 
-      {/* ⑥ Insights — the journal, image-led */}
-      <Section>
-        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
-          <Reveal exit>
-            <Eyebrow className="text-fog">Insights</Eyebrow>
-          </Reveal>
-          <QuietLink to="/insights">All Insights</QuietLink>
-        </div>
-        <RevealGroup className="mt-11 grid gap-10 md:grid-cols-3 md:gap-7">
-          {latest.map((i) => (
-            <RevealItem key={i.slug}>
-              <InsightCard insight={i} />
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </Section>
+      {/* ⑥ Insights — a scrollable rail, so more than three can be offered */}
+      <InsightCarousel insights={insights} />
 
       {/* ⑦ Request a conversation — the close */}
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
-            <Eyebrow className="justify-center text-silver">Begin</Eyebrow>
+            <Eyebrow className="justify-center text-silver">Our promise</Eyebrow>
           </Reveal>
           <SplitHeading as="h2" className="type-display mt-6" mode="chars">
             We will not call you unless you ask us to.
@@ -105,7 +91,7 @@ export default function Home() {
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
               <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
-                Request a conversation
+                Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/difference" kind="line">How We're Different</CTA>
             </div>

@@ -7,7 +7,12 @@
  * Pages compose from this module so the positioning never drifts between
  * surfaces.
  *
- * Two deliberate departures from the source, both house style:
+ * The client has since overridden some of it directly — the hero headline, the
+ * market line, three of the four commitment claims and the commitments
+ * headline. Those are theirs, not the document's, so do not "restore" them to
+ * the document on a later pass.
+ *
+ * Two other departures from the source, both house style:
  *   · em dashes are rewritten as commas, colons or full stops (the words are
  *     unchanged); en dashes stay in numeric ranges, as they always have
  *   · the stages keep the document's own tab label, because the rail and the
@@ -25,7 +30,7 @@
 /** The narrative that explains the model, rather than asserting it. */
 export const MARKET_CASE = {
   eyebrow: "Why the market works this way",
-  headline: "Every agent in Dubai is paid on commission. That is the whole problem.",
+  headline: "Most agents in Dubai are paid on commission. That is the whole problem.",
   body: [
     "Nearly 40,000 licensed brokers now compete for the same buyers, on splits of 40–70% and nothing else. Average tenure has fallen to six months or less. The newest agents, the ones most likely to be calling you, churn out inside ninety days.",
     "A brokerage CEO writing in Gulf News describes the result plainly: deals go to whoever is willing to hand back the biggest slice of their own commission. That is not advice. It is an auction on the advisor's survival.",
@@ -87,14 +92,14 @@ export interface Commitment {
 
 export const COMMITMENTS_INTRO = {
   eyebrow: "Four commitments",
-  headline: "Not a faster broker. A differently built one.",
+  headline: "Not a typical broker. A differently built one.",
   body: "Each of these is a structural fact about how Serene is set up, not a promise about how hard we try.",
 } as const;
 
 export const COMMITMENTS: Commitment[] = [
   {
     k: "01",
-    claim: "Our advisors are not paid on commission.",
+    claim: "We do not employ commission only sales agents.",
     copy: "No financial reason to prefer one developer, one project or one unit over another, the same way a good independent financial adviser is not paid by any single fund manager.",
   },
   {
@@ -104,12 +109,12 @@ export const COMMITMENTS: Commitment[] = [
   },
   {
     k: "03",
-    claim: "We do not disappear at reservation.",
+    claim: "We do not disappear once the deal is done.",
     copy: "The relationship continues through construction monitoring, independent snagging, handover, tenanting, mortgage and refinance, and years later, resale.",
   },
   {
     k: "04",
-    claim: "We tell you the truth about going direct.",
+    claim: "We are better than buying direct from a developer.",
     copy: "It does not save you money on an off-plan purchase. The developer pays commission out of its own budget either way. Going direct only removes the one party representing you.",
   },
 ];

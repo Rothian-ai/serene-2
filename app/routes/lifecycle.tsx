@@ -63,7 +63,7 @@ export default function Lifecycle() {
       <div className="bg-ink text-ivory">
         <Section className="text-center">
           <Reveal exit>
-            <Eyebrow className="justify-center text-silver">Begin</Eyebrow>
+            <Eyebrow className="justify-center text-silver">Our promise</Eyebrow>
           </Reveal>
           <SplitHeading as="h2" mode="chars" className="type-display mt-6">
             Start at stage one.
@@ -75,7 +75,7 @@ export default function Lifecycle() {
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
               <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
-                Ask us anything
+                Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/faqs" kind="line">Read the questions first</CTA>
             </div>

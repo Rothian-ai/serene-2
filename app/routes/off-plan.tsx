@@ -383,7 +383,7 @@ export default function OffPlan() {
           </ul>
           <div className="mt-11 flex flex-wrap gap-4">
             <CTA to={conversationHref("an off-plan purchase")} kind="solid" external={HAS_WHATSAPP}>
-              Request a conversation
+              Ask Amelia, our AI Sales Agent
             </CTA>
             <CTA to="/difference" kind="line-ink">How We're Different</CTA>
           </div>

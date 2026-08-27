@@ -23,7 +23,7 @@ import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 const COPY = {
   eyebrow: "The Serene difference",
-  title: "Advice you can trace back to your interest.",
+  title: "A different type of broker, a broker that you can trust.",
   sub: "Our advisors are salaried. They earn nothing extra for choosing one developer, one project or one unit over another. What they are paid to do is be right for you, before the reservation, and for the years after it.",
 } as const;
 
@@ -43,7 +43,7 @@ function Actions() {
   return (
     <>
       <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
-        Ask us anything
+        Ask Amelia, our AI Sales Agent
       </CTA>
       <CTA to="/difference" kind="line">
         How We're Different

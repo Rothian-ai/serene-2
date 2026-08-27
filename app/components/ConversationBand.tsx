@@ -18,10 +18,10 @@ import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
  * under prefers-reduced-motion.
  */
 export function ConversationBand({
-  eyebrow = "Begin",
+  eyebrow = "Our promise",
   title,
   copy,
-  primary = "Request a conversation",
+  primary = "Ask Amelia, our AI Sales Agent",
   secondary,
   secondaryTo,
   image = "/images/about-ask.jpg",

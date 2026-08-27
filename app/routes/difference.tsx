@@ -24,7 +24,7 @@ export function meta() {
   return buildMeta({
     title: "The Difference",
     description:
-      "Every agent in Dubai is paid on commission. That is the whole problem. Serene Bay's advisors are salaried, so there is no financial reason to prefer one developer, one project or one unit over another.",
+      "Most agents in Dubai are paid on commission. That is the whole problem. Serene Bay does not employ commission only sales agents, so there is no financial reason to prefer one developer, one project or one unit over another.",
     path: "/difference",
   });
 }

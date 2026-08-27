@@ -583,6 +583,50 @@ body {
   will-change: transform;
 }
 
+/* rail — a full-bleed horizontal scroller whose first card lines up with the
+   container's text, while the last runs off the right edge. That overhang is
+   the affordance: a rail that ends tidily inside the margin reads as a short
+   grid rather than something you can scroll.
+
+   The gutter has to track .container-site exactly, hence the max(): the
+   container is centred at max-width 1440, so its left content edge is half the
+   leftover space plus its own padding, floored at that padding on narrow
+   viewports. scroll-padding matches it so snap-start lands on the gutter and
+   not on the viewport edge. */
+.rail {
+  --rail-gutter: max(1.5rem, calc((100% - 1440px) / 2 + 1.5rem));
+  padding-inline-start: var(--rail-gutter);
+  scroll-padding-inline-start: var(--rail-gutter);
+  scrollbar-width: thin;
+  scrollbar-color: rgb(10 21 38 / 0.25) transparent;
+}
+@media (min-width: 768px) {
+  .rail {
+    --rail-gutter: max(3rem, calc((100% - 1440px) / 2 + 3rem));
+  }
+}
+@media (min-width: 1024px) {
+  .rail {
+    --rail-gutter: max(5rem, calc((100% - 1440px) / 2 + 5rem));
+  }
+}
+@media (min-width: 1920px) {
+  .rail {
+    --rail-gutter: max(5rem, calc((100% - 1760px) / 2 + 5rem));
+  }
+}
+/* a scrollbar you can see but never notice — it is the only hint, other than
+   the cut-off card, that the rail moves */
+.rail::-webkit-scrollbar {
+  height: 3px;
+}
+.rail::-webkit-scrollbar-track {
+  background: rgb(10 21 38 / 0.07);
+}
+.rail::-webkit-scrollbar-thumb {
+  background: rgb(10 21 38 / 0.28);
+}
+
 /* marquee — a slow, continuous drift. The track holds two identical halves;
    translating by -50% loops seamlessly. Pauses on hover/focus; neutralised to a
    static row under reduced motion.
