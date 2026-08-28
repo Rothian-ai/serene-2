@@ -1,8 +1,8 @@
 /**
  * A developer's lockup, rendered through a CSS mask.
  *
- * The seven logos arrive as mixed sources: six SVGs and one PNG, in whatever
- * colours their owners use. Painting them as images would put seven different
+ * The logos arrive as mixed sources — SVG, PNG and WebP — in whatever
+ * colours their owners use. Painting them as images would put a dozen different
  * palettes on one page. Masking instead means the artwork supplies only the
  * shape and the page supplies the colour, so the register reads as one ink-toned
  * set and can take the brass on hover like any other mark on the site.
@@ -18,6 +18,18 @@ const BRAND_LOGOS: Record<string, { src: string; w: string }> = {
   meraas: { src: "/images/brands/dev-meraas.svg", w: "w-[112px] md:w-[140px]" },
   binghatti: { src: "/images/brands/dev-binghatti.svg", w: "w-[108px] md:w-[135px]" },
   arada: { src: "/images/brands/dev-arada.svg", w: "w-[108px] md:w-[135px]" },
+  "ahs-properties": { src: "/images/brands/dev-ahs-properties.png", w: "w-[69px] md:w-[85px]" },
+  "al-zorah": { src: "/images/brands/dev-al-zorah.png", w: "w-[120px] md:w-[150px]" },
+  "bnw-developments": { src: "/images/brands/dev-bnw-developments.webp", w: "w-[58px] md:w-[70px]" },
+  "bt-properties": { src: "/images/brands/dev-bt-properties.webp", w: "w-[120px] md:w-[150px]" },
+  "grovy-developments": { src: "/images/brands/dev-grovy-developments.svg", w: "w-[58px] md:w-[70px]" },
+  "hre": { src: "/images/brands/dev-hre.png", w: "w-[72px] md:w-[88px]" },
+  "object-1": { src: "/images/brands/dev-object-1.svg", w: "w-[120px] md:w-[150px]" },
+  "omniyat": { src: "/images/brands/dev-omniyat.svg", w: "w-[120px] md:w-[150px]" },
+  "pantheon": { src: "/images/brands/dev-pantheon.png", w: "w-[120px] md:w-[150px]" },
+  "rak-properties": { src: "/images/brands/dev-rak-properties.svg", w: "w-[120px] md:w-[150px]" },
+  "reef-luxury-developments": { src: "/images/brands/dev-reef-luxury-developments.svg", w: "w-[94px] md:w-[115px]" },
+  "sol-properties": { src: "/images/brands/dev-sol-properties.webp", w: "w-[76px] md:w-[93px]" },
 };
 
 /** The mask paints the mark, so the ground decides which fill it takes. */

@@ -92,3 +92,29 @@ about-ask.jpg — Photo by Nereid Ndreu on Unsplash — https://unsplash.com/pho
 about-decide.jpg — Photo by Declan Sun on Unsplash — https://unsplash.com/photos/a-white-door-is-open-in-a-room-feNszHAdznQ
 about-light.jpg — Photo by Fabian Kleiser on Unsplash — https://unsplash.com/photos/modern-ceiling-with-wooden-beams-and-recessed-lighting-usFpnf7rDkQ
 about-understand.jpg — Photo by Amsterdam City Archives on Unsplash — https://unsplash.com/photos/architectural-blueprint-of-a-multi-story-building-9tmKEDz03uw
+
+────────────────────────────────────────────────────────────────────────
+DEVELOPER LOGOS (public/images/brands/dev-*)
+────────────────────────────────────────────────────────────────────────
+Registered trademarks of their respective owners, used to identify the
+developers on the Serene register. Each was taken from the developer's
+own website on 2026-08-28 and is rendered monochrome via CSS mask
+(see app/components/BrandMark.tsx), so only the silhouette is used.
+
+  ahs-properties            ahsproperties.com
+  al-zorah                  alzorah.ae / alzorahcity.com
+  bnw-developments          bnwdevelopments.ae
+  bt-properties             btproperties.ae
+  grovy-developments        grovy.ae
+  hre                       hredevelopment.com
+  object-1                  object1.com  (inline header SVG)
+  omniyat                   omniyat.com
+  pantheon                  pantheondevelopment.ae
+  rak-properties            rakproperties.ae
+  reef-luxury-developments  reefdevelopments.ae
+  sol-properties            solproperties.ae
+
+Confirm the client's right to display each mark before launch.
+
+Still without artwork: atara, devmark, eywa-by-r-evolutions,
+iman-developers, marquis, ohana, qube, savills-difc, svarn.
