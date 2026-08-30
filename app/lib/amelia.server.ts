@@ -35,6 +35,24 @@ function base(): string {
   return (process.env.AMELIA_API_BASE?.trim() || DEFAULT_BASE).replace(/\/+$/, "");
 }
 
+/**
+ * Where the wall clock went on one call, so a slow page can be attributed
+ * instead of guessed at. Loaders pass one of these in and publish it as a
+ * Server-Timing header, which means anyone with devtools open, or a curl, can
+ * see whether the wait was Amelia's or ours.
+ */
+export interface Timing {
+  /** request sent to parsed JSON body, including transport */
+  upstreamMs: number;
+  /** applying house style to the parsed record */
+  shapeMs: number;
+}
+
+/** `Server-Timing` value for a call, or undefined when nothing was measured. */
+export function serverTiming(t: Timing): string {
+  return `amelia;dur=${t.upstreamMs}, housestyle;dur=${t.shapeMs}`;
+}
+
 export class AmeliaError extends Error {
   constructor(readonly status: number, message: string) {
     super(message);
@@ -243,7 +261,7 @@ function houseStyle<T>(node: T, depth = 0): T {
 
 /* ——— transport ——— */
 
-async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
+async function get<T>(path: string, signal?: AbortSignal, timing?: Timing): Promise<T> {
   const key = process.env.AMELIA_API_KEY?.trim();
   if (!key) throw new AmeliaError(0, "AMELIA_API_KEY is not set");
 
@@ -287,7 +305,16 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
     console.error(`[amelia] GET ${path} -> ${res.status} in ${Date.now() - started}ms`);
     throw new AmeliaError(res.status, `Listing API returned ${res.status}.`);
   }
-  return houseStyle((await res.json()) as T);
+  const parsed = (await res.json()) as T;
+  if (timing) timing.upstreamMs = Date.now() - started;
+
+  // houseStyle walks every string in the record, and a detail payload with all
+  // units is a big tree — worth measuring separately rather than assuming it
+  // rounds to nothing.
+  const shapeStarted = Date.now();
+  const shaped = houseStyle(parsed);
+  if (timing) timing.shapeMs = Date.now() - shapeStarted;
+  return shaped;
 }
 
 export interface ProjectQuery {
@@ -303,6 +330,7 @@ export interface ProjectQuery {
 export async function fetchProjects(
   q: ProjectQuery = {},
   signal?: AbortSignal,
+  timing?: Timing,
 ): Promise<{ data: ProjectCard[]; nextCursor: string | null }> {
   const p = new URLSearchParams();
   p.set("limit", String(Math.min(q.limit ?? 50, 100)));
@@ -313,6 +341,7 @@ export async function fetchProjects(
   const res = await get<{ data: ProjectCard[]; nextCursor: string | null }>(
     `/api/v1/projects?${p}`,
     signal,
+    timing,
   );
   // A 200 carrying an empty catalogue is indistinguishable, from the page, from
   // a request we got wrong. Say which in the logs so the next person asking
@@ -333,12 +362,14 @@ export async function fetchProject(
   slug: string,
   opts: { includeUnits?: "available" | "all" | "none" } = {},
   signal?: AbortSignal,
+  timing?: Timing,
 ): Promise<ProjectDetail | null> {
   const units = opts.includeUnits ?? "all";
   try {
     return await get(
       `/api/v1/projects/${encodeURIComponent(slug)}?includeUnits=${units}`,
       signal,
+      timing,
     );
   } catch (err) {
     if (err instanceof AmeliaError && err.status === 404) return null;

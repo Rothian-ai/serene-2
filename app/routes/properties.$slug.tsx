@@ -1,10 +1,11 @@
-import { Link, useLoaderData } from "react-router";
-import type { LoaderFunctionArgs } from "react-router";
+import { Link, data, useLoaderData } from "react-router";
+import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
 import { CTA, Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { RegisterInterest } from "~/components/RegisterInterest";
-import { AmeliaError, fetchProject, isAmeliaConfigured } from "~/lib/amelia.server";
-import type { ProjectDetail } from "~/lib/amelia.server";
+import { AmeliaError, fetchProject, isAmeliaConfigured, serverTiming } from "~/lib/amelia.server";
+import type { ProjectDetail, Timing } from "~/lib/amelia.server";
+import { permitQr } from "~/lib/qr.server";
 import {
   EMPTY,
   bedrooms,
@@ -40,19 +41,27 @@ export function meta({ data }: Route.MetaArgs) {
  * changes, so the HTML must not be frozen at build time. This is the equivalent
  * of the integration guide's Next `revalidate: 300`.
  */
-export function headers() {
-  return {
-    "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400",
+const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
+
+export function headers({ loaderHeaders }: HeadersArgs) {
+  const out: Record<string, string> = {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH,
   };
+  // See the note on the register: this says whether a slow render was the
+  // catalogue's time or ours. A CDN hit never ran the loader, so it has none.
+  const timing = loaderHeaders.get("Server-Timing");
+  if (timing) out["Server-Timing"] = timing;
+  return out;
 }
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const slug = params.slug!;
   if (!isAmeliaConfigured()) throw new Response("Not Found", { status: 404 });
+  const timing: Timing = { upstreamMs: 0, shapeMs: 0 };
   let project: ProjectDetail | null;
   try {
     // `all` so Reserved/Sold arrive too and sold-out states can be rendered.
-    project = await fetchProject(slug, { includeUnits: "all" }, request.signal);
+    project = await fetchProject(slug, { includeUnits: "all" }, request.signal, timing);
   } catch (err) {
     throw new Response(
       err instanceof AmeliaError ? err.message : "The listing service is unavailable.",
@@ -61,7 +70,17 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   }
   // 404 covers unknown slugs, another org's slugs and unpublished drafts alike.
   if (!project) throw new Response("Not Found", { status: 404 });
-  return { project };
+
+  // Drawn here rather than in the component so the encoder stays off the
+  // browser bundle, and so it is computed once per origin render rather than
+  // once per hydration.
+  const permit = project.trust?.permit ?? project.permit ?? null;
+  const qr = permit?.qrImageUrl ? null : permitQr(permit?.verificationUrl);
+
+  return data(
+    { project, qr },
+    { headers: { "Cache-Control": FRESH, "Server-Timing": serverTiming(timing) } },
+  );
 }
 
 /* ——— a titled band, so every section shares one rhythm ——— */
@@ -94,7 +113,7 @@ const amenityName = (a: NonNullable<ProjectDetail["amenities"]>[number]) =>
   typeof a === "string" ? a : (a?.name ?? a?.label ?? null);
 
 export default function Property() {
-  const { project: p } = useLoaderData<typeof loader>();
+  const { project: p, qr } = useLoaderData<typeof loader>();
   const currency = p.currency ?? "AED";
   const locality = [p.area, p.emirate].filter(Boolean).join(", ");
   const signup = buyerSignupHref(p.slug);
@@ -715,20 +734,21 @@ export default function Property() {
               ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
             />
             {/* A permit QR has to survive being pointed at by a phone, which
-                sets its size: a Trakheesi validation URL is long enough to
-                encode at around version 7 to 10, so 45 to 57 modules across.
-                The old 112px gave those 2.0 to 2.5px a module, under what a
-                camera decodes reliably; 192px gives 3.4 to 4.3.
+                sets its size: a Trakheesi validation URL encodes at 49 modules
+                across, and 224px gives those 4.6px each, comfortably above what
+                a camera decodes.
 
-                `pixelated` because the source may be smaller than we draw it,
-                and smoothing an upscaled QR blurs exactly the module edges a
-                scanner is looking for. The white plate guarantees the quiet
-                zone whether or not the supplied image includes one. */}
-            {permit?.qrImageUrl && (
+                Two sources, in order of authority. If Amelia ever populates
+                `qrImageUrl` that is the permit holder's own artwork and wins.
+                Today it is null on every record, so we draw the code from
+                `verificationUrl` instead: same content, and as a path rather
+                than a bitmap it is exact at any size and prints sharp.
+
+                Either way the quiet zone is the wrapper's padding, never the
+                image's own: padding inside the box comes out of the code area,
+                and the code area is what a scanner has to resolve. */}
+            {permit?.qrImageUrl ? (
               <div className="shrink-0">
-                {/* the quiet zone is the wrapper's padding, not the image's:
-                    padding on the image itself comes out of the code area, and
-                    the code area is what a scanner has to resolve */}
                 <div className="inline-block bg-white p-3">
                   <img
                     src={permit.qrImageUrl}
@@ -739,7 +759,22 @@ export default function Property() {
                 </div>
                 <p className="type-cap mt-2.5 text-fog">Scan to verify with DLD</p>
               </div>
-            )}
+            ) : qr ? (
+              <div className="shrink-0">
+                <div className="inline-block bg-white p-3">
+                  <svg
+                    viewBox={`0 0 ${qr.size} ${qr.size}`}
+                    className="block h-44 w-44 md:h-56 md:w-56"
+                    shapeRendering="crispEdges"
+                    role="img"
+                    aria-label="Scan to verify this permit with the Dubai Land Department"
+                  >
+                    <path d={qr.path} fill="#0a1526" />
+                  </svg>
+                </div>
+                <p className="type-cap mt-2.5 text-fog">Scan to verify with DLD</p>
+              </div>
+            ) : null}
           </div>
           {permit?.verificationUrl && (
             <p className="type-cap mt-6">

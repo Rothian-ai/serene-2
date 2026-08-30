@@ -3,7 +3,8 @@ import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
 import { AdvisorLink, Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { PropertyCard } from "~/components/property";
-import { AmeliaError, fetchProjects, isAmeliaConfigured } from "~/lib/amelia.server";
+import { AmeliaError, fetchProjects, isAmeliaConfigured, serverTiming } from "~/lib/amelia.server";
+import type { Timing } from "~/lib/amelia.server";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "light" as const };
@@ -30,7 +31,15 @@ const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
 const BRIEF = "public, max-age=0, s-maxage=15";
 
 export function headers({ loaderHeaders }: HeadersArgs) {
-  return { "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH };
+  const out: Record<string, string> = {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH,
+  };
+  // Published so a slow page can be attributed rather than guessed at: it says
+  // how much of the wait was the catalogue and how much was us. Only present on
+  // an origin render; a CDN hit never ran the loader.
+  const timing = loaderHeaders.get("Server-Timing");
+  if (timing) out["Server-Timing"] = timing;
+  return out;
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -43,6 +52,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     );
   }
   const p = new URL(request.url).searchParams;
+  const timing: Timing = { upstreamMs: 0, shapeMs: 0 };
   try {
     const projects = await fetchProjects(
       {
@@ -55,11 +65,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
         maxPrice: p.get("maxPrice") ? Number(p.get("maxPrice")) : null,
       },
       request.signal,
+      timing,
     );
     const nextCursor = projects.nextCursor;
     return data(
       { state: "ok" as const, projects: projects.data, nextCursor, error: null },
-      { headers: { "Cache-Control": FRESH } },
+      { headers: { "Cache-Control": FRESH, "Server-Timing": serverTiming(timing) } },
     );
   } catch (err) {
     // A listing outage is not a broken site: keep the page, explain the gap.
