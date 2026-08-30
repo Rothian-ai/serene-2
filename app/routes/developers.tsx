@@ -29,26 +29,25 @@ export function meta() {
  * Replacing it with a hairline grid fixed the ranking and lost the pictures.
  *
  * So: one tile per developer, identical in size and structure, and every one of
- * them carries a ground. Where we hold licensed photography of the developer's
- * work it is the ground; where we do not, the art-directed plate is. Both sit
- * under the same scrim at the same weight, and in both cases the subject of the
- * tile is the developer's mark rather than the picture behind it — which is what
- * keeps a photographed entry from outranking an unphotographed one.
+ * them carries an art-directed ground rather than a photograph. We hold licensed
+ * photography for seven of the twenty-eight, and putting a real building behind
+ * those seven and a plate behind the other twenty-one reinstates exactly the
+ * hierarchy this page had to lose. The plates are the same six surfaces used
+ * across the site, so the wall reads as one set and the subject of every tile is
+ * the developer's mark rather than the picture behind it.
  *
- * It also grows the right way. A twenty-ninth registration is one more tile, and
- * a photograph arriving later upgrades a tile in place with no redesign.
+ * It also grows the right way: a twenty-ninth registration is one more tile. If
+ * photography ever exists for all of them, passing image={d.image} to the Plate
+ * is the whole change.
  */
 
-/* Six grounds, cycled across the tiles that have no photograph of their own.
-   The counter skips the photographed ones so the cycle a visitor actually sees
-   is unbroken, and nothing about which ground a tile gets is a judgement on the
-   developer standing on it. */
+/* Six grounds cycled by position. Four columns against six kinds means neither
+   the tile beside a given one nor the tile above it can repeat its ground, and
+   nothing about which ground a tile gets is a judgement on the developer
+   standing on it. */
 const GROUNDS: PlateKind[] = ["render", "glass", "dusk", "stone", "interior", "hero"];
 
 export default function Developers() {
-  let g = 0;
-  const grounds = developers.map((d) => (d.image ? d.plate : GROUNDS[g++ % GROUNDS.length]));
-
   return (
     <>
       <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[60svh]">
@@ -71,15 +70,13 @@ export default function Developers() {
                 <Link to={`/developers/${d.slug}`} className="group block">
                   <span className="relative block aspect-[4/3] overflow-hidden">
                     <Plate
-                      kind={grounds[i]}
-                      image={d.image}
+                      kind={GROUNDS[i % GROUNDS.length]}
                       /* .plate carries position:relative in plain CSS, which outranks
                          an `absolute` utility — so size it rather than pin it. */
                       className="h-full w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
                     />
-                    {/* One scrim over both kinds of ground. It is what makes a
-                        photograph and a plate sit at the same weight, and it is
-                        what guarantees the mark reads whatever is behind it. */}
+                    {/* The scrim is what guarantees the mark reads whatever
+                        ground it lands on. */}
                     <span
                       aria-hidden
                       className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/52 to-ink/34 transition-opacity duration-500 group-hover:opacity-85"
@@ -91,14 +88,15 @@ export default function Developers() {
                   <span className="type-title mt-4 block text-[1.05rem] transition-colors duration-300 group-hover:text-brass">
                     {d.name}
                   </span>
-                  {/* No tagline. Seven records carry one and twenty-one do not,
+                  {/* No tagline. Seven entries carry one and twenty-one do not,
                       and a cell two lines taller than its neighbours is the
-                      ranking this page had to stop implying. It opens the
-                      record page instead. */}
-                  {/* Not "the record": only seven of the twenty-eight pages carry a
-                      ledger, and the word promises one. "The registration" is
-                      true of every entry, thin or full, and names the thing the
-                      section is actually about. */}
+                      ranking this page had to stop implying; the tagline opens
+                      the entry's own page instead.
+
+                      And not "the record" for the link: only seven of the
+                      twenty-eight pages carry a ledger, and that word promises
+                      one. "The registration" is true of a thin entry and a full
+                      one alike. */}
                   <span className="type-cap mt-2 flex items-center gap-2 text-fog">
                     The registration
                     <span
