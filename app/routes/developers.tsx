@@ -1,11 +1,10 @@
 import { Link } from "react-router";
-import { Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
-import { listedDevelopers, profiledDevelopers } from "~/lib/content";
-import type { Developer } from "~/lib/content";
+import { developers } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 
@@ -15,70 +14,28 @@ export function meta() {
   return buildMeta({
     title: "Developers",
     description:
-      "Cross-developer, selected on suitability, with the due diligence disclosed. The developers Serene is registered with, each with its founding, its delivery record and its notable works.",
+      "Cross-developer, selected on suitability, with the due diligence disclosed. Every developer Serene is registered with, each with its own record.",
     path: "/developers",
   });
 }
 
 /**
- * A registry entry, set as an editorial spread rather than a card: the lockup
- * as a stamp, the name in the house light weight, the record in a ledger. The
- * whole row is the link, and alternate rows flip so the page reads as a
- * register rather than a grid of tiles.
+ * The register as one directory, every entry the same shape.
+ *
+ * It used to be two tiers: seven as full editorial spreads, then the rest under
+ * "Also registered with". That split was about which records I had research for,
+ * but it did not read that way — it read as a ranking, seven principals and
+ * twenty-one hangers-on, which is not true of any of them. They are all
+ * registrations of exactly the same kind.
+ *
+ * So the index is a directory: one cell per developer, one shape, one link
+ * each. Depth belongs on the individual pages, where a fuller record simply
+ * makes a longer page rather than a better position in a list.
  */
-function RegistryEntry({ developer, flip }: { developer: Developer; flip: boolean }) {
-  return (
-    <Link
-      to={`/developers/${developer.slug}`}
-      className="group grid items-center gap-8 border-t border-ink/14 py-12 md:grid-cols-12 md:gap-7 md:py-16"
-    >
-      <div
-        className={`relative overflow-hidden md:col-span-5 ${
-          flip ? "md:order-2 md:col-start-8" : ""
-        }`}
-      >
-        <Plate
-          kind={developer.plate}
-          image={developer.image}
-          alt={developer.name}
-          className="aspect-[16/11] w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-        />
-      </div>
-
-      <div className={`md:col-span-6 ${flip ? "md:order-1 md:col-start-1" : "md:col-start-7"}`}>
-        <BrandMark slug={developer.slug} name={developer.name} />
-        <h2 className="type-headline mt-6 transition-colors duration-300 group-hover:text-brass">
-          {developer.name}
-        </h2>
-        {developer.tagline && (
-          <p className="type-body-lg mt-3 max-w-[46ch] text-ink/70">{developer.tagline}</p>
-        )}
-        <Ledger
-          className="mt-7"
-          cells={[
-            { k: "Founded", v: developer.founded },
-            { k: "Delivered", v: developer.delivered },
-            { k: "HQ", v: developer.hq },
-          ].filter((c): c is { k: string; v: string } => Boolean(c.v))}
-        />
-        {developer.notable.length > 0 && (
-          <p className="type-cap mt-5 text-fog">Notable: {developer.notable.join(" · ")}</p>
-        )}
-        <span className="mt-7 inline-flex items-center gap-2.5 border-b border-gold pb-1.5 text-[12.5px] font-semibold uppercase tracking-[0.1em]">
-          The full record
-          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
-            →
-          </span>
-        </span>
-      </div>
-    </Link>
-  );
-}
-
 export default function Developers() {
   return (
     <>
-      <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[64svh]">
+      <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[60svh]">
         <Eyebrow className="text-silver">{REGISTER_INTRO.eyebrow}</Eyebrow>
         <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
           {REGISTER_INTRO.headline}
@@ -86,38 +43,51 @@ export default function Developers() {
         <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">{REGISTER_INTRO.full}</p>
       </Hero>
 
-      {/* The researched records, as spreads */}
       <Section>
-        <div className="hairline-b">
-          {profiledDevelopers.map((d, i) => (
-            <RegistryEntry key={d.slug} developer={d} flip={i % 2 === 1} />
-          ))}
-        </div>
-      </Section>
+        <Reveal exit>
+          <p className="type-body-lg max-w-[58ch] text-ink/74">{REGISTER_INTRO.body}</p>
+        </Reveal>
 
-      {/* And the rest by name. Twenty-one of these arrived as a list of names,
-          and a spread apiece would mean twenty-one pages of blank ledgers and a
-          page some 16,000px long. They belong in the register either way, so
-          they are named here and take a profile when there is one to write. */}
-      {listedDevelopers.length > 0 && (
-        <div className="bg-frost">
-          <Section>
-            <Reveal exit>
-              <Eyebrow className="text-fog">Also registered with</Eyebrow>
-            </Reveal>
-            <ul className="mt-9 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {listedDevelopers.map((d) => (
-                <li key={d.slug} className="border-t border-ink/16 pt-5">
-                  {/* these have no logo on file, so the mark is the name */}
-                  <span className="flex h-11 items-center">
+        <Reveal className="mt-12 md:mt-16">
+          <ul className="grid grid-cols-2 gap-x-7 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+            {developers.map((d) => (
+              <li key={d.slug}>
+                <Link
+                  to={`/developers/${d.slug}`}
+                  className="group flex h-full flex-col border-t border-ink/16 pt-6"
+                >
+                  {/* fixed height so a logo and a wordmark occupy the same box
+                      and no row looks more important than another */}
+                  <span className="flex h-12 items-center">
                     <BrandMark slug={d.slug} name={d.name} compact />
                   </span>
-                </li>
-              ))}
-            </ul>
-          </Section>
-        </div>
-      )}
+                  <span className="type-title mt-4 text-[1.05rem] transition-colors duration-300 group-hover:text-brass">
+                    {d.name}
+                  </span>
+                  {/* No tagline here, though seven of them have one. A cell with
+                      two extra lines of prose stands taller than its neighbours,
+                      and a directory where some entries are visibly bigger reads
+                      as a ranking — which is the exact thing this page had to
+                      stop doing. The tagline still opens the record page. */}
+                  <span className="type-cap mt-auto pt-5 flex items-center gap-2 text-fog">
+                    The record
+                    <span
+                      aria-hidden
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <Reveal className="mt-12">
+          <QuietLink to="/properties">The addresses they are building</QuietLink>
+        </Reveal>
+      </Section>
 
       <ConversationBand
         eyebrow="Request a conversation"

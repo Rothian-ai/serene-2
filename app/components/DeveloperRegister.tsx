@@ -25,8 +25,9 @@ import { REGISTER_INTRO } from "~/lib/strategy";
  * under prefers-reduced-motion the animation stops, the rows become ordinary
  * scrollable strips and the duplicates are hidden.
  *
- * Most of the register has no logo file yet, so BrandMark's wordmark fallback is
- * the common case here rather than the exception.
+ * Some of the register has no logo file yet, so BrandMark's wordmark fallback
+ * carries those. Every mark links: each developer has a page, whether or not
+ * there is a written profile behind it.
  */
 
 /** Seconds per mark. Holds the pace steady however long the register gets. */
@@ -47,21 +48,14 @@ function Row({
     >
       {marks.map((d) => (
         <span key={d.slug} className="flex items-center">
-          {d.profiled ? (
-            <Link
-              to={`/developers/${d.slug}`}
-              className="group flex items-center px-8 py-1 md:px-11"
-              tabIndex={duplicate ? -1 : undefined}
-              aria-label={duplicate ? undefined : `${d.name}, the full record`}
-            >
-              <BrandMark slug={d.slug} name={d.name} />
-            </Link>
-          ) : (
-            // no record to open, so it is a mark and not a link
-            <span className="group flex items-center px-8 py-1 md:px-11">
-              <BrandMark slug={d.slug} name={d.name} />
-            </span>
-          )}
+          <Link
+            to={`/developers/${d.slug}`}
+            className="group flex items-center px-8 py-1 md:px-11"
+            tabIndex={duplicate ? -1 : undefined}
+            aria-label={duplicate ? undefined : `${d.name}, the full record`}
+          >
+            <BrandMark slug={d.slug} name={d.name} />
+          </Link>
           <span aria-hidden className="h-1 w-1 shrink-0 rotate-45 bg-gold/70" />
         </span>
       ))}

@@ -73,8 +73,9 @@ export interface Insight {
  * twenty-eight, and the twenty-one added later carry a name and nothing else:
  * founding years, delivery counts, headquarters and notable works are facts
  * about real companies, and an empty field is honest where a guessed one is
- * not. So every other field is optional, and `profiled` is the flag pages use
- * to decide whether there is a record worth opening.
+ * not. So every other field is optional, and `profiled` says whether a record
+ * carries more than a name — which decides how much of a page renders, not
+ * whether there is one. Every developer has a page.
  */
 export interface Developer {
   slug: string;
@@ -152,10 +153,6 @@ export const developers: Developer[] = load(developerFiles, (slug, d, body) => {
     profiled: Boolean(founded || hq || delivered || tagline || body.trim()),
   };
 }).sort((a, b) => a.name.localeCompare(b.name));
-
-/** The register split by whether there is a page worth linking to. */
-export const profiledDevelopers = developers.filter((d) => d.profiled);
-export const listedDevelopers = developers.filter((d) => !d.profiled);
 
 export const getDeveloper = (slug: string) => developers.find((d) => d.slug === slug);
 

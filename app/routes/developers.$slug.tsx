@@ -1,9 +1,10 @@
-import { Eyebrow, Reveal, Section } from "~/components/primitives";
+import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
 import { getDeveloper, renderMarkdown } from "~/lib/content";
+import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/developers.$slug";
 
@@ -11,9 +12,7 @@ export const handle = { headerTone: "dark" as const };
 
 export function meta({ params }: Route.MetaArgs) {
   const dev = getDeveloper(params.slug);
-  if (!dev?.profiled) {
-    return buildMeta({ title: "Developer", description: "A registered developer." });
-  }
+  if (!dev) return buildMeta({ title: "Developer", description: "A registered developer." });
   return buildMeta({
     title: dev.name,
     description: [
@@ -30,10 +29,7 @@ export function meta({ params }: Route.MetaArgs) {
 
 export default function DeveloperProfile({ params }: Route.ComponentProps) {
   const dev = getDeveloper(params.slug);
-  // A name-only entry has no page: it is named on /developers, kept out of the
-  // sitemap and the prerender list, and 404s here rather than serving a profile
-  // with nothing in it to anyone who guesses the URL.
-  if (!dev || !dev.profiled) throw new Response("Not Found", { status: 404 });
+  if (!dev) throw new Response("Not Found", { status: 404 });
 
   const record = [
     { k: "Founded", v: dev.founded },
@@ -53,7 +49,10 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
         )}
       </Hero>
 
-      {/* The record set beside the prose, so neither is left alone in whitespace */}
+      {/* Every developer has a page; a fuller record simply makes a longer one.
+          With nothing on file this is the mark, how the register is selected and
+          the way to ask — brief, but true, and it grows the moment a profile is
+          written for it. */}
       <Section>
         <div className="grid gap-12 md:grid-cols-12 md:gap-7">
           <div className="md:col-span-4">
@@ -88,12 +87,27 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
 
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.1}>
-              <Eyebrow className="text-fog">The house</Eyebrow>
-              <div
-                className="prose-serene mt-7"
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: renderMarkdown(dev.body) }}
-              />
+              <Eyebrow className="text-fog">
+                {dev.body.trim() ? "The house" : "In the register"}
+              </Eyebrow>
+              {dev.body.trim() ? (
+                <div
+                  className="prose-serene mt-7"
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(dev.body) }}
+                />
+              ) : (
+                <>
+                  <p className="type-body-lg mt-7 max-w-[54ch] text-ink/78">
+                    {REGISTER_INTRO.full} {REGISTER_INTRO.body}
+                  </p>
+                  <div className="mt-9">
+                    <QuietLink to="/properties">
+                      The addresses currently in the register
+                    </QuietLink>
+                  </div>
+                </>
+              )}
             </Reveal>
           </div>
         </div>
