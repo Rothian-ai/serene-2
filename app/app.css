@@ -637,6 +637,13 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+/* The same travel the other way. Two rows drifting against each other read as a
+   wall of marks rather than one stream, and halving a long register across them
+   halves each row's loop: fourteen marks at seven seconds is 98s, not 196. */
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
 .marquee-track {
   animation: marquee var(--marquee-duration, 48s) linear infinite;
   width: max-content;
@@ -655,12 +662,27 @@ body {
   );
   mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
 }
+.marquee-track-reverse {
+  animation: marquee-reverse var(--marquee-duration, 48s) linear infinite;
+  width: max-content;
+}
+/* A single row pauses itself. A wall of rows pauses together — one row frozen
+   beside another still drifting reads as a fault, not a hover state — which
+   needs a selector on the wall, because .marquee only ever scopes to the row
+   actually under the pointer. */
 .marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track {
+.marquee:hover .marquee-track-reverse,
+.marquee:focus-within .marquee-track,
+.marquee:focus-within .marquee-track-reverse,
+.marquee-wall:hover .marquee-track,
+.marquee-wall:hover .marquee-track-reverse,
+.marquee-wall:focus-within .marquee-track,
+.marquee-wall:focus-within .marquee-track-reverse {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  .marquee-track,
+  .marquee-track-reverse {
     animation: none;
   }
   .marquee {

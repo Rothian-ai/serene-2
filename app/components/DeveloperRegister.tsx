@@ -1,29 +1,92 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
-import { BrandMark, hasBrandLogo } from "~/components/BrandMark";
+import { BrandMark } from "~/components/BrandMark";
 import { developers } from "~/lib/content";
+import type { Developer } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
 
 /**
- * The register, as a grid of marks on the frost ground.
+ * The register, as two counter-drifting rows on the frost ground.
  *
- * It was a drifting marquee, which suited seven and does not suit twenty-eight.
- * A marquee's duration has to scale with its length or it speeds up as you add
- * to it, so twenty-eight marks means a 196-second loop: any one developer is on
- * screen for a few seconds in every three and a half minutes, and a visitor who
- * scrolls past in five seconds sees two of them. That is fine for decoration and
- * useless for a claim about how many houses we are registered with — a claim
- * that only lands if you can see the set at once.
+ * One row of twenty-eight was the problem: a marquee's duration has to scale
+ * with its length or it speeds up as marks are added, so twenty-eight meant a
+ * 196-second loop and a visitor scrolling past saw two developers. Split across
+ * two rows it is fourteen each, 98 seconds, and twice as many marks are on
+ * screen at any moment. Running them in opposite directions is what makes the
+ * pair read as one wall rather than two unrelated strips.
  *
- * So: a grid, which shows all of them, gains rows rather than pace as the
- * register grows, and gives every mark the same weight.
+ * Everything the single row had is kept: the duration derives from the row's own
+ * count so the pace per mark never changes, both rows pause together on hover
+ * and focus (which needs the marquee-wall class on the pair, since .marquee
+ * scopes only to the row the pointer is actually over), the duplicate halves
+ * are hidden from assistive technology and taken out of the tab order, and
+ * under prefers-reduced-motion the animation stops, the rows become ordinary
+ * scrollable strips and the duplicates are hidden.
  *
- * Names carry the ones without a logo file. BrandMark falls back to the name in
- * the house light weight, which is why the grid can fill out before the artwork
- * arrives — and why the fallback has to look deliberate rather than missing.
+ * Most of the register has no logo file yet, so BrandMark's wordmark fallback is
+ * the common case here rather than the exception.
  */
+
+/** Seconds per mark. Holds the pace steady however long the register gets. */
+const SECONDS_PER_MARK = 7;
+
+function Row({
+  marks,
+  reverse = false,
+}: {
+  marks: Developer[];
+  reverse?: boolean;
+}) {
+  const duration = { "--marquee-duration": `${marks.length * SECONDS_PER_MARK}s` };
+  const half = (duplicate: boolean) => (
+    <div
+      className={`flex shrink-0 items-center${duplicate ? " marquee-dup" : ""}`}
+      aria-hidden={duplicate || undefined}
+    >
+      {marks.map((d) => (
+        <span key={d.slug} className="flex items-center">
+          {d.profiled ? (
+            <Link
+              to={`/developers/${d.slug}`}
+              className="group flex items-center px-8 py-1 md:px-11"
+              tabIndex={duplicate ? -1 : undefined}
+              aria-label={duplicate ? undefined : `${d.name}, the full record`}
+            >
+              <BrandMark slug={d.slug} name={d.name} />
+            </Link>
+          ) : (
+            // no record to open, so it is a mark and not a link
+            <span className="group flex items-center px-8 py-1 md:px-11">
+              <BrandMark slug={d.slug} name={d.name} />
+            </span>
+          )}
+          <span aria-hidden className="h-1 w-1 shrink-0 rotate-45 bg-gold/70" />
+        </span>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="marquee marquee-fade overflow-hidden py-3" tabIndex={0}>
+      <div
+        className={`flex ${reverse ? "marquee-track-reverse" : "marquee-track"}`}
+        style={duration as CSSProperties}
+      >
+        {half(false)}
+        {half(true)}
+      </div>
+    </div>
+  );
+}
+
 export function DeveloperRegister() {
+  // split down the middle; an odd count leaves the extra mark on the top row
+  const cut = Math.ceil(developers.length / 2);
+  const top = developers.slice(0, cut);
+  const bottom = developers.slice(cut);
+
   return (
     <div className="bg-frost">
       <Section className="pb-0">
@@ -40,49 +103,13 @@ export function DeveloperRegister() {
         </div>
       </Section>
 
-      <Section className="pt-0">
-        <Reveal className="mt-11 md:mt-14">
-          {/* Column count climbs with the viewport and the rows follow the
-              register, so nothing needs a filler cell. Each mark sits in a
-              fixed-height box so a wordmark and a logo occupy the same space. */}
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {developers.map((d) => {
-              // With no logo on file the mark is already the name, so the
-              // caption would repeat it. Only logos get a name beneath them.
-              const logo = hasBrandLogo(d.slug);
-              const inner = (
-                <>
-                  <span className="flex h-11 items-center">
-                    <BrandMark slug={d.slug} name={d.name} compact />
-                  </span>
-                  {logo && (
-                    <span className="type-cap mt-3 block text-fog transition-colors duration-300 group-hover:text-brass">
-                      {d.name}
-                    </span>
-                  )}
-                </>
-              );
-              // only the researched records have a page worth opening
-              return (
-                <li key={d.slug} className="border-t border-ink/16 pt-5">
-                  {d.profiled ? (
-                    <Link
-                      to={`/developers/${d.slug}`}
-                      className="group block"
-                      aria-label={`${d.name}, the full record`}
-                    >
-                      {inner}
-                    </Link>
-                  ) : (
-                    <div className="group">{inner}</div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </Reveal>
+      <div className="marquee-wall mt-9 flex flex-col gap-2 md:mt-11">
+        <Row marks={top} />
+        <Row marks={bottom} reverse />
+      </div>
 
-        <Reveal className="mt-10">
+      <Section className="pt-0">
+        <Reveal className="mt-9">
           <QuietLink to="/developers">All {developers.length} developers</QuietLink>
         </Reveal>
       </Section>
