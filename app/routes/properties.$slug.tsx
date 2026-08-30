@@ -48,7 +48,7 @@ export function headers({ loaderHeaders }: HeadersArgs) {
     "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH,
   };
   // See the note on the register: this says whether a slow render was the
-  // catalogue's time or ours. A CDN hit never ran the loader, so it has none.
+  // catalogue's time or ours, and it survives into the cached copy.
   const timing = loaderHeaders.get("Server-Timing");
   if (timing) out["Server-Timing"] = timing;
   return out;

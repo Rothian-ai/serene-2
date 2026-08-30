@@ -35,8 +35,10 @@ export function headers({ loaderHeaders }: HeadersArgs) {
     "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH,
   };
   // Published so a slow page can be attributed rather than guessed at: it says
-  // how much of the wait was the catalogue and how much was us. Only present on
-  // an origin render; a CDN hit never ran the loader.
+  // how much of the wait was the catalogue and how much was us. The header is
+  // cached with the body, so a CDN hit still reports the timings of the origin
+  // render that filled it — which is what you want, since that render is the
+  // one a visitor would have waited for.
   const timing = loaderHeaders.get("Server-Timing");
   if (timing) out["Server-Timing"] = timing;
   return out;
