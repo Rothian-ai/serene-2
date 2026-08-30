@@ -95,8 +95,12 @@ export default function Developers() {
                       and a cell two lines taller than its neighbours is the
                       ranking this page had to stop implying. It opens the
                       record page instead. */}
+                  {/* Not "the record": only seven of the twenty-eight pages carry a
+                      ledger, and the word promises one. "The registration" is
+                      true of every entry, thin or full, and names the thing the
+                      section is actually about. */}
                   <span className="type-cap mt-2 flex items-center gap-2 text-fog">
-                    The record
+                    The registration
                     <span
                       aria-hidden
                       className="transition-transform duration-300 group-hover:translate-x-1"
