@@ -30,6 +30,15 @@ const BRAND_LOGOS: Record<string, { src: string; w: string }> = {
   "rak-properties": { src: "/images/brands/dev-rak-properties.svg", w: "w-[120px] md:w-[150px]" },
   "reef-luxury-developments": { src: "/images/brands/dev-reef-luxury-developments.svg", w: "w-[94px] md:w-[115px]" },
   "sol-properties": { src: "/images/brands/dev-sol-properties.webp", w: "w-[76px] md:w-[93px]" },
+  "atara": { src: "/images/brands/dev-atara.svg", w: "w-[82px] md:w-[102px]" },
+  "devmark": { src: "/images/brands/dev-devmark.svg", w: "w-[120px] md:w-[150px]" },
+  "eywa-by-r-evolutions": { src: "/images/brands/dev-eywa-by-r-evolutions.svg", w: "w-[120px] md:w-[150px]" },
+  "iman-developers": { src: "/images/brands/dev-iman-developers.svg", w: "w-[90px] md:w-[112px]" },
+  "marquis": { src: "/images/brands/dev-marquis.svg", w: "w-[80px] md:w-[100px]" },
+  "ohana": { src: "/images/brands/dev-ohana.svg", w: "w-[120px] md:w-[150px]" },
+  "qube": { src: "/images/brands/dev-qube.svg", w: "w-[90px] md:w-[113px]" },
+  "savills-difc": { src: "/images/brands/dev-savills-difc.svg", w: "w-[105px] md:w-[131px]" },
+  "svarn": { src: "/images/brands/dev-svarn.png", w: "w-[120px] md:w-[150px]" },
 };
 
 /** The mask paints the mark, so the ground decides which fill it takes. */
