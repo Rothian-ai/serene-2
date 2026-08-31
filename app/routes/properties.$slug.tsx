@@ -22,7 +22,7 @@ import {
   priceRange,
   text,
 } from "~/lib/amelia";
-import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
+import { meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/properties.$slug";
 
 export const handle = { headerTone: "dark" as const };
@@ -414,9 +414,6 @@ export default function Property() {
           <div className="mt-12 flex flex-wrap gap-4 md:mt-14">
             <CTA to={signup} external kind="platinum">
               Ask Amelia
-            </CTA>
-            <CTA to={conversationHref(p.name)} kind="line" external={HAS_WHATSAPP}>
-              Speak to an advisor
             </CTA>
           </div>
         </div>
