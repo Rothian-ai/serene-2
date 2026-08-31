@@ -45,7 +45,10 @@ export function meta({ data }: Route.MetaArgs) {
  * changes, so the HTML must not be frozen at build time. This is the equivalent
  * of the integration guide's Next `revalidate: 300`.
  */
-const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
+// One hour at the edge (see properties.tsx for the reasoning).
+const FRESH = "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400";
+// Failure states must never pin the cache — same constant the list uses.
+const BRIEF = "public, max-age=0, s-maxage=15";
 
 export function headers({ loaderHeaders }: HeadersArgs) {
   const out: Record<string, string> = {
@@ -69,7 +72,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   } catch (err) {
     throw new Response(
       err instanceof AmeliaError ? err.message : "The listing service is unavailable.",
-      { status: 503 },
+      { status: 503, headers: { "Cache-Control": BRIEF } },
     );
   }
   // 404 covers unknown slugs, another org's slugs and unpublished drafts alike.

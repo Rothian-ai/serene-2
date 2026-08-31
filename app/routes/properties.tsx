@@ -35,7 +35,11 @@ export function meta() {
  * minutes, long after the catalogue recovered. Failures get seconds instead, so
  * the next request re-tries almost immediately.
  */
-const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
+// One hour at the edge: the catalogue changes a few times a week, stale
+// copies still serve instantly for a day while revalidating, and the hourly
+// warmer refreshes entries anyway. Five minutes just meant a fresh origin
+// render (and its upstream calls) every five minutes per URL.
+const FRESH = "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400";
 const BRIEF = "public, max-age=0, s-maxage=15";
 
 export function headers({ loaderHeaders }: HeadersArgs) {
