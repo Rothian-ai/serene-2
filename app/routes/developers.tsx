@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+import { data, Link, useLoaderData } from "react-router";
+import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
 import { Eyebrow, Plate, QuietLink, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
@@ -7,6 +8,8 @@ import { ConversationBand } from "~/components/ConversationBand";
 import { developers } from "~/lib/content";
 import type { PlateKind } from "~/lib/content";
 import { REGISTER_INTRO } from "~/lib/strategy";
+import { fetchAllProjects, isAmeliaConfigured, serverTiming } from "~/lib/amelia.server";
+import type { Timing } from "~/lib/amelia.server";
 import { meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
@@ -20,26 +23,81 @@ export function meta() {
   });
 }
 
+const FRESH = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
+const BRIEF = "public, max-age=0, s-maxage=15";
+
+export function headers({ loaderHeaders }: HeadersArgs) {
+  const out: Record<string, string> = {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? FRESH,
+  };
+  const timing = loaderHeaders.get("Server-Timing");
+  if (timing) out["Server-Timing"] = timing;
+  return out;
+}
+
 /**
- * The register as one directory of image tiles.
+ * The wall is drawn from the catalogue now, not from the content folder.
  *
- * This page has been three things. Seven editorial spreads read well but only
- * seven of twenty-eight had the photography for it, so the other twenty-one
- * arrived as an "also registered with" list and the split read as a ranking.
- * Replacing it with a hairline grid fixed the ranking and lost the pictures.
+ * The curated list and the register drifted the way two hand-kept lists always
+ * do: developers joined the catalogue that no one wrote a markdown file for,
+ * and files outlived registrations. So the loader asks Amelia who is actually
+ * on the register today, and the curated entries only decide where a tile
+ * links — a researched profile page when one exists, the developer's own
+ * addresses on the register when it does not.
  *
- * So: one tile per developer, identical in size and structure, and every one of
- * them carries an art-directed ground rather than a photograph. We hold licensed
- * photography for seven of the twenty-eight, and putting a real building behind
- * those seven and a plate behind the other twenty-one reinstates exactly the
- * hierarchy this page had to lose. The plates are the same six surfaces used
- * across the site, so the wall reads as one set and the subject of every tile is
- * the developer's mark rather than the picture behind it.
- *
- * It also grows the right way: a twenty-ninth registration is one more tile. If
- * photography ever exists for all of them, passing image={d.image} to the Plate
- * is the whole change.
+ * The curated wall still renders whole when the catalogue is unreachable or
+ * unconfigured: a fresh clone shows the register as last written rather than
+ * an empty page.
  */
+interface RegisterDeveloper {
+  name: string;
+  logoUrl: string | null;
+  logoOnDark: boolean;
+  count: number;
+  /** the curated entry's slug, when this developer has a researched page */
+  entry: string | null;
+}
+
+const squash = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  if (!isAmeliaConfigured()) {
+    return data({ register: null }, { headers: { "Cache-Control": BRIEF } });
+  }
+  const timing: Timing = { upstreamMs: 0, shapeMs: 0 };
+  try {
+    const cards = await fetchAllProjects(request.signal, timing);
+    const byName = new Map<string, RegisterDeveloper>();
+    for (const c of cards) {
+      const name = c.developer?.name?.trim();
+      if (!name) continue;
+      const key = squash(name);
+      const held = byName.get(key);
+      if (held) {
+        held.count += 1;
+        if (!held.logoUrl) held.logoUrl = c.developer?.logoUrl ?? null;
+      } else {
+        byName.set(key, {
+          name,
+          logoUrl: c.developer?.logoUrl ?? null,
+          logoOnDark: Boolean(c.developer?.logoOnDark),
+          count: 1,
+          entry:
+            developers.find((d) => squash(d.name) === key || squash(d.slug) === key)?.slug ??
+            null,
+        });
+      }
+    }
+    const register = [...byName.values()].sort((a, b) => a.name.localeCompare(b.name));
+    return data(
+      { register: register.length > 0 ? register : null },
+      { headers: { "Cache-Control": FRESH, "Server-Timing": serverTiming(timing) } },
+    );
+  } catch {
+    // A catalogue outage is not a broken page: the curated wall stands in.
+    return data({ register: null }, { headers: { "Cache-Control": BRIEF } });
+  }
+}
 
 /* Six grounds cycled by position. Four columns against six kinds means neither
    the tile beside a given one nor the tile above it can repeat its ground, and
@@ -47,7 +105,55 @@ export function meta() {
    standing on it. */
 const GROUNDS: PlateKind[] = ["render", "glass", "dusk", "stone", "interior", "hero"];
 
+/** One tile of the wall: art-directed ground, scrim, and the developer's mark. */
+function Tile({
+  index,
+  to,
+  mark,
+  name,
+  caption,
+}: {
+  index: number;
+  to: string;
+  mark: React.ReactNode;
+  name: string;
+  caption: string;
+}) {
+  return (
+    <li>
+      <Link to={to} className="group block">
+        <span className="relative block aspect-[4/3] overflow-hidden">
+          <Plate
+            kind={GROUNDS[index % GROUNDS.length]}
+            /* .plate carries position:relative in plain CSS, which outranks
+               an `absolute` utility — so size it rather than pin it. */
+            className="h-full w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+          />
+          {/* The scrim is what guarantees the mark reads whatever ground it
+              lands on. */}
+          <span
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/52 to-ink/34 transition-opacity duration-500 group-hover:opacity-85"
+          />
+          <span className="absolute inset-0 flex items-center justify-center px-5">{mark}</span>
+        </span>
+        <span className="type-title mt-4 block text-[1.05rem] transition-colors duration-300 group-hover:text-brass">
+          {name}
+        </span>
+        <span className="type-cap mt-2 flex items-center gap-2 text-fog">
+          {caption}
+          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
+        </span>
+      </Link>
+    </li>
+  );
+}
+
 export default function Developers() {
+  const { register } = useLoaderData<typeof loader>();
+
   return (
     <>
       <Hero plate="render" image="/images/dev-emaar.jpg" height="min-h-[60svh]">
@@ -65,50 +171,55 @@ export default function Developers() {
 
         <Reveal className="mt-12 md:mt-16">
           <ul className="grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 md:gap-x-6 md:gap-y-11 lg:grid-cols-4">
-            {developers.map((d, i) => (
-              <li key={d.slug}>
-                <Link to={`/developers/${d.slug}`} className="group block">
-                  <span className="relative block aspect-[4/3] overflow-hidden">
-                    <Plate
-                      kind={GROUNDS[i % GROUNDS.length]}
-                      /* .plate carries position:relative in plain CSS, which outranks
-                         an `absolute` utility — so size it rather than pin it. */
-                      className="h-full w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
-                    />
-                    {/* The scrim is what guarantees the mark reads whatever
-                        ground it lands on. */}
-                    <span
-                      aria-hidden
-                      className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/52 to-ink/34 transition-opacity duration-500 group-hover:opacity-85"
-                    />
-                    <span className="absolute inset-0 flex items-center justify-center px-5">
-                      <BrandMark slug={d.slug} name={d.name} tone="ivory" />
-                    </span>
-                  </span>
-                  <span className="type-title mt-4 block text-[1.05rem] transition-colors duration-300 group-hover:text-brass">
-                    {d.name}
-                  </span>
-                  {/* No tagline. Seven entries carry one and twenty-one do not,
-                      and a cell two lines taller than its neighbours is the
-                      ranking this page had to stop implying; the tagline opens
-                      the entry's own page instead.
-
-                      And not "the record" for the link: only seven of the
-                      twenty-eight pages carry a ledger, and that word promises
-                      one. "The registration" is true of a thin entry and a full
-                      one alike. */}
-                  <span className="type-cap mt-2 flex items-center gap-2 text-fog">
-                    The registration
-                    <span
-                      aria-hidden
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
+            {register
+              ? register.map((d, i) => (
+                  <Tile
+                    key={d.name}
+                    index={i}
+                    to={
+                      d.entry
+                        ? `/developers/${d.entry}`
+                        : `/properties?developer=${encodeURIComponent(d.name)}`
+                    }
+                    name={d.name}
+                    /* Not "the record" for a link into a thin entry: only the
+                       researched pages carry a ledger, and that word promises
+                       one. The register filter is honest for everyone else. */
+                    caption={`${d.count} ${d.count === 1 ? "address" : "addresses"} · ${
+                      d.entry ? "The registration" : "On the register"
+                    }`}
+                    mark={
+                      d.logoUrl ? (
+                        /* The catalogue's own artwork. Light lockups stand
+                           straight on the scrim; dark ones get a pearl plate. */
+                        <span
+                          className={`inline-flex max-w-[78%] items-center justify-center ${
+                            d.logoOnDark ? "" : "bg-ivory/95 px-3.5 py-2.5"
+                          }`}
+                        >
+                          <img
+                            src={d.logoUrl}
+                            alt=""
+                            loading="lazy"
+                            className="max-h-11 w-auto max-w-full object-contain md:max-h-12"
+                          />
+                        </span>
+                      ) : (
+                        <BrandMark slug={d.entry ?? squash(d.name)} name={d.name} tone="ivory" />
+                      )
+                    }
+                  />
+                ))
+              : developers.map((d, i) => (
+                  <Tile
+                    key={d.slug}
+                    index={i}
+                    to={`/developers/${d.slug}`}
+                    name={d.name}
+                    caption="The registration"
+                    mark={<BrandMark slug={d.slug} name={d.name} tone="ivory" />}
+                  />
+                ))}
           </ul>
         </Reveal>
 
