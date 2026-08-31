@@ -159,6 +159,15 @@ function uniq(values: Array<string | null | undefined>): string[] {
   return [...seen.values()].sort((a, b) => a.localeCompare(b));
 }
 
+/**
+ * A facet option has to read as a label. The live catalogue files prose where
+ * this page expected names — `location.neighborhood` arrives as a paragraph on
+ * where the property sits — and a sentence in a select is not a filter anyone
+ * can use. Prose stays in the search haystack, where it is genuinely useful,
+ * and out of the options.
+ */
+const nameLike = (s: string) => s.length <= 48 && !s.includes(". ") && !/[.!?]$/.test(s);
+
 export interface RegisterFacets {
   developers: string[];
   emirates: string[];
@@ -187,7 +196,7 @@ function buildFacets(cards: ProjectCard[], facts: Map<string, RegisterFacts>): R
     communities: uniq([
       ...cards.map((c) => c.area),
       ...[...facts.values()].flatMap((f) => [...f.communities, f.neighborhood]),
-    ]),
+    ]).filter(nameLike),
     types: uniq(cards.map((c) => c.propertyType)),
     statuses: uniq(cards.map((c) => c.status)),
     categories: uniq(cards.map((c) => category(c.propertyType))),
