@@ -1,0 +1,119 @@
+name: Deploy
+
+# Why this exists.
+#
+# Vercel's Git integration only builds a commit whose *author* is a Vercel
+# account with access to the project. A push from a collaborator who is not on
+# the Vercel team is therefore never built: no failure, no email, the site just
+# keeps serving the last authorised commit. That is what happened here, and it
+# is invisible unless you go looking.
+#
+# Deploying from Actions with a project token removes the question of who
+# pushed. The token belongs to the project owner, so every commit on these
+# branches deploys, whoever wrote it.
+#
+# Setup — three repository secrets, at
+# Settings -> Secrets and variables -> Actions -> New repository secret:
+#
+#   VERCEL_TOKEN       Vercel -> Account Settings -> Tokens -> Create
+#   VERCEL_ORG_ID      Vercel -> Project -> Settings -> General -> Team ID
+#   VERCEL_PROJECT_ID  Vercel -> Project -> Settings -> General -> Project ID
+#
+# Then turn the Vercel Git integration OFF for this repository
+# (Vercel -> Project -> Settings -> Git -> Disconnect, or set Ignored Build Step
+# to `exit 0`). Leave it on and every push from an authorised author deploys
+# twice: once here, once there.
+#
+# Application secrets do not move to GitHub. `vercel pull` fetches the project's
+# environment from Vercel at build time, so AMELIA_API_KEY, DATABASE_URL and the
+# SMTP credentials stay exactly where they are.
+
+on:
+  push:
+    branches: [beta, main]
+  workflow_dispatch:
+
+# One deploy per branch at a time; a newer push supersedes an in-flight one.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      # serene-2.vercel.app serves this branch, so it is the production target;
+      # everything else deploys as a preview under its own URL.
+      PRODUCTION_BRANCH: beta
+
+    steps:
+      - name: Check the secrets are set
+        env:
+          TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          missing=""
+          [ -n "$TOKEN" ]             || missing="$missing VERCEL_TOKEN"
+          [ -n "$VERCEL_ORG_ID" ]     || missing="$missing VERCEL_ORG_ID"
+          [ -n "$VERCEL_PROJECT_ID" ] || missing="$missing VERCEL_PROJECT_ID"
+          if [ -n "$missing" ]; then
+            echo "Missing repository secret(s):$missing" >> "$GITHUB_STEP_SUMMARY"
+            echo "Add them under Settings -> Secrets and variables -> Actions." >> "$GITHUB_STEP_SUMMARY"
+            echo "See the header of .github/workflows/deploy.yml for where each value lives." >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::Missing repository secret(s):$missing"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install the Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Decide the target environment
+        id: target
+        run: |
+          if [ "${{ github.ref_name }}" = "$PRODUCTION_BRANCH" ]; then
+            echo "environment=production" >> "$GITHUB_OUTPUT"
+            echo "prod_flag=--prod" >> "$GITHUB_OUTPUT"
+          else
+            echo "environment=preview" >> "$GITHUB_OUTPUT"
+            echo "prod_flag=" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Brings down the project settings and the environment variables that are
+      # configured in Vercel, so the build here matches the build there.
+      - name: Pull the Vercel environment
+        run: vercel pull --yes --environment=${{ steps.target.outputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build
+        run: vercel build ${{ steps.target.outputs.prod_flag }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt ${{ steps.target.outputs.prod_flag }} --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Report
+        run: |
+          {
+            echo "### Deployed"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Environment | ${{ steps.target.outputs.environment }} |"
+            echo "| Branch | \`${{ github.ref_name }}\` |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Author | ${{ github.event.head_commit.author.name || github.actor }} |"
+            echo "| URL | ${{ steps.deploy.outputs.url }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
