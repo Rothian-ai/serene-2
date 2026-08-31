@@ -41,6 +41,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
         <Meta />
         <Links />
+        {/* Decide the intro BEFORE the first paint. The overlay ships in the
+            server-rendered HTML and app.css hides it unless this script sets
+            `data-intro`, so a first-time visitor's first paint IS the intro and
+            a returning one never sees it. Deciding in an effect instead is what
+            made the home page paint, sit there for a second, then get covered
+            and uncovered again — hydration always lands after paint.
+            The timeout is a safety net: if the bundle fails, nothing is left
+            holding an opaque overlay over the site.
+            React logs "Extra attributes from the server: data-intro" in dev
+            because the attribute lands before hydration. It is the same warning
+            every theme-flash script produces, it is stripped from production
+            builds, and React leaves the attribute alone — suppressHydrationWarning
+            does not cover it, so there is nothing to silence. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{" +
+              "var d=document.documentElement;" +
+              "if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;" +
+              "if(sessionStorage.getItem('serene:intro'))return;" +
+              "sessionStorage.setItem('serene:intro','1');" +
+              "d.setAttribute('data-intro','');" +
+              "setTimeout(function(){d.removeAttribute('data-intro')},4000);" +
+              "}catch(e){}})()",
+          }}
+        />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

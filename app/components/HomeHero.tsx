@@ -142,10 +142,16 @@ export function HomeHero() {
     [],
   );
 
+  /* The stage is centred, so it has to be centred in the space below the fixed
+     header rather than in the whole viewport. Without the top reservation the
+     mark sat 33px above the header's bottom edge at 1280x720 and 72px above it
+     at 1280x600 — straight through the bar. --header-h carries the bar's
+     measured height; the extra 1.25rem is what keeps the mark off it rather
+     than merely level with it. */
   return (
     <section
       ref={rootRef}
-      className="hero-4k-home relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-ink text-ivory"
+      className="hero-4k-home relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-ink pb-8 pt-[calc(var(--header-h)+1.25rem)] text-ivory"
     >
       <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
         <Plate kind="hero" {...HERO_BG} eager className="h-full w-full" />
@@ -155,7 +161,7 @@ export function HomeHero() {
 
       <div className="container-site relative z-[1] text-center">
         {/* mark alone (sanctioned lockup 2) — the wordmark would double the headline */}
-        <SereneMark ref={markRef} tone="white" title="Serene" className="mx-auto h-20 w-auto md:h-28" />
+        <SereneMark ref={markRef} tone="white" title="Serene" className="hero-home-mark mx-auto h-20 w-auto md:h-28" />
         <Eyebrow className="mt-8 justify-center text-silver">{COPY.eyebrow}</Eyebrow>
         <h1 ref={headlineRef} className="type-display mx-auto mt-4 max-w-[22ch]">
           {COPY.title}

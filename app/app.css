@@ -150,6 +150,52 @@
   }
 }
 
+/* ——— the fixed header's height, so a hero can reserve it ———
+   The bar is a py-4 row around a 36px mark: 72px, 70px where the mark is
+   smaller. A hero that centres its content has to centre it in the space
+   BELOW the bar rather than in the whole viewport — centring in the viewport
+   is what slid the homepage mark under the header on every screen shorter
+   than about 800px, which is most laptops and every phone. */
+:root {
+  --header-h: 4.5rem;
+}
+
+/* Short viewports: reserving the header costs ~92px at the top, and a 720px
+   laptop does not have it spare. The homepage hero has a fixed amount to say,
+   so the mark gives the space back rather than the actions falling past the
+   fold. Plain CSS, so it outranks the h-20/md:h-28 utilities on the element. */
+@media (max-height: 780px) {
+  .hero-home-mark {
+    height: 4.5rem;
+  }
+  /* The reservation itself has to give ground too, or clearing the header just
+     pushes the actions through the fold instead. */
+  .hero-4k-home {
+    padding-top: calc(var(--header-h) + 0.75rem);
+  }
+}
+@media (max-height: 660px) {
+  .hero-home-mark {
+    height: 3rem;
+  }
+  .hero-4k-home {
+    padding-top: calc(var(--header-h) + 0.5rem);
+  }
+}
+
+/* ——— the first-visit intro ———
+   In the server-rendered HTML so it paints with the document, and hidden
+   unless the inline script in <head> decided, before the first paint, that
+   this is a first visit. Deciding in an effect instead is what made the home
+   page appear, sit there readable for a second, then get covered by the intro
+   and uncovered again: hydration lands after paint. */
+.serene-intro {
+  display: none;
+}
+html[data-intro] .serene-intro {
+  display: flex;
+}
+
 /* base */
 html {
   background: var(--color-ink);
