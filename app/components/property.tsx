@@ -45,7 +45,26 @@ export function PropertyCard({ project }: { project: ProjectCard }) {
         {project.name}
       </h3>
       {project.developer?.name && (
-        <p className="type-cap mt-1.5 text-fog">{project.developer.name}</p>
+        <p className="type-cap mt-1.5 flex items-center gap-2 text-fog">
+          {/* The catalogue files artwork for every developer now. Light artwork
+              (`logoOnDark`) stands on a small ink chip; dark artwork sits
+              straight on the ivory card. */}
+          {project.developer.logoUrl && (
+            <span
+              className={`inline-flex h-5 shrink-0 items-center ${
+                project.developer.logoOnDark ? "bg-ink px-1.5" : ""
+              }`}
+            >
+              <img
+                src={project.developer.logoUrl}
+                alt=""
+                loading="lazy"
+                className="h-3.5 w-auto max-w-[76px] object-contain"
+              />
+            </span>
+          )}
+          {project.developer.name}
+        </p>
       )}
 
       {cells.length > 0 && <Ledger className="mt-4" cells={cells} />}
