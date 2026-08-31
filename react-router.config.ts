@@ -28,9 +28,7 @@ export default {
       "/difference",
       "/lifecycle",
       "/about",
-      // /developers is served live: its wall is drawn from Amelia's register,
-      // so freezing it at build would re-create the drift it exists to fix.
-      // The per-developer entries are curated content and stay prerendered.
+      "/developers",
       ...slugs("content/developers").map((s) => `/developers/${s}`),
       "/insights",
       ...slugs("content/insights").map((s) => `/insights/${s}`),
