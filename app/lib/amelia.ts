@@ -94,6 +94,28 @@ export function permitLabel(number: string | null | undefined): string | null {
   return number ? `Trakheesi permit ${number}` : null;
 }
 
+/** "2027-03-31T00:00:00Z" → "31 Mar 2027". Catalogue dates are ISO strings and
+ *  every one of them is nullable, so this returns null rather than "Invalid
+ *  Date" and callers omit the row. */
+export function dateLabel(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+/** An amenity arrives as a plain string or as { name } / { label }; the pages
+ *  only ever want the display name. */
+export function amenityName(a: unknown): string | null {
+  if (typeof a === "string") return a.trim() || null;
+  if (a && typeof a === "object") {
+    const o = a as { name?: unknown; label?: unknown };
+    if (typeof o.name === "string" && o.name.trim()) return o.name.trim();
+    if (typeof o.label === "string" && o.label.trim()) return o.label.trim();
+  }
+  return null;
+}
+
 /**
  * Coerce a catalogue value to something safe to render, or null.
  *

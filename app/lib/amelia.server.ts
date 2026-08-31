@@ -14,6 +14,8 @@
  * the section". The types below say so, and the pages render accordingly.
  */
 
+import { amenityName } from "~/lib/amelia";
+
 const DEFAULT_BASE = "https://amelia.serenebay.ae";
 
 /** Absent key ⇒ the listing pages show an explained empty state, never a 500. */
@@ -42,7 +44,9 @@ function base(): string {
  * see whether the wait was Amelia's or ours.
  */
 export interface Timing {
-  /** request sent to parsed JSON body, including transport */
+  /** request sent to parsed JSON body, including transport. Accumulates when a
+   *  loader makes several calls (the register page fans out), so it reads as
+   *  total catalogue time spent, not the last call's. */
   upstreamMs: number;
   /** applying house style to the parsed record */
   shapeMs: number;
@@ -82,6 +86,12 @@ export interface Developer {
 export interface Permit {
   number?: string | null;
   liveness?: string | null;
+  /** last nightly DLD re-check */
+  checkedAt?: string | null;
+  /** the seller's active-permit confirmation (property-level only) */
+  attestedAt?: string | null;
+  /** DLD End Date — "Valid until …" (property-level only) */
+  expiresAt?: string | null;
   verificationUrl?: string | null;
   qrImageUrl?: string | null;
 }
@@ -107,11 +117,24 @@ export interface ProjectCard extends Money {
   updatedAt: string | null;
 }
 
+export interface NearbyPlace {
+  name?: string | null;
+  category?: string | null;
+  distanceKm?: number | null;
+  travelTimeMin?: number | null;
+  transportMode?: string | null;
+  minutes?: number | null;
+}
+
 export interface MediaItem {
   url: string;
+  /** documented field name; `kind` kept as a fallback for older payloads */
+  type?: string | null;
   kind?: string | null;
   provider?: string | null;
+  title?: string | null;
   caption?: string | null;
+  thumbnailUrl?: string | null;
 }
 export interface Unit {
   id?: string;
@@ -123,8 +146,12 @@ export interface Unit {
   bedrooms?: number | null;
   areaSqft?: number | null;
   price?: number | null;
+  pricePerSqft?: number | null;
   status?: string | null;
   floor?: number | string | null;
+  /** The unit's OWN Trakheesi permit; null means the property permit in
+   *  trust.permit covers it. Rendered only where a single unit is advertised. */
+  permit?: Permit | null;
 }
 export interface PaymentMilestone {
   label?: string | null;
@@ -144,6 +171,14 @@ export interface PaymentPlan {
    not a valid extension. */
 export interface ProjectDetail extends Omit<ProjectCard, "location"> {
   description?: string | null;
+  /** The detail record nests money here (the card carries it flat); the flat
+   *  aliases inherited from ProjectCard stay honoured as fallbacks. */
+  pricing?: {
+    minPrice?: number | null;
+    maxPrice?: number | null;
+    currency?: string | null;
+    serviceChargePerSqft?: number | null;
+  } | null;
   serviceChargePerSqft?: number | null;
   /** Field names confirmed against a live record; the older aliases are kept
    *  as fallbacks so either shape renders. */
@@ -174,18 +209,16 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
     neighborhood?: string | null;
     mapUrl?: string | null;
     address?: string | null;
-    nearbyPlaces?: Array<{
-      name?: string | null;
-      distanceKm?: number | null;
-      travelTimeMin?: number | null;
-      transportMode?: string | null;
-      minutes?: number | null;
-    }> | null;
+    nearbyPlaces?: NearbyPlace[] | null;
   } | null;
+  /** the documented home for nearby places is the record root; some older
+   *  payloads nested them under `location` */
+  nearbyPlaces?: NearbyPlace[] | null;
   media?: MediaItem[] | null;
   documents?: Array<{ title?: string | null; url?: string | null }> | null;
   paymentPlans?: PaymentPlan[] | null;
   fees?: Array<{
+    category?: string | null;
     label?: string | null;
     amount?: number | null;
     pctOfPrice?: number | null;
@@ -199,6 +232,15 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
     name?: string | null;
     floors?: number | null;
     unitCount?: number | null;
+    totalUnits?: number | null;
+    /** the documented shape: a per-sqft rate per floor band */
+    floorPricing?: Array<{
+      floorFrom?: number | null;
+      floorTo?: number | null;
+      pricePerSqft?: number | null;
+      label?: string | null;
+    }> | null;
+    /** older payloads carried min/max bands under this name */
     pricingBands?: Array<{
       floorFrom?: number | null;
       floorTo?: number | null;
@@ -206,12 +248,25 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
       maxPrice?: number | null;
     }> | null;
   }> | null;
-  communities?: Array<{ name?: string | null; description?: string | null }> | null;
+  communities?: Array<{
+    name?: string | null;
+    kind?: string | null;
+    description?: string | null;
+    luxuryTier?: string | null;
+    amenities?: string[] | null;
+    totalUnits?: number | null;
+  }> | null;
   constructionMilestones?: Array<{
+    /** documented name, with the older alias beside it */
+    title?: string | null;
     label?: string | null;
+    targetDate?: string | null;
+    completedDate?: string | null;
     date?: string | null;
+    progressPct?: number | null;
     completedPct?: number | null;
     status?: string | null;
+    note?: string | null;
   }> | null;
   partners?: Array<{ name?: string | null; role?: string | null; logoUrl?: string | null }> | null;
   trust?: {
@@ -261,6 +316,23 @@ function houseStyle<T>(node: T, depth = 0): T {
 
 /* ——— transport ——— */
 
+/**
+ * Conditional-request cache, one entry per GET path.
+ *
+ * Every JSON response carries a weak ETag, and an unchanged page answers a
+ * `If-None-Match` revalidation with a bodyless 304 — the API's own guidance is
+ * that unchanged catalogues cost almost nothing this way. So the last shaped
+ * body is kept per path and revalidated instead of re-downloaded: a 304 skips
+ * the JSON parse and the houseStyle walk entirely.
+ *
+ * Instance-local by design. Fluid Compute reuses instances between requests,
+ * so the cache warms once per instance; a cold instance simply pays full price
+ * once. Entries are refreshed on insertion order and capped, which is LRU
+ * enough for a catalogue this size.
+ */
+const conditional = new Map<string, { etag: string; body: unknown }>();
+const CONDITIONAL_MAX = 256;
+
 async function get<T>(path: string, signal?: AbortSignal, timing?: Timing): Promise<T> {
   const key = process.env.AMELIA_API_KEY?.trim();
   if (!key) throw new AmeliaError(0, "AMELIA_API_KEY is not set");
@@ -270,11 +342,16 @@ async function get<T>(path: string, signal?: AbortSignal, timing?: Timing): Prom
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   signal?.addEventListener("abort", () => ctl.abort(), { once: true });
 
+  const held = conditional.get(path);
   const started = Date.now();
   let res: Response;
   try {
     res = await fetch(`${base()}${path}`, {
-      headers: { Authorization: `Bearer ${key}`, Accept: "application/json" },
+      headers: {
+        Authorization: `Bearer ${key}`,
+        Accept: "application/json",
+        ...(held ? { "If-None-Match": held.etag } : {}),
+      },
       signal: ctl.signal,
     });
   } catch (err) {
@@ -293,6 +370,12 @@ async function get<T>(path: string, signal?: AbortSignal, timing?: Timing): Prom
     clearTimeout(timer);
   }
 
+  // 304 only ever comes back to an If-None-Match we sent, so `held` exists on
+  // this branch; the guard keeps a misbehaving upstream from returning nothing.
+  if (res.status === 304 && held) {
+    if (timing) timing.upstreamMs += Date.now() - started;
+    return held.body as T;
+  }
   if (res.status === 404) throw new AmeliaError(404, "Not found");
   if (res.status === 401) {
     // The API deliberately doesn't say whether it's missing, mistyped or revoked.
@@ -306,14 +389,27 @@ async function get<T>(path: string, signal?: AbortSignal, timing?: Timing): Prom
     throw new AmeliaError(res.status, `Listing API returned ${res.status}.`);
   }
   const parsed = (await res.json()) as T;
-  if (timing) timing.upstreamMs = Date.now() - started;
+  if (timing) timing.upstreamMs += Date.now() - started;
 
   // houseStyle walks every string in the record, and a detail payload with all
   // units is a big tree — worth measuring separately rather than assuming it
   // rounds to nothing.
   const shapeStarted = Date.now();
   const shaped = houseStyle(parsed);
-  if (timing) timing.shapeMs = Date.now() - shapeStarted;
+  if (timing) timing.shapeMs += Date.now() - shapeStarted;
+
+  // The shaped body is what a 304 must reproduce, so that is what is held.
+  // Consumers treat records as read-only (they filter and map into new arrays),
+  // which is what makes sharing one body across requests safe.
+  const etag = res.headers.get("ETag");
+  if (etag) {
+    conditional.delete(path);
+    if (conditional.size >= CONDITIONAL_MAX) {
+      const oldest = conditional.keys().next().value;
+      if (oldest !== undefined) conditional.delete(oldest);
+    }
+    conditional.set(path, { etag, body: shaped });
+  }
   return shaped;
 }
 
@@ -356,6 +452,34 @@ export async function fetchProjects(
   return res;
 }
 
+/**
+ * The whole register, cursor by cursor.
+ *
+ * Filtering moved into our own loader — keyword search, developer, community
+ * and amenity filters have no upstream query params to lean on — and that only
+ * works over the full card set. The catalogue is dozens of cards, not
+ * thousands; one page usually carries it all, and the page cap is a guard
+ * against a runaway cursor, not an expected depth.
+ */
+export async function fetchAllProjects(
+  signal?: AbortSignal,
+  timing?: Timing,
+): Promise<ProjectCard[]> {
+  const all: ProjectCard[] = [];
+  let cursor: string | null = null;
+  for (let page = 0; page < 6; page++) {
+    const res: { data: ProjectCard[]; nextCursor: string | null } = await fetchProjects(
+      { limit: 100, cursor },
+      signal,
+      timing,
+    );
+    all.push(...(res.data ?? []));
+    cursor = res.nextCursor;
+    if (!cursor) break;
+  }
+  return all;
+}
+
 /** `null` when the slug is unknown, belongs to another org, or is an unpublished
  *  draft — the API returns 404 for all three, and so do we. */
 export async function fetchProject(
@@ -375,6 +499,72 @@ export async function fetchProject(
     if (err instanceof AmeliaError && err.status === 404) return null;
     throw err;
   }
+}
+
+/* ——— the filter index: what the cards do not carry ——— */
+
+/**
+ * Amenities and community names live only in the detail record, and the
+ * register's filters need them for every property at once. So each slug's
+ * facts are read via the lightweight `includeUnits=none` shape and held here,
+ * keyed by the card's own `updatedAt`: an unchanged card costs nothing at all,
+ * a changed one costs a conditional request that usually answers 304.
+ *
+ * The staleness this accepts is the API's own: content-only edits may not bump
+ * `updatedAt`, so a renamed amenity can lag until the instance recycles or the
+ * inventory next changes. For a filter list, that trade is the right one.
+ */
+export interface RegisterFacts {
+  updatedAt: string | null;
+  amenities: string[];
+  communities: string[];
+  neighborhood: string | null;
+}
+
+const factsCache = new Map<string, RegisterFacts>();
+const FACTS_CONCURRENCY = 6;
+
+export async function fetchRegisterFacts(
+  cards: ProjectCard[],
+  signal?: AbortSignal,
+  timing?: Timing,
+): Promise<Map<string, RegisterFacts>> {
+  const stale = cards.filter((c) => {
+    const held = factsCache.get(c.slug);
+    return !held || !held.updatedAt || held.updatedAt !== (c.updatedAt ?? null);
+  });
+
+  let next = 0;
+  const worker = async () => {
+    while (next < stale.length) {
+      const card = stale[next++];
+      try {
+        const d = await fetchProject(card.slug, { includeUnits: "none" }, signal, timing);
+        if (!d) continue;
+        factsCache.set(card.slug, {
+          updatedAt: card.updatedAt ?? null,
+          amenities: (d.amenities ?? []).map(amenityName).filter((x): x is string => Boolean(x)),
+          communities: (d.communities ?? [])
+            .map((c) => amenityName(c?.name))
+            .filter((x): x is string => Boolean(x)),
+          neighborhood: d.location?.neighborhood?.trim() || null,
+        });
+      } catch {
+        // A slug that will not index still lists and still filters on its card
+        // fields; the page must never 500 over a facet.
+      }
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(FACTS_CONCURRENCY, stale.length) }, worker),
+  );
+
+  const out = new Map<string, RegisterFacts>();
+  for (const c of cards) {
+    const held = factsCache.get(c.slug);
+    if (held) out.set(c.slug, held);
+  }
+  return out;
 }
 
 /* ——— the register-interest funnel (no account created) ——— */
