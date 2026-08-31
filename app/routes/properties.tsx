@@ -395,7 +395,11 @@ export default function Properties() {
 
   return (
     <>
-      <Section className="pt-40 pb-10 md:pb-12">
+      {/* Section's own `md:py-18` outranks unprefixed overrides at md+ (the
+          media rule is emitted later), so both edges carry md-prefixed values:
+          without them the eyebrow sat straight under the fixed header and the
+          intro trailed four and a half rems of nothing. */}
+      <Section className="pt-40 pb-6 md:pt-40 md:pb-8">
         <Reveal exit>
           <Eyebrow className="text-fog">The Register</Eyebrow>
         </Reveal>
@@ -411,7 +415,7 @@ export default function Properties() {
         </Reveal>
       </Section>
 
-      <Section className="pt-0">
+      <Section className="pt-0 md:pt-0">
         {state === "ok" && (
           <>
             {/* A GET form: filters live in the URL, so any result set can be
