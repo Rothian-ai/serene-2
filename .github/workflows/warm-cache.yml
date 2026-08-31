@@ -1,0 +1,57 @@
+name: Warm the catalogue cache
+
+# Amelia answers a project detail in about ten seconds. The edge cache hides
+# that completely — a warm entry serves in ~50ms, and stale-while-revalidate
+# keeps serving instantly for a day while it refreshes behind the visitor. The
+# ten seconds is only ever paid by whoever hits an entry that does not exist.
+#
+# With nineteen properties and two cache entries each, that was almost every
+# first click: a sweep found 33 of 38 entries cold. This runs the sweep instead,
+# so the visitor never is the one who pays.
+#
+# It needs no secrets and no Vercel access: every request is a plain GET against
+# the public site.
+
+on:
+  schedule:
+    # hourly. A warm entry costs one edge hit and never reaches Amelia, so the
+    # only expensive runs are the ones just after a deploy clears the cache.
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "Site to warm"
+        required: false
+        default: "https://www.serenebay.ae"
+  # A deploy invalidates every entry, so warm again as soon as one lands.
+  workflow_run:
+    workflows: [Deploy]
+    types: [completed]
+
+concurrency:
+  group: warm-cache
+  cancel-in-progress: false
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # On a workflow_run trigger, only bother if the deploy actually succeeded.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Warm
+        run: node scripts/warm-cache.mjs "${{ inputs.base || 'https://www.serenebay.ae' }}" | tee warm.log
+      - name: Report
+        if: always()
+        run: |
+          {
+            echo "### Cache warm"
+            echo ""
+            echo '```'
+            tail -n 6 warm.log 2>/dev/null || echo "no output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

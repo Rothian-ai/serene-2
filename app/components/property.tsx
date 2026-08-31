@@ -26,8 +26,16 @@ export function PropertyCard({ project }: { project: ProjectCard }) {
     },
   ].filter((c): c is { k: string; v: string } => Boolean(c.v));
 
+  /* `prefetch="intent"` starts the loader fetch on hover or touch-start
+     rather than on click. A warm entry is ~50ms either way, but on a cold
+     one this buys back whatever the visitor spends deciding, against a ten
+     second wait. */
   return (
-    <Link to={`/properties/${project.slug}`} className="group flex h-full flex-col">
+    <Link
+      to={`/properties/${project.slug}`}
+      prefetch="intent"
+      className="group flex h-full flex-col"
+    >
       <div className="relative aspect-[16/10] overflow-hidden">
         <Plate
           kind="render"
