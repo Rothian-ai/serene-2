@@ -110,10 +110,28 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
       >
         <div className={`container-site flex items-center gap-8 py-4 ${text}`}>
           <Link to="/" className="flex items-center gap-3" aria-label="Serene, home">
-            {/* mark alone — the wordmark beside it is the live "SERENE" span */}
             <SereneMark tone={overDark ? "white" : "graphite"} className="h-9 w-auto" />
-            {/* the wordmark carries the short title identity; prose says "Serene Bay" */}
-            <span className="text-[15px] font-medium uppercase tracking-[0.2em]">Serene</span>
+            {/* The wordmark is the supplied artwork, not type: the "SERENE" band
+                cropped out of logo/serene-mark.png. That artwork is flat white,
+                so it is invisible on the light bar — the file supplies the shape
+                through a mask and the header's own currentColor supplies the
+                ink, which keeps it in step with the bar's dark/light tone for
+                free. 11px tall means even a 2x screen samples the 23px source
+                down rather than up. */}
+            <span
+              aria-hidden
+              className="block h-[11px] w-[67px] bg-current"
+              style={{
+                WebkitMaskImage: 'url("/logo/serene-wordmark.png")',
+                maskImage: 'url("/logo/serene-wordmark.png")',
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+              }}
+            />
           </Link>
           {/* five primary links + one action: at lg the gaps tighten so the
               longer strategic labels still fit on a 1024px laptop */}
