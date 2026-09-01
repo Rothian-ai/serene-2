@@ -110,7 +110,16 @@ export interface ProjectCard extends Money {
   availableUnitCount: number | null;
   availableBedrooms: number[] | null;
   developer: Developer | null;
-  location: { latitude: number | null; longitude: number | null } | null;
+  /** Register facets, carried on the card since the 1 Sep feed update. Older
+   *  payloads omit them — the facts fetcher then falls back to the detail
+   *  record, exactly as before. */
+  amenities?: Array<{ name?: string | null; label?: string | null } | string> | null;
+  communities?: Array<{ name?: string | null } | string> | null;
+  location: {
+    latitude: number | null;
+    longitude: number | null;
+    neighborhood?: string | null;
+  } | null;
   featuredImageUrl: string | null;
   images: string[] | null;
   permit: Permit | null;
@@ -522,7 +531,26 @@ export interface RegisterFacts {
 }
 
 const factsCache = new Map<string, RegisterFacts>();
-const FACTS_CONCURRENCY = 6;
+// Fallback-path width only (cards without the 1 Sep facet fields). The
+// upstream allows 120 requests/min, so one full-register wave fits easily —
+// four six-wide waves was most of a cold render's wall clock.
+const FACTS_CONCURRENCY = 19;
+
+/**
+ * Since 1 Sep the feed carries the facets on the card itself — a card that
+ * has them costs nothing: no detail request, no cache dependency, always
+ * exactly as fresh as the list. Older payloads (missing the fields) return
+ * null and take the detail-fetch path below.
+ */
+function factsFromCard(c: ProjectCard): RegisterFacts | null {
+  if (!Array.isArray(c.amenities) && !Array.isArray(c.communities)) return null;
+  return {
+    updatedAt: c.updatedAt ?? null,
+    amenities: (c.amenities ?? []).map(amenityName).filter((x): x is string => Boolean(x)),
+    communities: (c.communities ?? []).map(amenityName).filter((x): x is string => Boolean(x)),
+    neighborhood: c.location?.neighborhood?.trim() || null,
+  };
+}
 
 export async function fetchRegisterFacts(
   cards: ProjectCard[],
@@ -530,6 +558,11 @@ export async function fetchRegisterFacts(
   timing?: Timing,
 ): Promise<Map<string, RegisterFacts>> {
   const stale = cards.filter((c) => {
+    const direct = factsFromCard(c);
+    if (direct) {
+      factsCache.set(c.slug, direct);
+      return false;
+    }
     const held = factsCache.get(c.slug);
     return !held || !held.updatedAt || held.updatedAt !== (c.updatedAt ?? null);
   });
