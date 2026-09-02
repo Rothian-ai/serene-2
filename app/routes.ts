@@ -24,6 +24,8 @@ export default [
   route("terms", "routes/legal-terms.tsx"),
 
   // Backend (Vercel/SSR): enquiry sink + admin submissions dashboard.
+  // TEMPORARY: upstream latency diagnostic (see the route file).
+  route("api/upstream-check", "routes/api.upstream-check.tsx"),
   route("api/submit", "routes/api.submit.tsx"),
   route("api/register-interest", "routes/api.register-interest.tsx"),
   route("dashboard", "routes/dashboard.tsx"),
