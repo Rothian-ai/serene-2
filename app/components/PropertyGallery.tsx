@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Plate } from "~/components/primitives";
+import { sizedImage, sizedSrcSet } from "~/lib/amelia";
 
 /**
  * The photography, as a set rather than a strip.
@@ -114,7 +115,9 @@ export function PropertyGallery({ name, images }: { name: string; images: Galler
           <div className="aspect-[16/10] md:aspect-[21/10]">
             <Plate
               kind="render"
-              image={images[0].url}
+              image={sizedImage(images[0].url, 1920)}
+              srcSet={sizedSrcSet(images[0].url, [960, 1280, 1920])}
+              sizes="100vw"
               alt={images[0].caption ?? `${name}, photograph`}
               className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
             />
@@ -138,7 +141,9 @@ export function PropertyGallery({ name, images }: { name: string; images: Galler
               >
                 <Plate
                   kind="render"
-                  image={img.url}
+                  image={sizedImage(img.url, 960)}
+                  srcSet={sizedSrcSet(img.url, [640, 960, 1280])}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   alt={img.caption ?? `${name}, photograph ${i + 1}`}
                   className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                 />
@@ -186,7 +191,7 @@ export function PropertyGallery({ name, images }: { name: string; images: Galler
           <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 md:px-20">
             <motion.img
               key={current}
-              src={active.url}
+              src={sizedImage(active.url, 1920)}
               alt={active.caption ?? `${name}, photograph ${current + 1}`}
               initial={reduced ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -223,8 +228,8 @@ export function PropertyGallery({ name, images }: { name: string; images: Galler
         {/* the neighbours, decoded before they are asked for */}
         {count > 1 && (
           <div hidden aria-hidden>
-            <img src={images[(current + 1) % count].url} alt="" />
-            <img src={images[(current - 1 + count) % count].url} alt="" />
+            <img src={sizedImage(images[(current + 1) % count].url, 1920)} alt="" />
+            <img src={sizedImage(images[(current - 1 + count) % count].url, 1920)} alt="" />
           </div>
         )}
       </dialog>

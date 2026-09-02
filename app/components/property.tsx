@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Ledger, Plate } from "~/components/primitives";
 import type { ProjectCard } from "~/lib/amelia.server";
-import { bedrooms, humanise, permitLabel, priceRange } from "~/lib/amelia";
+import { bedrooms, humanise, permitLabel, priceRange, sizedImage, sizedSrcSet } from "~/lib/amelia";
 
 /**
  * Listing card — the journal card's grammar applied to inventory: image, a
@@ -37,9 +37,13 @@ export function PropertyCard({ project }: { project: ProjectCard }) {
       className="group flex h-full flex-col"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
+        {/* Sized variants: the card can display ~600px; the original is
+            multi-MB photography. */}
         <Plate
           kind="render"
-          image={project.featuredImageUrl ?? undefined}
+          image={sizedImage(project.featuredImageUrl, 960)}
+          srcSet={sizedSrcSet(project.featuredImageUrl, [480, 960, 1280])}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           alt={project.name}
           className="h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
         />

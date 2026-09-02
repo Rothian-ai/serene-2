@@ -104,6 +104,33 @@ export function dateLabel(iso: string | null | undefined): string | null {
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
+/* ——— sized image variants (2 Sep feed update) ———
+   Catalogue media URLs accept ?w=320|480|640|960|1280|1920 and answer with a
+   webp resized to that width. Originals are multi-MB photography; a card that
+   hotlinks one ships thirty times the bytes it can display. External URLs and
+   non-raster formats pass through untouched. */
+
+const FEED_MEDIA = /\/api\/v1\/media\//;
+const RASTER = /\.(jpe?g|png|webp)(?:$|\?)/i;
+export type FeedImageWidth = 320 | 480 | 640 | 960 | 1280 | 1920;
+
+export function sizedImage(
+  url: string | null | undefined,
+  width: FeedImageWidth,
+): string | undefined {
+  if (!url) return undefined;
+  if (!FEED_MEDIA.test(url) || !RASTER.test(url)) return url;
+  return `${url}${url.includes("?") ? "&" : "?"}w=${width}`;
+}
+
+export function sizedSrcSet(
+  url: string | null | undefined,
+  widths: FeedImageWidth[],
+): string | undefined {
+  if (!url || !FEED_MEDIA.test(url) || !RASTER.test(url)) return undefined;
+  return widths.map((w) => `${sizedImage(url, w)} ${w}w`).join(", ");
+}
+
 /** An amenity arrives as a plain string or as { name } / { label }; the pages
  *  only ever want the display name. */
 export function amenityName(a: unknown): string | null {
