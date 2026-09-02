@@ -1,12 +1,18 @@
-import { readdirSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 
 /** Regenerates public/sitemap.xml from the content collections. Runs before every build. */
 
 const BASE = "https://serene.com";
 
+/* Skips anything marked `hidden: true` in its frontmatter: a hidden route 404s
+   at runtime, and a sitemap entry for it would point a crawler at a page we
+   have taken down. Same rule as react-router.config.ts. */
 const slugs = (dir) => {
   try {
-    return readdirSync(dir).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""));
+    return readdirSync(dir)
+      .filter((f) => f.endsWith(".md"))
+      .filter((f) => !/^hidden:\s*true\s*$/m.test(readFileSync(`${dir}/${f}`, "utf8")))
+      .map((f) => f.replace(/\.md$/, ""));
   } catch {
     return [];
   }

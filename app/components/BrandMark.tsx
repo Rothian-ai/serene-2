@@ -30,6 +30,11 @@ const BRAND_LOGOS: Record<string, { src: string; w: string }> = {
   "rak-properties": { src: "/images/brands/dev-rak-properties.svg", w: "w-[120px] md:w-[150px]" },
   "reef-luxury-developments": { src: "/images/brands/dev-reef-luxury-developments.svg", w: "w-[94px] md:w-[115px]" },
   "sol-properties": { src: "/images/brands/dev-sol-properties.webp", w: "w-[76px] md:w-[93px]" },
+  // 1920x320, ratio 6.0 -> capped at the 150px the wide marks share
+  beyond: { src: "/images/brands/dev-beyond.webp", w: "w-[120px] md:w-[150px]" },
+  // 296x334: the monogram is the only vector mark Arista publishes, so it sits
+  // at the width the other square marks use rather than a wordmark's
+  "arista-properties": { src: "/images/brands/dev-arista-properties.svg", w: "w-[58px] md:w-[70px]" },
   "atara": { src: "/images/brands/dev-atara.svg", w: "w-[82px] md:w-[102px]" },
   "devmark": { src: "/images/brands/dev-devmark.svg", w: "w-[120px] md:w-[150px]" },
   "eywa-by-r-evolutions": { src: "/images/brands/dev-eywa-by-r-evolutions.svg", w: "w-[120px] md:w-[150px]" },

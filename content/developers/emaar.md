@@ -1,5 +1,6 @@
 ---
 name: Emaar
+hidden: true
 founded: '1997'
 hq: Dubai
 delivered: 108,000+ homes

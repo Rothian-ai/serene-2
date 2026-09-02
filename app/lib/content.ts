@@ -90,6 +90,14 @@ export interface Developer {
   body: string;
   /** true once the record carries more than a name */
   profiled: boolean;
+  /**
+   * Kept in the repo but off the site: no card on /developers, no mark in the
+   * homepage marquee, no page of its own, and absent from the sitemap and the
+   * prerender list. A registration we are not presenting right now is not the
+   * same as one we never had, so the record stays and a line of frontmatter
+   * decides whether it is shown.
+   */
+  hidden: boolean;
 }
 
 function load<T>(
@@ -134,7 +142,7 @@ export const insights: Insight[] = load(insightFiles, (slug, d, body) => ({
   body,
 })).sort((a, b) => (b.date > a.date ? 1 : -1));
 
-export const developers: Developer[] = load(developerFiles, (slug, d, body) => {
+const allDevelopers: Developer[] = load(developerFiles, (slug, d, body) => {
   const founded = str(d.founded) || undefined;
   const hq = str(d.hq) || undefined;
   const delivered = str(d.delivered) || undefined;
@@ -151,8 +159,18 @@ export const developers: Developer[] = load(developerFiles, (slug, d, body) => {
     plate: (str(d.plate, "render") as PlateKind),
     body,
     profiled: Boolean(founded || hq || delivered || tagline || body.trim()),
+    hidden: d.hidden === true,
   };
 }).sort((a, b) => a.name.localeCompare(b.name));
+
+/**
+ * Only the shown ones, everywhere. `getDeveloper` reads this list too, so a
+ * hidden slug 404s rather than rendering a page nothing links to. The build-time
+ * lists (react-router.config.ts, scripts/generate-sitemap.mjs) apply the same
+ * frontmatter flag against the files directly, since they run before this
+ * module exists.
+ */
+export const developers: Developer[] = allDevelopers.filter((d) => !d.hidden);
 
 export const getDeveloper = (slug: string) => developers.find((d) => d.slug === slug);
 

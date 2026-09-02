@@ -1,5 +1,6 @@
 ---
 name: RAK Properties
+hidden: true
 founded: '2005'
 hq: Ras Al Khaimah
 notable:
