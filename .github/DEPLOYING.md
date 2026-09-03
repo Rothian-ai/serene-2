@@ -61,3 +61,11 @@ hash works too: the stylesheet is `/assets/root-<hash>.css` in both the local
 
 A deploy also empties the CDN cache in front of the catalogue, and Amelia takes
 about ten seconds per project, so re-run the warmer after one.
+
+## While the Actions secrets are missing
+
+The Deploy workflow shows a red cross on every push because the three
+`VERCEL_*` repository secrets have never been added. That cross is noise, not
+a failed deploy: the Vercel Git integration is what actually builds `beta`,
+and it only builds commits whose author email it recognises (see above).
+Until the secrets exist, judge a deploy by the site itself, not by Actions.
