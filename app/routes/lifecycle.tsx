@@ -74,7 +74,7 @@ export default function Lifecycle() {
               budget, and your tolerance for developer tier and delivery risk.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
+              <CTA to={conversationHref(undefined, "lifecycle")} kind="platinum" external={HAS_WHATSAPP}>
                 Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/faqs" kind="line">Read the questions first</CTA>

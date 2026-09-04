@@ -42,7 +42,7 @@ const VIGNETTE =
 function Actions() {
   return (
     <>
-      <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
+      <CTA to={conversationHref(undefined, "home")} kind="platinum" external={HAS_WHATSAPP}>
         Ask Amelia, our AI Sales Agent
       </CTA>
       <CTA to="/difference" kind="line">

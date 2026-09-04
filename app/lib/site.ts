@@ -74,12 +74,28 @@ export const HAS_WHATSAPP = Boolean(WHATSAPP_NUMBER && WHATSAPP_NUMBER.length >=
  * The destination for a conversation CTA. `context` is folded into the opening
  * message so an advisor sees which page it came from without asking.
  */
-export function conversationHref(context?: string): string {
+export function conversationHref(context?: string, via?: string): string {
   if (!HAS_WHATSAPP) return "/contact";
   const opening = context
     ? `Hello Serene, I would like to talk about ${context}.`
     : "Hello Serene, I would like to speak with an advisor.";
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(opening)}`;
+  // A short page marker rides along in the message ("via:off-plan"). It is
+  // the only thing that survives the jump into WhatsApp, and Amelia reads it
+  // back on the first message to record where the person came from. Derived
+  // from the context when no explicit marker is given.
+  const marker = viaCode(via ?? context);
+  const text = marker ? `${opening} via:${marker}` : opening;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+/** Lower-case, dashes for anything that is not a letter or digit, at most 60 chars. */
+export function viaCode(input?: string): string {
+  if (!input) return "";
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
 }
 
 export function pageTitle(title?: string): string {

@@ -112,7 +112,7 @@ export default function About() {
                 {SCHEDULE_BAND.body}
               </p>
               <div className="mt-11 flex flex-wrap justify-center gap-4">
-                <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
+                <CTA to={conversationHref(undefined, "about")} kind="platinum" external={HAS_WHATSAPP}>
                   Book a conversation
                 </CTA>
                 <CTA to="/lifecycle" kind="line">The nine stages</CTA>

@@ -31,7 +31,7 @@ export default function NotFound() {
           </h1>
           <div className="mt-11 flex flex-wrap justify-center gap-4">
             <CTA to="/" kind="platinum">Return home</CTA>
-            <CTA to={conversationHref()} kind="line" external={HAS_WHATSAPP}>
+            <CTA to={conversationHref(undefined, "not-found")} kind="line" external={HAS_WHATSAPP}>
               Speak with an advisor
             </CTA>
           </div>

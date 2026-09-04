@@ -88,7 +88,7 @@ export default function Home() {
               channel, in your hours, with no obligation and no follow-up sequence.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={conversationHref()} kind="platinum" external={HAS_WHATSAPP}>
+              <CTA to={conversationHref(undefined, "home")} kind="platinum" external={HAS_WHATSAPP}>
                 Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/difference" kind="line">How We're Different</CTA>

@@ -39,7 +39,7 @@ function ConversationAction({ className }: { className: string }) {
   const label = "Ask our AI Agent";
   if (HAS_WHATSAPP) {
     return (
-      <a href={conversationHref()} target="_blank" rel="noopener noreferrer" className={className}>
+      <a href={conversationHref(undefined, "header")} target="_blank" rel="noopener noreferrer" className={className}>
         {label}
       </a>
     );
