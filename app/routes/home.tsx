@@ -7,7 +7,7 @@ import { LifecycleRail } from "~/components/LifecycleRail";
 import { DeveloperRegister } from "~/components/DeveloperRegister";
 import { insights } from "~/lib/content";
 import { COMMITMENTS, COMMITMENTS_INTRO } from "~/lib/strategy";
-import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
+import { ASK_EXTERNAL, askHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -88,7 +88,7 @@ export default function Home() {
               channel, in your hours, with no obligation and no follow-up sequence.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={conversationHref(undefined, "home")} kind="platinum" external={HAS_WHATSAPP}>
+              <CTA to={askHref({ via: "home" })} kind="platinum" external={ASK_EXTERNAL}>
                 Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/difference" kind="line">How We're Different</CTA>

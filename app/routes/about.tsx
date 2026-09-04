@@ -17,7 +17,7 @@ import {
   PROBLEMS_INTRO,
   SCHEDULE_BAND,
 } from "~/lib/strategy";
-import { HAS_WHATSAPP, SITE, conversationHref, meta as buildMeta } from "~/lib/site";
+import { ASK_EXTERNAL, SITE, askHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -112,7 +112,7 @@ export default function About() {
                 {SCHEDULE_BAND.body}
               </p>
               <div className="mt-11 flex flex-wrap justify-center gap-4">
-                <CTA to={conversationHref(undefined, "about")} kind="platinum" external={HAS_WHATSAPP}>
+                <CTA to={askHref({ via: "about" })} kind="platinum" external={ASK_EXTERNAL}>
                   Book a conversation
                 </CTA>
                 <CTA to="/lifecycle" kind="line">The nine stages</CTA>

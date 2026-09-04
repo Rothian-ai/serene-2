@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router";
-import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
+import { ASK_EXTERNAL, askHref } from "~/lib/site";
 import { useRef } from "react";
 import type { ReactNode } from "react";
 import { fadeRise, revealVariants, stagger, viewportOnce } from "~/lib/motion";
@@ -85,8 +85,9 @@ export function Seam({ variant }: { variant: keyof typeof seamMap }) {
 }
 
 /* ——— AdvisorLink: an inline "ask someone" link.
-       A conversation is a WhatsApp thread now, which is an external anchor, not
-       a route Link — so the element itself has to change, not just the href.
+       A conversation is off-site now (WhatsApp, or the web chat on the Amelia
+       domain), which is an external anchor, not a route Link — so the element
+       itself has to change, not just the href.
        Three routes offer an advisor mid-sentence and all three need that
        branch, so it lives here rather than three times over. ——— */
 
@@ -100,8 +101,8 @@ export function AdvisorLink({
   context?: string;
   className?: string;
 }) {
-  const href = conversationHref(context);
-  if (HAS_WHATSAPP) {
+  const href = askHref({ context });
+  if (ASK_EXTERNAL) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
         {children}

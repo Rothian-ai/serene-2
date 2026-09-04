@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SereneMark } from "~/components/SereneMark";
-import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
+import { ASK_EXTERNAL, askHref } from "~/lib/site";
 
 /**
  * Primary navigation, ordered by the buyer journey the strategy describes:
@@ -28,8 +28,9 @@ const SECONDARY = [
 
 /**
  * The bar's single action. It is an ordinary route link to the contact form
- * until a WhatsApp number is configured, at which point it becomes an external
- * thread instead — so the markup has to branch, not just the href.
+ * until a conversation destination is configured (a WhatsApp number, or the
+ * web chat on the Amelia domain), at which point it becomes an external link
+ * instead — so the markup has to branch, not just the href.
  *
  * Shorter than the label the page CTAs use. "Ask Amelia, our AI Sales Agent"
  * measures 244px against a 1009px bar already carrying seven nav links at
@@ -37,9 +38,9 @@ const SECONDARY = [
  */
 function ConversationAction({ className }: { className: string }) {
   const label = "Ask our AI Agent";
-  if (HAS_WHATSAPP) {
+  if (ASK_EXTERNAL) {
     return (
-      <a href={conversationHref(undefined, "header")} target="_blank" rel="noopener noreferrer" className={className}>
+      <a href={askHref({ via: "header" })} target="_blank" rel="noopener noreferrer" className={className}>
         {label}
       </a>
     );

@@ -3,7 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { CTA, Eyebrow, Plate, Reveal } from "~/components/primitives";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ENQUIRY } from "~/lib/strategy";
-import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
+import { ASK_EXTERNAL, WHATSAPP_ASIDE, askFootnote, askHref, conversationHref } from "~/lib/site";
 
 /**
  * The closing band on every inner page, and the site's single conversion
@@ -36,7 +36,7 @@ export function ConversationBand({
   secondaryTo?: string;
   image?: string;
   alt?: string;
-  /** folded into the WhatsApp opening line, so an advisor knows the page */
+  /** what the visitor is asking about: folded into the WhatsApp opening line, or typed as the first line of the web chat, so Amelia knows the page */
   context?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -73,7 +73,7 @@ export function ConversationBand({
           <Reveal delay={0.12}>
             <p className="type-body-lg mt-6 text-ivory/78">{copy}</p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <CTA to={conversationHref(context)} kind="platinum" external={HAS_WHATSAPP}>
+              <CTA to={askHref({ context })} kind="platinum" external={ASK_EXTERNAL}>
                 {primary}
               </CTA>
               {secondary && secondaryTo && (
@@ -82,7 +82,20 @@ export function ConversationBand({
                 </CTA>
               )}
             </div>
-            <p className="type-cap mt-5 text-ivory/55">{ENQUIRY.footnote}</p>
+            <p className="type-cap mt-5 text-ivory/55">{askFootnote(ENQUIRY.footnote)}</p>
+            {WHATSAPP_ASIDE && (
+              <p className="type-cap mt-2 text-ivory/55">
+                Prefer WhatsApp?{" "}
+                <a
+                  href={conversationHref(context)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-ivory"
+                >
+                  Message Amelia there ↗
+                </a>
+              </p>
+            )}
           </Reveal>
         </div>
       </div>

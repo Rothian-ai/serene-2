@@ -26,7 +26,7 @@ import {
   PLAN_CHECKS,
 } from "~/lib/offplan";
 import { CALCULATOR} from "~/lib/strategy";
-import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
+import { ASK_EXTERNAL, askHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -382,7 +382,7 @@ export default function OffPlan() {
             ))}
           </ul>
           <div className="mt-11 flex flex-wrap gap-4">
-            <CTA to={conversationHref("an off-plan purchase", "off-plan")} kind="solid" external={HAS_WHATSAPP}>
+            <CTA to={askHref({ context: "an off-plan purchase", via: "off-plan" })} kind="solid" external={ASK_EXTERNAL}>
               Ask Amelia, our AI Sales Agent
             </CTA>
             <CTA to="/difference" kind="line-ink">How We're Different</CTA>

@@ -10,7 +10,7 @@ import { SplitHeading } from "~/components/SplitHeading";
 import { StickyStages } from "~/components/StickyStages";
 import { ConversationBand } from "~/components/ConversationBand";
 import { CHAIN_INTRO} from "~/lib/strategy";
-import { HAS_WHATSAPP, conversationHref, meta as buildMeta } from "~/lib/site";
+import { ASK_EXTERNAL, askHref, meta as buildMeta } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -74,7 +74,7 @@ export default function Lifecycle() {
               budget, and your tolerance for developer tier and delivery risk.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={conversationHref(undefined, "lifecycle")} kind="platinum" external={HAS_WHATSAPP}>
+              <CTA to={askHref({ via: "lifecycle" })} kind="platinum" external={ASK_EXTERNAL}>
                 Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/faqs" kind="line">Read the questions first</CTA>

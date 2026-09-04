@@ -15,6 +15,7 @@ import {
   brochureHref,
   buyerPropertyHref,
   buyerSignupHref,
+  tryAmeliaHref,
   dateLabel,
   humanise,
   money,
@@ -22,7 +23,7 @@ import {
   priceRange,
   text,
 } from "~/lib/amelia";
-import { meta as buildMeta } from "~/lib/site";
+import { CHAT_FIRST, WHATSAPP_ASIDE, conversationHref, meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/properties.$slug";
 
 export const handle = { headerTone: "dark" as const };
@@ -176,6 +177,9 @@ export default function Property() {
   const currency = pricing?.currency ?? p.currency ?? "AED";
   const locality = [p.area, p.emirate].filter(Boolean).join(", ");
   const signup = buyerSignupHref(p.slug);
+  // Chat-first: "Ask Amelia" opens the no-account chat on this property; the
+  // verified signup stays one line down for anyone who wants the portal now.
+  const ask = CHAT_FIRST ? tryAmeliaHref({ slug: p.slug, via: "property" }) : signup;
 
   const units = (p.units ?? []).filter(
     (u) => u && (u.unitNumber || u.name || u.bedrooms != null),
@@ -415,7 +419,7 @@ export default function Property() {
             </p>
           )}
           <div className="mt-12 flex flex-wrap gap-4 md:mt-14">
-            <CTA to={signup} external kind="platinum">
+            <CTA to={ask} external kind="platinum">
               Ask Amelia
             </CTA>
           </div>
@@ -484,7 +488,7 @@ export default function Property() {
                             </div>
                           ))}
                       </dl>
-                      <CTA to={signup} external kind="platinum" className="mt-8 w-full">
+                      <CTA to={ask} external kind="platinum" className="mt-8 w-full">
                         Ask Amelia
                       </CTA>
                       {permitLine && <p className="type-cap mt-4 text-fog">{permitLine}</p>}
@@ -986,11 +990,12 @@ export default function Property() {
         <Section className="text-center">
           <h2 className="type-headline mx-auto max-w-[26ch]">Ask anything about {p.name}.</h2>
           <p className="type-body-lg mx-auto mt-6 max-w-[52ch] text-ivory/78">
-            Create your buyer account and Amelia opens on this address: payment schedule, escrow
-            filing and the comparable resale record, answered on demand.
+            {CHAT_FIRST
+              ? "Amelia opens on this address with no account needed: payment schedule, escrow filing and the comparable resale record, answered on demand."
+              : "Create your buyer account and Amelia opens on this address: payment schedule, escrow filing and the comparable resale record, answered on demand."}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <CTA to={signup} external kind="platinum">
+            <CTA to={ask} external kind="platinum">
               Ask Amelia
             </CTA>
             {/* "View the brochure" promised what the Documents band above
@@ -1001,10 +1006,23 @@ export default function Property() {
             </CTA>
           </div>
           <p className="type-cap mt-5 text-silver">
-            Verified signup: confirm your email, and your WhatsApp number where that is
-            enabled, then the property opens in your portal.
-            No cold calls: an advisor replies only when you ask.
+            {CHAT_FIRST
+              ? "Nothing to fill in to ask. Share one detail when you want a brochure, a quote, a viewing or your own portal, or to keep going after a long conversation. No cold calls: an advisor replies only when you ask."
+              : "Verified signup: confirm your email, and your WhatsApp number where that is enabled, then the property opens in your portal. No cold calls: an advisor replies only when you ask."}
           </p>
+          {WHATSAPP_ASIDE && (
+            <p className="type-cap mt-2 text-silver/70">
+              Prefer WhatsApp?{" "}
+              <a
+                href={conversationHref(p.name, "property")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-ivory"
+              >
+                Message Amelia there ↗
+              </a>
+            </p>
+          )}
           <p className="type-cap mt-2 text-silver/70">
             Already have an account?{" "}
             <a

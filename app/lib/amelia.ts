@@ -159,3 +159,19 @@ export function text(value: unknown): string | null {
   // objects, arrays and booleans are not display values here
   return null;
 }
+
+/* ——— "Ask Amelia" with no account (Sep 2026) ———
+   The platform's guest chat lives on our Amelia domain at /try/<slug> for a
+   property and /try for the house in general. The visitor asks first and
+   shares a detail only when it unlocks something (a brochure, a quote, a
+   viewing). `via` is the same page marker the WhatsApp link carries; the
+   platform stores it with the lead and shows the page of origin for both
+   routes. `context` becomes the first line already typed into the chat. Whether a CTA points here or at WhatsApp
+   is decided in site.ts (VITE_AMELIA_ASK_MODE). */
+export function tryAmeliaHref(opts: { slug?: string | null; context?: string; via?: string } = {}): string {
+  const path = opts.slug ? `/try/${encodeURIComponent(opts.slug)}` : "/try";
+  const params = new URLSearchParams({ utm_source: "serenebay.ae", utm_medium: "website" });
+  if (opts.via) params.set("utm_campaign", opts.via);
+  if (opts.context) params.set("q", `I would like to talk about ${opts.context}.`);
+  return `${PUBLIC_BASE}${path}?${params.toString()}`;
+}

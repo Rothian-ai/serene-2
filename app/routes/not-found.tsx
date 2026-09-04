@@ -1,7 +1,7 @@
 import { CTA, Eyebrow, Reveal, RevealGroup, RevealItem, Section } from "~/components/primitives";
 import { insights } from "~/lib/content";
 import { InsightRow } from "~/components/cards";
-import { meta as buildMeta, HAS_WHATSAPP, conversationHref } from "~/lib/site";
+import { meta as buildMeta, ASK_EXTERNAL, askHref } from "~/lib/site";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -31,7 +31,7 @@ export default function NotFound() {
           </h1>
           <div className="mt-11 flex flex-wrap justify-center gap-4">
             <CTA to="/" kind="platinum">Return home</CTA>
-            <CTA to={conversationHref(undefined, "not-found")} kind="line" external={HAS_WHATSAPP}>
+            <CTA to={askHref({ via: "not-found" })} kind="line" external={ASK_EXTERNAL}>
               Speak with an advisor
             </CTA>
           </div>
