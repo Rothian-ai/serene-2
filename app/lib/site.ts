@@ -74,13 +74,17 @@ export const HAS_WHATSAPP = Boolean(WHATSAPP_NUMBER && WHATSAPP_NUMBER.length >=
 
 /**
  * The destination for a conversation CTA. `context` is folded into the opening
- * message so an advisor sees which page it came from without asking.
+ * message so Amelia sees which page it came from without asking.
+ *
+ * The openers deliberately do not ask for "an advisor" (6 Sep 2026): Amelia
+ * answers first, and a message that only asks for a person made her hand the
+ * thread to the team before helping. "Chat", not "speak": nobody is speaking.
  */
 export function conversationHref(context?: string, via?: string): string {
   if (!HAS_WHATSAPP) return "/contact";
   const opening = context
-    ? `Hello Serene, I would like to talk about ${context}.`
-    : "Hello Serene, I would like to speak with an advisor.";
+    ? `Hello Serene, I'd like to chat about ${context}.`
+    : "Hello Serene, I'd like to explore your properties.";
   // A short page marker rides along in the message ("via:off-plan"). It is
   // the only thing that survives the jump into WhatsApp, and Amelia reads it
   // back on the first message to record where the person came from. Derived

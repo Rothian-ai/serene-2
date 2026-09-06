@@ -172,6 +172,6 @@ export function tryAmeliaHref(opts: { slug?: string | null; context?: string; vi
   const path = opts.slug ? `/try/${encodeURIComponent(opts.slug)}` : "/try";
   const params = new URLSearchParams({ utm_source: "serenebay.ae", utm_medium: "website" });
   if (opts.via) params.set("utm_campaign", opts.via);
-  if (opts.context) params.set("q", `I would like to talk about ${opts.context}.`);
+  if (opts.context) params.set("q", `I'd like to chat about ${opts.context}.`);
   return `${PUBLIC_BASE}${path}?${params.toString()}`;
 }
