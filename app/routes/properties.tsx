@@ -393,7 +393,7 @@ export default function Properties() {
   const filtered = chips.length > 0;
   /** how many of the applied filters live behind the dialog, for its button */
   const inDialog =
-    ["developer", "community", "area", "category", "minPrice", "maxPrice"].filter((k) =>
+    ["emirate", "community", "area", "category", "minPrice", "maxPrice"].filter((k) =>
       params.get(k),
     ).length + params.getAll("amenity").length;
 
@@ -437,14 +437,17 @@ export default function Properties() {
                     className={`${FIELD} w-full`}
                   />
                 </Field>
+                {/* Developer is the facet people actually arrive with, so it
+                    takes the row. Wider than the others because a developer
+                    name is a name, not a one-word category. No `display`: these
+                    are already proper nouns and humanise would re-case them. */}
                 <FacetSelect
-                  id="f-emirate"
-                  name="emirate"
-                  label="Emirate"
-                  options={facets.emirates}
-                  current={params.get("emirate")}
-                  display={humanise}
-                  className="w-[130px]"
+                  id="f-developer"
+                  name="developer"
+                  label="Developer"
+                  options={facets.developers}
+                  current={params.get("developer")}
+                  className="w-[190px]"
                 />
                 <FacetSelect
                   id="f-type"
@@ -508,11 +511,12 @@ export default function Properties() {
                 </div>
                 <div className="grid max-h-[62vh] gap-x-7 gap-y-6 overflow-y-auto px-7 py-7 sm:grid-cols-2">
                   <FacetSelect
-                    id="f-developer"
-                    name="developer"
-                    label="Developer"
-                    options={facets.developers}
-                    current={params.get("developer")}
+                    id="f-emirate"
+                    name="emirate"
+                    label="Emirate"
+                    options={facets.emirates}
+                    current={params.get("emirate")}
+                    display={humanise}
                   />
                   <FacetSelect
                     id="f-community"

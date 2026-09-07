@@ -8,10 +8,13 @@ import { ASK_EXTERNAL, askHref } from "~/lib/site";
 /**
  * Primary navigation, ordered by the buyer journey the strategy describes:
  * discovery → understanding the model → understanding the lifecycle → trust.
- * Conversion sits in the bar's own action, not in the link list.
+ * Conversion sits in the bar's own actions, not in the link list.
+ *
+ * Properties is not here. It is the one link people arrive wanting, so it sits
+ * with the conversation action as a button rather than sixth in a row of seven
+ * equal-weight labels. The mobile drawer pairs the same two at the bottom.
  */
 const NAV = [
-  { to: "/properties", label: "Properties" },
   { to: "/developers", label: "Developers" },
   { to: "/off-plan", label: "Off-Plan" },
   { to: "/difference", label: "The Difference" },
@@ -101,6 +104,10 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
   const action = overDark
     ? "border-silver/70 text-silver hover:border-silver hover:bg-ivory/5"
     : "border-brass text-brass hover:border-ink hover:text-ink";
+  // the quieter of the two: present as a button, subordinate to the accent
+  const propertiesAction = overDark
+    ? "border-ivory/25 text-ivory/90 hover:border-ivory/60 hover:bg-ivory/5"
+    : "border-ink/25 text-ink hover:border-ink";
 
   return (
     <>
@@ -150,6 +157,18 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
+            {/* Two buttons, deliberately unequal. Properties takes the quieter
+                outline so it reads as a destination; the conversation action
+                keeps the accent because it is the conversion. Neither takes the
+                platinum fill, which stays reserved for in-page primaries. */}
+            <Link
+              to="/properties"
+              prefetch="intent"
+              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${propertiesAction}`}
+              aria-current={active("/properties") ? "page" : undefined}
+            >
+              Properties
+            </Link>
             <ConversationAction
               className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
             />
@@ -204,8 +223,18 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.45 }}
-                className="mt-10"
+                className="mt-10 flex flex-wrap items-center gap-3"
               >
+                {/* Properties left the link list above, so it has to be here or
+                    it would be unreachable from the drawer. */}
+                <Link
+                  to="/properties"
+                  prefetch="intent"
+                  onClick={() => setOpen(false)}
+                  className="inline-block border border-ivory/30 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ivory transition-colors hover:border-ivory"
+                >
+                  Properties
+                </Link>
                 <ConversationAction className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]" />
               </motion.div>
             </nav>

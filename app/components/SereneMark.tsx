@@ -20,6 +20,14 @@ import { forwardRef, useId } from "react";
  *                    as noise
  *   tone="current"   inherits `currentColor`
  *
+ * The viewBox carries 6 units of padding around the artwork. The paths run
+ * edge to edge of their own bounding box (measured: zero margin on all four
+ * sides) and an SVG clips at its viewport, so without the padding the open
+ * frame's outer verticals sit exactly on the clip boundary and get shaved by
+ * antialiasing. At header size one unit is under a fifth of a pixel, so the
+ * right-hand tower simply looks cut off. This is the same fix already carried
+ * on the alpha branch.
+ *
  * Aspect is locked by the viewBox; set a height and let the width follow, so
  * the tower ratio can never stretch.
  */
@@ -66,7 +74,7 @@ export const SereneMark = forwardRef<
   return (
     <svg
       ref={ref}
-      viewBox="0 0 158.12 204.12"
+      viewBox="-6 -6 170.12 216.12"
       className={className}
       role={title ? "img" : "presentation"}
       aria-label={title}
