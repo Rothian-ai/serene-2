@@ -126,9 +126,23 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 ink, which keeps it in step with the bar's dark/light tone for
                 free. 11px tall means even a 2x screen samples the 23px source
                 down rather than up. */}
+            {/* Nudged down 3px, deliberately.
+
+                items-center centres the two boxes, and the mark's ink is centred in
+                its own box: measured mid 17.95 against a box centre of 18. But the
+                mark is a spire and a hairline frame sitting over solid towers, so its
+                mass is not where its box is. Rasterised and weighted, its centre of
+                mass falls at 22.4px, 4.4px below centre, and the silhouette only
+                becomes substantial 6.6px down. Centred geometrically the wordmark
+                therefore reads high, which is exactly how it looked.
+
+                3px aligns it to the middle of the towers (20.75px) rather than to the
+                full extent including the spire, which is the shape the eye weighs.
+                Chasing the centre of mass outright would drop it 4.4px and read low.
+                A transform, so nothing reflows. */}
             <span
               aria-hidden
-              className="block h-[11px] w-[67px] bg-current"
+              className="block h-[11px] w-[67px] translate-y-[3px] bg-current"
               style={{
                 WebkitMaskImage: 'url("/logo/serene-wordmark.png")',
                 maskImage: 'url("/logo/serene-wordmark.png")',
