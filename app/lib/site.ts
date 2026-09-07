@@ -85,13 +85,12 @@ export function conversationHref(context?: string, via?: string): string {
   const opening = context
     ? `Hello Serene, I'd like to chat about ${context}.`
     : "Hello Serene, I'd like to explore your properties.";
-  // A short page marker rides along in the message ("via:off-plan"). It is
-  // the only thing that survives the jump into WhatsApp, and Amelia reads it
-  // back on the first message to record where the person came from. Derived
-  // from the context when no explicit marker is given.
-  const marker = viaCode(via ?? context);
-  const text = marker ? `${opening} via:${marker}` : opening;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  // The opener is exactly what the visitor sees in their WhatsApp box, so it
+  // carries no page marker: "via:header" read as junk to the people who
+  // clicked (7 Sep 2026). The page of origin still reaches the chat route as
+  // utm_campaign (askHref); on WhatsApp the topic itself says which property.
+  void via;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(opening)}`;
 }
 
 /** Lower-case, dashes for anything that is not a letter or digit, at most 60 chars. */
