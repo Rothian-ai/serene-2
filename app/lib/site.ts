@@ -25,8 +25,16 @@ export const SITE = {
    * copy of every page lived on a domain we do not own.
    */
   url: "https://www.serenebay.ae",
-  /** PLACEHOLDER — replace with the client's real RERA licence number before launch. */
-  rera: "RERA Licence № 41273",
+  /**
+   * The real licence, supplied by the client on 10 September 2026. It replaced
+   * an invented placeholder (41273) that had been shipping in the footer of
+   * every page, on the metrics band under a tick reading "verifiable", and in
+   * the FAQ answer that tells buyers to check it with RERA themselves.
+   *
+   * The digits are repeated in content/faqs.json, which is prose and cannot
+   * read this constant. Change one, change the other.
+   */
+  rera: "RERA Licence № 52277",
   email: "enquiries@serene.com",
   careersEmail: "careers@serene.com",
   office: "Boulevard Plaza Tower One, Downtown Dubai",
