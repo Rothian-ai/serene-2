@@ -7,7 +7,7 @@ updated: July 2026
 
 ## The site
 
-serene.com is operated by Serene Bay Real Estate LLC, a real estate advisory licensed under RERA, Dubai, UAE. Use of the site constitutes acceptance of these terms.
+serenebay.ae is operated by Serene Bay Real Estate LLC, a real estate advisory licensed under RERA, Dubai, UAE. Use of the site constitutes acceptance of these terms.
 
 ## What the site is and isn't
 

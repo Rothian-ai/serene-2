@@ -12,6 +12,7 @@ import {
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { Accordion } from "~/components/Accordion";
+import { track } from "~/lib/analytics";
 import { ConversationBand } from "~/components/ConversationBand";
 import { ImageMosaic } from "~/components/ImageMosaic";
 import type { MosaicFrame } from "~/components/ImageMosaic";
@@ -346,7 +347,10 @@ export default function OffPlan() {
             </SplitHeading>
           </Reveal>
           <div className="mt-10 max-w-[900px]">
-            <Accordion items={OFFPLAN_FAQS} />
+            <Accordion
+              items={OFFPLAN_FAQS}
+              onOpen={(item) => track("faq_open", { question: item.question, category: "Off-plan" })}
+            />
             <p className="mt-9 text-[15.5px] text-ink/70">
               Questions about how we work rather than how the market works?{" "}
               <QuietLink to="/faqs" className="ml-1 align-middle">

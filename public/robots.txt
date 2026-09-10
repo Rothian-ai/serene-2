@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://serene.com/sitemap.xml
+# Application surfaces, not content. Nothing here should reach the index.
+Disallow: /dashboard
+Disallow: /api/
+
+Sitemap: https://www.serenebay.ae/sitemap.xml

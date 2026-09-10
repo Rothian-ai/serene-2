@@ -2,7 +2,10 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 
 /** Regenerates public/sitemap.xml from the content collections. Runs before every build. */
 
-const BASE = "https://serene.com";
+/* Must match SITE.url in app/lib/site.ts. `serenebay.ae` redirects to the www
+   host, so every <loc> uses www: a sitemap of URLs that redirect wastes crawl
+   budget and muddies which address is canonical. */
+const BASE = "https://www.serenebay.ae";
 
 /* Skips anything marked `hidden: true` in its frontmatter: a hidden route 404s
    at runtime, and a sitemap entry for it would point a crawler at a page we
@@ -28,8 +31,10 @@ const routes = [
   ...slugs("content/developers").map((s) => `/developers/${s}`),
   "/insights",
   ...slugs("content/insights").map((s) => `/insights/${s}`),
+  "/properties",
   "/careers",
   "/faqs",
+  "/contact",
   "/privacy",
   "/cookies",
   "/terms",

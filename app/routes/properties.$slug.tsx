@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, data, useLoaderData } from "react-router";
 import type { HeadersArgs, LoaderFunctionArgs } from "react-router";
 import { CTA, Eyebrow, Ledger, Plate, Reveal, Section } from "~/components/primitives";
@@ -8,6 +8,7 @@ import { PropertyGallery } from "~/components/PropertyGallery";
 import { AmeliaError, fetchProject, isAmeliaConfigured, serverTiming } from "~/lib/amelia.server";
 import type { MediaItem, ProjectDetail, Timing } from "~/lib/amelia.server";
 import { permitQr } from "~/lib/qr.server";
+import { track } from "~/lib/analytics";
 import {
   EMPTY,
   amenityName,
@@ -180,6 +181,28 @@ export default function Property() {
   // Chat-first: "Ask Amelia" opens the no-account chat on this property; the
   // verified signup stays one line down for anyone who wants the portal now.
   const ask = CHAT_FIRST ? tryAmeliaHref({ slug: p.slug, via: "property" }) : signup;
+
+  /* Which address was read, not merely that /properties/<something> was.
+     page_view carries the path; GA4 reports on it as an opaque string, so the
+     developer and the price band have to be sent as parameters to be able to
+     ask "which projects get looked at" rather than "which URLs". */
+  useEffect(() => {
+    track("property_view", {
+      project: p.slug,
+      name: p.name,
+      developer: p.developer?.name,
+      area: p.area,
+      emirate: p.emirate,
+    });
+  }, [p.slug, p.name, p.developer?.name, p.area, p.emirate]);
+
+  /* The platinum CTA leaves for the Amelia domain, so the delegated listener
+     reports it as ask_agent_click — accurate, but it cannot know which property
+     the visitor was standing on. This qualifies it; `place` separates the hero
+     from the sticky rail and the closing band, which is the only way to learn
+     how far down the page the decision is actually made. */
+  const enquire = (place: string) => () =>
+    track("property_enquiry", { project: p.slug, name: p.name, place, mode: CHAT_FIRST ? "chat" : "signup" });
 
   const units = (p.units ?? []).filter(
     (u) => u && (u.unitNumber || u.name || u.bedrooms != null),
@@ -419,7 +442,7 @@ export default function Property() {
             </p>
           )}
           <div className="mt-12 flex flex-wrap gap-4 md:mt-14">
-            <CTA to={ask} external kind="platinum">
+            <CTA to={ask} external kind="platinum" onClick={enquire("hero")}>
               Ask Amelia
             </CTA>
           </div>
@@ -488,7 +511,13 @@ export default function Property() {
                             </div>
                           ))}
                       </dl>
-                      <CTA to={ask} external kind="platinum" className="mt-8 w-full">
+                      <CTA
+                        to={ask}
+                        external
+                        kind="platinum"
+                        className="mt-8 w-full"
+                        onClick={enquire("rail")}
+                      >
                         Ask Amelia
                       </CTA>
                       {permitLine && <p className="type-cap mt-4 text-fog">{permitLine}</p>}
@@ -995,7 +1024,7 @@ export default function Property() {
               : "Create your buyer account and Amelia opens on this address: payment schedule, escrow filing and the comparable resale record, answered on demand."}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <CTA to={ask} external kind="platinum">
+            <CTA to={ask} external kind="platinum" onClick={enquire("closing")}>
               Ask Amelia
             </CTA>
             {/* "View the brochure" promised what the Documents band above

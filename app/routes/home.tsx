@@ -13,8 +13,12 @@ export const handle = { headerTone: "dark" as const };
 
 export function meta() {
   return buildMeta({
+    // Leads with the brand and the market. The old opener ("Our advisors are
+    // salaried...") never said "Serene Bay" or "Dubai" in the first clause,
+    // so the homepage matched the brand query less well than the cookie policy,
+    // whose description happened to spell the name out.
     description:
-      "Our advisors are salaried. They earn nothing extra for choosing one developer, one project or one unit over another. Off-plan advisory across Dubai and Abu Dhabi, with a relationship that outlasts the handover.",
+      "Serene Bay is an off-plan property buyer advisory in Dubai and Abu Dhabi. Salaried advisors who compare every developer, never one, and stay with you past the handover.",
     path: "/",
   });
 }

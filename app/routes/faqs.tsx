@@ -4,6 +4,7 @@ import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { ConversationBand } from "~/components/ConversationBand";
 import { Accordion } from "~/components/Accordion";
+import { track } from "~/lib/analytics";
 import faqs from "../../content/faqs.json";
 import { meta as buildMeta } from "~/lib/site";
 
@@ -73,7 +74,10 @@ export default function Faqs() {
 
       <Section className="pt-0">
         <div className="max-w-[880px]">
-          <Accordion items={list} />
+          <Accordion
+            items={list}
+            onOpen={(item) => track("faq_open", { question: item.question, category: cat })}
+          />
           <p className="mt-10 text-[15.5px] text-ink/70">
             A question we haven't answered?{" "}
             <AdvisorLink context="a question the FAQs did not answer">

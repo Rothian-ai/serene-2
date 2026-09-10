@@ -7,8 +7,19 @@ export interface AccordionItem {
   answer: string;
 }
 
-/** Ledger-row accordion — one open at a time, 400ms ease-inout. */
-export function Accordion({ items }: { items: AccordionItem[] }) {
+/**
+ * Ledger-row accordion — one open at a time, 400ms ease-inout.
+ *
+ * `onOpen` fires on expand only, never on collapse: the question a visitor
+ * chose to open is the signal, and closing it again is not a second one.
+ */
+export function Accordion({
+  items,
+  onOpen,
+}: {
+  items: AccordionItem[];
+  onOpen?: (item: AccordionItem, index: number) => void;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const baseId = useId();
 
@@ -23,7 +34,10 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
               className="flex w-full cursor-pointer items-baseline justify-between gap-6 py-5 text-left"
               aria-expanded={open}
               aria-controls={`${baseId}-${i}`}
-              onClick={() => setOpenIndex(open ? null : i)}
+              onClick={() => {
+                setOpenIndex(open ? null : i);
+                if (!open) onOpen?.(item, i);
+              }}
             >
               <span className="type-title text-[1.15rem]">{item.question}</span>
               <span aria-hidden className="shrink-0 text-brass">

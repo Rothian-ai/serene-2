@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { Eyebrow, QuietLink, Reveal, Section } from "~/components/primitives";
 import { Hero } from "~/components/Hero";
 import { SplitHeading } from "~/components/SplitHeading";
 import { BrandMark } from "~/components/BrandMark";
 import { ConversationBand } from "~/components/ConversationBand";
 import { getDeveloper, renderMarkdown } from "~/lib/content";
+import { track } from "~/lib/analytics";
 import { REGISTER_INTRO } from "~/lib/strategy";
 import { meta as buildMeta } from "~/lib/site";
 import type { Route } from "./+types/developers.$slug";
@@ -36,6 +38,14 @@ export default function DeveloperProfile({ params }: Route.ComponentProps) {
     { k: "Headquarters", v: dev.hq },
     { k: "Delivered", v: dev.delivered },
   ].filter((f): f is { k: string; v: string } => Boolean(f.v));
+
+  /* Same reasoning as property_view: the developer profiles are the research
+     step before an enquiry, and knowing which names are being checked is worth
+     more than a path in the pages report. (The throw above sits before this
+     hook exactly as it does in insight.tsx — a 404 never renders the body.) */
+  useEffect(() => {
+    track("developer_view", { developer: dev.slug, name: dev.name });
+  }, [dev.slug, dev.name]);
 
   return (
     <>

@@ -17,8 +17,14 @@ export const SITE = {
   /** The house line, as the copy of record states it. */
   positioning:
     "Off-plan advisory across Dubai and Abu Dhabi. Salaried advisors, cross-developer comparison, and a relationship that outlasts the handover.",
-  /** PLACEHOLDER — replace with the client's real domain before launch. */
-  url: "https://serene.com",
+  /**
+   * The canonical origin. `serenebay.ae` 308-redirects to the `www` host, so
+   * `www` is the address Google must be given: every canonical, og:url, sitemap
+   * entry and JSON-LD id is built from this. It was left as the placeholder
+   * `https://serene.com` through the first deploys, which told Google the real
+   * copy of every page lived on a domain we do not own.
+   */
+  url: "https://www.serenebay.ae",
   /** PLACEHOLDER — replace with the client's real RERA licence number before launch. */
   rera: "RERA Licence № 41273",
   email: "enquiries@serene.com",
@@ -158,21 +164,61 @@ export function askFootnote(whatsappCopy: string): string {
   return "No account and no details to start. Amelia answers first; you share one detail when you want a brochure, a quote, a viewing or your own portal, or to carry on after a long conversation. You will not be added to a calling list. Ever.";
 }
 
+/**
+ * Titles carry the searched brand, not the short mark.
+ *
+ * People look for "Serene Bay". That exact phrase used to appear in no title on
+ * the site — every one said "· Serene" — so the only pages matching the brand
+ * string were the few whose descriptions happened to spell it out, which is how
+ * the cookie policy came to be the result for "Serene Bay Dubai". The mark stays
+ * "Serene" in the header; the document title says the name people type.
+ */
 export function pageTitle(title?: string): string {
   return title
-    ? `${title} · Serene`
-    : "Serene · Off-Plan Buyer Advisory, Dubai & Abu Dhabi";
+    ? `${title} · ${SITE.contentName}`
+    : `${SITE.contentName} · Off-Plan Property Advisory in Dubai & Abu Dhabi`;
 }
 
-export function meta(opts: { title?: string; description: string; path?: string }) {
+/** The default share card: 1200x630, the ratio Facebook/LinkedIn/X crop to. */
+export const OG_IMAGE = "/images/og-serene-bay.jpg";
+
+/** Absolute URL for a site-relative path. Social crawlers reject relative ones. */
+export function absoluteUrl(path = "/"): string {
+  return SITE.url + (path.startsWith("/") ? path : `/${path}`);
+}
+
+export function meta(opts: {
+  title?: string;
+  description: string;
+  path?: string;
+  /** override the share card, e.g. a property or insight image */
+  image?: string;
+  /** articles set this so og:type is right */
+  type?: "website" | "article";
+}) {
   const title = pageTitle(opts.title);
+  const image = absoluteUrl(opts.image ?? OG_IMAGE);
+  const url = opts.path ? absoluteUrl(opts.path) : undefined;
   return [
     { title },
     { name: "description", content: opts.description },
+
     { property: "og:title", content: title },
     { property: "og:description", content: opts.description },
-    { property: "og:type", content: "website" },
-    { property: "og:site_name", content: SITE.name },
-    ...(opts.path ? [{ tagName: "link", rel: "canonical", href: SITE.url + opts.path }] : []),
+    { property: "og:type", content: opts.type ?? "website" },
+    { property: "og:site_name", content: SITE.contentName },
+    { property: "og:locale", content: "en_AE" },
+    { property: "og:image", content: image },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+    { property: "og:image:alt", content: `${SITE.contentName} — ${SITE.descriptor}` },
+    ...(url ? [{ property: "og:url", content: url }] : []),
+
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: opts.description },
+    { name: "twitter:image", content: image },
+
+    ...(url ? [{ tagName: "link", rel: "canonical", href: url }] : []),
   ];
 }

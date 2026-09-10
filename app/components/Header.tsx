@@ -157,7 +157,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
           </Link>
           {/* five primary links + one action: at lg the gaps tighten so the
               longer strategic labels still fit on a 1024px laptop */}
-          <nav className="ml-auto hidden items-center gap-5 lg:flex xl:gap-8" aria-label="Primary">
+          <nav className="ml-auto hidden items-center gap-4 lg:flex xl:gap-7" aria-label="Primary">
             {NAV.map((item) => (
               <Link
                 key={item.to}
@@ -171,21 +171,32 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
-            {/* Two buttons, deliberately unequal. Properties takes the quieter
-                outline so it reads as a destination; the conversation action
-                keeps the accent because it is the conversion. Neither takes the
-                platinum fill, which stays reserved for in-page primaries. */}
-            <Link
-              to="/properties"
-              prefetch="intent"
-              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${propertiesAction}`}
-              aria-current={active("/properties") ? "page" : undefined}
-            >
-              Properties
-            </Link>
-            <ConversationAction
-              className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
-            />
+            {/* The actions are their own group, not two more items in the row.
+                Every gap in this bar used to be the same 32px, so a 40px-tall
+                boxed button sat exactly as far from "About" as "About" sat from
+                "Insights" — the two buttons read as stray boxes dropped into the
+                link list rather than as a pair of actions. A wider break before
+                the group and a tighter gap inside it is what separates
+                navigation from conversion.
+
+                Deliberately unequal within the pair: Properties takes the
+                quieter outline so it reads as a destination; the conversation
+                action keeps the accent because it is the conversion. Neither
+                takes the platinum fill, which stays reserved for in-page
+                primaries. */}
+            <div className="ml-2 flex items-center gap-2.5 xl:ml-4">
+              <Link
+                to="/properties"
+                prefetch="intent"
+                className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${propertiesAction}`}
+                aria-current={active("/properties") ? "page" : undefined}
+              >
+                View Properties
+              </Link>
+              <ConversationAction
+                className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
+              />
+            </div>
           </nav>
           <button
             type="button"
@@ -247,7 +258,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   onClick={() => setOpen(false)}
                   className="inline-block border border-ivory/30 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ivory transition-colors hover:border-ivory"
                 >
-                  Properties
+                  View Properties
                 </Link>
                 <ConversationAction className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]" />
               </motion.div>

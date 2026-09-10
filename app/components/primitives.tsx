@@ -1,6 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router";
 import { ASK_EXTERNAL, askHref } from "~/lib/site";
+import { track } from "~/lib/analytics";
 import { useRef } from "react";
 import type { ReactNode } from "react";
 import { fadeRise, revealVariants, stagger, viewportOnce } from "~/lib/motion";
@@ -160,6 +161,9 @@ export function CTA({
 }) {
   const cls = `${btnBase} ${btnKinds[kind]} ${className}`;
   if (external) {
+    // No cta_click here: trackOutboundClicks() already sees every external
+    // anchor on the document and reports it as whatsapp/ask_agent/outbound.
+    // Firing both would count one click twice under two names.
     return (
       <a href={to} className={cls} onClick={onClick} target="_blank" rel="noopener noreferrer">
         {children}
@@ -167,7 +171,21 @@ export function CTA({
     );
   }
   return (
-    <Link to={to} className={cls} onClick={onClick}>
+    <Link
+      to={to}
+      className={cls}
+      onClick={() => {
+        track("cta_click", {
+          to,
+          kind,
+          from: typeof window === "undefined" ? undefined : window.location.pathname,
+          // Most CTAs are labelled by a bare string; anything richer is left
+          // unlabelled rather than guessed at from the element tree.
+          label: typeof children === "string" ? children : undefined,
+        });
+        onClick?.();
+      }}
+    >
       {children}
     </Link>
   );

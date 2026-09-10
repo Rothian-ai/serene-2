@@ -83,7 +83,11 @@ export function ContactForm({
       track("contact_submit");
       setStatus("success");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something interrupted the send.");
+      const message = err instanceof Error ? err.message : "Something interrupted the send.";
+      // A lost enquiry is the one failure worth a metric of its own: without it
+      // a broken SMTP config reads in GA4 as visitors simply not writing in.
+      track("contact_error", { message });
+      setError(message);
       setStatus("error");
     }
   };

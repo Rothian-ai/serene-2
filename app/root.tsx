@@ -20,9 +20,9 @@ import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
 import { RouteProgress } from "~/components/RouteProgress";
-import { initAnalytics } from "~/lib/analytics";
+import { initAnalytics, pageView, trackOutboundClicks } from "~/lib/analytics";
 import { gsap, ScrollTrigger } from "~/lib/gsap";
-import { SITE } from "~/lib/site";
+import { OG_IMAGE, SITE } from "~/lib/site";
 import { EASE_QUIET, markHydrated } from "~/lib/motion";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -68,28 +68,65 @@ export function Layout({ children }: { children: React.ReactNode }) {
               "}catch(e){}})()",
           }}
         />
+        {/* Structured data as a graph, so the brand, the company and the site
+            are three linked things rather than one loose blob.
+
+            The point of alternateName here is discovery: people search "Serene
+            Bay", the mark reads "Serene", and the legal entity is a third
+            string. Naming all three against one @id is how a search engine
+            learns they are the same house. Nothing is asserted that we cannot
+            stand behind — no invented social profiles, no sitelinks search box
+            for a search the site does not have. */}
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "RealEstateAgent",
-              name: SITE.contentName,
-              alternateName: SITE.name,
-              legalName: SITE.legalName,
-              url: SITE.url,
-              slogan: SITE.tagline,
-              description: SITE.positioning,
-              areaServed: ["Dubai", "Abu Dhabi"],
-              knowsAbout: [
-                "Off-plan real estate",
-                "UAE property investment",
-                "Buyer representation",
-                "Developer due diligence",
-                "Independent snagging inspection",
-                "Non-resident mortgages",
-                "Off-plan assignment and resale",
+              "@graph": [
+                {
+                  "@type": "RealEstateAgent",
+                  "@id": `${SITE.url}/#organisation`,
+                  name: SITE.contentName,
+                  alternateName: [SITE.name, SITE.legalName],
+                  legalName: SITE.legalName,
+                  url: SITE.url,
+                  logo: {
+                    "@type": "ImageObject",
+                    url: `${SITE.url}/logo/serene-mark.png`,
+                  },
+                  image: `${SITE.url}${OG_IMAGE}`,
+                  slogan: SITE.tagline,
+                  description: SITE.positioning,
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: SITE.office,
+                    addressLocality: "Dubai",
+                    addressCountry: "AE",
+                  },
+                  areaServed: [
+                    { "@type": "City", name: "Dubai" },
+                    { "@type": "City", name: "Abu Dhabi" },
+                  ],
+                  knowsAbout: [
+                    "Off-plan real estate",
+                    "UAE property investment",
+                    "Buyer representation",
+                    "Developer due diligence",
+                    "Independent snagging inspection",
+                    "Non-resident mortgages",
+                    "Off-plan assignment and resale",
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${SITE.url}/#website`,
+                  url: SITE.url,
+                  name: SITE.contentName,
+                  alternateName: SITE.name,
+                  inLanguage: "en-AE",
+                  publisher: { "@id": `${SITE.url}/#organisation` },
+                },
               ],
             }),
           }}
@@ -123,7 +160,8 @@ export default function App() {
 
   useEffect(() => {
     initAnalytics();
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const stopOutbound = trackOutboundClicks();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return stopOutbound;
     // Lenis drives the document scroll; GSAP's ticker drives Lenis, and Lenis
     // pushes every scroll into ScrollTrigger — one clock for smooth scroll and
     // all pinned/scrubbed timelines (no scrollerProxy: Lenis scrolls window).
@@ -133,10 +171,27 @@ export default function App() {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
     return () => {
+      stopOutbound();
       gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);
+
+  /* One GA4 page_view per client-side navigation.
+     `config` fires the landing page only, and React Router changes routes
+     without a document load, so without this every page after the first was
+     absent from GA4 entirely. Skipped on the first pass because loadAnalytics()
+     already sent the landing view; the title is read after commit, so it is the
+     new route's title and not the one we just left. */
+  const firstView = useRef(true);
+  useEffect(() => {
+    if (!hydrated) return;
+    if (firstView.current) {
+      firstView.current = false;
+      return;
+    }
+    pageView(location.pathname + location.search);
+  }, [location.pathname, location.search, hydrated]);
 
   // Client-side navigation swaps `main` and its pinned triggers — recompute
   // pin/scrub geometry once the enter transition has settled.
