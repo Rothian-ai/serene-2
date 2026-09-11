@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
-import { Link } from "react-router";
 import { CTA, Eyebrow, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
@@ -44,31 +43,25 @@ const VIGNETTE =
 /* "Ask Amelia, our AI Sales Agent" used to lead here as a platinum button. It
    is now the launcher pinned to the bottom-right of every page
    (AmeliaLauncher), so the hero states the position and the way to ask stays
-   within reach the whole way down rather than scrolling out of sight. */
+   within reach the whole way down rather than scrolling out of sight.
+
+   That left the hero with no primary, which is what "New to off-plan? Start
+   here" now fills. It was a gold-underlined text link below the row, kept quiet
+   on the reasoning that a first-time buyer is not ready to talk to anyone yet —
+   true, and no longer an argument for keeping it small, because the action it
+   competed with has left the hero. It reads first because it is the one route
+   that assumes nothing of the reader, and takes the platinum fill that the row
+   no longer spends anywhere else. */
 function Actions() {
   return (
-    <CTA to="/difference" kind="line">
-      How We're Different
-    </CTA>
-  );
-}
-
-/**
- * The newcomer's way in. Deliberately a text link rather than a third button:
- * most first-time buyers are not ready to talk to anyone yet, and the contact
- * form has to stay the only primary action on the page.
- */
-function NewToOffPlan() {
-  return (
-    <Link
-      to="/off-plan"
-      className="group inline-flex items-center gap-2.5 border-b border-gold/60 pb-1 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ivory/85 transition-colors hover:border-gold hover:text-ivory"
-    >
-      New to off-plan? Start here
-      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
-        →
-      </span>
-    </Link>
+    <>
+      <CTA to="/off-plan" kind="platinum">
+        New to off-plan? Start here
+      </CTA>
+      <CTA to="/difference" kind="line">
+        How We're Different
+      </CTA>
+    </>
   );
 }
 
@@ -170,9 +163,6 @@ export function HomeHero() {
         <div ref={ctaRef} className="mt-11 md:mt-14">
           <div className="flex flex-wrap justify-center gap-4">
             <Actions />
-          </div>
-          <div className="mt-8 flex justify-center">
-            <NewToOffPlan />
           </div>
         </div>
       </div>
