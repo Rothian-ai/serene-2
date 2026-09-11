@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { CTA, Eyebrow, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
-import { tryAmeliaHref } from "~/lib/amelia";
 
 /**
  * The homepage hero — one frame, not a sequence.
@@ -21,10 +20,13 @@ import { tryAmeliaHref } from "~/lib/amelia";
  * SSR renders the finished state, so the prerendered HTML is never blank.
  */
 
+/* The salaried-advisors paragraph that used to sit under the headline was cut
+   (11 Sep 2026). The argument it made is not lost: it is the whole of
+   /difference, and the commitments band further down this page states it
+   again. */
 const COPY = {
   eyebrow: "The Serene difference",
   title: "A different type of broker, a broker that you can trust.",
-  sub: "Our advisors are salaried. They earn nothing extra for choosing one developer, one project or one unit over another. What they are paid to do is be right for you, before the reservation, and for the years after it.",
 } as const;
 
 /** The ground: the Downtown dusk plate, with its modern-format ladder. */
@@ -39,22 +41,15 @@ const HERO_BG = {
 const VIGNETTE =
   "radial-gradient(125% 105% at 50% 48%, rgba(10,21,38,0.5) 0%, rgba(10,21,38,0.66) 55%, rgba(10,21,38,0.86) 100%)";
 
+/* "Ask Amelia, our AI Sales Agent" used to lead here as a platinum button. It
+   is now the launcher pinned to the bottom-right of every page
+   (AmeliaLauncher), so the hero states the position and the way to ask stays
+   within reach the whole way down rather than scrolling out of sight. */
 function Actions() {
   return (
-    <>
-      {/* Pinned to the web chat, deliberately bypassing askHref/VITE_AMELIA_ASK_MODE.
-          Every other "Ask Amelia" on the site still follows that mode, so this
-          button is the one exception — the hero is where a first-time visitor
-          should meet Amelia without being handed to WhatsApp first. `external`
-          is hard-coded rather than ASK_EXTERNAL because this destination is
-          always off-site, whatever the mode happens to be. */}
-      <CTA to={tryAmeliaHref({ via: "home" })} kind="platinum" external>
-        Ask Amelia, our AI Sales Agent
-      </CTA>
-      <CTA to="/difference" kind="line">
-        How We're Different
-      </CTA>
-    </>
+    <CTA to="/difference" kind="line">
+      How We're Different
+    </CTA>
   );
 }
 
@@ -85,7 +80,6 @@ export function HomeHero() {
   const cueRef = useRef<HTMLDivElement>(null);
   const markRef = useRef<SVGSVGElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useGsapContext(
@@ -119,8 +113,9 @@ export function HomeHero() {
           { autoAlpha: 0, yPercent: 118, rotateX: -55, stagger: 0.02, duration: 0.95 },
           "-=0.4",
         )
-        .from(subRef.current, { autoAlpha: 0, y: 20, duration: 0.7 }, "-=0.55")
-        .from(ctaRef.current, { autoAlpha: 0, y: 16, duration: 0.6 }, "-=0.4")
+        // The sub-paragraph's step is gone with the paragraph; the actions take
+        // its overlap so the headline still hands straight over to them.
+        .from(ctaRef.current, { autoAlpha: 0, y: 16, duration: 0.6 }, "-=0.5")
         .from(cueRef.current, { autoAlpha: 0, duration: 0.6 }, "-=0.15");
 
       // The entrance runs on rAF, which browsers suspend in a background tab.
@@ -172,9 +167,6 @@ export function HomeHero() {
         <h1 ref={headlineRef} className="type-display mx-auto mt-4 max-w-[22ch]">
           {COPY.title}
         </h1>
-        <p ref={subRef} className="type-body-lg mx-auto mt-5 max-w-[52ch] text-ivory/80">
-          {COPY.sub}
-        </p>
         <div ref={ctaRef} className="mt-11 md:mt-14">
           <div className="flex flex-wrap justify-center gap-4">
             <Actions />

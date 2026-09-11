@@ -18,6 +18,10 @@ export function CookieConsent() {
   const decide = (state: "accepted" | "declined") => {
     setConsent(state);
     setVisible(false);
+    // The launcher sits in the same bottom strip and stays hidden while this
+    // band is up; without a signal it would not reappear until the next
+    // navigation.
+    window.dispatchEvent(new Event("serene:consent"));
   };
 
   return (

@@ -16,6 +16,7 @@ import Lenis from "lenis";
 import "./app.css";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { AmeliaLauncher } from "~/components/AmeliaLauncher";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
@@ -251,6 +252,11 @@ export default function App() {
       <div ref={footerRef} className="fixed inset-x-0 bottom-0 z-0">
         <Footer />
       </div>
+      {/* Every page, not just the homepage: it replaced the hero's platinum
+          "Ask Amelia" button, and a launcher that existed on one route would be
+          the one place a visitor could ask. It yields to the cookie band, which
+          owns the same corner until it is dismissed. */}
+      <AmeliaLauncher />
       <CookieConsent />
     </>
   );

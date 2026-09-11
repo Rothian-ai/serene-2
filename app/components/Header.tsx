@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SereneMark } from "~/components/SereneMark";
-import { ASK_EXTERNAL, askHref } from "~/lib/site";
+import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
 
 /**
  * Primary navigation, ordered by the buyer journey the strategy describes:
@@ -30,27 +30,64 @@ const SECONDARY = [
 ];
 
 /**
- * The bar's single action. It is an ordinary route link to the contact form
- * until a conversation destination is configured (a WhatsApp number, or the
- * web chat on the Amelia domain), at which point it becomes an external link
- * instead — so the markup has to branch, not just the href.
- *
- * Shorter than the label the page CTAs use. "Ask Amelia, our AI Sales Agent"
- * measures 244px against a 1009px bar already carrying seven nav links at
- * 1024px, and overflows it; this fits.
+ * WhatsApp's own glyph. lucide-react carries no brand icons, so the path is
+ * inlined; it inherits currentColor like every other icon in the bar.
  */
-function ConversationAction({ className }: { className: string }) {
-  const label = "Ask our AI Agent";
-  if (ASK_EXTERNAL) {
+function WhatsAppGlyph({ size = 20 }: { size?: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="currentColor"
+      aria-hidden
+      focusable="false"
+    >
+      <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35z" />
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24z" />
+    </svg>
+  );
+}
+
+/**
+ * The bar's conversation action, now the WhatsApp glyph rather than the words
+ * "Ask our AI Agent" (11 Sep 2026).
+ *
+ * It is pinned to WhatsApp rather than following askHref/VITE_AMELIA_ASK_MODE,
+ * because the icon makes a promise about where the click lands and that promise
+ * has to hold whatever the mode is set to. Amelia's no-sign-up web chat has its
+ * own door: the launcher at the bottom right of every page. Two channels, two
+ * controls, neither pretending to be the other.
+ *
+ * With no number configured it still falls back to the contact form, so the
+ * control is never a dead end — hence the branch in the markup, not just in the
+ * href.
+ */
+function ConversationAction({ className, withLabel }: { className: string; withLabel?: boolean }) {
+  const label = "Chat with us on WhatsApp";
+  const body = (
+    <>
+      <WhatsAppGlyph />
+      {withLabel && <span>WhatsApp</span>}
+    </>
+  );
+  if (HAS_WHATSAPP) {
     return (
-      <a href={askHref({ via: "header" })} target="_blank" rel="noopener noreferrer" className={className}>
-        {label}
+      <a
+        href={conversationHref(undefined, "header")}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        aria-label={withLabel ? undefined : label}
+        title={label}
+      >
+        {body}
       </a>
     );
   }
   return (
-    <Link to="/contact" className={className}>
-      {label}
+    <Link to="/contact" className={className} aria-label={withLabel ? undefined : label} title={label}>
+      {body}
     </Link>
   );
 }
@@ -104,10 +141,25 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
   const action = overDark
     ? "border-silver/70 text-silver hover:border-silver hover:bg-ivory/5"
     : "border-brass text-brass hover:border-ink hover:text-ink";
-  // the quieter of the two: present as a button, subordinate to the accent
+  /* Silver, filled, on both grounds. It used to be the quieter outline of a
+     pair; now that the conversation action beside it is a bare glyph, the
+     destination is the only thing in the group carrying a word, and an outline
+     next to an icon read as two leftovers rather than a pair. Silver is the
+     brand's own material and stops short of the platinum fill, which stays
+     reserved for in-page primaries. Ink on Silver measures about 11:1, so it
+     holds on the dark bar and on the ivory one without a second treatment. */
   const propertiesAction = overDark
-    ? "border-ivory/25 text-ivory/90 hover:border-ivory/60 hover:bg-ivory/5"
-    : "border-ink/25 text-ink hover:border-ink";
+    ? "border-transparent bg-silver text-ink hover:bg-platinum"
+    // On the ivory bar the fill alone washes out: Silver on Pearl is 1.90:1, so
+    // the block barely separates from the bar behind it. A Steel hairline takes
+    // that edge to 2.92:1, which is a clearly visible boundary. It is not the
+    // 3:1 of WCAG 1.4.11, and it does not need to be: that rule governs the
+    // visual information *required* to identify a control, and here the label
+    // does it at 8.76:1 — the edge is doing aesthetic work, not semantic. No
+    // neutral in the palette reaches 3:1 against Pearl without going darker
+    // than the mark itself. Over the hero the dark ground already separates the
+    // button at 8.76:1, so a border there would only add a seam.
+    : "border-steel bg-silver text-ink hover:border-ink hover:bg-platinum";
 
   return (
     <>
@@ -193,8 +245,11 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
               >
                 View Properties
               </Link>
+              {/* Square rather than the text button's padding, and sized to
+                  match its neighbour's height so the pair still reads as a
+                  pair. */}
               <ConversationAction
-                className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${action}`}
+                className={`flex h-[40px] w-[40px] shrink-0 items-center justify-center border transition-colors ${action}`}
               />
             </div>
           </nav>
@@ -256,11 +311,17 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   to="/properties"
                   prefetch="intent"
                   onClick={() => setOpen(false)}
-                  className="inline-block border border-ivory/30 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ivory transition-colors hover:border-ivory"
+                  className="inline-block bg-silver px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-platinum"
                 >
                   View Properties
                 </Link>
-                <ConversationAction className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]" />
+                {/* The drawer has the room the bar does not, and a bare glyph in
+                    a full-screen menu loses the affordance a tap target wants,
+                    so here the icon keeps its word. */}
+                <ConversationAction
+                  withLabel
+                  className="inline-flex items-center gap-2.5 border border-ivory/30 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ivory transition-colors hover:border-ivory"
+                />
               </motion.div>
             </nav>
           </motion.div>
