@@ -7,7 +7,8 @@ import { LifecycleRail } from "~/components/LifecycleRail";
 import { DeveloperRegister } from "~/components/DeveloperRegister";
 import { insights } from "~/lib/content";
 import { COMMITMENTS, COMMITMENTS_INTRO } from "~/lib/strategy";
-import { ASK_EXTERNAL, askHref, meta as buildMeta } from "~/lib/site";
+import { meta as buildMeta } from "~/lib/site";
+import { tryAmeliaHref } from "~/lib/amelia";
 
 export const handle = { headerTone: "dark" as const };
 
@@ -92,7 +93,9 @@ export default function Home() {
               channel, in your hours, with no obligation and no follow-up sequence.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-4">
-              <CTA to={askHref({ via: "home" })} kind="platinum" external={ASK_EXTERNAL}>
+              {/* Pinned to the web chat, like the hero — the two identical buttons on
+                  this page must not lead to two different places. See HomeHero. */}
+              <CTA to={tryAmeliaHref({ via: "home" })} kind="platinum" external>
                 Ask Amelia, our AI Sales Agent
               </CTA>
               <CTA to="/difference" kind="line">How We're Different</CTA>

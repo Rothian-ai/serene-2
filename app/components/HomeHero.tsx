@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { CTA, Eyebrow, Plate } from "~/components/primitives";
 import { SereneMark } from "~/components/SereneMark";
 import { gsap, SplitText, useGsapContext } from "~/lib/gsap";
-import { ASK_EXTERNAL, askHref } from "~/lib/site";
+import { tryAmeliaHref } from "~/lib/amelia";
 
 /**
  * The homepage hero — one frame, not a sequence.
@@ -42,7 +42,13 @@ const VIGNETTE =
 function Actions() {
   return (
     <>
-      <CTA to={askHref({ via: "home" })} kind="platinum" external={ASK_EXTERNAL}>
+      {/* Pinned to the web chat, deliberately bypassing askHref/VITE_AMELIA_ASK_MODE.
+          Every other "Ask Amelia" on the site still follows that mode, so this
+          button is the one exception — the hero is where a first-time visitor
+          should meet Amelia without being handed to WhatsApp first. `external`
+          is hard-coded rather than ASK_EXTERNAL because this destination is
+          always off-site, whatever the mode happens to be. */}
+      <CTA to={tryAmeliaHref({ via: "home" })} kind="platinum" external>
         Ask Amelia, our AI Sales Agent
       </CTA>
       <CTA to="/difference" kind="line">
