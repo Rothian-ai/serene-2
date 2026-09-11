@@ -15,7 +15,7 @@ This site sets one category of cookies, analytics, and only after you accept the
 |---|---|---|---|
 | `_ga`, `_ga_*` | Google Analytics 4 | Anonymised usage measurement | Required. Loads only after acceptance |
 | `serene-consent` (local storage) | Serene Bay | Remembers your accept/decline choice | Strictly necessary |
-| `serene-visited` (session storage) | Serene Bay | Skips the loading sequence on repeat views | Strictly necessary |
+| `serene:intro` (session storage) | Serene Bay | Skips the opening sequence on repeat views in the same tab | Strictly necessary |
 
 ## Changing your mind
 
