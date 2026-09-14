@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { AmeliaMark } from "~/components/AmeliaMark";
 import { tryAmeliaHref } from "~/lib/amelia";
 import { getConsent } from "~/lib/analytics";
 
@@ -49,7 +49,12 @@ export function AmeliaLauncher() {
       title="Ask Amelia"
       className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-ink text-ivory shadow-[0_10px_30px_rgba(10,21,38,0.45)] transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:bg-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass motion-reduce:transform-none motion-reduce:hover:translate-y-0 md:bottom-8 md:right-8"
     >
-      <MessageCircle size={24} strokeWidth={1.5} aria-hidden />
+      {/* Amelia's own mark rather than a generic bubble: the launcher opens
+          Amelia specifically, and the header's action already wears WhatsApp's
+          glyph for its channel. Two doors, each showing whose it is. Filled
+          shapes read heavier than a 1.5-weight stroke, so it sits at 26px where
+          the bubble sat at 24. */}
+      <AmeliaMark className="h-[26px] w-[26px]" />
       {/* The label appears on hover on pointer devices and is always available
           to a screen reader through aria-label, so the icon never has to carry
           the meaning on its own. */}
