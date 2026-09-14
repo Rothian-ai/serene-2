@@ -147,19 +147,21 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
      next to an icon read as two leftovers rather than a pair. Silver is the
      brand's own material and stops short of the platinum fill, which stays
      reserved for in-page primaries. Ink on Silver measures about 11:1, so it
-     holds on the dark bar and on the ivory one without a second treatment. */
-  const propertiesAction = overDark
-    ? "border-transparent bg-silver text-ink hover:bg-platinum"
-    // On the ivory bar the fill alone washes out: Silver on Pearl is 1.90:1, so
-    // the block barely separates from the bar behind it. A Steel hairline takes
-    // that edge to 2.92:1, which is a clearly visible boundary. It is not the
-    // 3:1 of WCAG 1.4.11, and it does not need to be: that rule governs the
-    // visual information *required* to identify a control, and here the label
-    // does it at 8.76:1 — the edge is doing aesthetic work, not semantic. No
-    // neutral in the palette reaches 3:1 against Pearl without going darker
-    // than the mark itself. Over the hero the dark ground already separates the
-    // button at 8.76:1, so a border there would only add a seam.
-    : "border-steel bg-silver text-ink hover:border-ink hover:bg-platinum";
+  /* The same silver the page CTAs wear: .btn-platinum, the brushed-metal
+     fill off the Platinum ramp, rather than the flat Silver token this
+     carried before.
+
+     That reverses a rule this file used to state, that the platinum fill
+     stays reserved for in-page primaries so the bar never out-shouts the
+     section under it. What changed is the bar around it: the conversation
+     action beside it is a bare glyph now, so inside the group the metal is
+     the only fill, and the hero's own primary is a full-size CTA far enough
+     down that the two are never in one glance.
+
+     One treatment for both grounds. The metal carries its own light, so it
+     needs neither the flat fill's tone split nor the Steel hairline that was
+     propping that fill up on the ivory bar. */
+  const propertiesAction = "btn-platinum";
 
   return (
     <>
@@ -231,16 +233,14 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 the group and a tighter gap inside it is what separates
                 navigation from conversion.
 
-                Deliberately unequal within the pair: Properties takes the
-                quieter outline so it reads as a destination; the conversation
-                action keeps the accent because it is the conversion. Neither
-                takes the platinum fill, which stays reserved for in-page
-                primaries. */}
+                Deliberately unequal within the pair: Properties takes the silver
+                metal the page CTAs use, so the destination carries the weight; the
+                conversation action stays an outlined glyph beside it. */}
             <div className="ml-2 flex items-center gap-2.5 xl:ml-4">
               <Link
                 to="/properties"
                 prefetch="intent"
-                className={`whitespace-nowrap border px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] transition-colors xl:px-5 ${propertiesAction}`}
+                className={`whitespace-nowrap px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] xl:px-5 ${propertiesAction}`}
                 aria-current={active("/properties") ? "page" : undefined}
               >
                 View Properties
@@ -311,7 +311,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                   to="/properties"
                   prefetch="intent"
                   onClick={() => setOpen(false)}
-                  className="inline-block bg-silver px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-platinum"
+                  className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
                 >
                   View Properties
                 </Link>
