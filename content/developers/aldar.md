@@ -1,5 +1,6 @@
 ---
 name: Aldar
+hidden: true
 founded: '2004'
 hq: Abu Dhabi
 delivered: 41,000+ homes

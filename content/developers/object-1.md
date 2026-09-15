@@ -1,5 +1,6 @@
 ---
 name: Object 1
+hidden: true
 founded: '2022'
 hq: Dubai
 delivered: 15+ projects since 2022

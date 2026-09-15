@@ -69,8 +69,9 @@ export interface Insight {
 /**
  * A developer in the register.
  *
- * Only `name` is guaranteed. The register grew from seven researched profiles to
- * twenty-eight, and the twenty-one added later carry a name and nothing else:
+ * Only `name` is guaranteed. The register grew from a handful of researched
+ * profiles to several times that, and the ones added later carry a name and
+ * nothing else:
  * founding years, delivery counts, headquarters and notable works are facts
  * about real companies, and an empty field is honest where a guessed one is
  * not. So every other field is optional, and `profiled` says whether a record

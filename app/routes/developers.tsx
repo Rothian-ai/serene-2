@@ -23,16 +23,16 @@ export function meta() {
 /**
  * The register as one directory of image tiles.
  *
- * This page has been three things. Seven editorial spreads read well but only
- * seven of twenty-eight had the photography for it, so the other twenty-one
- * arrived as an "also registered with" list and the split read as a ranking.
- * Replacing it with a hairline grid fixed the ranking and lost the pictures.
+ * This page has been three things. Editorial spreads read well, but only the
+ * few records with photography could carry one, so the rest arrived as an "also
+ * registered with" list and the split read as a ranking. Replacing it with a
+ * hairline grid fixed the ranking and lost the pictures.
  *
  * So: one tile per developer, identical in size and structure, and every one of
  * them carries an art-directed ground rather than a photograph. We hold licensed
- * photography for seven of the twenty-eight, and putting a real building behind
- * those seven and a plate behind the other twenty-one reinstates exactly the
- * hierarchy this page had to lose. The plates are the same six surfaces used
+ * photography for only a few of them, and putting a real building behind those
+ * and a plate behind the rest reinstates exactly the hierarchy this page had to
+ * lose. The plates are the same six surfaces used
  * across the site, so the wall reads as one set and the subject of every tile is
  * the developer's mark rather than the picture behind it.
  *
@@ -88,15 +88,15 @@ export default function Developers() {
                   <span className="type-title mt-4 block text-[1.05rem] transition-colors duration-300 group-hover:text-brass">
                     {d.name}
                   </span>
-                  {/* No tagline. Seven entries carry one and twenty-one do not,
-                      and a cell two lines taller than its neighbours is the
-                      ranking this page had to stop implying; the tagline opens
-                      the entry's own page instead.
+                  {/* No tagline. Some entries carry one and most do not, and a
+                      cell two lines taller than its neighbours is the ranking
+                      this page had to stop implying; the tagline opens the
+                      entry's own page instead.
 
-                      And not "the record" for the link: only seven of the
-                      twenty-eight pages carry a ledger, and that word promises
-                      one. "The registration" is true of a thin entry and a full
-                      one alike. */}
+                      And not "the record" for the link: only a few of these
+                      pages carry a ledger, and that word promises one. "The
+                      registration" is true of a thin entry and a full one
+                      alike. */}
                   <span className="type-cap mt-2 flex items-center gap-2 text-fog">
                     The registration
                     <span
