@@ -27,8 +27,15 @@ import { OG_IMAGE, SITE } from "~/lib/site";
 import { EASE_QUIET, markHydrated } from "~/lib/motion";
 
 /** Amelia's website analytics (AME-118). The URL is the contract — orgKey and
- *  all — so it is kept verbatim rather than assembled from env. */
-const AMELIA_TRACKER = "https://amelia.serenebay.ae/api/track/script?orgKey=re-org-001";
+ *  all — so it is kept verbatim rather than assembled from env.
+ *
+ *  `storage=none` is what lets this load ahead of the cookie notice: that
+ *  variant writes nothing to the device — no cookie, no localStorage id — and
+ *  PostHog runs cookieless beside it. The notice promises "decline and nothing
+ *  loads" about what it governs, which is GA4; drop the parameter and this tag
+ *  starts storing a visitor id, and would have to move behind consent too. */
+const AMELIA_TRACKER =
+  "https://amelia.serenebay.ae/api/track/script?orgKey=re-org-001&storage=none";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   // The tracker beacons `location.href` with every page view, and the admin
