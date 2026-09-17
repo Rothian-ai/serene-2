@@ -13,7 +13,9 @@ Serene Bay Real Estate LLC ("Serene Bay", "we") is a licensed real estate adviso
 
 **What you give us.** If you use the contact form: your name, email address, optional phone number, and your message. Nothing on this site requires an account.
 
-**What analytics collects.** With your consent, and only with it, Google Analytics 4 records anonymised usage data (pages read, approximate region, device class). IP addresses are anonymised. If you decline the cookie notice, no analytics loads at all.
+**What analytics collects.** With your consent, and only with it, Google Analytics 4 records anonymised usage data (pages read, approximate region, device class). IP addresses are anonymised. If you decline the cookie notice, Google Analytics never loads and no cookies are set.
+
+**What is counted without cookies.** Our listing platform, Amelia, counts page views and enquiry actions for every visitor using PostHog, hosted in the EU, in its cookieless mode. It stores nothing on your device, does not recognise you between visits, and never reads what you type into a form. If you open a link Amelia sent you personally, the pages you read in that visit are noted against your enquiry. See the [cookie policy](/cookies) for the detail.
 
 **Third-party platforms.** Where we introduce you to an independent specialist, a surveyor, mortgage advisor, letting agent or legal counsel, anything you share with them is governed by their own privacy terms, not ours. We pass on only what you ask us to pass on.
 
@@ -31,7 +33,7 @@ You may request access to, correction of, or deletion of your personal data; obj
 
 ## Transfers
 
-Data you submit is processed in the UAE and, for analytics, by Google under its standard contractual clauses.
+Data you submit is processed in the UAE and, for analytics, by Google under its standard contractual clauses. Cookieless measurement is processed by PostHog in the EU.
 
 ## Changes
 

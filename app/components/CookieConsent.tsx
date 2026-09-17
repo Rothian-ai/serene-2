@@ -33,7 +33,7 @@ export function CookieConsent() {
       <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-4">
         <p className="type-cap max-w-[64ch] text-fog">
           We use analytics cookies to understand how the site is read, nothing more. Decline and
-          nothing loads. <Link to="/cookies" className="underline underline-offset-2">Cookie policy</Link>
+          no cookies are set. <Link to="/cookies" className="underline underline-offset-2">Cookie policy</Link>
         </p>
         <div className="ml-auto flex gap-3">
           <button
