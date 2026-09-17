@@ -151,6 +151,7 @@ export function CTA({
   onClick,
   external,
   className = "",
+  conversion,
 }: {
   to: string;
   kind?: BtnKind;
@@ -158,6 +159,10 @@ export function CTA({
   onClick?: () => void;
   external?: boolean;
   className?: string;
+  /** Names this CTA as a lead action for Amelia's analytics, which reads the
+   *  attribute off the element. WhatsApp, tel and mailto links need none —
+   *  the tracker recognises those by their href. */
+  conversion?: string;
 }) {
   const cls = `${btnBase} ${btnKinds[kind]} ${className}`;
   if (external) {
@@ -165,7 +170,14 @@ export function CTA({
     // anchor on the document and reports it as whatsapp/ask_agent/outbound.
     // Firing both would count one click twice under two names.
     return (
-      <a href={to} className={cls} onClick={onClick} target="_blank" rel="noopener noreferrer">
+      <a
+        href={to}
+        className={cls}
+        onClick={onClick}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-amelia-conversion={conversion}
+      >
         {children}
       </a>
     );
@@ -174,6 +186,7 @@ export function CTA({
     <Link
       to={to}
       className={cls}
+      data-amelia-conversion={conversion}
       onClick={() => {
         track("cta_click", {
           to,

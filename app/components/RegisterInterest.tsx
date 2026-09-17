@@ -67,7 +67,14 @@ export function RegisterInterest({
   }
 
   return (
-    <form onSubmit={onSubmit} className="relative" noValidate>
+    // Named on the form, not the button: Amelia's tracker counts the submit
+    // itself, and a tagged button inside it would count the same lead twice.
+    <form
+      onSubmit={onSubmit}
+      className="relative"
+      noValidate
+      data-amelia-conversion="register_interest"
+    >
       <input type="hidden" name="projectSlug" value={projectSlug} />
       {/* honeypot — off-screen rather than display:none, and out of tab order */}
       <div aria-hidden className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">

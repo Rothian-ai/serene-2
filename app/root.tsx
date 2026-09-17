@@ -26,7 +26,19 @@ import { gsap, ScrollTrigger } from "~/lib/gsap";
 import { OG_IMAGE, SITE } from "~/lib/site";
 import { EASE_QUIET, markHydrated } from "~/lib/motion";
 
+/** Amelia's website analytics (AME-118). The URL is the contract — orgKey and
+ *  all — so it is kept verbatim rather than assembled from env. */
+const AMELIA_TRACKER = "https://amelia.serenebay.ae/api/track/script?orgKey=re-org-001";
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  // The tracker beacons `location.href` with every page view, and the admin
+  // dashboard's search is a GET form over "name, email, message…" — a lead's
+  // details would ride to analytics in the query string. So it loads on every
+  // public page and never under /dashboard. Staff reach the dashboard by URL,
+  // which is a document load, so the tag is simply absent there.
+  const { pathname } = useLocation();
+  const tracked = !pathname.startsWith("/dashboard");
+
   return (
     <html lang="en">
       <head>
@@ -42,6 +54,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
         <Meta />
         <Links />
+        {/* Once, here, for the whole site: the script sends its own page view,
+            follows client-side navigation through PostHog's history capture,
+            and counts WhatsApp / tel / mailto clicks and form submits without
+            help. Anything else that is a lead action carries a
+            `data-amelia-conversion` attribute where it is rendered. */}
+        {tracked && <script src={AMELIA_TRACKER} async />}
         {/* Decide the intro BEFORE the first paint. The overlay ships in the
             server-rendered HTML and app.css hides it unless this script sets
             `data-intro`, so a first-time visitor's first paint IS the intro and

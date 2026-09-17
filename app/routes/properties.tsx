@@ -425,7 +425,16 @@ export default function Properties() {
             {/* A GET form: filters live in the URL, so any result set can be
                 linked, bookmarked and re-rendered on the server. The dialog
                 sits inside the same form — everything applies in one submit. */}
-            <Form method="get" onSubmit={submitClean} className="border-y border-ink/12 py-5">
+            {/* Amelia's tracker reports every form submit as a conversion and
+                offers no opt-out, so an unnamed filter form would land in the
+                lead numbers as a generic `form_submit`. Naming it keeps a
+                search separable from an enquiry in every report. */}
+            <Form
+              method="get"
+              onSubmit={submitClean}
+              data-amelia-conversion="register_search"
+              className="border-y border-ink/12 py-5"
+            >
               <div className="flex flex-wrap items-end gap-x-4 gap-y-4">
                 <Field id="f-q" label="Search" className="min-w-[220px] flex-1 basis-[260px]">
                   <input

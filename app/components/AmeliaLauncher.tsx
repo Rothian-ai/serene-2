@@ -47,6 +47,7 @@ export function AmeliaLauncher() {
       rel="noopener noreferrer"
       aria-label="Ask Amelia, our AI sales agent"
       title="Ask Amelia"
+      data-amelia-conversion="ask_amelia"
       className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-ink text-ivory shadow-[0_10px_30px_rgba(10,21,38,0.45)] transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:bg-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass motion-reduce:transform-none motion-reduce:hover:translate-y-0 md:bottom-8 md:right-8"
     >
       {/* Amelia's own mark rather than a generic bubble: the launcher opens

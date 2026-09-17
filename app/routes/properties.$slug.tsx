@@ -442,7 +442,7 @@ export default function Property() {
             </p>
           )}
           <div className="mt-12 flex flex-wrap gap-4 md:mt-14">
-            <CTA to={ask} external kind="platinum" onClick={enquire("hero")}>
+            <CTA to={ask} external kind="platinum" onClick={enquire("hero")} conversion="property_enquiry">
               Ask Amelia
             </CTA>
           </div>
@@ -730,6 +730,7 @@ export default function Property() {
                   href={d.url!}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-amelia-conversion="brochure_download"
                   className="inline-flex items-center gap-2 border border-ink/30 px-5 py-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] transition-colors hover:border-ink"
                 >
                   {d.title ?? "Brochure"} ↗
@@ -1024,13 +1025,13 @@ export default function Property() {
               : "Create your buyer account and Amelia opens on this address: payment schedule, escrow filing and the comparable resale record, answered on demand."}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <CTA to={ask} external kind="platinum" onClick={enquire("closing")}>
+            <CTA to={ask} external kind="platinum" onClick={enquire("closing")} conversion="property_enquiry">
               Ask Amelia
             </CTA>
             {/* "View the brochure" promised what the Documents band above
                 already delivers; Amelia's public page is the one-screen
                 summary, so it is named for what it is. */}
-            <CTA to={brochureHref(p.slug)} external kind="line">
+            <CTA to={brochureHref(p.slug)} external kind="line" conversion="brochure_view">
               At a glance
             </CTA>
           </div>
