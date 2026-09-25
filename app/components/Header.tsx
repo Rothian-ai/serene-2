@@ -10,9 +10,9 @@ import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
  * discovery → understanding the model → understanding the lifecycle → trust.
  * Conversion sits in the bar's own actions, not in the link list.
  *
- * Properties is not here. It is the one link people arrive wanting, so it sits
- * with the conversation action as a button rather than sixth in a row of seven
- * equal-weight labels. The mobile drawer pairs the same two at the bottom.
+ * The bar's only action is the conversation glyph; the mobile drawer carries
+ * the same at the bottom. Properties is the homepage hero's single action
+ * rather than a header button.
  */
 const NAV = [
   { to: "/developers", label: "Developers" },
@@ -141,27 +141,6 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
   const action = overDark
     ? "border-silver/70 text-silver hover:border-silver hover:bg-ivory/5"
     : "border-brass text-brass hover:border-ink hover:text-ink";
-  /* Silver, filled, on both grounds. It used to be the quieter outline of a
-     pair; now that the conversation action beside it is a bare glyph, the
-     destination is the only thing in the group carrying a word, and an outline
-     next to an icon read as two leftovers rather than a pair. Silver is the
-     brand's own material and stops short of the platinum fill, which stays
-     reserved for in-page primaries. Ink on Silver measures about 11:1, so it
-  /* The same silver the page CTAs wear: .btn-platinum, the brushed-metal
-     fill off the Platinum ramp, rather than the flat Silver token this
-     carried before.
-
-     That reverses a rule this file used to state, that the platinum fill
-     stays reserved for in-page primaries so the bar never out-shouts the
-     section under it. What changed is the bar around it: the conversation
-     action beside it is a bare glyph now, so inside the group the metal is
-     the only fill, and the hero's own primary is a full-size CTA far enough
-     down that the two are never in one glance.
-
-     One treatment for both grounds. The metal carries its own light, so it
-     needs neither the flat fill's tone split nor the Steel hairline that was
-     propping that fill up on the ivory bar. */
-  const propertiesAction = "btn-platinum";
 
   return (
     <>
@@ -225,29 +204,10 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 {item.label}
               </Link>
             ))}
-            {/* The actions are their own group, not two more items in the row.
-                Every gap in this bar used to be the same 32px, so a 40px-tall
-                boxed button sat exactly as far from "About" as "About" sat from
-                "Insights" — the two buttons read as stray boxes dropped into the
-                link list rather than as a pair of actions. A wider break before
-                the group and a tighter gap inside it is what separates
-                navigation from conversion.
-
-                Deliberately unequal within the pair: Properties takes the silver
-                metal the page CTAs use, so the destination carries the weight; the
-                conversation action stays an outlined glyph beside it. */}
-            <div className="ml-2 flex items-center gap-2.5 xl:ml-4">
-              <Link
-                to="/properties"
-                prefetch="intent"
-                className={`whitespace-nowrap px-4 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] xl:px-5 ${propertiesAction}`}
-                aria-current={active("/properties") ? "page" : undefined}
-              >
-                View Properties
-              </Link>
-              {/* Square rather than the text button's padding, and sized to
-                  match its neighbour's height so the pair still reads as a
-                  pair. */}
+            {/* A wider break before the action than between the links, so the
+                boxed glyph reads as an action rather than another item in the
+                link list. */}
+            <div className="ml-2 flex items-center xl:ml-4">
               <ConversationAction
                 className={`flex h-[40px] w-[40px] shrink-0 items-center justify-center border transition-colors ${action}`}
               />
@@ -274,7 +234,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
-            {/* the drawer scrolls: five primary links plus two actions can
+            {/* the drawer scrolls: the links plus the action can
                 exceed a short phone viewport in landscape */}
             <nav
               className="flex h-full flex-col justify-center gap-1 overflow-y-auto px-8 py-24"
@@ -305,16 +265,6 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
                 transition={{ delay: 0.45 }}
                 className="mt-10 flex flex-wrap items-center gap-3"
               >
-                {/* Properties left the link list above, so it has to be here or
-                    it would be unreachable from the drawer. */}
-                <Link
-                  to="/properties"
-                  prefetch="intent"
-                  onClick={() => setOpen(false)}
-                  className="btn-platinum inline-block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.12em]"
-                >
-                  View Properties
-                </Link>
                 {/* The drawer has the room the bar does not, and a bare glyph in
                     a full-screen menu loses the affordance a tap target wants,
                     so here the icon keeps its word. */}

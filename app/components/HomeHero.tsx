@@ -45,23 +45,14 @@ const VIGNETTE =
    (AmeliaLauncher), so the hero states the position and the way to ask stays
    within reach the whole way down rather than scrolling out of sight.
 
-   That left the hero with no primary, which is what "New to off-plan? Start
-   here" now fills. It was a gold-underlined text link below the row, kept quiet
-   on the reasoning that a first-time buyer is not ready to talk to anyone yet —
-   true, and no longer an argument for keeping it small, because the action it
-   competed with has left the hero. It reads first because it is the one route
-   that assumes nothing of the reader, and takes the platinum fill that the row
-   no longer spends anywhere else. */
+   The hero now carries a single action: the properties. "New to off-plan?
+   Start here" moved up into the header, and "How We're Different" left — the
+   page below still routes to /difference several times, the close included. */
 function Actions() {
   return (
-    <>
-      <CTA to="/off-plan" kind="platinum">
-        New to off-plan? Start here
-      </CTA>
-      <CTA to="/difference" kind="line">
-        How We're Different
-      </CTA>
-    </>
+    <CTA to="/properties" kind="platinum">
+      View Properties
+    </CTA>
   );
 }
 
