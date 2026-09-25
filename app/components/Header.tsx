@@ -11,10 +11,10 @@ import { HAS_WHATSAPP, conversationHref } from "~/lib/site";
  * Conversion sits in the bar's own actions, not in the link list.
  *
  * The bar's only action is the conversation glyph; the mobile drawer carries
- * the same at the bottom. Properties is the homepage hero's single action
- * rather than a header button.
+ * the same at the bottom.
  */
 const NAV = [
+  { to: "/properties", label: "Properties" },
   { to: "/developers", label: "Developers" },
   { to: "/off-plan", label: "Off-Plan" },
   { to: "/difference", label: "The Difference" },
@@ -188,7 +188,7 @@ export function Header({ tone }: { tone: "dark" | "light" }) {
               }}
             />
           </Link>
-          {/* five primary links + one action: at lg the gaps tighten so the
+          {/* seven primary links + one action: at lg the gaps tighten so the
               longer strategic labels still fit on a 1024px laptop */}
           <nav className="ml-auto hidden items-center gap-4 lg:flex xl:gap-7" aria-label="Primary">
             {NAV.map((item) => (
