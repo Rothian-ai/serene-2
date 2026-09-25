@@ -150,6 +150,19 @@
   }
 }
 
+/* The Burj Khalifa in hero-dusk sits at 51.1% of the photo's width, so on a
+   wide screen it stood right of the centred mark and headline: 21px at 1920,
+   42px at 3840. Shift the photo back by that 1.1%; the 1.023 scale is the
+   overflow that keeps the right edge covered, including under reduced motion
+   when the ambient scale on the wrapper never runs. The shift is a share of
+   the box, which matches the photo only where the photo is fitted to the
+   width, hence wide screens only. */
+@media (min-width: 1280px) {
+  .hero-home-plate > picture {
+    transform: translateX(-1.1%) scale(1.023);
+  }
+}
+
 /* ——— the fixed header's height, so a hero can reserve it ———
    The bar is a py-4 row around a 36px mark: 72px, 70px where the mark is
    smaller. A hero that centres its content has to centre it in the space

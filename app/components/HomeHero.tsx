@@ -139,14 +139,23 @@ export function HomeHero() {
       className="hero-4k-home relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-ink pb-8 pt-[calc(var(--header-h)+1.25rem)] text-ivory"
     >
       <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
-        <Plate kind="hero" {...HERO_BG} eager className="h-full w-full" />
+        <Plate kind="hero" {...HERO_BG} eager className="hero-home-plate h-full w-full" />
         {!reduced && <div ref={lightRef} aria-hidden className="hero-light" />}
         <div aria-hidden className="absolute inset-0" style={{ background: VIGNETTE }} />
       </div>
 
       <div className="container-site relative z-[1] text-center">
-        {/* mark alone (sanctioned lockup 2) — the wordmark would double the headline */}
-        <SereneMark ref={markRef} tone="white" title="Serene" className="hero-home-mark mx-auto h-20 w-auto md:h-28" />
+        {/* mark alone (sanctioned lockup 2) — the wordmark would double the headline.
+            Its frame is symmetric but its spire stands about 6% of its width
+            right of centre, so centred by its box it reads right of the text
+            under it. The nudge splits the difference between frame and spire.
+            `left`, not a transform: the entrance tween owns the transform. */}
+        <SereneMark
+          ref={markRef}
+          tone="white"
+          title="Serene"
+          className="hero-home-mark relative -left-[2px] mx-auto h-20 w-auto md:-left-[3px] md:h-28"
+        />
         <Eyebrow className="mt-8 justify-center text-silver">{COPY.eyebrow}</Eyebrow>
         <h1 ref={headlineRef} className="type-display mx-auto mt-4 max-w-[22ch]">
           {COPY.title}
