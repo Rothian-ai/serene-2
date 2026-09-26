@@ -22,6 +22,7 @@ import {
   money,
   perSqft,
   priceRange,
+  sqftRange,
   text,
 } from "~/lib/amelia";
 import { CHAT_FIRST, WHATSAPP_ASIDE, conversationHref, meta as buildMeta } from "~/lib/site";
@@ -69,8 +70,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const timing: Timing = { upstreamMs: 0, shapeMs: 0 };
   let project: ProjectDetail | null;
   try {
-    // `all` so Reserved/Sold arrive too and sold-out states can be rendered.
-    project = await fetchProject(slug, { includeUnits: "all" }, request.signal, timing);
+    // Units never arrive now (AME-209); the mode only shapes unitCounts, and
+    // the page reads just the available figure.
+    project = await fetchProject(slug, { includeUnits: "available" }, request.signal, timing);
   } catch (err) {
     throw new Response(
       err instanceof AmeliaError ? err.message : "The listing service is unavailable.",
@@ -204,32 +206,22 @@ export default function Property() {
   const enquire = (place: string) => () =>
     track("property_enquiry", { project: p.slug, name: p.name, place, mode: CHAT_FIRST ? "chat" : "signup" });
 
-  const units = (p.units ?? []).filter(
-    (u) => u && (u.unitNumber || u.name || u.bedrooms != null),
-  );
-  const availableUnits = units.filter((u) => !/reserved|sold/i.test(u.status ?? ""));
+  // Exact units are no longer published (AME-209): the record carries a table
+  // of the layouts on sale instead, and its headline figures come ready-made.
+  const unitTypes = (p.unitTypes ?? [])
+    .map((g) => ({
+      key: g.category ?? "",
+      label: humanise(g.category),
+      rows: (g.rows ?? []).filter((r) => text(r.label)),
+    }))
+    .filter((g) => g.label && g.rows.length > 0);
 
-  // When the developer has not filed a band, the schedule of listed units IS
-  // the price range — an address headlined by no figure was this page's most
-  // conspicuous silence. Available units set the band; a sold-out property
-  // falls back to what its units went for.
-  const pricedFrom = (availableUnits.length ? availableUnits : units)
-    .map((u) => u.price)
-    .filter(isNum);
-  const bandMin = pricing?.minPrice ?? p.minPrice ?? (pricedFrom.length ? Math.min(...pricedFrom) : null);
-  const bandMax = pricing?.maxPrice ?? p.maxPrice ?? (pricedFrom.length ? Math.max(...pricedFrom) : null);
+  // With no band on file, the cheapest layout on sale is still its floor.
+  const typePrices = unitTypes.flatMap((g) => g.rows.map((r) => r.fromPrice)).filter(isNum);
+  const bandMin =
+    pricing?.minPrice ?? p.minPrice ?? (typePrices.length ? Math.min(...typePrices) : null);
+  const bandMax = pricing?.maxPrice ?? p.maxPrice ?? null;
   const band = priceRange(bandMin, bandMax, currency);
-
-  const unitRates = (availableUnits.length ? availableUnits : units)
-    .map((u) => u.pricePerSqft)
-    .filter(isNum);
-  const perSqftMin = p.minPricePerSqft ?? (unitRates.length ? Math.min(...unitRates) : null);
-
-  const layoutBeds =
-    p.availableBedrooms ??
-    (availableUnits.length
-      ? [...new Set(availableUnits.map((u) => u.bedrooms).filter(isNum))]
-      : null);
   const availableCount = p.unitCounts?.available ?? p.availableUnitCount ?? null;
 
   /** the one marketing line the record carries, if any */
@@ -244,8 +236,8 @@ export default function Property() {
     { k: "Status", v: humanise(p.status) },
     { k: "Handover", v: p.handoverQuarter },
     { k: "From", v: band },
-    { k: "Per sqft", v: perSqft(perSqftMin, currency) },
-    { k: "Layouts", v: bedrooms(layoutBeds) },
+    { k: "Per sqft", v: perSqft(p.minPricePerSqft, currency) },
+    { k: "Layouts", v: bedrooms(p.availableBedrooms) },
     {
       k: "Available",
       v:
@@ -816,48 +808,33 @@ export default function Property() {
         </Block>
       )}
 
-      {/* ——— availability ——— */}
-      {units.length > 0 && (
-        <Block title="The units on the floor plates." className="pt-0">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] border-collapse text-[15px]">
-              <thead>
-                <tr className="border-b border-ink/20 text-left text-[10.5px] uppercase tracking-[0.1em] text-fog">
-                  <th className="py-3 pr-6">Unit</th>
-                  <th className="py-3 pr-6">Beds</th>
-                  <th className="py-3 pr-6">Area</th>
-                  <th className="py-3 pr-6">Price</th>
-                  <th className="py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {units.slice(0, 60).map((u, i) => {
-                  const taken = /reserved|sold/i.test(u.status ?? "");
-                  return (
-                    <tr
-                      key={u.id ?? i}
-                      className={`border-b border-ink/10 ${taken ? "text-ink/40" : ""}`}
-                    >
-                      <td className="py-3 pr-6">{u.unitNumber ?? u.name ?? EMPTY}</td>
-                      <td className="py-3 pr-6">{u.bedrooms === 0 ? "Studio" : (u.bedrooms ?? EMPTY)}</td>
-                      <td className="py-3 pr-6 tabular-nums">
-                        {typeof (u.sizeSqft ?? u.areaSqft) === "number"
-                          ? `${(u.sizeSqft ?? u.areaSqft)!.toLocaleString("en-GB")} sqft`
-                          : EMPTY}
-                      </td>
-                      <td className="py-3 pr-6 tabular-nums">{money(u.price, currency) ?? EMPTY}</td>
-                      <td className="py-3">{humanise(u.status) ?? "Available"}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      {/* ——— the layouts on sale: per type and bedroom count, the lowest price
+             and the size range. No unit numbers, floors or unit permits — the
+             record no longer carries them, and the site must not show them. ——— */}
+      {unitTypes.length > 0 && (
+        <Block eyebrow="The Units" title="The layouts on sale." className="pt-0">
+          <div className="flex flex-col gap-12">
+            {unitTypes.map((g) => (
+              <div key={g.key}>
+                <h3 className="type-title">{g.label}</h3>
+                <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {g.rows.map((r, i) => {
+                    const from = money(r.fromPrice, currency);
+                    const size = sqftRange(r.minSizeSqft, r.maxSizeSqft);
+                    return (
+                      <li key={r.id ?? i} className="border border-ink/14 p-5">
+                        <p className="type-title text-[1.1rem]">{r.label}</p>
+                        <p className={`type-data mt-4 ${from ? "text-brass" : "text-fog"}`}>
+                          {from ? `From ${from}` : "Price on request"}
+                        </p>
+                        {size && <p className="type-cap mt-1.5 text-fog">{size}</p>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
           </div>
-          {units.length > 60 && (
-            <p className="type-cap mt-4 text-fog">
-              Showing 60 of {units.length}. Amelia holds the full schedule.
-            </p>
-          )}
         </Block>
       )}
 

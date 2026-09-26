@@ -145,23 +145,6 @@ export interface MediaItem {
   caption?: string | null;
   thumbnailUrl?: string | null;
 }
-export interface Unit {
-  id?: string;
-  unitNumber?: string | null;
-  unitType?: string | null;
-  sizeSqft?: number | null;
-  bathrooms?: number | null;
-  name?: string | null;
-  bedrooms?: number | null;
-  areaSqft?: number | null;
-  price?: number | null;
-  pricePerSqft?: number | null;
-  status?: string | null;
-  floor?: number | string | null;
-  /** The unit's OWN Trakheesi permit; null means the property permit in
-   *  trust.permit covers it. Rendered only where a single unit is advertised. */
-  permit?: Permit | null;
-}
 export interface PaymentMilestone {
   label?: string | null;
   percentage?: number | null;
@@ -235,7 +218,23 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
     isOptional?: boolean | null;
     note?: string | null;
   }> | null;
-  units?: Unit[] | null;
+  /** Exact units are no longer published (Amelia AME-209): the record's `units`
+   *  always arrives empty and is deliberately left untyped, so nothing can
+   *  render one. This table of the layouts on sale replaces it. Categories
+   *  arrive in display order; prices are in pricing.currency. */
+  unitTypes?: Array<{
+    category?: string | null;
+    rows?: Array<{
+      id?: string | null;
+      label?: string | null;
+      /** 0 = studio; null for commercial and plots */
+      bedrooms?: number | null;
+      /** lowest price on sale; null = price on request */
+      fromPrice?: number | null;
+      minSizeSqft?: number | null;
+      maxSizeSqft?: number | null;
+    }> | null;
+  }> | null;
   unitCounts?: { available?: number | null; reserved?: number | null; sold?: number | null } | null;
   towers?: Array<{
     name?: string | null;

@@ -89,6 +89,21 @@ export function perSqft(value: number | null | undefined, currency = "AED"): str
   return `${currency || "AED"} ${Math.round(value).toLocaleString("en-GB")}/sqft`;
 }
 
+/** A size band in whole square feet, "420 to 440 sqft". One figure when only
+ *  one end is filed, or when both ends round to the same number. */
+export function sqftRange(
+  min: number | null | undefined,
+  max: number | null | undefined,
+): string | null {
+  const whole = (v: number | null | undefined) =>
+    typeof v === "number" && Number.isFinite(v) ? Math.round(v).toLocaleString("en-GB") : null;
+  const lo = whole(min);
+  const hi = whole(max);
+  if (lo && hi) return lo === hi ? `${lo} sqft` : `${lo} to ${hi} sqft`;
+  const one = lo ?? hi;
+  return one ? `${one} sqft` : null;
+}
+
 /** The permit line is a compliance requirement, not decoration. */
 export function permitLabel(number: string | null | undefined): string | null {
   return number ? `Trakheesi permit ${number}` : null;
