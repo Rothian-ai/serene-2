@@ -32,6 +32,10 @@ npm run typecheck  # route typegen + tsc
 The build prerenders **every route** — including each insight — to static HTML for SEO. Deploy `build/client` to any static host behind HTTPS; configure the
 host's SPA fallback to `__spa-fallback.html` for unknown paths.
 
+Production deploys on Vercel from the `beta` branch of `Rothian-ai/serene-2`, not
+from `main`. On the Hobby plan Vercel only builds commits authored by the
+project's owner, so commit as that account or the push will not deploy.
+
 ## Structure
 
 ```
