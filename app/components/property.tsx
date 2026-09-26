@@ -16,13 +16,15 @@ export function PropertyCard({ project }: { project: ProjectCard }) {
     { k: "Handover", v: project.handoverQuarter },
     { k: "Layouts", v: bedrooms(project.availableBedrooms) },
     {
-      k: "Available",
+      k: project.availableUnitCount === 0 ? "Availability" : "Available",
       v:
-        typeof project.availableUnitCount === "number"
-          ? typeof project.totalUnits === "number"
-            ? `${project.availableUnitCount} of ${project.totalUnits}`
-            : `${project.availableUnitCount}`
-          : null,
+        project.availableUnitCount === 0
+          ? "Sold out"
+          : typeof project.availableUnitCount === "number"
+            ? typeof project.totalUnits === "number"
+              ? `${project.availableUnitCount} of ${project.totalUnits}`
+              : `${project.availableUnitCount}`
+            : null,
     },
   ].filter((c): c is { k: string; v: string } => Boolean(c.v));
 

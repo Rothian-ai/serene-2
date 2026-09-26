@@ -170,12 +170,16 @@ export interface ProjectDetail extends Omit<ProjectCard, "location"> {
     maxPrice?: number | null;
     currency?: string | null;
     serviceChargePerSqft?: number | null;
+    /** set when the seller filed a range; serviceChargePerSqft is then its lower end */
+    serviceChargePerSqftMax?: number | null;
   } | null;
   serviceChargePerSqft?: number | null;
   /** Field names confirmed against a live record; the older aliases are kept
    *  as fallbacks so either shape renders. */
   investment?: {
     expectedGrossYieldPct?: number | null;
+    /** set when the seller filed a range; expectedGrossYieldPct is then its lower end */
+    expectedGrossYieldPctMax?: number | null;
     expectedAnnualRentAed?: number | null;
     residencyVisaEligibility?: string | boolean | null;
     investorEligibility?: string | null;

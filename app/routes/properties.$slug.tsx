@@ -20,7 +20,9 @@ import {
   dateLabel,
   humanise,
   money,
+  pctRange,
   perSqft,
+  perSqftRange,
   priceRange,
   sqftRange,
   text,
@@ -239,13 +241,16 @@ export default function Property() {
     { k: "Per sqft", v: perSqft(p.minPricePerSqft, currency) },
     { k: "Layouts", v: bedrooms(p.availableBedrooms) },
     {
-      k: "Available",
+      // Nothing left on sale reads "Sold out", as it does across Amelia (AME-201).
+      k: availableCount === 0 ? "Availability" : "Available",
       v:
-        typeof availableCount === "number"
-          ? typeof p.totalUnits === "number"
-            ? `${availableCount} of ${p.totalUnits}`
-            : `${availableCount}`
-          : null,
+        availableCount === 0
+          ? "Sold out"
+          : typeof availableCount === "number"
+            ? typeof p.totalUnits === "number"
+              ? `${availableCount} of ${p.totalUnits}`
+              : `${availableCount}`
+            : null,
     },
     { k: "Built", v: typeof p.completionPct === "number" ? `${p.completionPct}% complete` : null },
   ].filter((c): c is { k: string; v: string } => Boolean(c.v));
@@ -358,9 +363,10 @@ export default function Property() {
   const returnsCells = [
     {
       k: "Gross yield",
-      v: isNum(p.investment?.expectedGrossYieldPct ?? p.investment?.grossYieldPct)
-        ? `${p.investment?.expectedGrossYieldPct ?? p.investment?.grossYieldPct}%`
-        : null,
+      v: pctRange(
+        p.investment?.expectedGrossYieldPct ?? p.investment?.grossYieldPct,
+        p.investment?.expectedGrossYieldPctMax,
+      ),
     },
     {
       k: "Expected rent",
@@ -382,8 +388,9 @@ export default function Property() {
     },
   ].filter((c): c is { k: string; v: string } => Boolean(c.v));
 
-  const serviceCharge = perSqft(
+  const serviceCharge = perSqftRange(
     pricing?.serviceChargePerSqft ?? p.serviceChargePerSqft,
+    pricing?.serviceChargePerSqftMax,
     currency,
   );
   const fees = (p.fees ?? []).filter((x) => x.label);

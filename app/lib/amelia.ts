@@ -104,6 +104,32 @@ export function sqftRange(
   return one ? `${one} sqft` : null;
 }
 
+/** A per-sqft rate that may be a range. When `max` is set, `value` is the
+ *  lower end: "AED 14 to 15/sqft". A max with no lower end is not shown. */
+export function perSqftRange(
+  value: number | null | undefined,
+  max: number | null | undefined,
+  currency = "AED",
+): string | null {
+  const one = perSqft(value, currency);
+  if (!one || typeof max !== "number" || !Number.isFinite(max)) return one;
+  const lo = Math.round(value as number);
+  const hi = Math.round(max);
+  if (lo === hi) return one;
+  return `${currency || "AED"} ${lo.toLocaleString("en-GB")} to ${hi.toLocaleString("en-GB")}/sqft`;
+}
+
+/** A percentage that may be a range: "7%", or "7 to 8%" when `max` is set.
+ *  The feed's percentages are already percentage numbers (7 = 7%). */
+export function pctRange(
+  value: number | null | undefined,
+  max: number | null | undefined,
+): string | null {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  if (typeof max !== "number" || !Number.isFinite(max) || max === value) return `${value}%`;
+  return `${value} to ${max}%`;
+}
+
 /** The permit line is a compliance requirement, not decoration. */
 export function permitLabel(number: string | null | undefined): string | null {
   return number ? `Trakheesi permit ${number}` : null;
