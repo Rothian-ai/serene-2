@@ -9,7 +9,7 @@ import {
   RevealItem,
   Section,
 } from "~/components/primitives";
-import { Hero } from "~/components/Hero";
+import { VideoExplainer } from "~/components/VideoExplainer";
 import { SplitHeading } from "~/components/SplitHeading";
 import { Accordion } from "~/components/Accordion";
 import { track } from "~/lib/analytics";
@@ -101,18 +101,28 @@ const MOSAIC: MosaicFrame[] = [
 export default function OffPlan() {
   return (
     <>
-      {/* ① Hero */}
-      <Hero plate="render" image="/images/bugatti-residences-04.jpg" height="min-h-[64svh]">
-        <Eyebrow className="text-silver">Off-Plan, Explained</Eyebrow>
-        <SplitHeading as="h1" mode="chars" className="type-display mt-5 max-w-[20ch]">
-          Buying a building that does not exist yet.
-        </SplitHeading>
-        <p className="type-body-lg mt-6 max-w-[54ch] text-ivory/72">
-          Most UAE residential sales are off-plan, and almost none of the people buying have done it
-          before. This is the whole process in order, in plain language, with the paperwork named and
-          the risks stated.
-        </p>
-      </Hero>
+      {/* ① Hero — the explainer video IS the hero; the copy sits above it */}
+      <section className="relative bg-ink text-ivory">
+        {/* top padding clears the fixed header (this page's header tone is dark) */}
+        <div className="container-site pb-16 pt-28 text-center md:pb-24 md:pt-36">
+          <Eyebrow className="justify-center text-silver">Off-Plan, Explained</Eyebrow>
+          <SplitHeading as="h1" mode="chars" className="type-display mx-auto mt-5 max-w-[20ch]">
+            Buying a building that does not exist yet.
+          </SplitHeading>
+          <p className="type-body-lg mx-auto mt-6 max-w-[56ch] text-ivory/72">
+            Most UAE residential sales are off-plan, and almost none of the people buying have done it
+            before. This is the whole process in order, in plain language, with the paperwork named and
+            the risks stated.
+          </p>
+          <VideoExplainer
+            className="mx-auto mt-10 max-w-[1120px] md:mt-12"
+            src="/video/serene-offplan.mp4"
+            poster="/video/serene-offplan-poster.jpg"
+            label="Off-plan, explained"
+            duration="0:59"
+          />
+        </div>
+      </section>
 
       {/* ② What it actually is */}
       <Section>

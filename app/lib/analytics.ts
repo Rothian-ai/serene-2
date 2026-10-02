@@ -136,6 +136,7 @@ export type EventName =
   | "developer_view"
   | "insight_read"
   | "faq_open"
+  | "video_play"
   | "outbound_click"
   | "cta_click";
 
