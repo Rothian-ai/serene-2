@@ -1,53 +1,48 @@
 # Deploying
 
+## Where production runs
+
+Production is the Vercel project `serene-2` on the admin@rothian.com account,
+connected to `Rothian-ai/serene-2`. It builds the `beta` branch and serves it at
+www.serenebay.ae and serenebay.ae. `main` is not production.
+
+Until 26 Sep 2026 this repository lived at `luismayrina/serene-2` and deployed
+from Luis Mayrina's Vercel. That copy is stale and nothing deploys from it, so
+push to `Rothian-ai/serene-2` only. A clone that still has the old address as
+its `origin` needs re-pointing:
+
+    git remote set-url origin https://github.com/Rothian-ai/serene-2.git
+
 ## Vercel builds a commit only if it recognises the author
 
 Vercel's Git integration checks the **author email of the commit** against the
-accounts authorised on the project. If it cannot match one, it does not build
-and it does not fail either: no email, no red cross, nothing in the GitHub
-checks. The site simply keeps serving the last commit it did accept, which is
-invisible unless you diff the deployed HTML against the branch.
+accounts with access to the project. If it cannot match one, it does not build
+the commit, and the site keeps serving the last commit it did accept. That is
+easy to miss unless you compare the deployed site with the branch.
 
-This has bitten this project twice.
+On this project the recognised author is **admin@rothian.com** (GitHub:
+`Rothian-ai`), the account that owns it. A commit authored as anyone else, a
+collaborator or a personal address on the same machine, is not built.
 
-**Once from a collaborator.** Eight commits by a contributor with no Vercel
-access sat on `beta` unbuilt. The code was fine; it type-checked and built.
-
-**Once from the owner's own machine**, which is the surprising one. These
-deployed:
-
-    c831ec6  author 71801164+luismayrina@users.noreply.github.com   built
-    02d94e9  author 71801164+luismayrina@users.noreply.github.com   built
-
-and these, three commits later on the same machine, did not:
-
-    8b34663  author admin@rothian.com                               skipped
-    cfd7f62  author admin@rothian.com                               skipped
-    668ae57  author admin@rothian.com                               skipped
-
-Same person, same repository, same push. Only `user.email` differed, because
-the global git config carries `admin@rothian.com` and Vercel has no way to know
-that address belongs to an authorised account.
+The previous project was bitten by this twice: eight commits by a collaborator
+with no Vercel access sat on `beta` unbuilt, and later the owner's own commits
+were skipped because they carried an address that project did not recognise.
 
 ## What to do about it
 
-**A. Deploy from Actions instead — the durable answer.** `deploy.yml` deploys
+**A. Set the identity in every clone you commit from.**
+
+    git config --local user.name "Rothian-ai"
+    git config --local user.email admin@rothian.com
+
+Repo-local, so the global config is untouched. It covers future commits from
+that clone only; a fresh clone, or another machine, needs the same two lines.
+
+**B. Deploy from Actions instead — the durable answer.** `deploy.yml` deploys
 with a project token, so who wrote the commit stops mattering. It needs three
 repository secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`);
 they are documented at the top of that file. This is the only option that also
 covers collaborators.
-
-**B. Make the address recognisable.** Add `admin@rothian.com` as a verified
-email on the GitHub account, at GitHub -> Settings -> Emails. Vercel then
-matches it and every commit from this machine builds. Free, and about a minute.
-
-**C. Set the identity per repository.** Already done here:
-
-    git config --local user.email 71801164+luismayrina@users.noreply.github.com
-
-Repo-local, so the global config is untouched. It fixes future commits from
-this clone and nothing else — a fresh clone, or another machine, brings the
-problem back.
 
 ## Checking whether the branch is actually live
 
