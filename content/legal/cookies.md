@@ -18,6 +18,7 @@ Separately, a cookieless page counter runs for every visitor, whatever you choos
 | `_ga`, `_ga_*` | Google Analytics 4 | Anonymised usage measurement | Required. Loads only after acceptance |
 | `serene-consent` (local storage) | Serene Bay | Remembers your accept/decline choice | Strictly necessary |
 | `serene:intro` (session storage) | Serene Bay | Skips the opening sequence on repeat views in the same tab | Strictly necessary |
+| `amelia-chat:…` (local storage) | Amelia | Remembers that you have chatted here, so a reply can show on the chat button | Only once you start a chat |
 
 ## Measurement without cookies
 

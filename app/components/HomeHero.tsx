@@ -41,8 +41,8 @@ const VIGNETTE =
   "radial-gradient(125% 105% at 50% 48%, rgba(10,21,38,0.5) 0%, rgba(10,21,38,0.66) 55%, rgba(10,21,38,0.86) 100%)";
 
 /* "Ask Amelia, our AI Sales Agent" used to lead here as a platinum button. It
-   is now the launcher pinned to the bottom-right of every page
-   (AmeliaLauncher), so the hero states the position and the way to ask stays
+   is now Amelia's chat button, pinned to the bottom-right of every page
+   (AmeliaChat), so the hero states the position and the way to ask stays
    within reach the whole way down rather than scrolling out of sight.
 
    The hero now carries a single action: the properties. "New to off-plan?
