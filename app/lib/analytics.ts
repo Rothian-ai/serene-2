@@ -1,9 +1,25 @@
 /**
- * GA4, consent-gated. Nothing loads until the visitor accepts the cookie
- * notice; declining is remembered and nothing is ever loaded.
+ * GA4 under Google Consent Mode v2. The tag loads for every visitor; consent
+ * governs the COOKIE, not whether measurement happens.
  * Set VITE_GA_ID in .env (e.g. G-XXXXXXXXXX). Empty disables it entirely.
  *
- * Two things this has to get right that a stock gtag snippet does not:
+ * Until 28 Oct 2026 nothing loaded until the visitor accepted, which meant GA4
+ * could only ever report the consenting slice of the audience — the reason its
+ * figures never matched Amelia's, which has always run cookie-free for
+ * everyone. Now both measure the same people.
+ *
+ * What consent actually switches:
+ *   denied  (default, and after a decline)  no cookie, no persistent id, no
+ *           cross-visit stitching. GA4 receives a cookieless ping and models
+ *           the rest. Nothing is written to the device, so there is nothing
+ *           for the notice to have to ask about.
+ *   granted (after an accept)               the ordinary _ga cookie and the
+ *           full behavioural picture.
+ *
+ * The notice therefore still tells the truth when it says declining sets no
+ * cookies — see content/legal/cookies.md, which has to stay in step with this.
+ *
+ * Three things this has to get right that a stock gtag snippet does not:
  *
  * 1. This is a single-page app. `config` sends one page_view on load and React
  *    Router then swaps routes without a document load, so every page after the
@@ -15,6 +31,11 @@
  *    before gtag exists used to vanish, because `window.gtag?.()` is a no-op
  *    when undefined. They queue now and flush on load, so the click that
  *    triggered the banner is not the one measurement misses.
+ *
+ * 3. The consent default must reach the dataLayer BEFORE gtag.js is fetched,
+ *    or the library has already decided it may use storage by the time we say
+ *    otherwise. That is why the `consent` command below is pushed first and
+ *    the <script> is appended last.
  */
 
 const GA_ID = (import.meta.env.VITE_GA_ID as string | undefined)?.trim() ?? "";
@@ -68,7 +89,12 @@ export function setConsent(state: Exclude<ConsentState, null>): void {
   } catch {
     /* storage unavailable: honour the choice for this page at least */
   }
-  if (state === "accepted") loadAnalytics();
+  // The tag is already running, so this is an upgrade or a confirmation of the
+  // state it started in, not a load. loadAnalytics() is kept for the case where
+  // the decision is made before the tag came up (a private path, or GA4 not yet
+  // initialised); it is a no-op once it has.
+  loadAnalytics();
+  if (window.gtag) window.gtag("consent", "update", consentSignals(state === "accepted"));
 }
 
 declare global {
@@ -97,6 +123,25 @@ function send(name: string, params?: Record<string, unknown>): void {
   window.gtag("event", name, params);
 }
 
+/**
+ * The Consent Mode v2 signal set. Only `analytics_storage` ever moves: the
+ * advertising signals stay denied permanently because this site runs no ads
+ * and links no Ads account, and saying so explicitly is what stops Google
+ * inferring otherwise. `security_storage` is granted — it covers fraud
+ * prevention and is not something the notice offers to switch off.
+ */
+function consentSignals(granted: boolean) {
+  return {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: granted ? "granted" : "denied",
+    functionality_storage: "denied",
+    personalization_storage: "denied",
+    security_storage: "granted",
+  } as const;
+}
+
 export function loadAnalytics(): void {
   if (loaded || !GA_ID || typeof document === "undefined") return;
   // Deferred, not refused: `loaded` stays false, so an admin who later opens a
@@ -116,6 +161,10 @@ export function loadAnalytics(): void {
     // eslint-disable-next-line prefer-rest-params
     window.dataLayer!.push(arguments);
   };
+  // FIRST, before `js`, `config` and the script tag: the state gtag.js must
+  // start in. Read from storage rather than assumed denied, so a returning
+  // visitor who already accepted is not briefly measured as anonymous.
+  window.gtag("consent", "default", consentSignals(getConsent() === "accepted"));
   window.gtag("js", new Date());
   window.gtag("config", GA_ID, {
     anonymize_ip: true,
@@ -128,14 +177,19 @@ export function loadAnalytics(): void {
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
   document.head.appendChild(s);
 
-  // the landing page, then anything captured while waiting for consent
+  // the landing page, then anything captured before the tag was up
   pageView();
   const pending = queue.splice(0, queue.length);
   for (const e of pending) window.gtag("event", e.name, e.params);
 }
 
+/**
+ * Start measurement. No longer conditional on consent: the tag comes up for
+ * every visitor and starts denied, which is the whole point of Consent Mode.
+ * Still refused on a private path (see isPrivatePath).
+ */
 export function initAnalytics(): void {
-  if (getConsent() === "accepted") loadAnalytics();
+  loadAnalytics();
 }
 
 /**
@@ -152,7 +206,7 @@ export function pageView(path?: string): void {
   // client-side navigation React commits the new route before this runs, and
   // we must judge the page we are about to send.
   if (isPrivatePath(location.split("?")[0]) || onPrivatePath()) return;
-  if (!loaded || !window.gtag) return; // pre-consent views are not backfilled
+  if (!loaded || !window.gtag) return; // nothing to send to yet
   // Consecutive identical paths are always a double-count, never a real second
   // view. Without this, loadAnalytics() sending the landing view and the route
   // effect sending the same path would both land — which is exactly what
