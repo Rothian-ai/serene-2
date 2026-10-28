@@ -22,6 +22,33 @@ const GA_ID = (import.meta.env.VITE_GA_ID as string | undefined)?.trim() ?? "";
 /** True when a measurement ID is compiled in. Useful for diagnostics. */
 export const ANALYTICS_CONFIGURED = Boolean(GA_ID);
 
+/**
+ * Paths no analytics may see, GA4 or otherwise.
+ *
+ * /dashboard is the admin's submissions list and its filter is a GET form over
+ * "name, email, message…", so a staff member searching a lead puts that lead's
+ * email in the query string. page_view reports pathname + search, which would
+ * hand Google a real person's address — against GA4's own terms as well as our
+ * privacy notice — and the mailto: links in the results table would do the same
+ * through the outbound-click listener. /dashboard/login is a password form and
+ * has no business in a report either.
+ *
+ * Amelia's tag has been excluded here since it was added (see root.tsx); GA4
+ * was not, which is the hole this closes. Both now read this one predicate, so
+ * the rule cannot drift apart again. It also keeps staff traffic out of GA4,
+ * which is a reporting win on its own.
+ */
+const PRIVATE_PREFIXES = ["/dashboard"] as const;
+
+export function isPrivatePath(pathname: string): boolean {
+  return PRIVATE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
+/** The live location, for the guards below. Server-side there is nothing to send. */
+function onPrivatePath(): boolean {
+  return typeof window !== "undefined" && isPrivatePath(window.location.pathname);
+}
+
 export type ConsentState = "accepted" | "declined" | null;
 const KEY = "serene-consent";
 
@@ -60,6 +87,9 @@ const QUEUE_LIMIT = 50;
 
 function send(name: string, params?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
+  // Dropped, not queued: a queued dashboard event would simply flush the
+  // moment the admin opened a public page, which is the leak with a delay.
+  if (onPrivatePath()) return;
   if (!loaded || !window.gtag) {
     if (queue.length < QUEUE_LIMIT) queue.push({ name, params });
     return;
@@ -69,6 +99,10 @@ function send(name: string, params?: Record<string, unknown>): void {
 
 export function loadAnalytics(): void {
   if (loaded || !GA_ID || typeof document === "undefined") return;
+  // Deferred, not refused: `loaded` stays false, so an admin who later opens a
+  // public page still gets GA4 — initAnalytics() is called again on every
+  // navigation and is a no-op once this has run.
+  if (onPrivatePath()) return;
   loaded = true;
 
   window.dataLayer = window.dataLayer ?? [];
@@ -109,10 +143,22 @@ export function initAnalytics(): void {
  * navigation, with the title read after React has committed the new route so
  * it is the new page's title rather than the previous one's.
  */
+let lastView: string | null = null;
+
 export function pageView(path?: string): void {
   if (typeof window === "undefined") return;
   const location = path ?? window.location.pathname + window.location.search;
+  // Checked against the path being reported, not just the live one: on a
+  // client-side navigation React commits the new route before this runs, and
+  // we must judge the page we are about to send.
+  if (isPrivatePath(location.split("?")[0]) || onPrivatePath()) return;
   if (!loaded || !window.gtag) return; // pre-consent views are not backfilled
+  // Consecutive identical paths are always a double-count, never a real second
+  // view. Without this, loadAnalytics() sending the landing view and the route
+  // effect sending the same path would both land — which is exactly what
+  // happens when GA4 starts late, on the first public page after /dashboard.
+  if (location === lastView) return;
+  lastView = location;
   window.gtag("event", "page_view", {
     page_path: location,
     page_location: window.location.origin + location,
