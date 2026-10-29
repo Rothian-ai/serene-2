@@ -21,7 +21,7 @@ import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
 import { ScrollProgress } from "~/components/ScrollProgress";
 import { RouteProgress } from "~/components/RouteProgress";
-import { initAnalytics, pageView, trackOutboundClicks } from "~/lib/analytics";
+import { initAnalytics, isPrivatePath, pageView, trackOutboundClicks } from "~/lib/analytics";
 import { gsap, ScrollTrigger } from "~/lib/gsap";
 import { OG_IMAGE, SITE } from "~/lib/site";
 import { EASE_QUIET, markHydrated } from "~/lib/motion";
@@ -44,7 +44,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   // public page and never under /dashboard. Staff reach the dashboard by URL,
   // which is a document load, so the tag is simply absent there.
   const { pathname } = useLocation();
-  const tracked = !pathname.startsWith("/dashboard");
+  // The same predicate GA4 uses, so the two tags can never disagree about
+  // which pages are private (app/lib/analytics.ts).
+  const tracked = !isPrivatePath(pathname);
 
   return (
     <html lang="en">
@@ -212,6 +214,11 @@ export default function App() {
   const firstView = useRef(true);
   useEffect(() => {
     if (!hydrated) return;
+    // Re-attempted every navigation, not once on mount: an admin who lands on
+    // /dashboard gets no GA4 at all, and this is what starts it if they then
+    // open a public page. It is a no-op once GA4 is up, and pageView() drops
+    // the duplicate when loadAnalytics() has just sent this same path.
+    initAnalytics();
     if (firstView.current) {
       firstView.current = false;
       return;
