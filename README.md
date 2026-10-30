@@ -50,7 +50,7 @@ app/
     site.ts           Site constants, Amelia gateway, <meta> builder
     gsap.ts           GSAP foundation: plugin registration + useGsapContext (scoped, reduced-motion safe)
     motion.ts         Framer variants/eases + the reveal repertoire
-    analytics.ts      GA4, loaded only after consent
+    analytics.ts      GA4 under Consent Mode, live site only
 content/              Markdown/JSON content (a new file = a new page)
 brand-assets/         brand-tokens.md (the brand rules) + the logo artwork
 public/               images/ (Plate photography, AVIF+srcSet hero), logo/, fonts/
@@ -138,7 +138,10 @@ Copy `.env.example` to `.env`:
   variable is no longer read by anything and can be deleted from .env / Vercel.
 - (historic) all Amelia CTAs used to route through
   `/amelia` (the gateway) and exit here with `ref`/`context` params for attribution.
-- `VITE_GA_ID` — GA4 id. Analytics loads **only after cookie consent**; declining loads nothing.
+- `VITE_GA_ID` — GA4 id. GA4 loads for every visitor on serenebay.ae (never on previews or
+  locally), cookie-free until they accept. Its reports count only visitors who accept, unless
+  Google's behavioural modelling is active for the property. Amelia counts every visitor,
+  cookie-free, and leaves out automated visits, so the two will not match.
 - `VITE_CONTACT_ENDPOINT` — POST target for the contact form (e.g. Formspree).
 
 ## Before launch
