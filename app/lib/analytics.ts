@@ -238,9 +238,15 @@ export function loadAnalytics(): void {
     anonymize_ip: true,
     // We send these by hand on every route change, including the first.
     send_page_view: false,
-    // The landing address without `alt`, for anything gtag sends on its own
-    // before our first page_view sets it explicitly.
+    // The landing address without `alt`, for anything gtag sends on its own.
+    // A config-level value sticks to every later hit, so pageView() refreshes
+    // it on each route change; otherwise it would stay frozen on this one.
     page_location: window.location.origin + currentPath(),
+    // gtag would send document.referrer as written. A tab opened from one of
+    // our own pages before Amelia's snippet stripped the address bar has that
+    // page, `alt` and all, as its referrer, so it is stripped here too. Left
+    // out when empty, so gtag's own handling of a direct visit is untouched.
+    ...(document.referrer ? { page_referrer: withoutRecipientRef(document.referrer) } : {}),
   });
 
   const s = document.createElement("script");
@@ -284,9 +290,23 @@ export function pageView(path?: string): void {
   // happens when GA4 starts late, on the first public page after /dashboard.
   if (location === lastView) return;
   lastView = location;
+  const pageLocation = window.location.origin + location;
+  // Google's SPA pattern: move the tag's own page to the new route before the
+  // page_view. The events gtag sends by itself (user_engagement, scroll,
+  // form_start, form_submit, its outbound clicks) carry no page of their own
+  // and take it from the config, which loadAnalytics() pinned to the landing
+  // address. Without this, every one of them after a client-side navigation
+  // was credited to the first page of the visit. It has to be `config` with
+  // `update: true`: a config-level page_location outranks anything `set` gives.
+  window.gtag("config", GA_ID, {
+    update: true,
+    send_page_view: false,
+    page_location: pageLocation,
+    page_title: document.title,
+  });
   window.gtag("event", "page_view", {
     page_path: location,
-    page_location: window.location.origin + location,
+    page_location: pageLocation,
     page_title: document.title,
   });
 }
