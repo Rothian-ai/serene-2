@@ -1,6 +1,6 @@
 ---
 title: Cookie Policy
-updated: July 2026
+updated: 30 October 2026
 ---
 
 *This policy is a working draft prepared for launch and should be reviewed by counsel before publication.*
@@ -9,7 +9,7 @@ updated: July 2026
 
 This site sets one category of cookies, analytics, and only after you accept the notice. Decline, and no cookies are set. Your choice is remembered in your browser's local storage either way.
 
-What declining does not stop is an anonymous count of page views. Two measurement tools run for every visitor, whatever you choose, and neither stores anything on your device when you have not accepted: there is nothing for the notice to switch off, because nothing is being kept. Accepting lets the Google Analytics one set its cookie and recognise you as the same visitor across visits. Declining leaves it counting, unable to tell one visit from another or to know you anywhere else. Both are described below.
+What declining does not stop is an anonymous count of page views and actions. Two measurement tools run for every visitor, whatever you choose, and neither stores anything on your device when you have not accepted: there is nothing for the notice to switch off, because nothing is being kept. Accepting lets the Google Analytics one set its cookie and recognise you as the same visitor across visits. Declining leaves it counting, unable to tell one visit from another or to know you anywhere else. Both are described below.
 
 ## The cookies
 
@@ -22,11 +22,11 @@ What declining does not stop is an anonymous count of page views. Two measuremen
 
 ## Measurement without cookies
 
-Where you have not accepted, Google Analytics runs in Google's "consent mode", denied. It sets no cookie and writes nothing to your device, keeps no identifier for you, and cannot connect this visit to any other visit here or to anything you do on another site. What reaches Google is a count of pages read, with no way back to you. Google estimates the totals it cannot measure directly. Accept, and the cookie in the table above is set and the ordinary measurement begins.
+Where you have not accepted, Google Analytics runs in Google's "consent mode", denied. It sets no cookie and writes nothing to your device, keeps no identifier for you, and cannot connect this visit to any other visit here or to anything you do on another site. What reaches Google is the pages you read and the actions you take on them (a form sent, a question in the FAQ opened, a WhatsApp or other outside link followed), with no cookie or identifier and no way back to you. Google may use them to estimate the totals it cannot measure directly, but only once the site has enough visitors for it to do so. Accept, and the cookie in the table above is set and the ordinary measurement begins.
 
-Our listing platform, Amelia, counts page views and enquiry actions (a form sent, a WhatsApp or phone link followed) using PostHog, hosted in the EU and run in its cookieless mode. It sets no cookies and writes nothing to local or session storage, records no sessions, and reports page addresses with their query strings removed. It never reads what you type into a form, and it does not recognise you from one visit to the next.
+Our listing platform, Amelia, counts page views and enquiry actions (a form sent, a WhatsApp or phone link followed) using PostHog, hosted in the EU and run in its cookieless mode. It sets no cookies and writes nothing to local or session storage, makes no recording of your visit (no session replay), and reports page addresses with their query strings removed. With each page view or action it records an approximate location (country, region and town or city, worked out from your connection; your IP address is never stored) and your browser's language. It never reads what you type into a form, and it cannot recognise you from one day to the next; within a day, visits from the same browser and connection are counted as one visitor, using a code worked out on PostHog's servers that is not stored on your device and cannot be traced back to you.
 
-One exception: if you open a link Amelia sent you personally, the pages you read during that visit are noted against your enquiry, so the advisor you are already talking to can see what you looked at. The link is held in memory for that visit and is gone when you close the tab.
+One exception: if you open a link Amelia sent you personally, the pages you read and the enquiry actions you take during that visit (a form sent, a WhatsApp or phone link followed) are noted against your enquiry, so the advisor you are already talking to can see what you looked at and what you did. The link is held in memory for that visit and is gone when you close the tab.
 
 ## Changing your mind
 

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   Links,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
@@ -16,6 +15,7 @@ import Lenis from "lenis";
 import "./app.css";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { FrozenOutlet } from "~/components/FrozenOutlet";
 import { AmeliaChat } from "~/components/AmeliaChat";
 import { CookieConsent } from "~/components/CookieConsent";
 import { LoadingSequence } from "~/components/LoadingSequence";
@@ -277,7 +277,10 @@ export default function App() {
             animate={{ opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_QUIET } }}
             exit={{ opacity: 0, transition: { duration: 0.22 } }}
           >
-            <Outlet />
+            {/* Not a plain <Outlet/>: that would render the NEW route inside
+                the main that is fading out, mounting it twice and running its
+                effects (property_view and the like) twice per navigation. */}
+            <FrozenOutlet />
           </motion.main>
         </AnimatePresence>
       </div>

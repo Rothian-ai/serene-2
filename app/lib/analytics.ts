@@ -3,16 +3,24 @@
  * governs the COOKIE, not whether measurement happens.
  * Set VITE_GA_ID in .env (e.g. G-XXXXXXXXXX). Empty disables it entirely.
  *
- * Until 28 Oct 2026 nothing loaded until the visitor accepted, which meant GA4
- * could only ever report the consenting slice of the audience — the reason its
- * figures never matched Amelia's, which has always run cookie-free for
- * everyone. Now both measure the same people.
+ * Until 28 Oct 2026 nothing loaded until the visitor accepted. Now the tag
+ * loads for every visitor, cookie-free until they accept. That does not make
+ * GA4 and Amelia count the same people. GA4's standard reports still count
+ * only visitors who accept: the cookieless pings sent before that are used
+ * for behavioural modelling, and Google turns modelling on only for a
+ * property with at least 1,000 denied events a day for 7 days and 1,000
+ * consenting users a day on 7 of the last 28 days (Analytics Help 11161109),
+ * and only shows it under the Blended reporting identity. Below that, the
+ * declined visitors are simply not in the reports. Amelia counts every
+ * visitor, cookie-free, and leaves out automated visits, so its figures will
+ * stay higher.
  *
  * What consent actually switches:
  *   denied  (default, and after a decline)  no cookie, no persistent id, no
- *           cross-visit stitching. GA4 receives a cookieless ping and models
- *           the rest. Nothing is written to the device, so there is nothing
- *           for the notice to have to ask about.
+ *           cross-visit stitching. GA4 receives a cookieless ping, which
+ *           reaches a report only through modelling (above). Nothing is
+ *           written to the device, so there is nothing for the notice to have
+ *           to ask about.
  *   granted (after an accept)               the ordinary _ga cookie and the
  *           full behavioural picture.
  *
@@ -70,6 +78,58 @@ function onPrivatePath(): boolean {
   return typeof window !== "undefined" && isPrivatePath(window.location.pathname);
 }
 
+/**
+ * GA4 runs on the live site and nowhere else. Preview builds and local runs
+ * were sending their visits to the live GA4 property, so every test click was
+ * counted as a real visitor. Amelia's tag is not gated here: Amelia filters
+ * preview hosts out itself.
+ */
+const PRODUCTION_HOSTS = ["serenebay.ae", "www.serenebay.ae"] as const;
+
+export function isProductionHost(hostname: string): boolean {
+  return (PRODUCTION_HOSTS as readonly string[]).includes(hostname.toLowerCase());
+}
+
+function onProductionHost(): boolean {
+  return typeof window !== "undefined" && isProductionHost(window.location.hostname);
+}
+
+/**
+ * Links in Serene's campaign emails carry `alt`, a private code that tells
+ * Amelia which recipient opened them. Amelia's snippet strips it from the
+ * address bar on arrival, but GA4 can read the URL before that happens, so
+ * every address we hand GA4 goes through this first. Only `alt` is removed:
+ * utm_* and every other parameter are kept exactly as written.
+ */
+const RECIPIENT_PARAM = "alt";
+
+export function withoutRecipientRef(location: string): string {
+  const q = location.indexOf("?");
+  if (q === -1) return location;
+  const hashAt = location.indexOf("#", q);
+  const end = hashAt === -1 ? location.length : hashAt;
+  const kept = location
+    .slice(q + 1, end)
+    .split("&")
+    .filter((pair) => {
+      if (!pair) return false;
+      const key = pair.split("=")[0];
+      let name = key;
+      try {
+        name = decodeURIComponent(key.replace(/\+/g, " "));
+      } catch {
+        /* malformed escape: compare it as written */
+      }
+      return name !== RECIPIENT_PARAM;
+    });
+  return location.slice(0, q) + (kept.length ? `?${kept.join("&")}` : "") + location.slice(end);
+}
+
+/** The current page as GA4 should see it: path and query, minus `alt`. */
+function currentPath(): string {
+  return withoutRecipientRef(window.location.pathname + window.location.search);
+}
+
 export type ConsentState = "accepted" | "declined" | null;
 const KEY = "serene-consent";
 
@@ -116,11 +176,24 @@ function send(name: string, params?: Record<string, unknown>): void {
   // Dropped, not queued: a queued dashboard event would simply flush the
   // moment the admin opened a public page, which is the leak with a delay.
   if (onPrivatePath()) return;
+  // Nothing will ever load to flush a queue off the live site.
+  if (!onProductionHost()) return;
+  // Every event carries the page it happened on, and gtag would otherwise take
+  // that from the raw address bar, `alt` and all. Taken now, not at flush time,
+  // so a queued event keeps the page it was fired on. The title goes with it:
+  // a route's own event (property_view and the like) fires from its mount
+  // effect, before root's effect has moved the config's page_title on, and an
+  // event-level value outranks the config one.
+  const withPage = {
+    page_location: window.location.origin + currentPath(),
+    page_title: document.title,
+    ...params,
+  };
   if (!loaded || !window.gtag) {
-    if (queue.length < QUEUE_LIMIT) queue.push({ name, params });
+    if (queue.length < QUEUE_LIMIT) queue.push({ name, params: withPage });
     return;
   }
-  window.gtag("event", name, params);
+  window.gtag("event", name, withPage);
 }
 
 /**
@@ -148,6 +221,8 @@ export function loadAnalytics(): void {
   // public page still gets GA4 — initAnalytics() is called again on every
   // navigation and is a no-op once this has run.
   if (onPrivatePath()) return;
+  // Refused for good, not deferred: the hostname never changes in a page's life.
+  if (!onProductionHost()) return;
   loaded = true;
 
   window.dataLayer = window.dataLayer ?? [];
@@ -170,6 +245,21 @@ export function loadAnalytics(): void {
     anonymize_ip: true,
     // We send these by hand on every route change, including the first.
     send_page_view: false,
+    // The landing address without `alt`, for anything gtag sends on its own.
+    // A config-level value sticks to every later hit, so pageView() refreshes
+    // it on each route change; otherwise it would stay frozen on this one.
+    page_location: window.location.origin + currentPath(),
+    // gtag would send document.referrer as written. A tab opened from one of
+    // our own pages before Amelia's snippet stripped the address bar has that
+    // page, `alt` and all, as its referrer, so it is stripped here too. It has
+    // to be set here, at config level, or the landing page's own automatic
+    // hits (session_start, user_engagement) would carry the raw one. Setting it
+    // is not gtag's default, though: left alone, gtag reports the previous
+    // virtual page as the referrer of each later view, and a config value
+    // would freeze every view of the visit on this external one. So pageView()
+    // moves it on to the previous page on every client-side view. Left out
+    // when empty.
+    ...(document.referrer ? { page_referrer: withoutRecipientRef(document.referrer) } : {}),
   });
 
   const s = document.createElement("script");
@@ -201,7 +291,7 @@ let lastView: string | null = null;
 
 export function pageView(path?: string): void {
   if (typeof window === "undefined") return;
-  const location = path ?? window.location.pathname + window.location.search;
+  const location = withoutRecipientRef(path ?? window.location.pathname + window.location.search);
   // Checked against the path being reported, not just the live one: on a
   // client-side navigation React commits the new route before this runs, and
   // we must judge the page we are about to send.
@@ -212,11 +302,33 @@ export function pageView(path?: string): void {
   // effect sending the same path would both land — which is exactly what
   // happens when GA4 starts late, on the first public page after /dashboard.
   if (location === lastView) return;
+  // Already alt-free: lastView only ever holds withoutRecipientRef output.
+  const prev = lastView;
   lastView = location;
+  const pageLocation = window.location.origin + location;
+  // The page we came from, as gtag would report it in a single-page app had
+  // loadAnalytics() not pinned the landing referrer (see there). Null on the
+  // landing view, which keeps the stripped external referrer from the config.
+  const referrer = prev ? { page_referrer: window.location.origin + prev } : {};
+  // Google's SPA pattern: move the tag's own page to the new route before the
+  // page_view. The events gtag sends by itself (user_engagement, scroll,
+  // form_start, form_submit, its outbound clicks) carry no page of their own
+  // and take it from the config, which loadAnalytics() pinned to the landing
+  // address. Without this, every one of them after a client-side navigation
+  // was credited to the first page of the visit. It has to be `config` with
+  // `update: true`: a config-level page_location outranks anything `set` gives.
+  window.gtag("config", GA_ID, {
+    update: true,
+    send_page_view: false,
+    page_location: pageLocation,
+    page_title: document.title,
+    ...referrer,
+  });
   window.gtag("event", "page_view", {
     page_path: location,
-    page_location: window.location.origin + location,
+    page_location: pageLocation,
     page_title: document.title,
+    ...referrer,
   });
 }
 

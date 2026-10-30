@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy
-updated: July 2026
+updated: 30 October 2026
 ---
 
 *This policy is a working draft prepared for launch and should be reviewed by counsel before publication.*
@@ -13,9 +13,9 @@ Serene Bay Real Estate LLC ("Serene Bay", "we") is a licensed real estate adviso
 
 **What you give us.** If you use the contact form: your name, email address, optional phone number, and your message. Nothing on this site requires an account.
 
-**What analytics collects.** With your consent, and only with it, Google Analytics 4 records anonymised usage data (pages read, approximate region, device class). IP addresses are anonymised. If you decline the cookie notice, Google Analytics never loads and no cookies are set.
+**What analytics collects.** Google Analytics 4 runs for every visitor. With your consent it sets its cookie and records anonymised usage data (pages read, approximate region, device class). IP addresses are anonymised. Until you accept, or if you decline, it sets no cookies and stores nothing on your device. Google still receives the pages you read and the actions you take on them (a form sent, a question in the FAQ opened, a WhatsApp or other outside link followed), with no cookie or identifier that links them to you or to any other visit.
 
-**What is counted without cookies.** Our listing platform, Amelia, counts page views and enquiry actions for every visitor using PostHog, hosted in the EU, in its cookieless mode. It stores nothing on your device, does not recognise you between visits, and never reads what you type into a form. If you open a link Amelia sent you personally, the pages you read in that visit are noted against your enquiry. See the [cookie policy](/cookies) for the detail.
+**What is counted without cookies.** Our listing platform, Amelia, counts page views and enquiry actions for every visitor using PostHog, hosted in the EU, in its cookieless mode. With each it records an approximate location (country, region and town or city, worked out from your connection; your IP address is never stored) and your browser's language. It stores nothing on your device and never reads what you type into a form. It cannot recognise you from one day to the next; within a day, visits from the same browser and connection are counted as one visitor, using a code worked out on PostHog's servers that is not stored on your device and cannot be traced back to you. If you open a link Amelia sent you personally, the pages you read and the enquiry actions you take in that visit (a form sent, a WhatsApp or phone link followed) are noted against your enquiry. Links in the emails we send can work the same way: they may carry a reference to you, so a visit from one of them can be matched to you. Nothing is stored on your device for it. See the [cookie policy](/cookies) for the detail.
 
 **Third-party platforms.** Where we introduce you to an independent specialist, a surveyor, mortgage advisor, letting agent or legal counsel, anything you share with them is governed by their own privacy terms, not ours. We pass on only what you ask us to pass on.
 
