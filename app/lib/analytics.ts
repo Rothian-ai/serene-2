@@ -180,8 +180,15 @@ function send(name: string, params?: Record<string, unknown>): void {
   if (!onProductionHost()) return;
   // Every event carries the page it happened on, and gtag would otherwise take
   // that from the raw address bar, `alt` and all. Taken now, not at flush time,
-  // so a queued event keeps the page it was fired on.
-  const withPage = { page_location: window.location.origin + currentPath(), ...params };
+  // so a queued event keeps the page it was fired on. The title goes with it:
+  // a route's own event (property_view and the like) fires from its mount
+  // effect, before root's effect has moved the config's page_title on, and an
+  // event-level value outranks the config one.
+  const withPage = {
+    page_location: window.location.origin + currentPath(),
+    page_title: document.title,
+    ...params,
+  };
   if (!loaded || !window.gtag) {
     if (queue.length < QUEUE_LIMIT) queue.push({ name, params: withPage });
     return;
@@ -244,8 +251,14 @@ export function loadAnalytics(): void {
     page_location: window.location.origin + currentPath(),
     // gtag would send document.referrer as written. A tab opened from one of
     // our own pages before Amelia's snippet stripped the address bar has that
-    // page, `alt` and all, as its referrer, so it is stripped here too. Left
-    // out when empty, so gtag's own handling of a direct visit is untouched.
+    // page, `alt` and all, as its referrer, so it is stripped here too. It has
+    // to be set here, at config level, or the landing page's own automatic
+    // hits (session_start, user_engagement) would carry the raw one. Setting it
+    // is not gtag's default, though: left alone, gtag reports the previous
+    // virtual page as the referrer of each later view, and a config value
+    // would freeze every view of the visit on this external one. So pageView()
+    // moves it on to the previous page on every client-side view. Left out
+    // when empty.
     ...(document.referrer ? { page_referrer: withoutRecipientRef(document.referrer) } : {}),
   });
 
@@ -289,8 +302,14 @@ export function pageView(path?: string): void {
   // effect sending the same path would both land — which is exactly what
   // happens when GA4 starts late, on the first public page after /dashboard.
   if (location === lastView) return;
+  // Already alt-free: lastView only ever holds withoutRecipientRef output.
+  const prev = lastView;
   lastView = location;
   const pageLocation = window.location.origin + location;
+  // The page we came from, as gtag would report it in a single-page app had
+  // loadAnalytics() not pinned the landing referrer (see there). Null on the
+  // landing view, which keeps the stripped external referrer from the config.
+  const referrer = prev ? { page_referrer: window.location.origin + prev } : {};
   // Google's SPA pattern: move the tag's own page to the new route before the
   // page_view. The events gtag sends by itself (user_engagement, scroll,
   // form_start, form_submit, its outbound clicks) carry no page of their own
@@ -303,11 +322,13 @@ export function pageView(path?: string): void {
     send_page_view: false,
     page_location: pageLocation,
     page_title: document.title,
+    ...referrer,
   });
   window.gtag("event", "page_view", {
     page_path: location,
     page_location: pageLocation,
     page_title: document.title,
+    ...referrer,
   });
 }
 
